@@ -766,7 +766,7 @@
 </footer>
 
 <script>
-const CASINOS = [
+const DEMO_CASINOS = [
   {
     id: 1,
     emoji: "🏰",
@@ -1031,6 +1031,115 @@ const CASINOS = [
   }
 ];
 
+// ── LIVE CASINO DATA ──────────────────────────────────────────
+let CASINOS = []; // populated from API
+let CASINOS_LOADED = false;
+
+function getCasinoEmoji(name, chain) {
+  if (/bellagio/i.test(name)) return '🏰';
+  if (/wynn|encore/i.test(name)) return '✨';
+  if (/mgm/i.test(name)) return '🦁';
+  if (/caesars/i.test(name)) return '🏛️';
+  if (/venetian|palazzo/i.test(name)) return '🚣';
+  if (/mirage/i.test(name)) return '🌋';
+  if (/station/i.test(name)) return '🏯';
+  if (/golden nugget/i.test(name)) return '🥇';
+  if (/circus/i.test(name)) return '🎪';
+  if (/fremont|downtown/i.test(name)) return '🎲';
+  if (/south point/i.test(name)) return '⭐';
+  if (/flamingo/i.test(name)) return '🦩';
+  if (/paris/i.test(name)) return '🗼';
+  if (/excalibur/i.test(name)) return '⚔️';
+  if (/luxor/i.test(name)) return '🔺';
+  if (/mandalay/i.test(name)) return '🌴';
+  if (/aria/i.test(name)) return '💎';
+  if (/cosmopolitan/i.test(name)) return '🌆';
+  if (/horseshoe|binion/i.test(name)) return '🎴';
+  if (/hard rock/i.test(name)) return '🎸';
+  if (/suncoast|boyd/i.test(chain || '')) return '🌊';
+  if (/station/i.test(chain || '')) return '🚉';
+  return '🎰';
+}
+
+function computeScore(c) {
+  let score = 60;
+  if (c.rating) score += Math.min(20, (c.rating - 3) * 10);
+  if (c.review_count > 1000) score += 10;
+  if (c.review_count > 5000) score += 5;
+  if (c.top_jackpot_cents > 100000000) score += 5; // $1M+
+  if (c.latest_jackpot_date) score += 5; // has recent activity
+  return Math.min(99, Math.max(50, Math.round(score)));
+}
+
+function scoreClass(score) {
+  if (score >= 85) return 'high';
+  if (score >= 70) return 'mid';
+  return 'low';
+}
+
+function formatAmount(dollars) {
+  if (dollars >= 1000000) return (dollars/1000000).toFixed(1) + 'M';
+  if (dollars >= 1000) return Math.round(dollars).toLocaleString();
+  return Math.round(dollars).toString();
+}
+
+async function loadCasinos() {
+  try {
+    const res = await fetch('/api/casinos?city=Las%20Vegas&limit=50');
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    if (!data.length) throw new Error('No data');
+
+    CASINOS = data.map(c => {
+      const score = computeScore(c);
+      return {
+        id: c.id,
+        emoji: getCasinoEmoji(c.name, c.chain),
+        name: c.name,
+        chain: c.chain || 'Independent',
+        location: `${c.city || 'Las Vegas'}, ${c.state || 'NV'}`,
+        score,
+        scoreClass: scoreClass(score),
+        slotPayback: c.payback_pct ? c.payback_pct + '%' : 'N/A',
+        largestJackpot: c.top_jackpot_cents ? '$' + formatAmount(c.top_jackpot_cents / 100) : 'N/A',
+        jackpotFreq: c.latest_jackpot_date ? 'Reported' : 'Unknown',
+        loyaltyProgram: c.chain || 'Rewards Program',
+        loyaltyTiers: [],
+        loyaltyScore: c.rating ? Math.min(10, c.rating * 2) : 5.0,
+        pointsPerDollar: 'N/A',
+        freePlay: true,
+        bingo: /bingo/i.test(c.name),
+        poker: /poker/i.test(c.name),
+        sports: false,
+        slots: true,
+        hot: !!(c.latest_jackpot_date && (new Date() - new Date(c.latest_jackpot_date)) < 7 * 86400000),
+        tables: [],
+        minBet: 'Varies',
+        parkingFree: /station|south point|boyd|orleans|suncoast/i.test(c.chain || ''),
+        hotelOnsite: (c.review_count || 0) > 500,
+        recentJackpots: c.latest_jackpot_machine ? [{
+          game: c.latest_jackpot_machine,
+          amount: '$' + formatAmount((c.latest_jackpot_cents || 0) / 100),
+          date: c.latest_jackpot_date ? new Date(c.latest_jackpot_date).toLocaleDateString('en-US', {month:'short', year:'numeric'}) : 'Recent',
+        }] : [],
+        perks: [],
+        notes: c.address || '',
+        affiliateUrl: c.affiliate_url || null,
+        affiliateNetwork: c.affiliate_network || null,
+      };
+    });
+
+    CASINOS_LOADED = true;
+    filterCasinos();
+    document.getElementById('resultsCount').textContent = `Showing ${CASINOS.length} casinos near Las Vegas, NV`;
+  } catch(e) {
+    console.warn('Using demo data:', e.message);
+    CASINOS = DEMO_CASINOS;
+    CASINOS_LOADED = true;
+    filterCasinos();
+  }
+}
+
 let activeFilter = 'all';
 let compareList = [];
 
@@ -1143,9 +1252,14 @@ async function openModal(id) {
   const c = CASINOS.find(x => x.id === id);
   if (!c) return;
 
-  const jackpotRows = c.recentJackpots.map(j =>
-    `<li><span>${j.game} <span style="color:var(--muted);font-size:0.78rem">(${j.date})</span></span><span class="jackpot-amount">${j.amount}</span></li>`
-  ).join('');
+  let jackpotRows;
+  if (c.recentJackpots && c.recentJackpots.length > 0) {
+    jackpotRows = c.recentJackpots.map(j =>
+      `<li><span>${j.game} <span style="color:var(--muted);font-size:0.78rem">(${j.date})</span></span><span class="jackpot-amount">${j.amount}</span></li>`
+    ).join('');
+  } else {
+    jackpotRows = `<li style="color:var(--muted);font-style:italic;justify-content:center">No jackpots on record yet.</li>`;
+  }
 
   const tierHtml = c.loyaltyTiers.map((t, i) => {
     const cls = ['bronze','silver','gold','platinum','diamond'][Math.min(i, 4)];
@@ -1544,7 +1658,7 @@ function renderWinsFeed() {
 }
 
 // Init
-renderCards(CASINOS);
+loadCasinos();
 renderWinsFeed();
 loadLiveData();
 

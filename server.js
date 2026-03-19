@@ -32,24 +32,59 @@ app.get('/', (req, res) => {
 // Serve service worker
 app.get('/sw.js', (req, res) => res.sendFile(path.join(__dirname, 'sw.js')));
 
-// GET /api/casinos — casinos with latest review ratings, ordered by review_count DESC
+// GET /api/casinos — rich casino data with jackpots, ratings, and query param filters
 app.get('/api/casinos', async (req, res) => {
   try {
+    const { city, chain, has_jackpots, limit = 50, offset = 0 } = req.query;
+    const limitVal = Math.min(parseInt(limit) || 50, 200);
+    const offsetVal = parseInt(offset) || 0;
+
+    const conditions = [`c.state = 'NV'`];
+    const params = [];
+
+    if (city) {
+      params.push(city);
+      conditions.push(`c.city ILIKE $${params.length}`);
+    }
+    if (chain) {
+      params.push(`%${chain}%`);
+      conditions.push(`c.chain ILIKE $${params.length}`);
+    }
+    if (has_jackpots === 'true') {
+      conditions.push(`EXISTS (SELECT 1 FROM jackpots WHERE casino_id = c.id)`);
+    }
+
+    const whereClause = conditions.join(' AND ');
+    params.push(limitVal, offsetVal);
+    const limitParam = params.length - 1;
+    const offsetParam = params.length;
+
     const result = await pool.query(`
       SELECT
-        c.id, c.name, c.slug, c.chain, c.city, c.state, c.address, c.lat, c.lng,
-        c.phone, c.website, c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking,
-        r.rating, r.review_count, r.source AS review_source
+        c.id, c.name, c.slug, c.chain, c.city, c.state, c.address,
+        c.ngcb_county, c.affiliate_url, c.affiliate_network, c.affiliate_commission_note,
+        r.rating, r.review_count,
+        j.machine_name AS latest_jackpot_machine,
+        j.amount_cents AS latest_jackpot_cents,
+        j.created_at AS latest_jackpot_date,
+        top_j.amount_cents AS top_jackpot_cents
       FROM casinos c
+      LEFT JOIN reviews r ON r.casino_id = c.id AND r.source = 'yelp'
       LEFT JOIN LATERAL (
-        SELECT rating, review_count, source
-        FROM reviews
-        WHERE casino_id = c.id
-        ORDER BY review_count DESC NULLS LAST
-        LIMIT 1
-      ) r ON true
-      ORDER BY r.review_count DESC NULLS LAST
-    `);
+        SELECT machine_name, amount_cents, created_at
+        FROM jackpots WHERE casino_id = c.id
+        ORDER BY created_at DESC LIMIT 1
+      ) j ON true
+      LEFT JOIN LATERAL (
+        SELECT amount_cents
+        FROM jackpots WHERE casino_id = c.id
+        ORDER BY amount_cents DESC LIMIT 1
+      ) top_j ON true
+      WHERE ${whereClause}
+      ORDER BY r.review_count DESC NULLS LAST, c.name ASC
+      LIMIT $${limitParam} OFFSET $${offsetParam}
+    `, params);
+
     res.json(result.rows);
   } catch (err) {
     console.error('/api/casinos error:', err.message);
@@ -99,24 +134,33 @@ app.get('/api/jackpots/top', async (req, res) => {
   }
 });
 
-// GET /api/casinos/:id — single casino with affiliate data
+// GET /api/casinos/:id — single casino with rich data, jackpots, payback
 app.get('/api/casinos/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query(`
       SELECT
-        c.id, c.name, c.slug, c.chain, c.city, c.state, c.address, c.lat, c.lng,
-        c.phone, c.website, c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking,
-        c.affiliate_url, c.affiliate_network, c.affiliate_commission_note,
-        r.rating, r.review_count, r.source AS review_source
+        c.id, c.name, c.slug, c.chain, c.city, c.state, c.address,
+        c.ngcb_county, c.affiliate_url, c.affiliate_network, c.affiliate_commission_note,
+        c.lat, c.lng, c.phone, c.website,
+        c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking,
+        r.rating, r.review_count,
+        j.machine_name AS latest_jackpot_machine,
+        j.amount_cents AS latest_jackpot_cents,
+        j.created_at AS latest_jackpot_date,
+        top_j.amount_cents AS top_jackpot_cents
       FROM casinos c
+      LEFT JOIN reviews r ON r.casino_id = c.id AND r.source = 'yelp'
       LEFT JOIN LATERAL (
-        SELECT rating, review_count, source
-        FROM reviews
-        WHERE casino_id = c.id
-        ORDER BY review_count DESC NULLS LAST
-        LIMIT 1
-      ) r ON true
+        SELECT machine_name, amount_cents, created_at
+        FROM jackpots WHERE casino_id = c.id
+        ORDER BY created_at DESC LIMIT 1
+      ) j ON true
+      LEFT JOIN LATERAL (
+        SELECT amount_cents
+        FROM jackpots WHERE casino_id = c.id
+        ORDER BY amount_cents DESC LIMIT 1
+      ) top_j ON true
       WHERE c.id = $1
     `, [id]);
 
@@ -142,6 +186,22 @@ app.get('/api/casinos/:id', async (req, res) => {
       );
       casino.affiliate_status = match ? match.status : 'pending_signup';
     }
+
+    // Fetch last 10 jackpots by amount
+    const jackpotsResult = await pool.query(`
+      SELECT machine_name, machine_type, amount_cents, won_at, created_at, source, verified
+      FROM jackpots WHERE casino_id = $1
+      ORDER BY amount_cents DESC LIMIT 10
+    `, [id]);
+    casino.jackpots = jackpotsResult.rows;
+
+    // Fetch slot payback data if available
+    const paybackResult = await pool.query(`
+      SELECT denomination, payback_pct, area, range
+      FROM slot_payback WHERE casino_id = $1
+      ORDER BY denomination ASC
+    `, [id]);
+    casino.slot_payback = paybackResult.rows;
 
     res.json(casino);
   } catch (err) {

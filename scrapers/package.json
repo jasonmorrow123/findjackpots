@@ -1,0 +1,25 @@
+{
+  "name": "jackpotmap-scrapers",
+  "version": "1.0.0",
+  "description": "JackpotMap data pipeline scrapers",
+  "scripts": {
+    "scrape:yelp": "node yelp-scraper.js",
+    "scrape:twitter": "node twitter-monitor.js",
+    "scrape:winners": "node winner-page-scraper.js",
+    "scrape:gov": "node gov-pdf-scraper.js",
+    "pipeline:all": "node run-all.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "node-cron": "^3.0.3",
+    "openai": "^4.20.0",
+    "pdf-parse": "^1.1.1",
+    "pg": "^8.11.0",
+    "playwright": "^1.40.0",
+    "twitter-api-v2": "^1.15.0",
+    "winston": "^3.11.0",
+    "xlsx": "^0.18.5"
+  }
+}

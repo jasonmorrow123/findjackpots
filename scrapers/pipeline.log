@@ -1,0 +1,260 @@
+[2026-03-19T14:03:03.002Z] INFO: 🎰 JackpotMap Pipeline Orchestrator running
+[2026-03-19T14:03:03.003Z] INFO: Schedules:
+[2026-03-19T14:03:03.003Z] INFO:   • Winner pages:   every 6 hours
+[2026-03-19T14:03:03.003Z] INFO:   • Reddit monitor: every 2 hours
+[2026-03-19T14:03:03.003Z] INFO:   • Yelp refresh:   Sundays at 3am
+[2026-03-19T14:03:03.003Z] INFO:   • Gov PDF:        5th of month at 2am
+[2026-03-19T14:03:03.003Z] INFO:   • Twitter stream: run separately (node twitter-monitor.js)
+[2026-03-19T14:03:03.003Z] INFO: 
+Press Ctrl+C to stop.
+
+[2026-03-19T14:03:08.005Z] INFO: Starting winner-page-scraper.js...
+[2026-03-19T14:03:08.010Z] INFO: Starting reddit-monitor.js...
+[2026-03-19T14:03:20.209Z] INFO: reddit-monitor.js completed
+[2026-03-19T14:03:20.209Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  53 posts fetched
+  → 2 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 12.1s — 2 jackpot posts found, 0 new records stored
+
+[2026-03-19T14:04:02.781Z] INFO: winner-page-scraper.js completed
+[2026-03-19T14:04:02.781Z] INFO: 🎰 JackpotMap Winner Page Scraper
+
+
+📄 Scraping: https://suncoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://goldcoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://mainstreet.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://thecal.boydgaming.com/play/winners
+  Falling back to full page text (2323 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://fremontcasino.boydgaming.com/play/winners
+
+📄 Scraping: https://samstownlv.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://stationcasinos.com/play/gaming-promotions/
+  Falling back to full page text (1799 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://www.southpointcasino.com/current-promotions
+  Falling back to full page text (1104 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+✅ Done in 54.4s — 24 new jackpots added, 1 errors
+
+[2026-03-19T14:05:16.598Z] INFO: 🎰 JackpotMap Pipeline Orchestrator running
+[2026-03-19T14:05:16.598Z] INFO: Schedules:
+[2026-03-19T14:05:16.599Z] INFO:   • Winner pages:   every 6 hours
+[2026-03-19T14:05:16.599Z] INFO:   • Reddit monitor: every 2 hours
+[2026-03-19T14:05:16.599Z] INFO:   • Yelp refresh:   Sundays at 3am
+[2026-03-19T14:05:16.599Z] INFO:   • Gov PDF:        5th of month at 2am
+[2026-03-19T14:05:16.599Z] INFO:   • Twitter stream: run separately (node twitter-monitor.js)
+[2026-03-19T14:05:16.599Z] INFO: 
+Press Ctrl+C to stop.
+
+[2026-03-19T14:05:21.599Z] INFO: Starting winner-page-scraper.js...
+[2026-03-19T14:05:21.607Z] INFO: Starting reddit-monitor.js...
+[2026-03-19T14:05:33.691Z] INFO: reddit-monitor.js completed
+[2026-03-19T14:05:33.691Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  53 posts fetched
+  → 2 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 11.9s — 2 jackpot posts found, 0 new records stored
+
+[2026-03-19T14:06:15.152Z] INFO: winner-page-scraper.js completed
+[2026-03-19T14:06:15.152Z] INFO: 🎰 JackpotMap Winner Page Scraper
+
+
+📄 Scraping: https://suncoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://goldcoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://mainstreet.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://thecal.boydgaming.com/play/winners
+  Falling back to full page text (2323 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://fremontcasino.boydgaming.com/play/winners
+
+📄 Scraping: https://samstownlv.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://stationcasinos.com/play/gaming-promotions/
+  Falling back to full page text (1799 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://www.southpointcasino.com/current-promotions
+  Falling back to full page text (1104 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+✅ Done in 53.2s — 24 new jackpots added, 1 errors
+
+[2026-03-19T15:00:00.677Z] INFO: Starting reddit-monitor.js...
+[2026-03-19T15:00:22.968Z] INFO: reddit-monitor.js completed
+[2026-03-19T15:00:22.968Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  53 posts fetched
+  → 2 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 22.1s — 2 jackpot posts found, 0 new records stored
+
+[2026-03-19T17:00:00.956Z] INFO: Starting winner-page-scraper.js...
+[2026-03-19T17:00:00.958Z] INFO: Starting reddit-monitor.js...
+[2026-03-19T17:00:14.609Z] INFO: reddit-monitor.js completed
+[2026-03-19T17:00:14.610Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  54 posts fetched
+  → 2 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 13.5s — 2 jackpot posts found, 0 new records stored
+
+[2026-03-19T17:00:56.367Z] INFO: winner-page-scraper.js completed
+[2026-03-19T17:00:56.367Z] INFO: 🎰 JackpotMap Winner Page Scraper
+
+
+📄 Scraping: https://suncoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://goldcoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://mainstreet.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://thecal.boydgaming.com/play/winners
+  Falling back to full page text (2323 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://fremontcasino.boydgaming.com/play/winners
+
+📄 Scraping: https://samstownlv.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 6 new jackpots added
+
+📄 Scraping: https://stationcasinos.com/play/gaming-promotions/
+  Falling back to full page text (1799 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://www.southpointcasino.com/current-promotions
+  Falling back to full page text (1110 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+✅ Done in 55.0s — 24 new jackpots added, 1 errors
+

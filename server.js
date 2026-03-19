@@ -24,6 +24,18 @@ webpush.setVapidDetails(
 app.use(cors());
 app.use(express.json());
 
+// Region definitions
+const REGIONS = {
+  'las-vegas': { states: ['NV'], city: 'Las Vegas', label: 'Las Vegas, NV', emoji: '🎰' },
+  'reno':      { states: ['NV'], city: 'Reno',      label: 'Reno, NV',      emoji: '🎲' },
+  'nevada':    { states: ['NV'], city: null,         label: 'All Nevada',    emoji: '🏜️' },
+  'midwest':   { states: ['MN','IA','IL','IN','MI','WI','MO','OH','ND','SD','NE','KS','KY'], city: null, label: 'Midwest', emoji: '🌽' },
+  'minnesota': { states: ['MN'], city: null, label: 'Minnesota', emoji: '🌲' },
+  'iowa':      { states: ['IA'], city: null, label: 'Iowa',      emoji: '🌾' },
+  'illinois':  { states: ['IL'], city: null, label: 'Illinois',  emoji: '🏙️' },
+  'michigan':  { states: ['MI'], city: null, label: 'Michigan',  emoji: '🚗' },
+};
+
 // Serve index.html at root
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -32,20 +44,48 @@ app.get('/', (req, res) => {
 // Serve service worker
 app.get('/sw.js', (req, res) => res.sendFile(path.join(__dirname, 'sw.js')));
 
+// GET /api/regions — return list of available regions for the frontend picker
+app.get('/api/regions', (req, res) => {
+  const list = Object.entries(REGIONS).map(([id, r], i) => ({
+    id,
+    label: r.label,
+    emoji: r.emoji,
+    ...(id === 'las-vegas' ? { default: true } : {}),
+  }));
+  res.json(list);
+});
+
 // GET /api/casinos — rich casino data with jackpots, ratings, and query param filters
 app.get('/api/casinos', async (req, res) => {
   try {
-    const { city, chain, has_jackpots, limit = 50, offset = 0 } = req.query;
+    const { region, city, chain, has_jackpots, limit = 50, offset = 0 } = req.query;
     const limitVal = Math.min(parseInt(limit) || 50, 200);
     const offsetVal = parseInt(offset) || 0;
 
-    const conditions = [`c.state = 'NV'`];
+    const conditions = [];
     const params = [];
 
-    if (city) {
+    // Region takes priority over city; default to las-vegas if neither provided
+    const regionKey = region && REGIONS[region] ? region : (!region && !city ? 'las-vegas' : null);
+    const regionDef = regionKey ? REGIONS[regionKey] : null;
+
+    if (regionDef) {
+      params.push(regionDef.states);
+      conditions.push(`c.state = ANY($${params.length})`);
+      if (regionDef.city) {
+        params.push(regionDef.city);
+        conditions.push(`c.city ILIKE $${params.length}`);
+      }
+    } else if (city) {
+      // Legacy city param (no region match)
+      conditions.push(`c.state = 'NV'`);
       params.push(city);
       conditions.push(`c.city ILIKE $${params.length}`);
+    } else {
+      // Fallback: all NV
+      conditions.push(`c.state = 'NV'`);
     }
+
     if (chain) {
       params.push(`%${chain}%`);
       conditions.push(`c.chain ILIKE $${params.length}`);
@@ -54,7 +94,7 @@ app.get('/api/casinos', async (req, res) => {
       conditions.push(`EXISTS (SELECT 1 FROM jackpots WHERE casino_id = c.id)`);
     }
 
-    const whereClause = conditions.join(' AND ');
+    const whereClause = conditions.length > 0 ? conditions.join(' AND ') : 'TRUE';
     params.push(limitVal, offsetVal);
     const limitParam = params.length - 1;
     const offsetParam = params.length;
@@ -63,6 +103,7 @@ app.get('/api/casinos', async (req, res) => {
       SELECT
         c.id, c.name, c.slug, c.chain, c.city, c.state, c.address,
         c.ngcb_county, c.affiliate_url, c.affiliate_network, c.affiliate_commission_note,
+        c.monthly_revenue_cents, c.revenue_report_month, c.revenue_source,
         r.rating, r.review_count,
         j.machine_name AS latest_jackpot_machine,
         j.amount_cents AS latest_jackpot_cents,
@@ -197,7 +238,7 @@ app.get('/api/casinos/:id', async (req, res) => {
 
     // Fetch slot payback data if available
     const paybackResult = await pool.query(`
-      SELECT denomination, payback_pct, area, range
+      SELECT denomination, payback_pct, report_month, machine_count
       FROM slot_payback WHERE casino_id = $1
       ORDER BY denomination ASC
     `, [id]);

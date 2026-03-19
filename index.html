@@ -615,6 +615,20 @@
       margin-top: 6px;
     }
 
+    /* ── REGION PICKER ── */
+    .region-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border: 1.5px solid transparent;
+    }
+    .region-option:hover { background: #1a1a3e; }
+    .region-option.active { border-color: var(--gold); background: #1a1a2e; }
+
     @media (max-width: 600px) {
       .search-section h1 { font-size: 1.4rem; }
       .casino-grid { grid-template-columns: 1fr; }
@@ -630,8 +644,10 @@
     <div class="tagline">The smartest way to pick your casino</div>
   </div>
   <div style="display:flex;gap:10px;align-items:center">
-    <span style="font-size:0.8rem;color:var(--muted)">📍 Las Vegas, NV</span>
-    <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="alert('Location picker coming soon!')">Change City</button>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span id="currentRegionLabel" style="font-size:0.8rem;color:var(--muted)">📍 Las Vegas, NV</span>
+      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change City</button>
+    </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
   </div>
@@ -640,7 +656,7 @@
 <!-- HERO SEARCH -->
 <div class="search-section">
   <h1>Find Your <em>Lucky</em> Casino</h1>
-  <p>Compare jackpots, rewards programs, games, and more — all in one place</p>
+  <p id="searchSubtext">Compare jackpots, rewards programs, games in Las Vegas</p>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search casino name, area, or game type..." oninput="filterCasinos()" />
     <button onclick="filterCasinos()">Search</button>
@@ -737,6 +753,23 @@
 <!-- DETAIL MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- REGION PICKER MODAL -->
+<div class="modal-overlay" id="regionPickerOverlay" onclick="closeRegionPicker(event)">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:1.5rem">📍</div>
+        <div style="font-size:1.1rem;font-weight:800;margin-top:4px">Choose Location</div>
+        <div style="font-size:0.82rem;color:var(--muted)">Select a region to explore casinos</div>
+      </div>
+      <button class="modal-close" onclick="closeRegionPickerBtn()">✕</button>
+    </div>
+    <div class="modal-body" id="regionPickerBody">
+      <!-- Populated by JS -->
+    </div>
+  </div>
 </div>
 
 <!-- REPORT A WIN MODAL -->
@@ -1083,12 +1116,11 @@ function formatAmount(dollars) {
   return Math.round(dollars).toString();
 }
 
-async function loadCasinos() {
+async function loadCasinos(region = 'las-vegas') {
   try {
-    const res = await fetch('/api/casinos?city=Las%20Vegas&limit=50');
+    const res = await fetch(`/api/casinos?region=${region}&limit=50`);
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
-    if (!data.length) throw new Error('No data');
 
     CASINOS = data.map(c => {
       const score = computeScore(c);
@@ -1131,7 +1163,12 @@ async function loadCasinos() {
 
     CASINOS_LOADED = true;
     filterCasinos();
-    document.getElementById('resultsCount').textContent = `Showing ${CASINOS.length} casinos near Las Vegas, NV`;
+    const regionLabel = (typeof availableRegions !== 'undefined' && availableRegions.find(r => r.id === region))?.label || region;
+    document.getElementById('resultsCount').textContent = `Showing ${CASINOS.length} casino${CASINOS.length !== 1 ? 's' : ''} — ${regionLabel}`;
+
+    if (CASINOS.length === 0) {
+      document.getElementById('casinoGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:0.95rem">No casinos found for this region yet.<br><span style="font-size:0.82rem">Check back soon as we expand our database!</span></div>';
+    }
   } catch(e) {
     console.warn('Using demo data:', e.message);
     CASINOS = DEMO_CASINOS;
@@ -1140,13 +1177,88 @@ async function loadCasinos() {
   }
 }
 
+// ── REGION PICKER ────────────────────────────────────────────
+let currentRegion = 'las-vegas';
+let availableRegions = [];
+
+const REGION_SUBTEXTS = {
+  'las-vegas':  'Compare jackpots, rewards programs, games in Las Vegas',
+  'reno':       'Compare jackpots, rewards programs, games in Reno',
+  'nevada':     'All Nevada casinos — slots, jackpots, and loyalty programs',
+  'midwest':    'Compare jackpots, rewards programs across the Midwest',
+  'minnesota':  'Minnesota tribal casino comparison',
+  'iowa':       'Iowa casino comparison — slots, jackpots, and rewards',
+  'illinois':   'Illinois casino comparison — slots, jackpots, and rewards',
+  'michigan':   'Michigan casino comparison — slots, jackpots, and rewards',
+};
+
+async function loadRegions() {
+  try {
+    const res = await fetch('/api/regions');
+    availableRegions = await res.json();
+  } catch(e) {
+    // fallback regions
+    availableRegions = [
+      { id: 'las-vegas', label: 'Las Vegas, NV', emoji: '🎰', default: true },
+      { id: 'reno',      label: 'Reno, NV',      emoji: '🎲' },
+      { id: 'nevada',    label: 'All Nevada',    emoji: '🏜️' },
+      { id: 'midwest',   label: 'Midwest',       emoji: '🌽' },
+      { id: 'minnesota', label: 'Minnesota',     emoji: '🌲' },
+      { id: 'iowa',      label: 'Iowa',          emoji: '🌾' },
+      { id: 'illinois',  label: 'Illinois',      emoji: '🏙️' },
+      { id: 'michigan',  label: 'Michigan',      emoji: '🚗' },
+    ];
+  }
+}
+
+function openRegionPicker() {
+  const body = document.getElementById('regionPickerBody');
+  body.innerHTML = availableRegions.map(r => `
+    <div class="region-option ${r.id === currentRegion ? 'active' : ''}" onclick="selectRegion('${r.id}', '${r.label}')">
+      <span style="font-size:1.4rem">${r.emoji}</span>
+      <div>
+        <div style="font-weight:700;font-size:0.95rem">${r.label}</div>
+        ${r.id === currentRegion ? '<div style="font-size:0.75rem;color:var(--green)">✓ Currently viewing</div>' : ''}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('regionPickerOverlay').classList.add('open');
+}
+
+function closeRegionPicker(e) {
+  if (e.target === document.getElementById('regionPickerOverlay')) {
+    document.getElementById('regionPickerOverlay').classList.remove('open');
+  }
+}
+
+function closeRegionPickerBtn() {
+  document.getElementById('regionPickerOverlay').classList.remove('open');
+}
+
+async function selectRegion(regionId, label) {
+  currentRegion = regionId;
+  document.getElementById('currentRegionLabel').textContent = '📍 ' + label;
+  document.getElementById('regionPickerOverlay').classList.remove('open');
+
+  // Update search subtext
+  const subtext = REGION_SUBTEXTS[regionId] || `Explore casinos — ${label}`;
+  document.getElementById('searchSubtext').textContent = subtext;
+
+  // Show loading state
+  document.getElementById('casinoGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)">Loading casinos...</div>';
+
+  // Reload casinos for new region
+  await loadCasinos(regionId);
+}
+
 let activeFilter = 'all';
 let compareList = [];
 
 function renderCards(data) {
   const grid = document.getElementById('casinoGrid');
   grid.innerHTML = '';
-  document.getElementById('resultsCount').textContent = `Showing ${data.length} casino${data.length !== 1 ? 's' : ''} near Las Vegas, NV`;
+  const regionLabelNow = (typeof availableRegions !== 'undefined' && availableRegions.find(r => r.id === currentRegion))?.label || currentRegion;
+  document.getElementById('resultsCount').textContent = `Showing ${data.length} casino${data.length !== 1 ? 's' : ''} — ${regionLabelNow}`;
 
   data.forEach(c => {
     const inCompare = compareList.includes(c.id);
@@ -1315,6 +1427,7 @@ async function openModal(id) {
         <div class="stat-row"><span class="stat-label">Min Table Bet</span><span class="stat-value">${c.minBet}</span></div>
         <div class="stat-row"><span class="stat-label">Free Parking</span><span class="stat-value ${c.parkingFree ? 'green' : 'red'}">${c.parkingFree ? 'Yes ✓' : 'No ✗'}</span></div>
         <div class="stat-row"><span class="stat-label">Hotel On-site</span><span class="stat-value ${c.hotelOnsite ? 'green' : 'red'}">${c.hotelOnsite ? 'Yes ✓' : 'No ✗'}</span></div>
+        ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--muted);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
       <button class="btn btn-primary" style="width:100%;padding:14px;font-size:0.95rem;border-radius:10px" onclick="alert('Directions feature coming soon!')">📍 Get Directions</button>
@@ -1326,17 +1439,41 @@ async function openModal(id) {
   `;
   document.getElementById('modalOverlay').classList.add('open');
 
-  // Async: fetch affiliate data from API and inject rewards button
+  // Async: fetch full casino detail — update jackpots, payback, and affiliate button
   try {
     const apiRes = await fetch(`/api/casinos/${id}`);
     if (!apiRes.ok) throw new Error('API unavailable');
     const dbCasino = await apiRes.json();
 
+    // ── Update jackpots section with real DB data ──
+    const jackpotList = document.querySelector('#modalContent .jackpot-list');
+    if (jackpotList && dbCasino.jackpots && dbCasino.jackpots.length > 0) {
+      jackpotList.innerHTML = dbCasino.jackpots.map(j => {
+        const amt = '$' + Math.round(j.amount_cents / 100).toLocaleString();
+        const dateStr = j.won_at || j.created_at
+          ? new Date(j.won_at || j.created_at).toLocaleDateString('en-US', {month:'short', year:'numeric'})
+          : 'Recent';
+        const machine = j.machine_name || j.machine_type || 'Slot Machine';
+        return `<li><span>${machine} <span style="color:var(--muted);font-size:0.78rem">(${dateStr})</span></span><span class="jackpot-amount">${amt}</span></li>`;
+      }).join('');
+    }
+
+    // ── Update slot payback if we have NGCB data ──
+    if (dbCasino.slot_payback && dbCasino.slot_payback.length > 0) {
+      const paybackEl = document.querySelector('#modalContent .stat-value.green');
+      if (paybackEl && paybackEl.closest('.stat-row')?.textContent.includes('Slot Payback')) {
+        const best = dbCasino.slot_payback.reduce((a, b) =>
+          parseFloat(a.payback_pct) > parseFloat(b.payback_pct) ? a : b
+        );
+        paybackEl.textContent = parseFloat(best.payback_pct).toFixed(1) + '%';
+      }
+    }
+
+    // ── Affiliate / rewards button ──
     const zone = document.getElementById('affiliateBtnZone');
     if (!zone) return;
 
     if (dbCasino.affiliate_url) {
-      // Active affiliate link
       zone.innerHTML = `
         <a class="btn-affiliate" href="${dbCasino.affiliate_url}${encodeURIComponent(dbCasino.website || '')}" target="_blank" rel="noopener noreferrer">
           🎰 Join Rewards Program
@@ -1344,7 +1481,6 @@ async function openModal(id) {
         <div class="affiliate-disclosure-note">💰 We may earn a commission if you sign up</div>
       `;
     } else if (dbCasino.affiliate_network) {
-      // Pending affiliate — use casino's own website
       const websiteUrl = dbCasino.website || '#';
       zone.innerHTML = `
         <a class="btn-affiliate website-fallback" href="${websiteUrl}" target="_blank" rel="noopener noreferrer">
@@ -1352,7 +1488,6 @@ async function openModal(id) {
         </a>
       `;
     } else if (dbCasino.website) {
-      // No affiliate data at all — still show website link
       zone.innerHTML = `
         <a class="btn-affiliate website-fallback" href="${dbCasino.website}" target="_blank" rel="noopener noreferrer">
           🎰 Join Rewards Program
@@ -1362,7 +1497,6 @@ async function openModal(id) {
       zone.innerHTML = '';
     }
   } catch (e) {
-    // API not running — remove the loading placeholder
     const zone = document.getElementById('affiliateBtnZone');
     if (zone) zone.innerHTML = '';
   }
@@ -1658,6 +1792,7 @@ function renderWinsFeed() {
 }
 
 // Init
+loadRegions();
 loadCasinos();
 renderWinsFeed();
 loadLiveData();

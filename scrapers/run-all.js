@@ -86,6 +86,24 @@ cron.schedule('0 2 5 * *', async () => {
   catch (e) { logger.error('Gov PDF scraper failed:', e.message); }
 });
 
+// Iowa revenue: monthly, 10th of month at 4am (reports land ~10 days after month end)
+cron.schedule('0 4 10 * *', async () => {
+  try { await runScript('iowa-scraper.js'); }
+  catch (e) { logger.error('Iowa scraper failed:', e.message); }
+});
+
+// Illinois revenue: monthly, 15th of month at 4am
+cron.schedule('0 4 15 * *', async () => {
+  try { await runScript('illinois-scraper.js'); }
+  catch (e) { logger.error('Illinois scraper failed:', e.message); }
+});
+
+// MN/WI winner pages: every 6 hours (same as Boyd)
+cron.schedule('0 */6 * * *', async () => {
+  try { await runScript('mn-wi-winner-scraper.js'); }
+  catch (e) { logger.error('MN/WI winner scraper failed:', e.message); }
+});
+
 // NGCB location registry: 1st of every month at 3am (picks up new licensees)
 cron.schedule('0 3 1 * *', async () => {
   try { await runScript('ngcb-location-scraper.js'); }
@@ -102,6 +120,9 @@ logger.info('  • Reddit monitor: every 2 hours  → push-notifier runs after')
 logger.info('  • Yelp refresh:   Sundays at 3am');
 logger.info('  • Gov PDF:        5th of month at 2am');
 logger.info('  • NGCB registry:  1st of month at 3am');
+logger.info('  • Iowa revenue:   10th of month at 4am');
+logger.info('  • Illinois rev:   15th of month at 4am');
+logger.info('  • MN/WI winners:  every 6 hours');
 logger.info('  • Push notifier:  auto-runs after winner/reddit scrapers');
 logger.info('  • Twitter stream: run separately (node twitter-monitor.js)');
 logger.info('\nPress Ctrl+C to stop.\n');

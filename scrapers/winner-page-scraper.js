@@ -2,9 +2,28 @@
  * Casino Winner Page Scraper
  * Uses Playwright to scrape jackpot winner pages from casino websites.
  * Handles JavaScript-rendered pages that Cheerio can't reach.
- * 
+ *
  * Run: node winner-page-scraper.js
  * Schedule: every 6 hours via cron
+ *
+ * ── Source Discovery Notes (tested 2026-03-19) ────────────────────────────
+ * WORKING (dollar amounts confirmed):
+ *   Boyd Gaming: suncoast.boydgaming.com, goldcoast.boydgaming.com,
+ *                mainstreet.boydgaming.com, thecal.boydgaming.com,
+ *                fremontcasino.boydgaming.com, samstownlv.boydgaming.com
+ *
+ * NOT WORKING (as of discovery run):
+ *   MGM Resorts (mgmgrand, bellagio, aria) — HTTP2 protocol errors (bot block)
+ *   Caesars Entertainment — pages load but return 0 dollar amounts (lazy load / auth wall)
+ *   Station Casinos (palacestation.com, redrock.sclv.com, etc.) — 404 or timeout
+ *   Wynn Las Vegas — 404 on /casino/jackpots and /casino/winners
+ *   Golden Nugget — 403 Forbidden
+ *   South Point — page loads but 0 dollar amounts (content not public)
+ *   The D, Eldorado, Circa — 404 or timeout
+ *
+ * For Strip/major casino jackpots, use news-monitor.js (Google News RSS)
+ * which captures high-profile wins from news coverage.
+ * ──────────────────────────────────────────────────────────────────────────
  */
 
 require('dotenv').config();
@@ -213,11 +232,13 @@ async function storeJackpots(casinoId, jackpots, sourceUrl) {
   for (const j of jackpots) {
     if (!j.amount_dollars || j.amount_dollars < 1000) continue;
     try {
+      // Dedup on casino + machine + amount — Boyd pages have no unique IDs per win
       const result = await pool.query(
         `INSERT INTO jackpots
            (casino_id, machine_name, machine_type, amount_cents, won_at, source, source_url, trust_score)
          VALUES ($1, $2, $3, $4, $5, 'website', $6, 7)
-         ON CONFLICT DO NOTHING`,
+         ON CONFLICT (casino_id, machine_name, amount_cents) WHERE source = 'website' AND machine_name IS NOT NULL
+         DO NOTHING`,
         [
           casinoId,
           j.machine_name || null,

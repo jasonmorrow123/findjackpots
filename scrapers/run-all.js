@@ -51,6 +51,13 @@ function runScript(scriptName) {
 // SCHEDULE CONFIGURATION
 // ─────────────────────────────────────────
 
+// News RSS monitor: every 4 hours (free source, no auth needed)
+cron.schedule('0 */4 * * *', async () => {
+  try {
+    await runScript('news-monitor.js');
+  } catch (e) { logger.error('News monitor failed:', e.message); }
+});
+
 // Winner pages: every 6 hours
 cron.schedule('0 */6 * * *', async () => {
   try {
@@ -89,6 +96,7 @@ cron.schedule('0 3 1 * *', async () => {
 
 logger.info('🎰 JackpotMap Pipeline Orchestrator running');
 logger.info('Schedules:');
+logger.info('  • News RSS:       every 4 hours  (Google News, no auth)');
 logger.info('  • Winner pages:   every 6 hours  → push-notifier runs after');
 logger.info('  • Reddit monitor: every 2 hours  → push-notifier runs after');
 logger.info('  • Yelp refresh:   Sundays at 3am');
@@ -98,9 +106,10 @@ logger.info('  • Push notifier:  auto-runs after winner/reddit scrapers');
 logger.info('  • Twitter stream: run separately (node twitter-monitor.js)');
 logger.info('\nPress Ctrl+C to stop.\n');
 
-// Run winner scraper immediately on startup
+// Run scrapers immediately on startup
 setTimeout(async () => {
   try {
+    await runScript('news-monitor.js');
     await runScript('winner-page-scraper.js');
     await runScript('reddit-monitor.js');
     await runScript('../push-notifier.js');

@@ -79,6 +79,12 @@ cron.schedule('0 2 5 * *', async () => {
   catch (e) { logger.error('Gov PDF scraper failed:', e.message); }
 });
 
+// NGCB location registry: 1st of every month at 3am (picks up new licensees)
+cron.schedule('0 3 1 * *', async () => {
+  try { await runScript('ngcb-location-scraper.js'); }
+  catch (e) { logger.error('NGCB location scraper failed:', e.message); }
+});
+
 // ─────────────────────────────────────────
 
 logger.info('🎰 JackpotMap Pipeline Orchestrator running');
@@ -87,6 +93,7 @@ logger.info('  • Winner pages:   every 6 hours  → push-notifier runs after')
 logger.info('  • Reddit monitor: every 2 hours  → push-notifier runs after');
 logger.info('  • Yelp refresh:   Sundays at 3am');
 logger.info('  • Gov PDF:        5th of month at 2am');
+logger.info('  • NGCB registry:  1st of month at 3am');
 logger.info('  • Push notifier:  auto-runs after winner/reddit scrapers');
 logger.info('  • Twitter stream: run separately (node twitter-monitor.js)');
 logger.info('\nPress Ctrl+C to stop.\n');

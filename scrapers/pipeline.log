@@ -680,3 +680,54 @@ Fetching: https://news.google.com/rss/search?q=slot+machine+jackpot+%22Las+Vegas
 [push-notifier] Found 1 jackpot(s) to notify about.
 [push-notifier] No push subscriptions on file. Nothing to send.
 
+[2026-03-19T21:00:00.984Z] INFO: Starting news-monitor.js...
+[2026-03-19T21:00:00.986Z] INFO: Starting reddit-monitor.js...
+[2026-03-19T21:00:09.259Z] INFO: news-monitor.js completed
+[2026-03-19T21:00:09.259Z] INFO: 📰 JackpotMap News Monitor
+
+
+Fetching: https://news.google.com/rss/search?q=las+vegas+jackpot+winner&hl=en-US&gl=US&cei...
+  100 articles found
+
+Fetching: https://news.google.com/rss/search?q=casino+jackpot+%22las+vegas%22+million&hl=e...
+  100 articles found
+
+Fetching: https://news.google.com/rss/search?q=megabucks+winner+nevada&hl=en-US&gl=US&ceid...
+  37 articles found
+
+Fetching: https://news.google.com/rss/search?q=slot+machine+jackpot+%22Las+Vegas%22&hl=en-...
+  100 articles found
+
+✅ Done — 0 new jackpots stored, 174 already known, 174 total processed
+
+[2026-03-19T21:00:17.695Z] INFO: reddit-monitor.js completed
+[2026-03-19T21:00:17.695Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  54 posts fetched
+  → 1 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 16.6s — 1 jackpot posts found, 0 new records stored
+
+[2026-03-19T21:00:17.695Z] INFO: Starting ../push-notifier.js...
+[2026-03-19T21:00:17.797Z] INFO: ../push-notifier.js completed
+[2026-03-19T21:00:17.798Z] INFO: [push-notifier] Starting push notification check...
+[push-notifier] No high-value jackpots in the last 2 hours. Nothing to send.
+

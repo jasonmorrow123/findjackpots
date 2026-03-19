@@ -646,7 +646,7 @@
   <div style="display:flex;gap:10px;align-items:center">
     <div style="display:flex;align-items:center;gap:8px">
       <span id="currentRegionLabel" style="font-size:0.8rem;color:var(--muted)">📍 Las Vegas, NV</span>
-      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change City</button>
+      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change Region</button>
     </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
@@ -1456,6 +1456,58 @@ async function openModal(id) {
         const machine = j.machine_name || j.machine_type || 'Slot Machine';
         return `<li><span>${machine} <span style="color:var(--muted);font-size:0.78rem">(${dateStr})</span></span><span class="jackpot-amount">${amt}</span></li>`;
       }).join('');
+    }
+
+    // ── Update loyalty program section with real DB data ──
+    if (dbCasino.loyalty_program_name) {
+      const loyaltyHeader = document.querySelector('#modalContent .modal-section h3');
+      if (loyaltyHeader && loyaltyHeader.textContent.includes('Loyalty Program')) {
+        // Update program name in heading
+        loyaltyHeader.textContent = `🏆 Loyalty Program — ${dbCasino.loyalty_program_name}`;
+
+        // Update tier badges
+        const tierDiv = loyaltyHeader.nextElementSibling;
+        if (tierDiv && tierDiv.classList.contains('loyalty-tier') && dbCasino.loyalty_tiers && dbCasino.loyalty_tiers.length > 0) {
+          tierDiv.innerHTML = dbCasino.loyalty_tiers.map((t, i) => {
+            const cls = ['bronze','silver','gold','platinum','diamond'][Math.min(i, 4)];
+            return `<span class="tier-badge ${cls}">${t}</span>`;
+          }).join('');
+        }
+
+        // Update benefits list
+        if (dbCasino.loyalty_benefits && dbCasino.loyalty_benefits.length > 0) {
+          const perksUl = loyaltyHeader.closest('.modal-section').querySelector('ul');
+          if (perksUl) {
+            perksUl.innerHTML = dbCasino.loyalty_benefits.map(p =>
+              `<li style="padding:4px 0;font-size:0.85rem;color:var(--text)">✓ ${p}</li>`
+            ).join('');
+          }
+        }
+
+        // Update points per dollar if available
+        if (dbCasino.loyalty_points_per_dollar) {
+          const earnEl = loyaltyHeader.closest('.modal-section').querySelector('[data-earn-rate]') ||
+            loyaltyHeader.closest('.modal-section').querySelector('strong:first-of-type');
+          // find the earn rate span by text
+          const infoDiv = loyaltyHeader.closest('.modal-section').querySelector('div[style*="margin-top"]');
+          if (infoDiv) {
+            const strongs = infoDiv.querySelectorAll('strong');
+            if (strongs.length > 0) strongs[0].textContent = dbCasino.loyalty_points_per_dollar;
+          }
+        }
+
+        // Add "Join Program" link if loyalty website available
+        if (dbCasino.loyalty_website) {
+          const section = loyaltyHeader.closest('.modal-section');
+          // Only add if not already present
+          if (!section.querySelector('.loyalty-join-link')) {
+            const joinLink = document.createElement('div');
+            joinLink.style.cssText = 'margin-top:10px';
+            joinLink.innerHTML = `<a class="loyalty-join-link" href="${dbCasino.loyalty_website}" target="_blank" rel="noopener noreferrer" style="font-size:0.83rem;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold)">Join Program →</a>`;
+            section.appendChild(joinLink);
+          }
+        }
+      }
     }
 
     // ── Update slot payback if we have NGCB data ──

@@ -568,3 +568,115 @@ Fetching: https://news.google.com/rss/search?q=slot+machine+jackpot+%22Las+Vegas
 [push-notifier] Found 1 jackpot(s) to notify about.
 [push-notifier] No push subscriptions on file. Nothing to send.
 
+[2026-03-19T20:48:18.241Z] INFO: 🎰 JackpotMap Pipeline Orchestrator running
+[2026-03-19T20:48:18.242Z] INFO: Schedules:
+[2026-03-19T20:48:18.242Z] INFO:   • News RSS:       every 4 hours  (Google News, no auth)
+[2026-03-19T20:48:18.242Z] INFO:   • Winner pages:   every 6 hours  → push-notifier runs after
+[2026-03-19T20:48:18.242Z] INFO:   • Reddit monitor: every 2 hours  → push-notifier runs after
+[2026-03-19T20:48:18.242Z] INFO:   • Yelp refresh:   Sundays at 3am
+[2026-03-19T20:48:18.242Z] INFO:   • Gov PDF:        5th of month at 2am
+[2026-03-19T20:48:18.242Z] INFO:   • NGCB registry:  1st of month at 3am
+[2026-03-19T20:48:18.242Z] INFO:   • Iowa revenue:   10th of month at 4am
+[2026-03-19T20:48:18.242Z] INFO:   • Illinois rev:   15th of month at 4am
+[2026-03-19T20:48:18.242Z] INFO:   • MN/WI winners:  every 6 hours
+[2026-03-19T20:48:18.242Z] INFO:   • Push notifier:  auto-runs after winner/reddit scrapers
+[2026-03-19T20:48:18.242Z] INFO:   • Twitter stream: run separately (node twitter-monitor.js)
+[2026-03-19T20:48:18.242Z] INFO: 
+Press Ctrl+C to stop.
+
+[2026-03-19T20:48:23.244Z] INFO: Starting news-monitor.js...
+[2026-03-19T20:48:31.072Z] INFO: news-monitor.js completed
+[2026-03-19T20:48:31.072Z] INFO: 📰 JackpotMap News Monitor
+
+
+Fetching: https://news.google.com/rss/search?q=las+vegas+jackpot+winner&hl=en-US&gl=US&cei...
+  0 articles found
+
+Fetching: https://news.google.com/rss/search?q=casino+jackpot+%22las+vegas%22+million&hl=e...
+  0 articles found
+
+Fetching: https://news.google.com/rss/search?q=megabucks+winner+nevada&hl=en-US&gl=US&ceid...
+  37 articles found
+
+Fetching: https://news.google.com/rss/search?q=slot+machine+jackpot+%22Las+Vegas%22&hl=en-...
+  100 articles found
+
+✅ Done — 0 new jackpots stored, 65 already known, 65 total processed
+
+[2026-03-19T20:48:31.073Z] INFO: Starting winner-page-scraper.js...
+[2026-03-19T20:49:24.680Z] INFO: winner-page-scraper.js completed
+[2026-03-19T20:49:24.680Z] INFO: 🎰 JackpotMap Winner Page Scraper
+
+
+📄 Scraping: https://suncoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://goldcoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://mainstreet.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://thecal.boydgaming.com/play/winners
+  Falling back to full page text (2323 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://fremontcasino.boydgaming.com/play/winners
+
+📄 Scraping: https://samstownlv.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://stationcasinos.com/play/gaming-promotions/
+  Falling back to full page text (1799 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://www.southpointcasino.com/current-promotions
+  Falling back to full page text (1104 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+✅ Done in 53.3s — 0 new jackpots added, 1 errors
+
+[2026-03-19T20:49:24.680Z] INFO: Starting reddit-monitor.js...
+[2026-03-19T20:49:37.916Z] INFO: reddit-monitor.js completed
+[2026-03-19T20:49:37.916Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  54 posts fetched
+  → 2 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 13.1s — 2 jackpot posts found, 0 new records stored
+
+[2026-03-19T20:49:37.917Z] INFO: Starting ../push-notifier.js...
+[2026-03-19T20:49:38.039Z] INFO: ../push-notifier.js completed
+[2026-03-19T20:49:38.039Z] INFO: [push-notifier] Starting push notification check...
+[push-notifier] Found 1 jackpot(s) to notify about.
+[push-notifier] No push subscriptions on file. Nothing to send.
+

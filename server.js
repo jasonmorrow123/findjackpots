@@ -185,6 +185,8 @@ app.get('/api/casinos/:id', async (req, res) => {
         c.ngcb_county, c.affiliate_url, c.affiliate_network, c.affiliate_commission_note,
         c.lat, c.lng, c.phone, c.website,
         c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking,
+        c.loyalty_program_name, c.loyalty_tiers, c.loyalty_benefits,
+        c.loyalty_website, c.loyalty_points_per_dollar,
         r.rating, r.review_count,
         j.machine_name AS latest_jackpot_machine,
         j.amount_cents AS latest_jackpot_cents,

@@ -390,17 +390,21 @@ async function findLatestReportUrl(browser) {
 
     // Find "XXXX Gaming Revenue" or "XXXX 2025/2026 Gaming Revenue" links
     // Sort by most recent (prefer current year, most recent month)
-    const monthOrder = ['december','november','october','september','august','july','june','may','april','march','february','january'];
     const revenueLinks = links
       .filter(l => /gaming revenue/i.test(l.text) && l.href.includes('/media/'))
       .filter(l => !/fiscal year|sport|fantasy|archived/i.test(l.text));
 
-    // Sort: prefer most recent month
+    // Sort: prefer most recent month/year by parsing the text
+    // "February 2026 Gaming Revenue" → compare as dates
     revenueLinks.sort((a, b) => {
-      const aMonth = monthOrder.findIndex(m => a.text.toLowerCase().includes(m));
-      const bMonth = monthOrder.findIndex(m => b.text.toLowerCase().includes(m));
-      if (aMonth !== bMonth) return aMonth - bMonth;
-      return 0;
+      const parseDate = (text) => {
+        const m = text.match(/(\w+)\s+(\d{4})\s+gaming revenue/i);
+        if (m) {
+          try { return new Date(m[1] + ' 1, ' + m[2]).getTime(); } catch {}
+        }
+        return 0;
+      };
+      return parseDate(b.text) - parseDate(a.text); // descending (newest first)
     });
 
     if (revenueLinks.length > 0) {
@@ -419,18 +423,42 @@ async function findLatestReportUrl(browser) {
  * Find casino_id by name (Iowa)
  */
 async function findCasinoId(searchName) {
-  const firstWord = searchName.split(/[\s,]+/)[0];
+  // Try full name first (most precise)
   let r = await pool.query(
     `SELECT id, name FROM casinos WHERE state = 'IA' AND name ILIKE $1`,
     [`%${searchName}%`]
   );
-  if (r.rows.length >= 1) return r.rows[0];
+  if (r.rows.length === 1) return r.rows[0];
+  if (r.rows.length > 1) {
+    // Multiple matches — find the best one (longest name overlap)
+    const best = r.rows.reduce((a, b) => {
+      const aScore = a.name.toLowerCase().split(' ').filter(w => searchName.toLowerCase().includes(w)).length;
+      const bScore = b.name.toLowerCase().split(' ').filter(w => searchName.toLowerCase().includes(w)).length;
+      return aScore >= bScore ? a : b;
+    });
+    return best;
+  }
 
-  r = await pool.query(
-    `SELECT id, name FROM casinos WHERE state = 'IA' AND name ILIKE $1`,
-    [`%${firstWord}%`]
-  );
-  if (r.rows.length >= 1) return r.rows[0];
+  // Try last word (often the city name - most distinctive)
+  const words = searchName.split(/[\s,]+/).filter(w => w.length > 3);
+  if (words.length > 0) {
+    const lastWord = words[words.length - 1];
+    r = await pool.query(
+      `SELECT id, name FROM casinos WHERE state = 'IA' AND name ILIKE $1`,
+      [`%${lastWord}%`]
+    );
+    if (r.rows.length === 1) return r.rows[0];
+  }
+
+  // Try first meaningful word
+  const firstWord = words[0];
+  if (firstWord) {
+    r = await pool.query(
+      `SELECT id, name FROM casinos WHERE state = 'IA' AND name ILIKE $1`,
+      [`%${firstWord}%`]
+    );
+    if (r.rows.length === 1) return r.rows[0];
+  }
 
   return null;
 }

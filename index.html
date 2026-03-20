@@ -170,6 +170,34 @@
       overflow-x: auto;
     }
     .filters::-webkit-scrollbar { display: none; }
+    .filter-search-wrap {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .filter-search-input {
+      width: 200px;
+      padding: 7px 14px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: var(--page-bg);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s, width 0.2s ease;
+    }
+    .filter-search-input:focus {
+      border-color: var(--primary);
+      width: 240px;
+    }
+    .filter-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
+      margin: 0 4px;
+    }
     .filter-label { font-size: 0.8rem; color: var(--text-secondary); margin-right: 4px; white-space: nowrap; font-weight: 500; }
     .chip {
       padding: 7px 16px;
@@ -1594,8 +1622,8 @@
   <h1>Find Your <em>Lucky</em> Casino</h1>
   <p id="searchSubtext">Compare jackpots, rewards programs, games in Las Vegas</p>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search casino name, area, or game type..." oninput="filterCasinos()" />
-    <button onclick="filterCasinos()">Search</button>
+    <input type="text" id="searchInput" placeholder="Search casino name, area, or game type..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()" />
+    <button onclick="searchAndScroll()">Search</button>
   </div>
 </div>
 
@@ -1640,6 +1668,10 @@
 <!-- FILTERS -->
 <div class="filter-bar-wrap">
   <div class="filters">
+    <div class="filter-search-wrap">
+      <input type="text" id="searchInputSticky" class="filter-search-input" placeholder="Search casinos..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()" />
+    </div>
+    <div class="filter-divider"></div>
     <button class="chip active" onclick="setFilter('all', this)">All</button>
     <button class="chip" onclick="setFilter('bingo', this)">Bingo</button>
     <button class="chip" onclick="setFilter('poker', this)">Poker</button>
@@ -2469,6 +2501,23 @@ function setFilter(f, el) {
 function clearFilters() {
   const allChip = document.querySelector('.chip');
   if (allChip) setFilter('all', allChip);
+}
+
+function searchAndScroll() {
+  filterCasinos();
+  setTimeout(() => {
+    const grid = document.getElementById('casinoGrid');
+    if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+}
+
+// Keep both search inputs in sync
+function syncSearch(val) {
+  const main = document.getElementById('searchInput');
+  const sticky = document.getElementById('searchInputSticky');
+  if (main && main.value !== val) main.value = val;
+  if (sticky && sticky.value !== val) sticky.value = val;
+  filterCasinos();
 }
 
 function sortCasinos(val) {

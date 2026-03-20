@@ -4,121 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JackpotMap — Find Your Best Casino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold: #f5c518;
-      --dark: #0d0d0d;
-      --card: #1a1a2e;
-      --card2: #16213e;
+      --dark: #ffffff;
+      --card: #ffffff;
+      --card2: #f7f8fa;
       --accent: #e94560;
       --green: #00c896;
-      --text: #e8e8e8;
-      --muted: #888;
+      --text: #1a1a2e;
+      --muted: #666;
       --radius: 12px;
     }
 
-    /* ── LIGHT MODE ── */
-    body.light-mode {
-      --dark: #f0f0f5;
-      --card: #ffffff;
-      --card2: #f7f7fc;
-      --text: #1a1a2e;
-      --muted: #666;
-    }
-    body.light-mode header {
-      background: linear-gradient(135deg, #f0f0f5 0%, #e8e0f5 50%, #f0f0f5 100%);
-    }
-    body.light-mode .search-section {
-      background: linear-gradient(180deg, #e8e0f5 0%, #f0f0f5 100%);
-    }
-    body.light-mode .search-bar input {
-      background: #fff;
-      border-color: #ddd;
-      color: var(--text);
-    }
-    body.light-mode .chip {
-      border-color: #ccc;
-      color: var(--text);
-    }
-    body.light-mode .chip:hover, body.light-mode .chip.active {
-      background: var(--gold);
-      color: #000;
-    }
-    body.light-mode .sort-select {
-      background: #fff;
-      border-color: #ddd;
-      color: var(--text);
-    }
-    body.light-mode .casino-card {
-      border-color: #ddd;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    body.light-mode .card-header { background: #f0f0f8; }
-    body.light-mode .casino-name { color: var(--text); }
-    body.light-mode .casino-location { color: var(--muted); }
-    body.light-mode .card-header.has-image { background: none; }
-    /* Force white text on photo headers in light mode */
-    body.light-mode .card-header.has-image .casino-name,
-    body.light-mode .card-header.has-image .casino-location,
-    body.light-mode .card-header.has-image .casino-emoji,
-    body.light-mode .card-header.has-image div[style*="color:var(--muted)"] {
-      color: #fff !important;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
-    }
-    body.light-mode .stat-row { border-bottom-color: #eee; }
-    body.light-mode .tag { background: #e8e8f5; color: #555; }
-    body.light-mode .tag.hot { background: #fde8ec; color: var(--accent); }
-    body.light-mode .tag.bingo { background: #e8f5ef; color: #007a55; }
-    body.light-mode .tag.poker { background: #e8eef5; color: #1a5fc8; }
-    body.light-mode .tag.slots { background: #fdf5e8; color: #8a6200; }
-    body.light-mode .tag.sports { background: #f0e8f5; color: #6a00c8; }
-    body.light-mode .card-footer { background: #f0f0f5; }
-    body.light-mode .btn-secondary { background: #e0e0ea; color: var(--text); }
-    body.light-mode .modal { background: #fff; }
-    body.light-mode .modal-header { background: #f7f7fc; }
-    body.light-mode .stat-row .stat-label { color: #555; }
-    body.light-mode footer { border-top-color: #ddd; }
-    body.light-mode .community-section {
-      background: linear-gradient(135deg, #f5fff8, #f0f0f5);
-      border-color: #cce5d8;
-    }
-    body.light-mode .win-card { background: #f5fff8; border-color: #cce5d8; }
-    body.light-mode .market-section { background: linear-gradient(135deg, #eef0f8, #f5eeff); }
-    body.light-mode .opp-card { background: #fff; border-color: #e0e0ea; }
-    body.light-mode .events-section { background: linear-gradient(135deg, #eef0f8, #f5eeff); }
-    body.light-mode .day-col { background: #fff; border-color: #e0e0ea; }
-    body.light-mode .daily-spin-section { background: linear-gradient(135deg, #f0f0f5, #ede8f5); }
-
-    /* ── TOGGLE BUTTON ── */
-    .mode-toggle {
-      background: transparent;
-      border: 1.5px solid #444;
-      color: var(--text);
-      padding: 7px 14px;
-      border-radius: 99px;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    .mode-toggle:hover { border-color: var(--gold); color: var(--gold); }
-    body.light-mode .mode-toggle { border-color: #aaa; color: var(--text); }
-    body.light-mode .mode-toggle:hover { border-color: var(--gold); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--dark);
+      background: #ffffff;
       color: var(--text);
       min-height: 100vh;
     }
 
     /* ── HERO ── */
     header {
-      background: linear-gradient(135deg, #0d0d0d 0%, #1a0a2e 50%, #0d0d0d 100%);
-      border-bottom: 2px solid var(--gold);
+      background: #ffffff;
+      border-bottom: 1px solid #e0e0e8;
       padding: 20px 24px;
       display: flex;
       align-items: center;
@@ -132,24 +45,27 @@
       gap: 10px;
       font-size: 1.6rem;
       font-weight: 800;
-      color: var(--gold);
+      color: #3a3a5c;
       letter-spacing: -0.5px;
     }
-    .logo span { color: var(--accent); }
+    .logo span { color: #5c7aaa; }
     .tagline { font-size: 0.85rem; color: var(--muted); margin-top: 2px; font-weight: 400; }
 
     /* ── SEARCH BAR ── */
     .search-section {
-      background: linear-gradient(180deg, #1a0a2e 0%, #0d0d0d 100%);
+      background: #f5f6f8;
       padding: 36px 24px;
       text-align: center;
     }
     .search-section h1 {
-      font-size: 2rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.4rem;
       font-weight: 800;
       margin-bottom: 8px;
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
-    .search-section h1 em { color: var(--gold); font-style: normal; }
+    .search-section h1 em { color: #5c7aaa; font-style: italic; }
     .search-section p { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
     .search-bar {
       display: flex;
@@ -161,18 +77,18 @@
       flex: 1;
       padding: 14px 18px;
       border-radius: var(--radius);
-      border: 2px solid #333;
-      background: #1a1a2e;
+      border: 2px solid #dde0ea;
+      background: #ffffff;
       color: var(--text);
       font-size: 1rem;
       outline: none;
       transition: border 0.2s;
     }
-    .search-bar input:focus { border-color: var(--gold); }
+    .search-bar input:focus { border-color: #5c7aaa; }
     .search-bar button {
       padding: 14px 22px;
-      background: var(--gold);
-      color: #000;
+      background: #5c7aaa;
+      color: #fff;
       font-weight: 700;
       font-size: 0.95rem;
       border: none;
@@ -196,14 +112,14 @@
     .chip {
       padding: 7px 16px;
       border-radius: 99px;
-      border: 1.5px solid #333;
+      border: 1.5px solid #c8ccd8;
       background: transparent;
       color: var(--text);
       font-size: 0.82rem;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .chip:hover, .chip.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 700; }
+    .chip:hover, .chip.active { background: #5c7aaa; color: #fff; border-color: #5c7aaa; font-weight: 700; }
 
     /* ── SORT ── */
     .results-header {
@@ -219,7 +135,7 @@
     .results-count { font-size: 0.9rem; color: var(--muted); }
     .sort-select {
       background: var(--card);
-      border: 1.5px solid #333;
+      border: 1.5px solid #c8ccd8;
       color: var(--text);
       padding: 7px 14px;
       border-radius: 8px;
@@ -242,15 +158,15 @@
     .casino-card {
       background: var(--card);
       border-radius: 16px;
-      border: 1.5px solid #2a2a3e;
+      border: 1.5px solid #e0e2ec;
       overflow: hidden;
       transition: transform 0.2s, border-color 0.2s;
       cursor: pointer;
       display: flex;
       flex-direction: column;
     }
-    .casino-card:hover { transform: translateY(-4px); border-color: var(--gold); }
-    .casino-card.featured { border-color: var(--gold); }
+    .casino-card:hover { transform: translateY(-4px); border-color: #5c7aaa; box-shadow: 0 4px 16px rgba(92,122,170,0.15); }
+    .casino-card.featured { border-color: #5c7aaa; }
 
     .card-header {
       padding: 18px 20px 14px;
@@ -270,7 +186,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(13,13,30,0.55) 0%, rgba(13,13,30,0.85) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.82) 100%);
       border-radius: 0;
       pointer-events: none;
     }
@@ -279,14 +195,22 @@
     }
     .card-header.has-image > * { position: relative; z-index: 1; }
     .casino-emoji { font-size: 2.2rem; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
-    .casino-name { font-size: 1.1rem; font-weight: 700; line-height: 1.2; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
-    .casino-location { font-size: 0.8rem; color: var(--muted); margin-top: 3px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+    .casino-name { font-size: 1.1rem; font-weight: 700; line-height: 1.2; color: var(--text); }
+    .casino-location { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+    /* Override for image headers — force white + strong shadow */
+    .card-header.has-image .casino-name,
+    .card-header.has-image .casino-location,
+    .card-header.has-image .casino-emoji,
+    .card-header.has-image div[style*="color"] {
+      color: #ffffff !important;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.95), 0 2px 12px rgba(0,0,0,0.85) !important;
+    }
     .score-badge {
       min-width: 46px;
       height: 46px;
       border-radius: 10px;
-      background: var(--gold);
-      color: #000;
+      background: #e0e2ec;
+      color: #1a1a2e;
       font-weight: 800;
       font-size: 1.1rem;
       display: flex;
@@ -294,9 +218,9 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .score-badge.high { background: var(--green); color: #000; }
-    .score-badge.mid { background: var(--gold); color: #000; }
-    .score-badge.low { background: var(--accent); color: #fff; }
+    .score-badge.high { background: #e0e2ec; color: #1a1a2e; }
+    .score-badge.mid { background: #e0e2ec; color: #1a1a2e; }
+    .score-badge.low { background: #e0e2ec; color: #1a1a2e; }
 
     .card-body { padding: 16px 20px; flex: 1; }
 
@@ -306,15 +230,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 7px 0;
-      border-bottom: 1px solid #2a2a3e;
+      border-bottom: 1px solid #eceef4;
       font-size: 0.85rem;
     }
     .stat-row:last-child { border-bottom: none; }
     .stat-label { color: var(--muted); display: flex; align-items: center; gap: 6px; }
     .stat-value { font-weight: 600; }
-    .stat-value.green { color: var(--green); }
-    .stat-value.gold { color: var(--gold); }
-    .stat-value.red { color: var(--accent); }
+    .stat-value.green { color: #2d8c65; }
+    .stat-value.gold { color: #7a6030; }
+    .stat-value.red { color: #a04060; }
 
     /* tag pills */
     .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
@@ -322,21 +246,21 @@
       font-size: 0.72rem;
       padding: 3px 10px;
       border-radius: 99px;
-      background: #2a2a4e;
-      color: #aaa;
+      background: #eceef4;
+      color: #666;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .tag.hot { background: #3d1a1a; color: var(--accent); }
-    .tag.bingo { background: #1a3d2e; color: var(--green); }
-    .tag.poker { background: #1a2a3d; color: #6ab0ff; }
-    .tag.slots { background: #3d2e1a; color: var(--gold); }
-    .tag.sports { background: #2a1a3d; color: #c084fc; }
+    .tag.hot { background: #f5e8ec; color: #a04060; }
+    .tag.bingo { background: #e4f2ec; color: #2d7a5a; }
+    .tag.poker { background: #e8eef5; color: #3a6090; }
+    .tag.slots { background: #eef1f8; color: #3a5888; }
+    .tag.sports { background: #ede8f5; color: #6040a0; }
 
     .card-footer {
       padding: 14px 20px;
-      background: #111120;
+      background: #f5f6f8;
       display: flex;
       gap: 8px;
     }
@@ -352,8 +276,8 @@
       transition: opacity 0.15s;
     }
     .btn:hover { opacity: 0.85; }
-    .btn-primary { background: var(--gold); color: #000; }
-    .btn-secondary { background: #2a2a4e; color: var(--text); }
+    .btn-primary { background: #5c7aaa; color: #fff; }
+    .btn-secondary { background: #e0e2ec; color: var(--text); }
 
     /* ── MODAL ── */
     .modal-overlay {
@@ -369,11 +293,12 @@
     .modal {
       background: var(--card);
       border-radius: 20px;
-      border: 2px solid var(--gold);
+      border: 1.5px solid #dde0ea;
       max-width: 580px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
     }
     .modal-header {
       padding: 24px 24px 16px;
@@ -384,9 +309,9 @@
       align-items: flex-start;
     }
     .modal-close {
-      background: #333;
+      background: #e0e2ec;
       border: none;
-      color: #fff;
+      color: var(--text);
       width: 30px; height: 30px;
       border-radius: 50%;
       cursor: pointer;
@@ -401,7 +326,7 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: var(--gold);
+      color: #5c7aaa;
       margin-bottom: 10px;
     }
     .loyalty-tier {
@@ -415,27 +340,27 @@
       font-size: 0.78rem;
       font-weight: 700;
     }
-    .tier-badge.bronze { background: #4a2a1a; color: #cd7f32; }
-    .tier-badge.silver { background: #2a2a3a; color: #c0c0c0; }
-    .tier-badge.gold { background: #3a2e0a; color: var(--gold); }
-    .tier-badge.platinum { background: #1a2a3a; color: #78c4f4; }
-    .tier-badge.diamond { background: #1a1a3a; color: #b070ff; }
+    .tier-badge.bronze { background: #f0e8e0; color: #8a5a2a; }
+    .tier-badge.silver { background: #e8eaee; color: #606880; }
+    .tier-badge.gold { background: #eef1f8; color: #3a5888; }
+    .tier-badge.platinum { background: #e4eef5; color: #3a6080; }
+    .tier-badge.diamond { background: #eee8f5; color: #6040a0; }
     .jackpot-list { list-style: none; }
     .jackpot-list li {
       padding: 8px 0;
-      border-bottom: 1px solid #2a2a3e;
+      border-bottom: 1px solid #eceef4;
       display: flex;
       justify-content: space-between;
       font-size: 0.88rem;
     }
     .jackpot-list li:last-child { border-bottom: none; }
-    .jackpot-amount { color: var(--green); font-weight: 700; }
+    .jackpot-amount { color: #2d8c65; font-weight: 700; }
 
     /* ── MARKET SECTION ── */
     .market-section {
-      background: linear-gradient(135deg, #0a1a2e, #1a0a2e);
-      border-top: 1px solid #2a2a3e;
-      border-bottom: 1px solid #2a2a3e;
+      background: #f5f6f8;
+      border-top: 1px solid #e0e2ec;
+      border-bottom: 1px solid #e0e2ec;
       padding: 32px 24px;
       margin: 0;
     }
@@ -448,10 +373,11 @@
       gap: 14px;
     }
     .opp-card {
-      background: #111120;
+      background: #ffffff;
       border-radius: 12px;
       padding: 16px;
-      border: 1px solid #2a2a3e;
+      border: 1px solid #e0e2ec;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
     .opp-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
     .opp-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
@@ -463,9 +389,10 @@
       padding: 24px;
       font-size: 0.78rem;
       color: var(--muted);
-      border-top: 1px solid #222;
+      border-top: 1px solid #e0e2ec;
+      background: #f5f6f8;
     }
-    footer a { color: var(--gold); text-decoration: none; }
+    footer a { color: #5c7aaa; text-decoration: none; }
 
     .hidden { display: none !important; }
 
@@ -473,8 +400,8 @@
     .compare-bar {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: #1a1a2e;
-      border-top: 2px solid var(--gold);
+      background: #ffffff;
+      border-top: 2px solid #5c7aaa;
       padding: 12px 24px;
       display: flex;
       align-items: center;
@@ -485,10 +412,10 @@
     }
     .compare-bar.visible { transform: translateY(0); }
     .compare-names { font-size: 0.88rem; color: var(--muted); }
-    .compare-names strong { color: var(--gold); }
+    .compare-names strong { color: #5c7aaa; }
     .compare-btn {
-      background: var(--gold);
-      color: #000;
+      background: #5c7aaa;
+      color: #fff;
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
@@ -498,8 +425,8 @@
 
     /* ── REPORT WIN BUTTON ── */
     .report-win-btn {
-      background: linear-gradient(135deg, var(--green), #00a07a);
-      color: #000;
+      background: #4a9a78;
+      color: #fff;
       border: none;
       padding: 10px 20px;
       border-radius: var(--radius);
@@ -515,9 +442,9 @@
 
     /* ── COMMUNITY WINS SECTION ── */
     .community-section {
-      background: linear-gradient(135deg, #0a1f0a, #0d0d1a);
-      border-top: 1px solid #1a3a1a;
-      border-bottom: 1px solid #1a3a1a;
+      background: #f5f6f8;
+      border-top: 1px solid #e0e2ec;
+      border-bottom: 1px solid #e0e2ec;
       padding: 32px 24px;
     }
     .community-inner { max-width: 1200px; margin: 0 auto; }
@@ -529,19 +456,20 @@
       gap: 14px;
     }
     .win-card {
-      background: #0f1f0f;
-      border: 1px solid #1a4a1a;
+      background: #ffffff;
+      border: 1px solid #e0e2ec;
       border-radius: 12px;
       padding: 16px;
       position: relative;
       transition: border-color 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
-    .win-card:hover { border-color: var(--green); }
-    .win-card.verified { border-color: var(--green); }
+    .win-card:hover { border-color: #5c7aaa; }
+    .win-card.verified { border-color: #4a9a78; }
     .win-amount {
       font-size: 1.5rem;
       font-weight: 800;
-      color: var(--green);
+      color: #2d8c65;
       line-height: 1;
       margin-bottom: 6px;
     }
@@ -557,8 +485,8 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .win-badge.verified { background: #1a4a1a; color: var(--green); }
-    .win-badge.unverified { background: #2a2a1a; color: #aaa; }
+    .win-badge.verified { background: #e4f2ec; color: #2d7a5a; }
+    .win-badge.unverified { background: #eceef4; color: #888; }
     .wins-empty {
       grid-column: 1/-1;
       text-align: center;
@@ -595,8 +523,8 @@
     }
     .form-input, .form-select, .form-textarea {
       width: 100%;
-      background: #111120;
-      border: 1.5px solid #333;
+      background: #ffffff;
+      border: 1.5px solid #d0d2e0;
       color: var(--text);
       padding: 11px 14px;
       border-radius: 8px;
@@ -605,11 +533,11 @@
       transition: border-color 0.2s;
       font-family: inherit;
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--green); }
-    .form-select option { background: #1a1a2e; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #5c7aaa; }
+    .form-select option { background: #ffffff; }
     .form-textarea { resize: vertical; min-height: 72px; }
     .photo-upload-zone {
-      border: 2px dashed #333;
+      border: 2px dashed #c8ccd8;
       border-radius: 10px;
       padding: 24px;
       text-align: center;
@@ -617,7 +545,7 @@
       transition: border-color 0.2s, background 0.2s;
       position: relative;
     }
-    .photo-upload-zone:hover, .photo-upload-zone.has-file { border-color: var(--green); background: #0a1f0a; }
+    .photo-upload-zone:hover, .photo-upload-zone.has-file { border-color: #4a9a78; background: #f0f8f4; }
     .photo-upload-zone input[type="file"] {
       position: absolute; inset: 0;
       opacity: 0; cursor: pointer;
@@ -625,22 +553,22 @@
     }
     .photo-upload-icon { font-size: 1.8rem; margin-bottom: 6px; }
     .photo-upload-text { font-size: 0.82rem; color: var(--muted); }
-    .photo-upload-text strong { color: var(--green); }
+    .photo-upload-text strong { color: #2d8c65; }
     .trust-info {
-      background: #0a1f0a;
-      border: 1px solid #1a4a1a;
+      background: #f0f8f4;
+      border: 1px solid #b8deca;
       border-radius: 8px;
       padding: 10px 14px;
       font-size: 0.8rem;
-      color: #aaa;
+      color: var(--muted);
       margin-top: 8px;
     }
-    .trust-info span { color: var(--green); font-weight: 700; }
+    .trust-info span { color: #2d8c65; font-weight: 700; }
     .submit-btn {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, var(--green), #00a07a);
-      color: #000;
+      background: #4a9a78;
+      color: #fff;
       font-weight: 800;
       font-size: 1rem;
       border: none;
@@ -655,11 +583,11 @@
       padding: 32px 20px;
     }
     .success-msg .success-icon { font-size: 3rem; margin-bottom: 12px; }
-    .success-msg h3 { font-size: 1.3rem; color: var(--green); margin-bottom: 8px; }
+    .success-msg h3 { font-size: 1.3rem; color: #2d8c65; margin-bottom: 8px; }
     .success-msg p { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
     .reporter-score {
-      background: #0a1f0a;
-      border: 1px solid #1a4a1a;
+      background: #f0f8f4;
+      border: 1px solid #b8deca;
       border-radius: 10px;
       padding: 14px 18px;
       display: flex;
@@ -667,7 +595,7 @@
       gap: 14px;
       margin-top: 18px;
     }
-    .reporter-score .score-num { font-size: 1.8rem; font-weight: 800; color: var(--green); }
+    .reporter-score .score-num { font-size: 1.8rem; font-weight: 800; color: #2d8c65; }
     .reporter-score .score-label { font-size: 0.78rem; color: var(--muted); }
     .reporter-score .score-title { font-size: 0.88rem; font-weight: 700; color: var(--text); }
     .amount-input-wrap { position: relative; }
@@ -675,7 +603,7 @@
       position: absolute;
       left: 14px; top: 50%;
       transform: translateY(-50%);
-      color: var(--green);
+      color: #2d8c65;
       font-weight: 700;
       font-size: 1rem;
       pointer-events: none;
@@ -684,16 +612,16 @@
 
     /* ── FTC DISCLOSURE BANNER ── */
     .disclosure-banner {
-      background: #0d0d14;
-      border-top: 1px solid #2a2a3e;
+      background: #f5f6f8;
+      border-top: 1px solid #e0e2ec;
       padding: 12px 24px;
       text-align: center;
       font-size: 0.75rem;
       color: #666;
       line-height: 1.5;
     }
-    .disclosure-banner a { color: #888; text-decoration: underline; }
-    .disclosure-banner a:hover { color: var(--muted); }
+    .disclosure-banner a { color: #5c7aaa; text-decoration: underline; }
+    .disclosure-banner a:hover { color: #3a5888; }
 
     /* ── AFFILIATE BUTTON ── */
     .btn-affiliate {
@@ -707,14 +635,14 @@
       cursor: pointer;
       text-align: center;
       text-decoration: none;
-      background: linear-gradient(135deg, var(--gold), #e0a800);
-      color: #000;
+      background: #5c7aaa;
+      color: #fff;
       transition: opacity 0.2s, transform 0.15s;
       margin-top: 10px;
     }
     .btn-affiliate:hover { opacity: 0.88; transform: scale(1.01); }
     .btn-affiliate.website-fallback {
-      background: #2a2a4e;
+      background: #e0e2ec;
       color: var(--text);
     }
     .affiliate-disclosure-note {
@@ -735,16 +663,16 @@
       transition: background 0.15s;
       border: 1.5px solid transparent;
     }
-    .region-option:hover { background: #1a1a3e; }
-    .region-option.active { border-color: var(--gold); background: #1a1a2e; }
+    .region-option:hover { background: #eef1f8; }
+    .region-option.active { border-color: #5c7aaa; background: #eef1f8; }
 
     /* ═══════════════════════════════════════════
-       CASINO EVENTS CALENDAR
+       CASINO EVENTS LEGEND DOTS
     ═══════════════════════════════════════════ */
     .events-section {
-      background: linear-gradient(135deg, #0a0a1e, #0d1020);
-      border-top: 2px solid #1a1a4e;
-      border-bottom: 1px solid #1a1a3e;
+      background: #ffffff;
+      border-top: 1px solid #e0e2ec;
+      border-bottom: 1px solid #e0e2ec;
       padding: 32px 24px;
     }
     .events-inner { max-width: 1200px; margin: 0 auto; }
@@ -760,7 +688,7 @@
     .events-region-badge {
       font-size: 0.78rem;
       color: var(--muted);
-      background: #1a1a3e;
+      background: #eceef4;
       padding: 3px 10px;
       border-radius: 99px;
       display: inline-block;
@@ -773,10 +701,10 @@
     }
     .events-view-toggle {
       display: flex;
-      background: #1a1a2e;
+      background: #eceef4;
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid #2a2a4e;
+      border: 1px solid #d8dae8;
     }
     .events-view-btn {
       padding: 7px 14px;
@@ -788,10 +716,10 @@
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
     }
-    .events-view-btn.active { background: var(--gold); color: #000; }
+    .events-view-btn.active { background: #5c7aaa; color: #fff; }
     .events-nav-btn {
-      background: #1a1a3e;
-      border: 1px solid #2a2a5e;
+      background: #eceef4;
+      border: 1px solid #d8dae8;
       color: var(--text);
       padding: 7px 14px;
       border-radius: 8px;
@@ -799,7 +727,7 @@
       font-size: 0.85rem;
       transition: background 0.15s, border-color 0.15s;
     }
-    .events-nav-btn:hover { background: #2a2a5e; border-color: var(--gold); }
+    .events-nav-btn:hover { background: #dde0ea; border-color: #5c7aaa; }
     .events-week-label {
       font-size: 0.85rem;
       color: var(--muted);
@@ -814,13 +742,13 @@
       min-height: 120px;
     }
     .day-col {
-      background: #0d0d20;
-      border: 1px solid #1e1e3e;
+      background: #f5f6f8;
+      border: 1px solid #e0e2ec;
       border-radius: 10px;
       padding: 8px 6px;
       min-height: 100px;
     }
-    .day-col.today-col { border-color: var(--gold); background: #0d0d25; }
+    .day-col.today-col { border-color: #5c7aaa; background: #eef1f8; }
     .day-header {
       font-size: 0.68rem;
       color: var(--muted);
@@ -837,7 +765,7 @@
       padding-bottom: 6px;
       border-bottom: 1px solid #1e1e3e;
     }
-    .day-date.today { color: var(--gold); }
+    .day-date.today { color: #5c7aaa; }
     .event-pill {
       padding: 4px 8px;
       border-radius: 6px;
@@ -851,13 +779,13 @@
     .event-pill .pill-casino { font-size: 0.62rem; opacity: 0.8; display: block; margin-bottom: 1px; }
     .event-pill .pill-title { font-weight: 600; display: block; }
     .event-pill .pill-time { font-size: 0.6rem; opacity: 0.75; display: block; margin-top: 1px; }
-    .event-pill.drawing { background: #3a2e0a; color: var(--gold); border-left: 2px solid var(--gold); }
-    .event-pill.bingo { background: #1a3d2e; color: var(--green); border-left: 2px solid var(--green); }
-    .event-pill.concert { background: #2a1a3d; color: #c084fc; border-left: 2px solid #c084fc; }
-    .event-pill.tournament { background: #3d1a1a; color: var(--accent); border-left: 2px solid var(--accent); }
-    .event-pill.promotion { background: #1a2a3d; color: #6ab0ff; border-left: 2px solid #6ab0ff; }
-    .event-pill.other { background: #2a2a2a; color: #aaa; border-left: 2px solid #555; }
-    .day-no-events { font-size: 0.65rem; color: #333; text-align: center; padding: 10px 0; }
+    .event-pill.drawing { background: #eef1f8; color: #3a5888; border-left: 2px solid #5c7aaa; }
+    .event-pill.bingo { background: #e4f2ec; color: #2d7a5a; border-left: 2px solid #4a9a78; }
+    .event-pill.concert { background: #ede8f5; color: #6040a0; border-left: 2px solid #9070c8; }
+    .event-pill.tournament { background: #f5e8ec; color: #a04060; border-left: 2px solid #c06080; }
+    .event-pill.promotion { background: #e8eef5; color: #3a6090; border-left: 2px solid #5c7aaa; }
+    .event-pill.other { background: #eceef4; color: #888; border-left: 2px solid #b0b4c0; }
+    .day-no-events { font-size: 0.65rem; color: #b0b4c0; text-align: center; padding: 10px 0; }
     /* List view */
     .events-list { display: none; }
     .events-list.active { display: block; }
@@ -866,9 +794,9 @@
     .event-date-header {
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--gold);
+      color: #5c7aaa;
       padding: 6px 0;
-      border-bottom: 1px solid #2a2a4e;
+      border-bottom: 1px solid #dde0ea;
       margin-bottom: 10px;
     }
     .event-list-item {
@@ -876,14 +804,15 @@
       align-items: flex-start;
       gap: 14px;
       padding: 12px 14px;
-      background: #0d0d20;
-      border: 1px solid #1e1e3e;
+      background: #ffffff;
+      border: 1px solid #e0e2ec;
       border-radius: 8px;
       margin-bottom: 8px;
       cursor: pointer;
       transition: border-color 0.15s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
-    .event-list-item:hover { border-color: var(--gold); }
+    .event-list-item:hover { border-color: #5c7aaa; }
     .event-list-type-dot {
       width: 10px;
       height: 10px;
@@ -891,16 +820,16 @@
       flex-shrink: 0;
       margin-top: 4px;
     }
-    .event-list-type-dot.drawing { background: var(--gold); }
-    .event-list-type-dot.bingo { background: var(--green); }
-    .event-list-type-dot.concert { background: #c084fc; }
-    .event-list-type-dot.tournament { background: var(--accent); }
-    .event-list-type-dot.promotion { background: #6ab0ff; }
-    .event-list-type-dot.other { background: #555; }
+    .event-list-type-dot.drawing { background: #5c7aaa; }
+    .event-list-type-dot.bingo { background: #4a9a78; }
+    .event-list-type-dot.concert { background: #9070c8; }
+    .event-list-type-dot.tournament { background: #c06080; }
+    .event-list-type-dot.promotion { background: #5c7aaa; }
+    .event-list-type-dot.other { background: #b0b4c0; }
     .event-list-info { flex: 1; }
     .event-list-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
     .event-list-meta { font-size: 0.78rem; color: var(--muted); }
-    .event-list-prize { font-size: 0.78rem; color: var(--gold); font-weight: 700; margin-top: 2px; }
+    .event-list-prize { font-size: 0.78rem; color: #3a5888; font-weight: 700; margin-top: 2px; }
     .events-empty {
       text-align: center;
       padding: 48px 24px;
@@ -920,18 +849,19 @@
     }
     #eventDetailModal.open { display: flex; }
     .event-detail-card {
-      background: #0d0d20;
-      border: 1px solid #2a2a5e;
+      background: #ffffff;
+      border: 1px solid #e0e2ec;
       border-radius: 16px;
       padding: 28px;
       max-width: 480px;
       width: 100%;
       position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
     }
     .event-detail-close {
       position: absolute;
       top: 16px; right: 16px;
-      background: #1a1a3e;
+      background: #eceef4;
       border: none;
       color: var(--text);
       width: 32px; height: 32px;
@@ -950,23 +880,23 @@
       letter-spacing: 0.5px;
       margin-bottom: 12px;
     }
-    .event-detail-type-badge.drawing { background: #3a2e0a; color: var(--gold); }
-    .event-detail-type-badge.bingo { background: #1a3d2e; color: var(--green); }
-    .event-detail-type-badge.concert { background: #2a1a3d; color: #c084fc; }
-    .event-detail-type-badge.tournament { background: #3d1a1a; color: var(--accent); }
-    .event-detail-type-badge.promotion { background: #1a2a3d; color: #6ab0ff; }
-    .event-detail-type-badge.other { background: #2a2a2a; color: #aaa; }
+    .event-detail-type-badge.drawing { background: #eef1f8; color: #3a5888; }
+    .event-detail-type-badge.bingo { background: #e4f2ec; color: #2d7a5a; }
+    .event-detail-type-badge.concert { background: #ede8f5; color: #6040a0; }
+    .event-detail-type-badge.tournament { background: #f5e8ec; color: #a04060; }
+    .event-detail-type-badge.promotion { background: #e8eef5; color: #3a6090; }
+    .event-detail-type-badge.other { background: #eceef4; color: #888; }
     .event-detail-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
     .event-detail-casino { font-size: 0.88rem; color: var(--muted); margin-bottom: 14px; }
     .event-detail-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; font-size: 0.85rem; }
     .event-detail-label { color: var(--muted); min-width: 60px; flex-shrink: 0; }
-    .event-detail-desc { font-size: 0.82rem; color: #bbb; line-height: 1.5; margin: 12px 0; }
-    .event-detail-prize { font-size: 1.1rem; font-weight: 800; color: var(--gold); margin: 8px 0; }
+    .event-detail-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin: 12px 0; }
+    .event-detail-prize { font-size: 1.1rem; font-weight: 800; color: #3a5888; margin: 8px 0; }
     .event-detail-link {
       display: block;
       text-align: center;
       padding: 10px 20px;
-      background: linear-gradient(135deg, #1a1a4e, #2a1a5e);
+      background: #eceef4;
       color: var(--text);
       border-radius: 8px;
       text-decoration: none;
@@ -974,10 +904,10 @@
       font-weight: 700;
       margin-top: 16px;
       cursor: pointer;
-      border: 1px solid #3a2a7e;
+      border: 1px solid #d0d2e0;
       transition: border-color 0.15s;
     }
-    .event-detail-link:hover { border-color: var(--gold); }
+    .event-detail-link:hover { border-color: #5c7aaa; }
     /* Events legend */
     .events-legend {
       display: flex;
@@ -985,7 +915,7 @@
       flex-wrap: wrap;
       margin-top: 14px;
       padding-top: 12px;
-      border-top: 1px solid #1a1a3e;
+      border-top: 1px solid #e0e2ec;
     }
     .legend-item {
       display: flex;
@@ -1019,9 +949,9 @@
        DAILY SPIN SECTION
     ═══════════════════════════════════════════ */
     .daily-spin-section {
-      background: linear-gradient(135deg, #0d0d1f, #1a0a2e);
-      border-top: 2px solid var(--gold);
-      border-bottom: 1px solid #2a2a3e;
+      background: #f5f6f8;
+      border-top: 1px solid #e0e2ec;
+      border-bottom: 1px solid #e0e2ec;
       padding: 16px 24px;
     }
     .daily-spin-inner { max-width: 1200px; margin: 0 auto; }
@@ -1052,7 +982,7 @@
     .slot-title-a {
       font-size: 1.2rem;
       font-weight: 900;
-      color: var(--gold);
+      color: #3a3a5c;
       margin: 0 0 2px;
       letter-spacing: 1px;
     }
@@ -1065,8 +995,8 @@
       position: relative;
       display: inline-flex;
       gap: 0;
-      background: #1a1a30;
-      border: 2px solid #3a3a5e;
+      background: #eceef4;
+      border: 2px solid #c8ccd8;
       border-radius: 10px;
       overflow: hidden;
       margin-bottom: 14px;
@@ -1079,9 +1009,9 @@
       justify-content: center;
       font-size: 2rem;
       line-height: 1;
-      background: #111128;
+      background: #ffffff;
       position: relative;
-      border-right: 2px solid #3a3a5e;
+      border-right: 2px solid #c8ccd8;
       overflow: hidden;
     }
     .reel-a:last-child { border-right: none; }
@@ -1119,8 +1049,8 @@
       50% { opacity: 0.2; }
     }
     .spin-btn-a {
-      background: var(--gold);
-      color: #000;
+      background: #5c7aaa;
+      color: #fff;
       border: none;
       padding: 10px 32px;
       font-size: 1rem;
@@ -1134,7 +1064,7 @@
     }
     .spin-btn-a:hover:not(:disabled) {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(245,197,24,0.6);
+      box-shadow: 0 0 16px rgba(92,122,170,0.4);
     }
     .spin-btn-a:active:not(:disabled) { transform: scale(0.97); }
     .spin-btn-a:disabled {
@@ -1145,7 +1075,7 @@
     .result-msg-a {
       min-height: 28px;
       font-size: 0.92rem;
-      color: #ccc;
+      color: var(--muted);
       margin-bottom: 10px;
     }
     .result-msg-a .confetti { font-size: 1.4rem; animation: confettiBounce 0.6s ease infinite alternate; }
@@ -1155,7 +1085,7 @@
     }
     .spin-cta-a {
       font-size: 0.82rem;
-      color: var(--gold);
+      color: #5c7aaa;
       text-decoration: none;
       cursor: pointer;
       display: inline-block;
@@ -1290,7 +1220,7 @@
     ═══════════════════════════════════════════ */
     .font-size-btns {
       display: flex;
-      border: 1.5px solid #444;
+      border: 1.5px solid #c8ccd8;
       border-radius: 99px;
       overflow: hidden;
     }
@@ -1306,7 +1236,7 @@
     }
     .font-size-btn:first-child { font-size: 0.7rem; }
     .font-size-btn:last-child { font-size: 0.92rem; }
-    .font-size-btn.active { background: var(--gold); color: #000; }
+    .font-size-btn.active { background: #5c7aaa; color: #fff; }
     .font-size-btn:hover:not(.active) { color: var(--text); }
 
     body.font-large { font-size: 17px; }
@@ -1321,12 +1251,86 @@
     /* ═══════════════════════════════════════════
        FEATURE 3: TAP-TO-CALL BUTTON
     ═══════════════════════════════════════════ */
+    /* ── CARD EVENTS ── */
+    .card-events {
+      margin-top: 12px;
+      border-top: 1px solid #eceef4;
+      padding-top: 10px;
+    }
+    .card-events-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .card-event-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .card-event-pill:hover { opacity: 0.8; }
+    .card-event-pill.drawing   { background: #eef1f8; color: #3a5888; }
+    .card-event-pill.bingo     { background: #e4f2ec; color: #2d7a5a; }
+    .card-event-pill.concert   { background: #ede8f5; color: #6040a0; }
+    .card-event-pill.tournament{ background: #f5e8ec; color: #a04060; }
+    .card-event-pill.promotion { background: #eef1f8; color: #3a5888; }
+    .card-event-pill.other     { background: #eceef4; color: #888;    }
+    .card-event-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .card-event-dot.drawing    { background: #5c7aaa; }
+    .card-event-dot.bingo      { background: #4a9a78; }
+    .card-event-dot.concert    { background: #9070c8; }
+    .card-event-dot.tournament { background: #c06080; }
+    .card-event-dot.promotion  { background: #5c7aaa; }
+    .card-event-dot.other      { background: #b0b4c0; }
+    .card-event-title { font-weight: 600; flex: 1; }
+    .card-event-date  { font-size: 0.72rem; opacity: 0.75; white-space: nowrap; }
+    .card-events-more {
+      font-size: 0.72rem;
+      color: #5c7aaa;
+      cursor: pointer;
+      padding: 2px 0;
+    }
+    .card-events-more:hover { text-decoration: underline; }
+
+    /* ── HELPFUL BUTTON ── */
+    .btn-helpful {
+      flex: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1.5px solid #c8ccd8;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-helpful:hover { border-color: #5c7aaa; color: #5c7aaa; background: #eef1f8; }
+    .btn-helpful.voted { background: #eef1f8; border-color: #5c7aaa; color: #5c7aaa; }
+    .btn-helpful .helpful-count { font-size: 0.75rem; opacity: 0.8; }
+
     .btn-call {
       flex: none;
       padding: 10px 14px;
       border-radius: 8px;
-      background: #1a3d2e;
-      color: var(--green);
+      background: #e4f2ec;
+      color: #2d7a5a;
       font-size: 0.82rem;
       font-weight: 700;
       text-decoration: none;
@@ -1335,15 +1339,15 @@
       gap: 4px;
       transition: background 0.15s;
     }
-    .btn-call:hover { background: #1f4f38; }
+    .btn-call:hover { background: #d0eadc; }
 
     /* ═══════════════════════════════════════════
        FEATURE 4: DEAL OF THE DAY BANNER
     ═══════════════════════════════════════════ */
     #dealOfDayBanner {
-      background: linear-gradient(135deg, #1a0a0a, #2a0a1a);
-      border-top: 2px solid var(--accent);
-      border-bottom: 1px solid #3a1a2a;
+      background: #f0f4f8;
+      border-top: 1px solid #d0d8e8;
+      border-bottom: 1px solid #d0d8e8;
       padding: 14px 24px;
     }
     .deal-inner {
@@ -1355,7 +1359,7 @@
       flex-wrap: wrap;
     }
     .deal-badge {
-      background: var(--accent);
+      background: #5c7aaa;
       color: #fff;
       font-size: 0.72rem;
       font-weight: 800;
@@ -1372,11 +1376,11 @@
     .deal-prize {
       font-size: 1.2rem;
       font-weight: 800;
-      color: var(--gold);
+      color: #3a5888;
       white-space: nowrap;
     }
     .deal-cta {
-      background: var(--accent);
+      background: #5c7aaa;
       color: #fff;
       border: none;
       padding: 8px 18px;
@@ -1388,8 +1392,7 @@
       transition: opacity 0.15s;
     }
     .deal-cta:hover { opacity: 0.85; }
-    body.light-mode #dealOfDayBanner { background: linear-gradient(135deg, #fff0f3, #fff); border-top-color: var(--accent); }
-    body.light-mode .deal-title { color: var(--text); }
+    
 
     /* ═══════════════════════════════════════════
        FEATURE 5: BEST FOR SHORTCUTS
@@ -1406,8 +1409,8 @@
     .best-for-btn {
       padding: 9px 18px;
       border-radius: 99px;
-      border: 1.5px solid #2a3a5e;
-      background: linear-gradient(135deg, #1a1a3e, #111128);
+      border: 1.5px solid #c8ccd8;
+      background: #ffffff;
       color: var(--text);
       font-size: 0.85rem;
       font-weight: 600;
@@ -1416,18 +1419,9 @@
       white-space: nowrap;
     }
     .best-for-btn:hover {
-      border-color: var(--gold);
-      background: linear-gradient(135deg, #2a2a4e, #1a1a38);
-      color: var(--gold);
-    }
-    body.light-mode .best-for-btn {
-      background: #fff;
-      border-color: #ddd;
-      color: var(--text);
-    }
-    body.light-mode .best-for-btn:hover {
-      border-color: var(--gold);
-      background: #fffbea;
+      border-color: #5c7aaa;
+      background: #eef1f8;
+      color: #3a5888;
     }
   </style>
 </head>
@@ -1450,7 +1444,6 @@
       <button class="font-size-btn" onclick="setFontSize('large')" id="fsBtn2">AA</button>
       <button class="font-size-btn" onclick="setFontSize('xlarge')" id="fsBtn3">AAA</button>
     </div>
-    <button class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()" title="Switch between dark and light mode">🌙 Dark</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
   </div>
 </header>
@@ -1530,6 +1523,7 @@
   <div class="results-count" id="resultsCount">Showing 8 casinos near Las Vegas, NV</div>
   <select class="sort-select" onchange="sortCasinos(this.value)">
     <option value="score">Sort: Best Overall Score</option>
+    <option value="distance">Sort: Nearest First</option>
     <option value="jackpot">Sort: Largest Jackpots</option>
     <option value="loyalty">Sort: Best Loyalty Program</option>
     <option value="payback">Sort: Highest Slot Payback</option>
@@ -1554,53 +1548,9 @@
   </div>
 </div>
 
-<!-- CASINO EVENTS CALENDAR -->
-<div class="events-section" id="eventsSection">
-  <div class="events-inner">
-    <div class="events-header">
-      <div class="events-header-left">
-        <h2>📅 Casino Events</h2>
-        <span class="events-region-badge" id="eventsRegionBadge">Las Vegas, NV</span>
-      </div>
-      <div class="events-controls">
-        <button class="events-nav-btn" onclick="eventsNavPrev()">← Prev</button>
-        <span class="events-week-label" id="eventsWeekLabel">Loading...</span>
-        <button class="events-nav-btn" onclick="eventsNavNext()">Next →</button>
-        <button class="events-nav-btn" style="background:#1a1a3e;border-color:#3a3a6e;" onclick="eventsNavToday()">Today</button>
-        <div class="events-view-toggle">
-          <button class="events-view-btn active" id="viewBtnWeek" onclick="setEventsView('week')">Week</button>
-          <button class="events-view-btn" id="viewBtnList" onclick="setEventsView('list')">List</button>
-          <button class="events-view-btn" id="viewBtnMonth" onclick="setEventsView('month')">Month</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Week view -->
-    <div class="week-grid" id="eventsWeekGrid">
-      <!-- Populated by JS -->
-    </div>
-
-    <!-- List view -->
-    <div class="events-list" id="eventsListView">
-      <!-- Populated by JS -->
-    </div>
-
-    <!-- Month view -->
-    <div class="events-list" id="eventsMonthView" style="display:none">
-      <!-- Populated by JS -->
-    </div>
-
-    <!-- Legend -->
-    <div class="events-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Drawing</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Bingo</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div> Concert</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Tournament</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#6ab0ff"></div> Promotion</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#555"></div> Other</div>
-    </div>
-  </div>
-</div>
+<!-- Hidden for JS compat -->
+<span id="eventsRegionBadge" style="display:none"></span>
+<span id="eventsWeekLabel" style="display:none"></span>
 
 <!-- EVENT DETAIL MODAL -->
 <div id="eventDetailModal" onclick="if(event.target===this)closeEventDetail()">
@@ -2002,18 +1952,94 @@ function getCasinoEmoji(name, chain) {
 }
 
 function computeScore(c) {
-  let score = 60;
-  if (c.rating) score += Math.min(20, (c.rating - 3) * 10);
-  if (c.review_count > 1000) score += 10;
-  if (c.review_count > 5000) score += 5;
-  if (c.top_jackpot_cents > 100000000) score += 5; // $1M+
-  if (c.latest_jackpot_date) score += 5; // has recent activity
-  return Math.min(99, Math.max(50, Math.round(score)));
+  // Each dimension scores 0–100 independently.
+  // When Yelp data is missing, weights shift toward amenities + loyalty
+  // so sparse regions still produce meaningful spread.
+
+  // Note: raw API objects use c.rating/c.review_count;
+  //       mapped casino objects use c.yelpRating/c.reviewCount
+  const rating = c.yelpRating || (c.rating ? parseFloat(c.rating) : null);
+  const reviewCount = c.reviewCount
+    ? parseInt(String(c.reviewCount).replace(/,/g, ''), 10)
+    : (c.review_count || 0);
+  const hasYelp = !!rating;
+
+  // Adaptive weights: lean on amenities+loyalty when no Yelp data
+  const weights = hasYelp
+    ? { reputation: 0.30, loyalty: 0.25, amenities: 0.20, jackpots: 0.15, revenue: 0.10 }
+    : { reputation: 0.00, loyalty: 0.38, amenities: 0.38, jackpots: 0.14, revenue: 0.10 };
+
+  // ── REPUTATION ────────────────────────────────────────────────────────────
+  let reputation = 0;
+  if (hasYelp) {
+    reputation = Math.round((rating / 5) * 100);
+    if (reviewCount > 10000)     reputation = Math.min(100, reputation + 8);
+    else if (reviewCount > 5000) reputation = Math.min(100, reputation + 5);
+    else if (reviewCount > 1000) reputation = Math.min(100, reputation + 3);
+    else if (reviewCount > 100)  reputation = Math.min(100, reputation + 1);
+  }
+
+  // ── LOYALTY PROGRAM ───────────────────────────────────────────────────────
+  let loyalty = 10; // no program = low
+  const tierCount = c.loyaltyTiers ? c.loyaltyTiers.length : 0;
+  if (c.loyaltyProgram && c.loyaltyProgram !== 'Rewards Program') {
+    loyalty = 42 + (tierCount * 10); // 1 tier=52 … 5 tiers=92
+    const premium = [
+      'Club M','Boarding Pass','B Connected','mychoice','Caesars Rewards',
+      'MGM Rewards','Rush Rewards','Grand Rewards','Prairie Gold',
+      'Hard Rock Rewards','Island Passport','Club Grand','Epic Rewards',
+      'Épique','Club7','MVP Rewards','Island Passport Club',
+    ];
+    if (premium.some(p => (c.loyaltyProgram||'').toLowerCase().includes(p.toLowerCase()))) {
+      loyalty = Math.min(100, loyalty + 12);
+    }
+    if (c.pointsPerDollar && c.pointsPerDollar !== 'N/A') loyalty = Math.min(100, loyalty + 5);
+  }
+
+  // ── AMENITIES ─────────────────────────────────────────────────────────────
+  // Spread is now the primary differentiator for data-sparse regions.
+  // Max possible = 100 (hotel+parking+slots+poker+bingo+sports)
+  let amenities = 0;
+  if (c.hotelOnsite) amenities += 28;
+  if (c.parkingFree) amenities += 12;
+  if (c.slots)       amenities += 18;
+  if (c.poker)       amenities += 20;
+  if (c.bingo)       amenities += 10;
+  if (c.sports)      amenities += 12;
+
+  // ── JACKPOT ACTIVITY ──────────────────────────────────────────────────────
+  let jackpots = 20;
+  if (c.latest_jackpot_date) {
+    const days = (new Date() - new Date(c.latest_jackpot_date)) / 86400000;
+    jackpots = days < 1 ? 100 : days < 7 ? 85 : days < 30 ? 65 : days < 90 ? 45 : 35;
+  }
+  if (c.top_jackpot_cents > 5000000000)  jackpots = Math.min(100, jackpots + 15);
+  else if (c.top_jackpot_cents > 1000000000) jackpots = Math.min(100, jackpots + 10);
+  else if (c.top_jackpot_cents > 100000000)  jackpots = Math.min(100, jackpots + 6);
+  else if (c.top_jackpot_cents > 1000000)    jackpots = Math.min(100, jackpots + 3);
+  if (c.hot) jackpots = Math.min(100, jackpots + 10);
+
+  // ── REVENUE ───────────────────────────────────────────────────────────────
+  let revenue = 50;
+  if (c.monthly_revenue_cents > 0) {
+    const m = c.monthly_revenue_cents / 100000000;
+    revenue = m > 40 ? 100 : m > 20 ? 85 : m > 10 ? 70 : m > 5 ? 60 : 55;
+  }
+
+  // ── WEIGHTED AVERAGE → scale to 40-99 ────────────────────────────────────
+  const raw = (reputation * weights.reputation) +
+              (loyalty    * weights.loyalty)    +
+              (amenities  * weights.amenities)  +
+              (jackpots   * weights.jackpots)   +
+              (revenue    * weights.revenue);
+
+  const display = Math.round(40 + (raw / 100) * 59);
+  return Math.min(99, Math.max(40, display));
 }
 
 function scoreClass(score) {
-  if (score >= 85) return 'high';
-  if (score >= 70) return 'mid';
+  if (score >= 78) return 'high';
+  if (score >= 62) return 'mid';
   return 'low';
 }
 
@@ -2030,15 +2056,14 @@ async function loadCasinos(region = 'las-vegas') {
     const data = await res.json();
 
     CASINOS = data.map(c => {
-      const score = computeScore(c);
-      return {
+      // Build the mapped object first, THEN score it so computeScore
+      // sees the camelCase field names it expects (hotelOnsite, loyaltyTiers, etc.)
+      const mapped = {
         id: c.id,
         emoji: getCasinoEmoji(c.name, c.chain),
         name: c.name,
         chain: c.chain || 'Independent',
         location: `${c.city || 'Las Vegas'}, ${c.state || 'NV'}`,
-        score,
-        scoreClass: scoreClass(score),
         slotPayback: c.payback_pct ? c.payback_pct + '%' : 'N/A',
         largestJackpot: c.top_jackpot_cents ? '$' + formatAmount(c.top_jackpot_cents / 100) : 'N/A',
         jackpotFreq: c.latest_jackpot_date ? 'Reported' : 'Unknown',
@@ -2059,6 +2084,10 @@ async function loadCasinos(region = 'las-vegas') {
         minBet: 'Varies',
         parkingFree: c.free_parking || false,
         hotelOnsite: c.has_hotel || false,
+        // pass through raw fields needed by computeScore
+        latest_jackpot_date: c.latest_jackpot_date,
+        top_jackpot_cents: c.top_jackpot_cents,
+        monthly_revenue_cents: c.monthly_revenue_cents,
         imageUrl: c.image_url || null,
         recentJackpots: c.latest_jackpot_machine ? [{
           game: c.latest_jackpot_machine,
@@ -2069,13 +2098,20 @@ async function loadCasinos(region = 'las-vegas') {
         notes: c.address || '',
         affiliateUrl: c.affiliate_url || null,
         affiliateNetwork: c.affiliate_network || null,
+        lat: c.lat ? parseFloat(c.lat) : null,
+        lng: c.lng ? parseFloat(c.lng) : null,
       };
+      mapped.score = computeScore(mapped);
+      mapped.scoreClass = scoreClass(mapped.score);
+      return mapped;
     });
 
     CASINOS_LOADED = true;
     filterCasinos();
     const regionLabel = (typeof availableRegions !== 'undefined' && availableRegions.find(r => r.id === region))?.label || region;
     document.getElementById('resultsCount').textContent = `Showing ${CASINOS.length} casino${CASINOS.length !== 1 ? 's' : ''} — ${regionLabel}`;
+    // Load events for cards and re-render once available
+    loadCardEvents(region).then(() => filterCasinos());
 
     if (CASINOS.length === 0) {
       document.getElementById('casinoGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:0.95rem">No casinos found for this region yet.<br><span style="font-size:0.82rem">Check back soon as we expand our database!</span></div>';
@@ -2206,6 +2242,14 @@ function renderCards(data) {
         <div class="score-badge ${c.scoreClass}" title="Overall Score">${c.score}</div>
       </div>
       <div class="card-body">
+        ${(() => {
+          const dist = distanceMiles(userLat, userLng, c.lat, c.lng);
+          const fmt = formatDistance(dist);
+          return fmt ? `<div class="stat-row">
+          <span class="stat-label">📍 Distance</span>
+          <span class="stat-value">${fmt}</span>
+        </div>` : '';
+        })()}
         ${c.yelpRating ? `
         <div class="stat-row">
           <span class="stat-label">⭐ Yelp Rating</span>
@@ -2214,18 +2258,18 @@ function renderCards(data) {
             ${c.reviewCount ? `<span style="font-size:0.78rem;color:var(--muted)">(${c.reviewCount})</span>` : ''}
           </span>
         </div>` : ''}
-        <div class="stat-row">
+        ${c.slotPayback !== 'N/A' ? `<div class="stat-row">
           <span class="stat-label">🎰 Slot Payback</span>
           <span class="stat-value green">${c.slotPayback}</span>
-        </div>
-        <div class="stat-row">
+        </div>` : ''}
+        ${c.largestJackpot !== 'N/A' ? `<div class="stat-row">
           <span class="stat-label">💰 Largest Jackpot</span>
           <span class="stat-value gold">${c.largestJackpot}</span>
-        </div>
-        <div class="stat-row">
+        </div>` : ''}
+        ${c.jackpotFreq !== 'Unknown' ? `<div class="stat-row">
           <span class="stat-label">⚡ Jackpot Frequency</span>
           <span class="stat-value">${c.jackpotFreq}</span>
-        </div>
+        </div>` : ''}
         <div class="stat-row">
           <span class="stat-label">🏆 Loyalty Program</span>
           <span class="stat-value">${c.loyaltyProgram}</span>
@@ -2235,15 +2279,23 @@ function renderCards(data) {
           <span class="stat-value ${c.loyaltyScore >= 9 ? 'green' : c.loyaltyScore >= 7.5 ? 'gold' : 'red'}">${c.loyaltyScore}/10</span>
         </div>
         <div class="stat-row">
+          <span class="stat-label">🅿️ Parking</span>
+          <span class="stat-value ${c.parkingFree ? 'green' : ''}">${c.parkingFree ? 'Free' : 'Paid'}</span>
+        </div>
+        ${c.minBet && c.minBet !== 'Varies' ? `<div class="stat-row">
           <span class="stat-label">💵 Min Table Bet</span>
           <span class="stat-value">${c.minBet}</span>
-        </div>
+        </div>` : ''}
         <div class="tags">${tagHtml}</div>
+        ${renderCardEvents(c.id)}
       </div>
       <div class="card-footer">
         <button class="btn btn-primary" onclick="openModal(${c.id})">View Details</button>
         <button class="btn btn-secondary" onclick="toggleCompare(${c.id}, event)" id="cmp-${c.id}">
           ${inCompare ? '✓ Comparing' : '+ Compare'}
+        </button>
+        <button class="btn-helpful ${helpfulVoted(c.id) ? 'voted' : ''}" id="helpful-${c.id}" onclick="voteHelpful(${c.id}, event)" title="Mark as helpful">
+          👍 <span class="helpful-count" id="helpful-count-${c.id}">${helpfulCount(c.id)}</span>
         </button>
         ${c.phone ? `<a class="btn btn-call" href="tel:${c.phone}" title="Call ${c.name}" onclick="event.stopPropagation()">📞 Call</a>` : ''}
       </div>
@@ -2282,6 +2334,13 @@ function setFilter(f, el) {
 function sortCasinos(val) {
   let sorted = [...CASINOS];
   if (val === 'score') sorted.sort((a,b) => b.score - a.score);
+  else if (val === 'distance') {
+    sorted.sort((a,b) => {
+      const da = distanceMiles(userLat, userLng, a.lat, a.lng) ?? Infinity;
+      const db = distanceMiles(userLat, userLng, b.lat, b.lng) ?? Infinity;
+      return da - db;
+    });
+  }
   else if (val === 'jackpot') sorted.sort((a,b) => parseFloat(b.largestJackpot.replace(/[$M,]/g,'')) - parseFloat(a.largestJackpot.replace(/[$M,]/g,'')));
   else if (val === 'loyalty') sorted.sort((a,b) => b.loyaltyScore - a.loyaltyScore);
   else if (val === 'payback') sorted.sort((a,b) => parseFloat(b.slotPayback) - parseFloat(a.slotPayback));
@@ -2356,10 +2415,11 @@ async function openModal(id) {
         <div class="stat-row"><span class="stat-label">Min Table Bet</span><span class="stat-value">${c.minBet}</span></div>
         <div class="stat-row"><span class="stat-label">Free Parking</span><span class="stat-value ${c.parkingFree ? 'green' : 'red'}">${c.parkingFree ? 'Yes ✓' : 'No ✗'}</span></div>
         <div class="stat-row"><span class="stat-label">Hotel On-site</span><span class="stat-value ${c.hotelOnsite ? 'green' : 'red'}">${c.hotelOnsite ? 'Yes ✓' : 'No ✗'}</span></div>
+        ${(() => { const d = formatDistance(distanceMiles(userLat, userLng, c.lat, c.lng)); return d ? `<div class="stat-row"><span class="stat-label">📍 Distance</span><span class="stat-value">${d} from you</span></div>` : ''; })()}
         ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--muted);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
-      <button class="btn btn-primary" style="width:100%;padding:14px;font-size:0.95rem;border-radius:10px" onclick="alert('Directions feature coming soon!')">📍 Get Directions</button>
+      <a class="btn btn-primary" style="width:100%;padding:14px;font-size:0.95rem;border-radius:10px;display:block;text-align:center;text-decoration:none" href="${c.lat && c.lng ? `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.name + ' ' + (c.notes || ''))}`}" target="_blank" rel="noopener">📍 Get Directions</a>
 
       <div id="affiliateBtnZone" style="margin-top:0">
         <div style="text-align:center;font-size:0.75rem;color:#444;padding:8px 0">Loading rewards info…</div>
@@ -2773,30 +2833,7 @@ function renderWinsFeed() {
   }).join('');
 }
 
-// ── DARK / LIGHT MODE TOGGLE ─────────────────────────────────────────────────
-function toggleMode() {
-  const isLight = document.body.classList.toggle('light-mode');
-  localStorage.setItem('jackpotmap_mode', isLight ? 'light' : 'dark');
-  updateModeBtn(isLight);
-}
-
-function updateModeBtn(isLight) {
-  const btn = document.getElementById('modeToggleBtn');
-  if (!btn) return;
-  btn.textContent = isLight ? '🌙 Dark' : '☀️ Light';
-}
-
-// Restore saved preference on load
-(function() {
-  const saved = localStorage.getItem('jackpotmap_mode');
-  if (saved === 'light') {
-    document.body.classList.add('light-mode');
-    // Update button after DOM ready
-    document.addEventListener('DOMContentLoaded', () => updateModeBtn(true));
-    // Also try immediately in case DOM is already ready
-    updateModeBtn(true);
-  }
-})();
+// Dark mode removed — app uses clean light theme
 
 // ── FEATURE 1: FONT SIZE SELECTOR ──────────────────────────────
 function setFontSize(size) {
@@ -2869,12 +2906,220 @@ function applyBestFor(type) {
   }
 }
 
-// Init
-loadRegions();
-loadCasinos();
-renderWinsFeed();
-loadLiveData();
-loadDealOfDay(currentRegion);
+// ═══════════════════════════════════════════════════════════════
+// CARD-LEVEL EVENTS
+// ═══════════════════════════════════════════════════════════════
+
+let cardEvents = {}; // { casinoId: [event, ...] }
+
+async function loadCardEvents(region) {
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const res = await fetch(`/api/events?region=${encodeURIComponent(region)}&date=${today}&days=14`);
+    if (!res.ok) return;
+    const events = await res.json();
+    // Group by casino_id, keep next 3 per casino
+    cardEvents = {};
+    events.forEach(ev => {
+      if (!cardEvents[ev.casino_id]) cardEvents[ev.casino_id] = [];
+      if (cardEvents[ev.casino_id].length < 3) cardEvents[ev.casino_id].push(ev);
+    });
+  } catch(e) { cardEvents = {}; }
+}
+
+function renderCardEvents(casinoId) {
+  const events = cardEvents[casinoId];
+  if (!events || events.length === 0) return '';
+  const pills = events.slice(0, 2).map(ev => {
+    const type = ev.event_type || 'other';
+    const dateStr = ev.event_date === new Date().toISOString().split('T')[0]
+      ? 'Today' + (ev.start_time ? ' · ' + formatTime(ev.start_time) : '')
+      : formatDateShort(ev.event_date) + (ev.start_time ? ' · ' + formatTime(ev.start_time) : '');
+    return `<div class="card-event-pill ${type}" onclick="openEventDetail(${JSON.stringify(ev).replace(/"/g,'&quot;')});event.stopPropagation()">
+      <div class="card-event-dot ${type}"></div>
+      <span class="card-event-title">${ev.title}</span>
+      <span class="card-event-date">${dateStr}</span>
+    </div>`;
+  }).join('');
+  const more = events.length > 2
+    ? `<div class="card-events-more" onclick="openModal(${casinoId});event.stopPropagation()">+${events.length - 2} more event${events.length - 2 !== 1 ? 's' : ''}</div>`
+    : '';
+  return `<div class="card-events">
+    <div class="card-events-label">📅 Upcoming Events</div>
+    ${pills}${more}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HELPFUL VOTES
+// ═══════════════════════════════════════════════════════════════
+
+let helpfulCounts = {}; // { casinoId: count } — from server
+const HELPFUL_KEY = 'jackpotmap_helpful_voted'; // localStorage: Set of casino IDs voted on
+
+function getVotedSet() {
+  try { return new Set(JSON.parse(localStorage.getItem(HELPFUL_KEY) || '[]')); }
+  catch(e) { return new Set(); }
+}
+
+function helpfulVoted(casinoId) {
+  return getVotedSet().has(casinoId);
+}
+
+function helpfulCount(casinoId) {
+  const c = helpfulCounts[casinoId];
+  return c ? c : '';
+}
+
+async function voteHelpful(casinoId, e) {
+  e.stopPropagation();
+  const btn = document.getElementById(`helpful-${casinoId}`);
+  const countEl = document.getElementById(`helpful-count-${casinoId}`);
+  if (!btn) return;
+
+  const voted = getVotedSet();
+  if (voted.has(casinoId)) {
+    // Toggle off
+    voted.delete(casinoId);
+    btn.classList.remove('voted');
+    helpfulCounts[casinoId] = Math.max(0, (helpfulCounts[casinoId] || 1) - 1);
+  } else {
+    // Vote
+    voted.add(casinoId);
+    btn.classList.add('voted');
+    helpfulCounts[casinoId] = (helpfulCounts[casinoId] || 0) + 1;
+    // Fire and forget to backend
+    fetch(`/api/casinos/${casinoId}/helpful`, { method: 'POST' }).catch(() => {});
+  }
+
+  localStorage.setItem(HELPFUL_KEY, JSON.stringify([...voted]));
+  const count = helpfulCounts[casinoId];
+  countEl.textContent = count > 0 ? count : '';
+}
+
+async function loadHelpfulCounts() {
+  try {
+    const res = await fetch('/api/casinos/helpful-counts');
+    helpfulCounts = await res.json();
+  } catch(e) { helpfulCounts = {}; }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LOCATION SERVICES
+// ═══════════════════════════════════════════════════════════════
+
+let userLat = null;
+let userLng = null;
+
+// Haversine distance in miles
+function distanceMiles(lat1, lng1, lat2, lng2) {
+  if (!lat1 || !lng1 || !lat2 || !lng2) return null;
+  const R = 3958.8;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng/2) * Math.sin(dLng/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function formatDistance(miles) {
+  if (miles === null) return null;
+  if (miles < 1) return '< 1 mi';
+  if (miles < 10) return miles.toFixed(1) + ' mi';
+  return Math.round(miles) + ' mi';
+}
+
+// Wrap geolocation in a real Promise so we can await it properly
+function getPosition() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error('no geolocation'));
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      timeout: 8000,
+      maximumAge: 3600000,
+    });
+  });
+}
+
+function applyRegion(region, label) {
+  currentRegion = region;
+  calendarRegion = region;
+  document.getElementById('currentRegionLabel').textContent = '📍 ' + label;
+  document.getElementById('eventsRegionBadge').textContent = label;
+  const subtext = REGION_SUBTEXTS[region] || `Explore casinos — ${label}`;
+  document.getElementById('searchSubtext').textContent = subtext;
+}
+
+async function initApp() {
+  await loadRegions();
+
+  // ── 1. Check localStorage first (survives refresh) ──────────────
+  const saved = localStorage.getItem('jackpotmap_location');
+  if (saved) {
+    try {
+      const { lat, lng, region, label, ts } = JSON.parse(saved);
+      if (Date.now() - ts < 86400000 && region && label) {
+        userLat = lat;
+        userLng = lng;
+        applyRegion(region, label);
+        await loadCasinos(region);
+        loadDealOfDay(region);
+        renderWinsFeed();
+        loadLiveData();
+        // Silently refresh coords in background without blocking UI
+        refreshLocationBackground();
+        return;
+      }
+    } catch(e) { /* bad saved data, fall through */ }
+  }
+
+  // ── 2. No saved location — try geolocation before loading anything ──
+  try {
+    const pos = await getPosition();
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+
+    const res = await fetch(`/api/locate?lat=${userLat}&lng=${userLng}`);
+    const { region, label } = await res.json();
+
+    applyRegion(region, label);
+    localStorage.setItem('jackpotmap_location', JSON.stringify({
+      lat: userLat, lng: userLng, region, label, ts: Date.now()
+    }));
+
+    await loadCasinos(region);
+    loadDealOfDay(region);
+  } catch(e) {
+    // Permission denied or timeout — fall back to Las Vegas
+    await loadCasinos('las-vegas');
+    loadDealOfDay('las-vegas');
+  }
+
+  renderWinsFeed();
+  loadLiveData();
+}
+
+// Background location refresh — updates saved coords without touching the UI
+async function refreshLocationBackground() {
+  try {
+    const pos = await getPosition();
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+    const res = await fetch(`/api/locate?lat=${lat}&lng=${lng}`);
+    const { region, label } = await res.json();
+    userLat = lat;
+    userLng = lng;
+    localStorage.setItem('jackpotmap_location', JSON.stringify({
+      lat, lng, region, label, ts: Date.now()
+    }));
+    // Re-render cards so distances update to fresh coords
+    filterCasinos();
+  } catch(e) { /* silent */ }
+}
+
+// Init — single entry point, no race condition
+loadHelpfulCounts();
+initApp();
 
 // ─── Push Notifications ───────────────────────────────────────────────────────
 

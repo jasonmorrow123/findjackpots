@@ -47,14 +47,15 @@ async function upsertCasino(biz) {
   try {
     // Upsert casino record
     const result = await client.query(
-      `INSERT INTO casinos (name, slug, address, city, state, zip, lat, lng, phone, website, yelp_id)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      `INSERT INTO casinos (name, slug, address, city, state, zip, lat, lng, phone, website, yelp_id, image_url)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
        ON CONFLICT (yelp_id) DO UPDATE SET
          name = EXCLUDED.name,
          address = EXCLUDED.address,
          lat = EXCLUDED.lat,
          lng = EXCLUDED.lng,
          phone = EXCLUDED.phone,
+         image_url = COALESCE(EXCLUDED.image_url, casinos.image_url),
          updated_at = NOW()
        RETURNING id`,
       [
@@ -69,6 +70,7 @@ async function upsertCasino(biz) {
         biz.phone,
         biz.url,
         biz.id,
+        biz.image_url || null,
       ]
     );
 

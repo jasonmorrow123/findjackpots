@@ -1,2 +1,6 @@
 node_modules/
+.env
 vapid-keys.json
+*.log
+.DS_Store
+geocode-casinos.js

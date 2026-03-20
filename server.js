@@ -112,7 +112,7 @@ app.get('/api/casinos', async (req, res) => {
         c.monthly_revenue_cents, c.revenue_report_month, c.revenue_source,
         c.loyalty_program_name, c.loyalty_tiers, c.loyalty_points_per_dollar,
         c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking, c.has_slots,
-        c.image_url,
+        c.image_url, c.lat, c.lng,
         c.phone,
         r.rating, r.review_count,
         j.machine_name AS latest_jackpot_machine,
@@ -603,6 +603,81 @@ app.get('/api/deal-of-day', async (req, res) => {
   } catch(err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// POST /api/casinos/:id/helpful — record a helpful vote
+app.post('/api/casinos/:id/helpful', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query(`
+      INSERT INTO casino_helpful_votes (casino_id, voted_at)
+      VALUES ($1, NOW())
+    `, [id]);
+    const result = await pool.query(
+      'SELECT COUNT(*) AS count FROM casino_helpful_votes WHERE casino_id=$1', [id]
+    );
+    res.json({ success: true, count: parseInt(result.rows[0].count) });
+  } catch(e) {
+    // Table may not exist yet — return success anyway, localStorage handles it
+    res.json({ success: true, count: null });
+  }
+});
+
+// GET /api/casinos/helpful-counts — batch fetch all vote counts
+// NOTE: must be defined BEFORE /api/casinos/:id to avoid route conflict
+app.get('/api/casinos/helpful-counts', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT casino_id, COUNT(*) AS count
+      FROM casino_helpful_votes
+      GROUP BY casino_id
+    `);
+    const counts = {};
+    result.rows.forEach(r => { counts[r.casino_id] = parseInt(r.count); });
+    res.json(counts);
+  } catch(e) {
+    res.json({});
+  }
+});
+
+// GET /api/locate?lat=&lng= — detect best region from coordinates
+app.get('/api/locate', (req, res) => {
+  const lat = parseFloat(req.query.lat);
+  const lng = parseFloat(req.query.lng);
+  if (isNaN(lat) || isNaN(lng)) return res.status(400).json({ error: 'lat/lng required' });
+
+  // State bounding boxes (rough but good enough for region detection)
+  const STATE_BOUNDS = {
+    NV: { minLat: 35.0, maxLat: 42.0, minLng: -120.0, maxLng: -114.0 },
+    MN: { minLat: 43.5, maxLat: 49.4, minLng: -97.2,  maxLng: -89.5  },
+    IA: { minLat: 40.4, maxLat: 43.5, minLng: -96.6,  maxLng: -90.1  },
+    IL: { minLat: 36.9, maxLat: 42.5, minLng: -91.5,  maxLng: -87.0  },
+    IN: { minLat: 37.8, maxLat: 41.8, minLng: -88.1,  maxLng: -84.8  },
+    MI: { minLat: 41.7, maxLat: 48.3, minLng: -90.4,  maxLng: -82.4  },
+    WI: { minLat: 42.5, maxLat: 47.1, minLng: -92.9,  maxLng: -86.2  },
+    MO: { minLat: 36.0, maxLat: 40.6, minLng: -95.8,  maxLng: -89.1  },
+    OH: { minLat: 38.4, maxLat: 42.3, minLng: -84.8,  maxLng: -80.5  },
+  };
+
+  const STATE_TO_REGION = {
+    NV: lat < 40.5 ? (lng < -116 ? 'las-vegas' : 'las-vegas') : 'reno',
+    MN: 'minnesota', IA: 'iowa', IL: 'illinois', IN: 'indiana',
+    MI: 'michigan',  WI: 'wisconsin', MO: 'missouri', OH: 'ohio',
+  };
+
+  // Las Vegas vs Reno refinement
+  const refinedNV = lat < 39.5 ? 'las-vegas' : 'reno';
+
+  for (const [state, bounds] of Object.entries(STATE_BOUNDS)) {
+    if (lat >= bounds.minLat && lat <= bounds.maxLat &&
+        lng >= bounds.minLng && lng <= bounds.maxLng) {
+      const region = state === 'NV' ? refinedNV : STATE_TO_REGION[state];
+      return res.json({ state, region, label: REGIONS[region]?.label || region });
+    }
+  }
+
+  // Outside known regions — return closest supported region
+  res.json({ state: null, region: 'las-vegas', label: 'Las Vegas, NV', fallback: true });
 });
 
 app.listen(PORT, () => {

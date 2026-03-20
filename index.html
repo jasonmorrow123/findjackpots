@@ -81,13 +81,24 @@
 
     /* ── HERO / SEARCH ── */
     .search-section {
-      background:
-        linear-gradient(135deg, rgba(239,246,255,0.92) 0%, rgba(248,250,252,0.90) 60%, rgba(240,253,244,0.92) 100%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect x='10' y='10' width='40' height='40' rx='7' fill='none' stroke='%232563EB' stroke-width='2' opacity='0.25'/%3E%3Ccircle cx='30' cy='30' r='4' fill='%232563EB' opacity='0.25'/%3E%3Crect x='60' y='52' width='40' height='40' rx='7' fill='none' stroke='%232563EB' stroke-width='2' opacity='0.2'/%3E%3Ccircle cx='72' cy='64' r='3.5' fill='%232563EB' opacity='0.2'/%3E%3Ccircle cx='88' cy='72' r='3.5' fill='%232563EB' opacity='0.2'/%3E%3Ccircle cx='140' cy='32' r='20' fill='none' stroke='%232563EB' stroke-width='2' opacity='0.2'/%3E%3Ccircle cx='140' cy='32' r='13' fill='none' stroke='%232563EB' stroke-width='1.5' opacity='0.15'/%3E%3Cline x1='120' y1='32' x2='160' y2='32' stroke='%232563EB' stroke-width='1.5' opacity='0.15'/%3E%3Cline x1='140' y1='12' x2='140' y2='52' stroke='%232563EB' stroke-width='1.5' opacity='0.15'/%3E%3Ctext x='18' y='112' font-size='32' fill='%232563EB' opacity='0.18' font-family='serif'%3E%E2%99%A0%3C/text%3E%3Ctext x='98' y='158' font-size='28' fill='%232563EB' opacity='0.18' font-family='serif'%3E%E2%99%A6%3C/text%3E%3Crect x='118' y='112' width='40' height='40' rx='7' fill='none' stroke='%232563EB' stroke-width='2' opacity='0.18'/%3E%3Ccircle cx='130' cy='124' r='3.5' fill='%232563EB' opacity='0.18'/%3E%3Ccircle cx='146' cy='124' r='3.5' fill='%232563EB' opacity='0.18'/%3E%3Ccircle cx='130' cy='140' r='3.5' fill='%232563EB' opacity='0.18'/%3E%3Ccircle cx='146' cy='140' r='3.5' fill='%232563EB' opacity='0.18'/%3E%3C/svg%3E");
-      background-size: auto, 180px 180px;
+      background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 60%, #F0FDF4 100%);
       padding: 64px 24px 56px;
       text-align: center;
       border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .search-section > *:not(.hero-pattern) {
+      position: relative;
+      z-index: 1;
     }
     .search-section h1 {
       font-size: 2.75rem;
@@ -1619,6 +1630,36 @@
 
 <!-- HERO SEARCH -->
 <div class="search-section">
+  <!-- Decorative casino pattern -->
+  <svg class="hero-pattern" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="casinoPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+        <!-- Dice -->
+        <rect x="12" y="12" width="44" height="44" rx="8" fill="none" stroke="#2563EB" stroke-width="2" opacity="0.18"/>
+        <circle cx="34" cy="34" r="4.5" fill="#2563EB" opacity="0.18"/>
+        <!-- Dice 2 -->
+        <rect x="68" y="58" width="44" height="44" rx="8" fill="none" stroke="#2563EB" stroke-width="2" opacity="0.14"/>
+        <circle cx="80" cy="70" r="4" fill="#2563EB" opacity="0.14"/>
+        <circle cx="100" cy="90" r="4" fill="#2563EB" opacity="0.14"/>
+        <!-- Poker chip -->
+        <circle cx="158" cy="38" r="24" fill="none" stroke="#2563EB" stroke-width="2" opacity="0.14"/>
+        <circle cx="158" cy="38" r="16" fill="none" stroke="#2563EB" stroke-width="1.5" opacity="0.1"/>
+        <line x1="134" y1="38" x2="182" y2="38" stroke="#2563EB" stroke-width="1.5" opacity="0.1"/>
+        <line x1="158" y1="14" x2="158" y2="62" stroke="#2563EB" stroke-width="1.5" opacity="0.1"/>
+        <!-- Spade -->
+        <text x="14" y="122" font-size="36" fill="#2563EB" opacity="0.13" font-family="serif">♠</text>
+        <!-- Diamond -->
+        <text x="108" y="168" font-size="30" fill="#2563EB" opacity="0.13" font-family="serif">♦</text>
+        <!-- Dice 3 (4 pips) -->
+        <rect x="130" y="122" width="44" height="44" rx="8" fill="none" stroke="#2563EB" stroke-width="2" opacity="0.14"/>
+        <circle cx="143" cy="135" r="4" fill="#2563EB" opacity="0.14"/>
+        <circle cx="161" cy="135" r="4" fill="#2563EB" opacity="0.14"/>
+        <circle cx="143" cy="153" r="4" fill="#2563EB" opacity="0.14"/>
+        <circle cx="161" cy="153" r="4" fill="#2563EB" opacity="0.14"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#casinoPattern)"/>
+  </svg>
   <h1>Find Your <em>Lucky</em> Casino</h1>
   <p id="searchSubtext">Compare jackpots, rewards programs, games in Las Vegas</p>
   <div class="search-bar">

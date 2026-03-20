@@ -9,11 +9,13 @@ const { AFFILIATE_CONFIG } = require('./affiliates');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// DigitalOcean managed Postgres requires SSL with self-signed cert
+if (process.env.DATABASE_URL) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://jasonmorrow@localhost:5432/jackpotmap',
-  ssl: process.env.DATABASE_URL
-    ? { rejectUnauthorized: false, ca: undefined }
-    : false,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
 // Load VAPID keys — env vars in production, file locally

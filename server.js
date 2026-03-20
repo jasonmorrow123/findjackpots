@@ -60,6 +60,10 @@ app.get('/', (req, res) => {
 // Serve service worker
 app.get('/sw.js', (req, res) => res.sendFile(path.join(__dirname, 'sw.js')));
 
+// Serve manifest and icons
+app.get('/manifest.json', (req, res) => res.sendFile(path.join(__dirname, 'manifest.json')));
+app.use('/icons', express.static(path.join(__dirname, 'icons')));
+
 // GET /api/regions — return list of available regions for the frontend picker
 app.get('/api/regions', (req, res) => {
   const list = Object.entries(REGIONS).map(([id, r], i) => ({

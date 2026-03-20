@@ -1513,3 +1513,105 @@ Fetching: https://news.google.com/rss/search?q=slot+machine+jackpot+%22Las+Vegas
 [2026-03-20T23:00:17.673Z] INFO: [push-notifier] Starting push notification check...
 [push-notifier] No high-value jackpots in the last 2 hours. Nothing to send.
 
+[2026-03-20T23:01:02.228Z] INFO: mn-wi-winner-scraper.js completed
+[2026-03-20T23:01:02.229Z] INFO: 🌲 MN/WI Winner Page Scraper
+
+
+📄 [MN] Mystic Lake — https://www.mysticlake.com/casino/jackpots
+  Dollar amounts found: 0
+
+📄 [MN] Mystic Lake — https://www.mysticlake.com/casino/winners
+  Dollar amounts found: 0
+
+📄 [MN] Grand Casino — https://www.grandcasinomn.com/casino/winners
+  Dollar amounts found: 0
+
+📄 [MN] Black Bear — https://www.blackbearcasinohotel.com/casino/winners
+  ❌ Error: page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://www.blackbearcasinohotel.com/casino/winners
+Call log:
+  - navigating to "https://www.blackbearcasinohotel.com/casino/winners", waiting until "domcontentloaded"
+
+
+📄 [MN] Treasure Island — https://www.treasureislandcasino.com/casino/winners
+  ❌ Error: page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://www.treasureislandcasino.com/casino/winners
+Call log:
+  - navigating to "https://www.treasureislandcasino.com/casino/winners", waiting until "domcontentloaded"
+
+
+📄 [MN] Jackpot Junction — https://www.jackpotjunction.com/casino/winners
+  ❌ Error: page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.jackpotjunction.com/casino/winners
+Call log:
+  - navigating to "https://www.jackpotjunction.com/casino/winners", waiting until "domcontentloaded"
+
+
+📄 [MN] Fortune Bay — https://www.fortunebay.com/casino/winners
+  ❌ Error: page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://www.fortunebay.com/casino/winners
+Call log:
+  - navigating to "https://www.fortunebay.com/casino/winners", waiting until "domcontentloaded"
+
+
+📄 [WI] Potawatomi — https://www.paysbig.com/casino/winners
+  Dollar amounts found: 0
+
+📄 [WI] Potawatomi — https://www.paysbig.com/promotions/jackpot-winners
+  Dollar amounts found: 0
+
+📄 [WI] Ho-Chunk — https://www.ho-chunkgaming.com/casino-winners
+  Dollar amounts found: 0
+
+📄 [WI] Northern Waters — https://www.northernwaterscasino.com/winners
+  Dollar amounts found: 0
+
+📄 [WI] Lucky Star — https://www.luckystarcasino.org/winners
+  Dollar amounts found: 0
+
+✅ Done in 61.3s
+   Working pages: 0/12
+   Total jackpots added: 0
+   Errors/blocked: 12
+
+[2026-03-20T23:01:11.506Z] INFO: winner-page-scraper.js completed
+[2026-03-20T23:01:11.506Z] INFO: 🎰 JackpotMap Winner Page Scraper
+
+
+📄 Scraping: https://suncoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://goldcoast.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://mainstreet.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://thecal.boydgaming.com/play/winners
+  Falling back to full page text (2323 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://fremontcasino.boydgaming.com/play/winners
+
+📄 Scraping: https://samstownlv.boydgaming.com/play/winners
+  Boyd structured parse: 6 winners
+  Parsed 6 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://stationcasinos.com/play/gaming-promotions/
+  Falling back to full page text (1799 chars)
+  Parsed 0 jackpot records
+  ✅ 0 new jackpots added
+
+📄 Scraping: https://www.southpointcasino.com/current-promotions
+
+✅ Done in 70.6s — 0 new jackpots added, 2 errors
+
+[2026-03-20T23:01:11.506Z] INFO: Starting ../push-notifier.js...
+[2026-03-20T23:01:11.602Z] INFO: ../push-notifier.js completed
+[2026-03-20T23:01:11.602Z] INFO: [push-notifier] Starting push notification check...
+[push-notifier] No high-value jackpots in the last 2 hours. Nothing to send.
+

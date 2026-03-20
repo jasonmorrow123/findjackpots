@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563EB"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="pinGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e0eaff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- App icon background -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)"/>
+
+  <!-- Map pin -->
+  <path d="M256 80 C186 80 130 136 130 206 C130 306 256 432 256 432 C256 432 382 306 382 206 C382 136 326 80 256 80Z" fill="url(#pinGrad2)"/>
+
+  <!-- Die face inside pin -->
+  <rect x="186" y="136" width="140" height="128" rx="24" fill="#2563EB"/>
+  <!-- top-left pip -->
+  <circle cx="218" cy="168" r="14" fill="white"/>
+  <!-- center pip -->
+  <circle cx="256" cy="200" r="14" fill="white"/>
+  <!-- bottom-right pip -->
+  <circle cx="294" cy="232" r="14" fill="white"/>
+</svg>

@@ -1398,3 +1398,35 @@ Call log:
 [2026-03-20T17:01:05.391Z] INFO: [push-notifier] Starting push notification check...
 [push-notifier] No high-value jackpots in the last 2 hours. Nothing to send.
 
+[2026-03-20T19:00:00.911Z] INFO: Starting reddit-monitor.js...
+[2026-03-20T19:00:13.432Z] INFO: reddit-monitor.js completed
+[2026-03-20T19:00:13.432Z] INFO: 🤖 JackpotMap Reddit Monitor (RSS/JSON — no API key)
+
+
+📡 Scanning r/gambling...
+  54 posts fetched
+  → 1 jackpot posts matched
+
+📡 Scanning r/LasVegas...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/vegaslocals...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/slotmachines...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+📡 Scanning r/Reno...
+  50 posts fetched
+  → 0 jackpot posts matched
+
+✅ Done in 12.3s — 1 jackpot posts found, 0 new records stored
+
+[2026-03-20T19:00:13.433Z] INFO: Starting ../push-notifier.js...
+[2026-03-20T19:00:13.563Z] INFO: ../push-notifier.js completed
+[2026-03-20T19:00:13.563Z] INFO: [push-notifier] Starting push notification check...
+[push-notifier] No high-value jackpots in the last 2 hours. Nothing to send.
+

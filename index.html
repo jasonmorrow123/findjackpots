@@ -6,26 +6,30 @@
   <title>JackpotMap — Find Your Best Casino</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --gold: #f5c518;
+      --primary: #4A72B8;
+      --primary-dark: #3a5c96;
+      --gold: #C9A84C;
       --dark: #ffffff;
       --card: #ffffff;
       --card2: #f7f8fa;
       --accent: #e94560;
-      --green: #00c896;
+      --green: #2d8c65;
       --text: #1a1a2e;
-      --muted: #666;
-      --radius: 12px;
+      --muted: #6b7280;
+      --gray-bg: #F0F1F5;
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
       background: #ffffff;
       color: var(--text);
       min-height: 100vh;
+      line-height: 1.6;
     }
 
     /* ── HERO ── */
@@ -45,16 +49,16 @@
       gap: 10px;
       font-size: 1.6rem;
       font-weight: 800;
-      color: #3a3a5c;
+      color: var(--primary);
       letter-spacing: -0.5px;
     }
-    .logo span { color: #5c7aaa; }
+    .logo span { color: var(--primary); font-weight: 400; }
     .tagline { font-size: 0.85rem; color: var(--muted); margin-top: 2px; font-weight: 400; }
 
     /* ── SEARCH BAR ── */
     .search-section {
       background: #f5f6f8;
-      padding: 36px 24px;
+      padding: 48px 24px;
       text-align: center;
     }
     .search-section h1 {
@@ -65,66 +69,72 @@
       color: var(--text);
       letter-spacing: -0.5px;
     }
-    .search-section h1 em { color: #5c7aaa; font-style: italic; }
-    .search-section p { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
+    .search-section h1 em { color: var(--primary); font-style: italic; }
+    .search-section p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; font-weight: 400; }
     .search-bar {
       display: flex;
-      max-width: 560px;
+      max-width: 580px;
       margin: 0 auto;
-      gap: 8px;
+      gap: 10px;
     }
     .search-bar input {
       flex: 1;
-      padding: 14px 18px;
-      border-radius: var(--radius);
+      padding: 16px 20px;
+      border-radius: 12px;
       border: 2px solid #dde0ea;
       background: #ffffff;
       color: var(--text);
       font-size: 1rem;
+      font-family: inherit;
       outline: none;
-      transition: border 0.2s;
+      transition: border 0.2s ease;
     }
-    .search-bar input:focus { border-color: #5c7aaa; }
+    .search-bar input:focus { border-color: var(--primary); }
     .search-bar button {
-      padding: 14px 22px;
-      background: #5c7aaa;
+      padding: 16px 24px;
+      background: var(--primary);
       color: #fff;
       font-weight: 700;
       font-size: 0.95rem;
+      font-family: inherit;
       border: none;
-      border-radius: var(--radius);
+      border-radius: 12px;
       cursor: pointer;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s ease;
     }
-    .search-bar button:hover { opacity: 0.85; }
+    .search-bar button:hover { opacity: 0.88; }
 
     /* ── FILTERS ── */
     .filters {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 8px;
       max-width: 1200px;
-      margin: 24px auto 0;
+      margin: 32px auto 0;
       padding: 0 24px;
       align-items: center;
+      overflow-x: auto;
     }
-    .filter-label { font-size: 0.85rem; color: var(--muted); margin-right: 4px; }
+    .filter-label { font-size: 0.85rem; color: var(--muted); margin-right: 4px; white-space: nowrap; font-weight: 500; }
     .chip {
-      padding: 7px 16px;
+      padding: 8px 18px;
       border-radius: 99px;
       border: 1.5px solid #c8ccd8;
       background: transparent;
       color: var(--text);
       font-size: 0.82rem;
+      font-family: inherit;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
-    .chip:hover, .chip.active { background: #5c7aaa; color: #fff; border-color: #5c7aaa; font-weight: 700; }
+    .chip:hover { border-color: var(--primary); color: var(--primary); }
+    .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); font-weight: 600; }
 
     /* ── SORT ── */
     .results-header {
       max-width: 1200px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       padding: 0 24px;
       display: flex;
       align-items: center;
@@ -132,14 +142,15 @@
       flex-wrap: wrap;
       gap: 8px;
     }
-    .results-count { font-size: 0.9rem; color: var(--muted); }
+    .results-count { font-size: 0.9rem; color: var(--muted); font-weight: 400; }
     .sort-select {
       background: var(--card);
       border: 1.5px solid #c8ccd8;
       color: var(--text);
-      padding: 7px 14px;
-      border-radius: 8px;
+      padding: 8px 14px;
+      border-radius: 99px;
       font-size: 0.85rem;
+      font-family: inherit;
       cursor: pointer;
       outline: none;
     }
@@ -148,9 +159,9 @@
     .casino-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
+      gap: 24px;
       max-width: 1200px;
-      margin: 20px auto 60px;
+      margin: 32px auto 80px;
       padding: 0 24px;
     }
 
@@ -160,16 +171,17 @@
       border-radius: 16px;
       border: 1.5px solid #e0e2ec;
       overflow: hidden;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     }
-    .casino-card:hover { transform: translateY(-4px); border-color: #5c7aaa; box-shadow: 0 4px 16px rgba(92,122,170,0.15); }
-    .casino-card.featured { border-color: #5c7aaa; }
+    .casino-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 8px 24px rgba(74,114,184,0.15); }
+    .casino-card.featured { border-color: var(--primary); }
 
     .card-header {
-      padding: 18px 20px 14px;
+      padding: 20px 24px 16px;
       background: var(--card2);
       display: flex;
       align-items: flex-start;
@@ -186,12 +198,9 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.82) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.65) 100%);
       border-radius: 0;
       pointer-events: none;
-    }
-    body.light-mode .card-header.has-image::before {
-      background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.75) 100%);
     }
     .card-header.has-image > * { position: relative; z-index: 1; }
     .casino-emoji { font-size: 2.2rem; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
@@ -222,21 +231,21 @@
     .score-badge.mid { background: #e0e2ec; color: #1a1a2e; }
     .score-badge.low { background: #e0e2ec; color: #1a1a2e; }
 
-    .card-body { padding: 16px 20px; flex: 1; }
+    .card-body { padding: 20px 24px; flex: 1; }
 
     /* stat rows */
     .stat-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 7px 0;
+      padding: 8px 0;
       border-bottom: 1px solid #eceef4;
       font-size: 0.85rem;
     }
     .stat-row:last-child { border-bottom: none; }
-    .stat-label { color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .stat-label { color: var(--muted); font-weight: 400; }
     .stat-value { font-weight: 600; }
-    .stat-value.green { color: #2d8c65; }
+    .stat-value.green { color: var(--green); }
     .stat-value.gold { color: #7a6030; }
     .stat-value.red { color: #a04060; }
 
@@ -247,37 +256,38 @@
       padding: 3px 10px;
       border-radius: 99px;
       background: #eceef4;
-      color: #666;
+      color: #6b7280;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .tag.hot { background: #f5e8ec; color: #a04060; }
-    .tag.bingo { background: #e4f2ec; color: #2d7a5a; }
-    .tag.poker { background: #e8eef5; color: #3a6090; }
-    .tag.slots { background: #eef1f8; color: #3a5888; }
-    .tag.sports { background: #ede8f5; color: #6040a0; }
+    .tag.bingo { background: #eceef4; color: #6b7280; }
+    .tag.poker { background: #eceef4; color: #6b7280; }
+    .tag.slots { background: #eceef4; color: #6b7280; }
+    .tag.sports { background: #eceef4; color: #6b7280; }
 
     .card-footer {
-      padding: 14px 20px;
+      padding: 16px 24px;
       background: #f5f6f8;
       display: flex;
       gap: 8px;
     }
     .btn {
       flex: 1;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
       border: none;
       font-size: 0.82rem;
-      font-weight: 700;
+      font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
       text-align: center;
-      transition: opacity 0.15s;
+      transition: opacity 0.2s ease;
     }
-    .btn:hover { opacity: 0.85; }
-    .btn-primary { background: #5c7aaa; color: #fff; }
-    .btn-secondary { background: #e0e2ec; color: var(--text); }
+    .btn:hover { opacity: 0.88; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-secondary { background: var(--gray-bg); color: var(--text); }
 
     /* ── MODAL ── */
     .modal-overlay {
@@ -326,8 +336,9 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #5c7aaa;
+      color: var(--primary);
       margin-bottom: 10px;
+      font-weight: 600;
     }
     .loyalty-tier {
       display: flex;
@@ -361,12 +372,12 @@
       background: #f5f6f8;
       border-top: 1px solid #e0e2ec;
       border-bottom: 1px solid #e0e2ec;
-      padding: 32px 24px;
+      padding: 48px 24px;
       margin: 0;
     }
     .market-inner { max-width: 1200px; margin: 0 auto; }
-    .market-inner h2 { font-size: 1.3rem; margin-bottom: 6px; }
-    .market-inner p { color: var(--muted); font-size: 0.88rem; margin-bottom: 20px; }
+    .market-inner h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+    .market-inner p { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; font-weight: 400; }
     .opp-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -392,7 +403,7 @@
       border-top: 1px solid #e0e2ec;
       background: #f5f6f8;
     }
-    footer a { color: #5c7aaa; text-decoration: none; }
+    footer a { color: var(--primary); text-decoration: none; }
 
     .hidden { display: none !important; }
 
@@ -401,71 +412,75 @@
       position: fixed;
       bottom: 0; left: 0; right: 0;
       background: #ffffff;
-      border-top: 2px solid #5c7aaa;
+      border-top: 2px solid var(--primary);
       padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       z-index: 50;
       transform: translateY(100%);
-      transition: transform 0.3s;
+      transition: transform 0.3s ease;
     }
     .compare-bar.visible { transform: translateY(0); }
-    .compare-names { font-size: 0.88rem; color: var(--muted); }
-    .compare-names strong { color: #5c7aaa; }
+    .compare-names { font-size: 0.88rem; color: var(--muted); font-weight: 400; }
+    .compare-names strong { color: var(--primary); }
     .compare-btn {
-      background: #5c7aaa;
+      background: var(--primary);
       color: #fff;
       border: none;
       padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 700;
+      border-radius: 99px;
+      font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
+      transition: opacity 0.2s ease;
     }
+    .compare-btn:hover { opacity: 0.88; }
 
     /* ── REPORT WIN BUTTON ── */
     .report-win-btn {
-      background: #4a9a78;
+      background: var(--green);
       color: #fff;
       border: none;
       padding: 10px 20px;
-      border-radius: var(--radius);
-      font-weight: 800;
+      border-radius: 99px;
+      font-weight: 600;
       font-size: 0.88rem;
+      font-family: inherit;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: opacity 0.2s ease;
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    .report-win-btn:hover { opacity: 0.9; transform: scale(1.03); }
+    .report-win-btn:hover { opacity: 0.88; }
 
     /* ── COMMUNITY WINS SECTION ── */
     .community-section {
       background: #f5f6f8;
       border-top: 1px solid #e0e2ec;
       border-bottom: 1px solid #e0e2ec;
-      padding: 32px 24px;
+      padding: 48px 24px;
     }
     .community-inner { max-width: 1200px; margin: 0 auto; }
-    .community-inner h2 { font-size: 1.3rem; margin-bottom: 4px; }
-    .community-inner .section-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 20px; }
+    .community-inner h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+    .community-inner .section-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 24px; font-weight: 400; }
     .wins-feed {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 14px;
+      gap: 16px;
     }
     .win-card {
       background: #ffffff;
       border: 1px solid #e0e2ec;
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 16px;
+      padding: 18px 20px;
       position: relative;
-      transition: border-color 0.2s;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     }
-    .win-card:hover { border-color: #5c7aaa; }
-    .win-card.verified { border-color: #4a9a78; }
+    .win-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(74,114,184,0.12); }
+    .win-card.verified { border-color: var(--green); }
     .win-amount {
       font-size: 1.5rem;
       font-weight: 800;
@@ -526,14 +541,14 @@
       background: #ffffff;
       border: 1.5px solid #d0d2e0;
       color: var(--text);
-      padding: 11px 14px;
-      border-radius: 8px;
+      padding: 12px 14px;
+      border-radius: 10px;
       font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s ease;
       font-family: inherit;
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #5c7aaa; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--primary); }
     .form-select option { background: #ffffff; }
     .form-textarea { resize: vertical; min-height: 72px; }
     .photo-upload-zone {
@@ -567,17 +582,18 @@
     .submit-btn {
       width: 100%;
       padding: 14px;
-      background: #4a9a78;
+      background: var(--green);
       color: #fff;
-      font-weight: 800;
+      font-weight: 700;
       font-size: 1rem;
+      font-family: inherit;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: opacity 0.2s ease;
       margin-top: 6px;
     }
-    .submit-btn:hover { opacity: 0.9; transform: scale(1.01); }
+    .submit-btn:hover { opacity: 0.88; }
     .success-msg {
       text-align: center;
       padding: 32px 20px;
@@ -620,7 +636,7 @@
       color: #666;
       line-height: 1.5;
     }
-    .disclosure-banner a { color: #5c7aaa; text-decoration: underline; }
+    .disclosure-banner a { color: var(--primary); text-decoration: underline; }
     .disclosure-banner a:hover { color: #3a5888; }
 
     /* ── AFFILIATE BUTTON ── */
@@ -628,21 +644,22 @@
       display: block;
       width: 100%;
       padding: 14px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: none;
       font-size: 0.95rem;
-      font-weight: 800;
+      font-weight: 700;
+      font-family: inherit;
       cursor: pointer;
       text-align: center;
       text-decoration: none;
-      background: #5c7aaa;
+      background: var(--primary);
       color: #fff;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: opacity 0.2s ease;
       margin-top: 10px;
     }
-    .btn-affiliate:hover { opacity: 0.88; transform: scale(1.01); }
+    .btn-affiliate:hover { opacity: 0.88; }
     .btn-affiliate.website-fallback {
-      background: #e0e2ec;
+      background: var(--gray-bg);
       color: var(--text);
     }
     .affiliate-disclosure-note {
@@ -664,7 +681,7 @@
       border: 1.5px solid transparent;
     }
     .region-option:hover { background: #eef1f8; }
-    .region-option.active { border-color: #5c7aaa; background: #eef1f8; }
+    .region-option.active { border-color: var(--primary); background: #eef1f8; }
 
     /* ═══════════════════════════════════════════
        CASINO EVENTS LEGEND DOTS
@@ -673,18 +690,18 @@
       background: #ffffff;
       border-top: 1px solid #e0e2ec;
       border-bottom: 1px solid #e0e2ec;
-      padding: 32px 24px;
+      padding: 48px 24px;
     }
     .events-inner { max-width: 1200px; margin: 0 auto; }
     .events-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 10px;
     }
-    .events-header-left h2 { font-size: 1.3rem; margin-bottom: 2px; }
+    .events-header-left h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 2px; }
     .events-region-badge {
       font-size: 0.78rem;
       color: var(--muted);
@@ -716,18 +733,19 @@
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
     }
-    .events-view-btn.active { background: #5c7aaa; color: #fff; }
+    .events-view-btn.active { background: var(--primary); color: #fff; }
     .events-nav-btn {
-      background: #eceef4;
+      background: var(--gray-bg);
       border: 1px solid #d8dae8;
       color: var(--text);
       padding: 7px 14px;
-      border-radius: 8px;
+      border-radius: 99px;
       cursor: pointer;
       font-size: 0.85rem;
-      transition: background 0.15s, border-color 0.15s;
+      font-family: inherit;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
-    .events-nav-btn:hover { background: #dde0ea; border-color: #5c7aaa; }
+    .events-nav-btn:hover { background: #dde0ea; border-color: var(--primary); }
     .events-week-label {
       font-size: 0.85rem;
       color: var(--muted);
@@ -748,7 +766,7 @@
       padding: 8px 6px;
       min-height: 100px;
     }
-    .day-col.today-col { border-color: #5c7aaa; background: #eef1f8; }
+    .day-col.today-col { border-color: var(--primary); background: #eef1f8; }
     .day-header {
       font-size: 0.68rem;
       color: var(--muted);
@@ -765,7 +783,7 @@
       padding-bottom: 6px;
       border-bottom: 1px solid #1e1e3e;
     }
-    .day-date.today { color: #5c7aaa; }
+    .day-date.today { color: var(--primary); }
     .event-pill {
       padding: 4px 8px;
       border-radius: 6px;
@@ -779,11 +797,11 @@
     .event-pill .pill-casino { font-size: 0.62rem; opacity: 0.8; display: block; margin-bottom: 1px; }
     .event-pill .pill-title { font-weight: 600; display: block; }
     .event-pill .pill-time { font-size: 0.6rem; opacity: 0.75; display: block; margin-top: 1px; }
-    .event-pill.drawing { background: #eef1f8; color: #3a5888; border-left: 2px solid #5c7aaa; }
+    .event-pill.drawing { background: #eef1f8; color: #3a5888; border-left: 2px solid var(--primary); }
     .event-pill.bingo { background: #e4f2ec; color: #2d7a5a; border-left: 2px solid #4a9a78; }
     .event-pill.concert { background: #ede8f5; color: #6040a0; border-left: 2px solid #9070c8; }
     .event-pill.tournament { background: #f5e8ec; color: #a04060; border-left: 2px solid #c06080; }
-    .event-pill.promotion { background: #e8eef5; color: #3a6090; border-left: 2px solid #5c7aaa; }
+    .event-pill.promotion { background: #e8eef5; color: #3a6090; border-left: 2px solid var(--primary); }
     .event-pill.other { background: #eceef4; color: #888; border-left: 2px solid #b0b4c0; }
     .day-no-events { font-size: 0.65rem; color: #b0b4c0; text-align: center; padding: 10px 0; }
     /* List view */
@@ -794,7 +812,7 @@
     .event-date-header {
       font-size: 0.85rem;
       font-weight: 700;
-      color: #5c7aaa;
+      color: var(--primary);
       padding: 6px 0;
       border-bottom: 1px solid #dde0ea;
       margin-bottom: 10px;
@@ -812,7 +830,7 @@
       transition: border-color 0.15s;
       box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
-    .event-list-item:hover { border-color: #5c7aaa; }
+    .event-list-item:hover { border-color: var(--primary); }
     .event-list-type-dot {
       width: 10px;
       height: 10px;
@@ -820,11 +838,11 @@
       flex-shrink: 0;
       margin-top: 4px;
     }
-    .event-list-type-dot.drawing { background: #5c7aaa; }
+    .event-list-type-dot.drawing { background: var(--primary); }
     .event-list-type-dot.bingo { background: #4a9a78; }
     .event-list-type-dot.concert { background: #9070c8; }
     .event-list-type-dot.tournament { background: #c06080; }
-    .event-list-type-dot.promotion { background: #5c7aaa; }
+    .event-list-type-dot.promotion { background: var(--primary); }
     .event-list-type-dot.other { background: #b0b4c0; }
     .event-list-info { flex: 1; }
     .event-list-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
@@ -907,7 +925,7 @@
       border: 1px solid #d0d2e0;
       transition: border-color 0.15s;
     }
-    .event-detail-link:hover { border-color: #5c7aaa; }
+    .event-detail-link:hover { border-color: var(--primary); }
     /* Events legend */
     .events-legend {
       display: flex;
@@ -946,13 +964,14 @@
     }
 
     /* ═══════════════════════════════════════════
-       DAILY SPIN SECTION
+       DAILY SPIN SECTION — de-emphasized
     ═══════════════════════════════════════════ */
     .daily-spin-section {
-      background: #f5f6f8;
-      border-top: 1px solid #e0e2ec;
-      border-bottom: 1px solid #e0e2ec;
-      padding: 16px 24px;
+      background: #f9fafb;
+      border-top: 1px solid #eceef4;
+      border-bottom: 1px solid #eceef4;
+      padding: 12px 24px;
+      opacity: 0.85;
     }
     .daily-spin-inner { max-width: 1200px; margin: 0 auto; }
     .slot-inline-layout {
@@ -976,20 +995,21 @@
       background: transparent;
       border: none;
       border-radius: 0;
-      padding: 24px 20px 20px;
+      padding: 10px 20px 10px;
       text-align: center;
     }
     .slot-title-a {
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: #3a3a5c;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--muted);
       margin: 0 0 2px;
-      letter-spacing: 1px;
+      letter-spacing: 0;
     }
     .slot-subtitle-a {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--muted);
       margin: 0;
+      font-weight: 400;
     }
     .reels-container-a {
       position: relative;
@@ -1049,22 +1069,22 @@
       50% { opacity: 0.2; }
     }
     .spin-btn-a {
-      background: #5c7aaa;
+      background: var(--primary);
       color: #fff;
       border: none;
-      padding: 10px 32px;
-      font-size: 1rem;
-      font-weight: 800;
-      border-radius: 50px;
+      padding: 8px 24px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: 99px;
       cursor: pointer;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: opacity 0.2s ease;
       margin-bottom: 0;
     }
     .spin-btn-a:hover:not(:disabled) {
-      transform: scale(1.05);
-      box-shadow: 0 0 16px rgba(92,122,170,0.4);
+      opacity: 0.88;
     }
     .spin-btn-a:active:not(:disabled) { transform: scale(0.97); }
     .spin-btn-a:disabled {
@@ -1085,7 +1105,7 @@
     }
     .spin-cta-a {
       font-size: 0.82rem;
-      color: #5c7aaa;
+      color: var(--primary);
       text-decoration: none;
       cursor: pointer;
       display: inline-block;
@@ -1236,7 +1256,7 @@
     }
     .font-size-btn:first-child { font-size: 0.7rem; }
     .font-size-btn:last-child { font-size: 0.92rem; }
-    .font-size-btn.active { background: #5c7aaa; color: #fff; }
+    .font-size-btn.active { background: var(--primary); color: #fff; }
     .font-size-btn:hover:not(.active) { color: var(--text); }
 
     body.font-large { font-size: 17px; }
@@ -1288,17 +1308,17 @@
       border-radius: 50%;
       flex-shrink: 0;
     }
-    .card-event-dot.drawing    { background: #5c7aaa; }
+    .card-event-dot.drawing    { background: var(--primary); }
     .card-event-dot.bingo      { background: #4a9a78; }
     .card-event-dot.concert    { background: #9070c8; }
     .card-event-dot.tournament { background: #c06080; }
-    .card-event-dot.promotion  { background: #5c7aaa; }
+    .card-event-dot.promotion  { background: var(--primary); }
     .card-event-dot.other      { background: #b0b4c0; }
     .card-event-title { font-weight: 600; flex: 1; }
     .card-event-date  { font-size: 0.72rem; opacity: 0.75; white-space: nowrap; }
     .card-events-more {
       font-size: 0.72rem;
-      color: #5c7aaa;
+      color: var(--primary);
       cursor: pointer;
       padding: 2px 0;
     }
@@ -1321,8 +1341,8 @@
       transition: all 0.15s;
       white-space: nowrap;
     }
-    .btn-helpful:hover { border-color: #5c7aaa; color: #5c7aaa; background: #eef1f8; }
-    .btn-helpful.voted { background: #eef1f8; border-color: #5c7aaa; color: #5c7aaa; }
+    .btn-helpful:hover { border-color: var(--primary); color: var(--primary); background: #eef1f8; }
+    .btn-helpful.voted { background: #eef1f8; border-color: var(--primary); color: var(--primary); }
     .btn-helpful .helpful-count { font-size: 0.75rem; opacity: 0.8; }
 
     .btn-call {
@@ -1342,27 +1362,30 @@
     .btn-call:hover { background: #d0eadc; }
 
     /* ═══════════════════════════════════════════
-       FEATURE 4: DEAL OF THE DAY BANNER
+       FEATURE 4: DEAL OF THE DAY — CARD STYLE
     ═══════════════════════════════════════════ */
     #dealOfDayBanner {
-      background: #f0f4f8;
-      border-top: 1px solid #d0d8e8;
-      border-bottom: 1px solid #d0d8e8;
-      padding: 14px 24px;
+      background: transparent;
+      padding: 0 24px 16px;
     }
     .deal-inner {
       max-width: 1200px;
       margin: 0 auto;
+      background: #ffffff;
+      border: 1.5px solid #e0e2ec;
+      border-radius: 16px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     }
     .deal-badge {
-      background: #5c7aaa;
+      background: var(--primary);
       color: #fff;
       font-size: 0.72rem;
-      font-weight: 800;
+      font-weight: 700;
       padding: 4px 12px;
       border-radius: 99px;
       text-transform: uppercase;
@@ -1372,56 +1395,78 @@
     }
     .deal-content { flex: 1; min-width: 150px; }
     .deal-title { font-weight: 700; font-size: 0.95rem; color: var(--text); }
-    .deal-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .deal-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; font-weight: 400; }
     .deal-prize {
       font-size: 1.2rem;
-      font-weight: 800;
-      color: #3a5888;
+      font-weight: 700;
+      color: var(--primary);
       white-space: nowrap;
     }
     .deal-cta {
-      background: #5c7aaa;
+      background: var(--primary);
       color: #fff;
       border: none;
-      padding: 8px 18px;
-      border-radius: 8px;
-      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 99px;
+      font-weight: 600;
       font-size: 0.82rem;
+      font-family: inherit;
       cursor: pointer;
       white-space: nowrap;
-      transition: opacity 0.15s;
+      transition: opacity 0.2s ease;
     }
-    .deal-cta:hover { opacity: 0.85; }
+    .deal-cta:hover { opacity: 0.88; }
     
 
     /* ═══════════════════════════════════════════
-       FEATURE 5: BEST FOR SHORTCUTS
+       FEATURE 5: BEST FOR SHORTCUTS — collapsible
     ═══════════════════════════════════════════ */
     .best-for-section {
-      display: flex;
+      max-width: 1200px;
+      margin: 12px auto 0;
+      padding: 0 24px;
+    }
+    .best-for-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 99px;
+      border: 1.5px solid #c8ccd8;
+      background: #ffffff;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .best-for-toggle:hover { border-color: var(--primary); color: var(--primary); }
+    .best-for-dropdown {
+      display: none;
       flex-wrap: wrap;
       gap: 8px;
-      max-width: 1200px;
-      margin: 10px auto 0;
-      padding: 0 24px;
+      margin-top: 10px;
       align-items: center;
     }
+    .best-for-dropdown.open { display: flex; }
     .best-for-btn {
-      padding: 9px 18px;
+      padding: 8px 18px;
       border-radius: 99px;
       border: 1.5px solid #c8ccd8;
       background: #ffffff;
       color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: inherit;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
     .best-for-btn:hover {
-      border-color: #5c7aaa;
+      border-color: var(--primary);
       background: #eef1f8;
-      color: #3a5888;
+      color: var(--primary);
     }
   </style>
 </head>
@@ -1436,9 +1481,9 @@
   <div style="display:flex;gap:10px;align-items:center">
     <div style="display:flex;align-items:center;gap:8px">
       <span id="currentRegionLabel" style="font-size:0.8rem;color:var(--muted)">📍 Las Vegas, NV</span>
-      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change Location</button>
+      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem;border-radius:99px" onclick="openRegionPicker()">Change Location</button>
     </div>
-    <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
+    <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
     <div class="font-size-btns" title="Text size">
       <button class="font-size-btn" onclick="setFontSize('normal')" id="fsBtn1">A</button>
       <button class="font-size-btn" onclick="setFontSize('large')" id="fsBtn2">AA</button>
@@ -1500,22 +1545,26 @@
 <div class="filters">
   <span class="filter-label">Filter:</span>
   <button class="chip active" onclick="setFilter('all', this)">All Casinos</button>
-  <button class="chip" onclick="setFilter('bingo', this)">🟢 Has Bingo</button>
-  <button class="chip" onclick="setFilter('poker', this)">♠️ Poker Room</button>
-  <button class="chip" onclick="setFilter('slots', this)">🎰 Loose Slots</button>
-  <button class="chip" onclick="setFilter('sports', this)">🏈 Sportsbook</button>
+  <button class="chip" onclick="setFilter('bingo', this)">Has Bingo</button>
+  <button class="chip" onclick="setFilter('poker', this)">Poker Room</button>
+  <button class="chip" onclick="setFilter('slots', this)">Loose Slots</button>
+  <button class="chip" onclick="setFilter('sports', this)">Sportsbook</button>
   <button class="chip" onclick="setFilter('hot', this)">🔥 Hot Jackpots</button>
 </div>
 
-<!-- BEST FOR SHORTCUTS -->
+<!-- BEST FOR SHORTCUTS — collapsible -->
 <div class="best-for-section">
-  <span class="filter-label">Best for:</span>
-  <button class="best-for-btn" onclick="applyBestFor('bingo')">🟢 Bingo Players</button>
-  <button class="best-for-btn" onclick="applyBestFor('poker')">♠️ Poker Players</button>
-  <button class="best-for-btn" onclick="applyBestFor('slots')">🎰 Slot Lovers</button>
-  <button class="best-for-btn" onclick="applyBestFor('hot')">🔥 Hot Jackpots</button>
-  <button class="best-for-btn" onclick="applyBestFor('hotel')">🏨 Overnight Stays</button>
-  <button class="best-for-btn" onclick="applyBestFor('parking')">🅿️ Free Parking</button>
+  <button class="best-for-toggle" onclick="this.nextElementSibling.classList.toggle('open')">
+    Best for ▾
+  </button>
+  <div class="best-for-dropdown">
+    <button class="best-for-btn" onclick="applyBestFor('bingo')">Bingo Players</button>
+    <button class="best-for-btn" onclick="applyBestFor('poker')">Poker Players</button>
+    <button class="best-for-btn" onclick="applyBestFor('slots')">Slot Lovers</button>
+    <button class="best-for-btn" onclick="applyBestFor('hot')">🔥 Hot Jackpots</button>
+    <button class="best-for-btn" onclick="applyBestFor('hotel')">Overnight Stays</button>
+    <button class="best-for-btn" onclick="applyBestFor('parking')">Free Parking</button>
+  </div>
 </div>
 
 <!-- RESULTS HEADER -->
@@ -1536,7 +1585,7 @@
 <!-- COMMUNITY WINS FEED -->
 <div class="community-section">
   <div class="community-inner">
-    <h2>🏆 Recent Community Wins <span id="liveIndicator" style="display:none;font-size:0.7rem;background:#cc0000;color:#fff;padding:2px 8px;border-radius:20px;vertical-align:middle;animation:pulse 2s infinite">🔴 Live</span></h2>
+    <h2 style="font-size:1.4rem;font-weight:700;">🏆 Recent Community Wins <span id="liveIndicator" style="display:none;font-size:0.7rem;background:#cc0000;color:#fff;padding:2px 8px;border-radius:20px;vertical-align:middle;animation:pulse 2s infinite">🔴 Live</span></h2>
     <p class="section-sub">Real jackpots reported by JackpotMap users · <span id="winsCount" style="color:var(--green);font-weight:700">0 reports</span></p>
     <div class="wins-feed" id="winsFeed">
       <div class="wins-empty">
@@ -1563,7 +1612,7 @@
 <!-- BUSINESS OPPORTUNITY SECTION -->
 <div class="market-section">
   <div class="market-inner">
-    <h2>💡 Business Opportunity Analysis</h2>
+    <h2 style="font-size:1.4rem;font-weight:700;">💡 Business Opportunity Analysis</h2>
     <p>Why a "Kayak for Casinos" app is a compelling market opportunity</p>
     <div class="opp-grid">
       <div class="opp-card">
@@ -2236,7 +2285,7 @@ function renderCards(data) {
           <div>
             <div class="casino-name">${c.name}</div>
             <div class="casino-location">📍 ${c.location}</div>
-            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">${c.chain}</div>
+            ${c.chain && c.chain !== 'Independent' ? `<div style="font-size:0.75rem;color:var(--muted);margin-top:2px">${c.chain}</div>` : ''}
           </div>
         </div>
         <div class="score-badge ${c.scoreClass}" title="Overall Score">${c.score}</div>
@@ -2246,44 +2295,44 @@ function renderCards(data) {
           const dist = distanceMiles(userLat, userLng, c.lat, c.lng);
           const fmt = formatDistance(dist);
           return fmt ? `<div class="stat-row">
-          <span class="stat-label">📍 Distance</span>
+          <span class="stat-label">Distance</span>
           <span class="stat-value">${fmt}</span>
         </div>` : '';
         })()}
         ${c.yelpRating ? `
         <div class="stat-row">
-          <span class="stat-label">⭐ Yelp Rating</span>
-          <span class="stat-value ${c.yelpRating >= 4 ? 'green' : c.yelpRating >= 3 ? 'gold' : 'red'}">
+          <span class="stat-label">Yelp Rating</span>
+          <span class="stat-value ${c.yelpRating >= 4 ? 'green' : c.yelpRating >= 3 ? '' : ''}">
             ${c.yelpRating.toFixed(1)} ★
             ${c.reviewCount ? `<span style="font-size:0.78rem;color:var(--muted)">(${c.reviewCount})</span>` : ''}
           </span>
         </div>` : ''}
         ${c.slotPayback !== 'N/A' ? `<div class="stat-row">
-          <span class="stat-label">🎰 Slot Payback</span>
+          <span class="stat-label">Slot Payback</span>
           <span class="stat-value green">${c.slotPayback}</span>
         </div>` : ''}
         ${c.largestJackpot !== 'N/A' ? `<div class="stat-row">
-          <span class="stat-label">💰 Largest Jackpot</span>
-          <span class="stat-value gold">${c.largestJackpot}</span>
+          <span class="stat-label">Largest Jackpot</span>
+          <span class="stat-value" style="color:var(--gold);font-weight:700">${c.largestJackpot}</span>
         </div>` : ''}
         ${c.jackpotFreq !== 'Unknown' ? `<div class="stat-row">
-          <span class="stat-label">⚡ Jackpot Frequency</span>
+          <span class="stat-label">Jackpot Frequency</span>
           <span class="stat-value">${c.jackpotFreq}</span>
         </div>` : ''}
         <div class="stat-row">
-          <span class="stat-label">🏆 Loyalty Program</span>
+          <span class="stat-label">Loyalty Program</span>
           <span class="stat-value">${c.loyaltyProgram}</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">⭐ Loyalty Score</span>
-          <span class="stat-value ${c.loyaltyScore >= 9 ? 'green' : c.loyaltyScore >= 7.5 ? 'gold' : 'red'}">${c.loyaltyScore}/10</span>
+          <span class="stat-label">Loyalty Score</span>
+          <span class="stat-value ${c.loyaltyScore >= 9 ? 'green' : c.loyaltyScore >= 7.5 ? '' : ''}">${c.loyaltyScore}/10</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">🅿️ Parking</span>
-          <span class="stat-value ${c.parkingFree ? 'green' : ''}">${c.parkingFree ? 'Free' : 'Paid'}</span>
+          <span class="stat-label">Parking</span>
+          <span class="stat-value ${c.parkingFree ? 'green' : ''}">${c.parkingFree ? 'Free ✓' : 'Paid'}</span>
         </div>
         ${c.minBet && c.minBet !== 'Varies' ? `<div class="stat-row">
-          <span class="stat-label">💵 Min Table Bet</span>
+          <span class="stat-label">Min Table Bet</span>
           <span class="stat-value">${c.minBet}</span>
         </div>` : ''}
         <div class="tags">${tagHtml}</div>
@@ -2378,7 +2427,7 @@ async function openModal(id) {
       <button class="modal-close" onclick="closeModalBtn()">✕</button>
     </div>
     <div class="modal-body">
-      <div style="background:#111120;border-radius:10px;padding:14px;margin-bottom:18px;font-size:0.85rem;color:#ccc;line-height:1.5;border-left:3px solid var(--gold)">
+      <div style="background:#f5f6f8;border-radius:10px;padding:14px;margin-bottom:18px;font-size:0.85rem;color:var(--muted);line-height:1.6;border-left:3px solid var(--primary)">
         ${c.notes}
       </div>
 
@@ -2415,7 +2464,7 @@ async function openModal(id) {
         <div class="stat-row"><span class="stat-label">Min Table Bet</span><span class="stat-value">${c.minBet}</span></div>
         <div class="stat-row"><span class="stat-label">Free Parking</span><span class="stat-value ${c.parkingFree ? 'green' : 'red'}">${c.parkingFree ? 'Yes ✓' : 'No ✗'}</span></div>
         <div class="stat-row"><span class="stat-label">Hotel On-site</span><span class="stat-value ${c.hotelOnsite ? 'green' : 'red'}">${c.hotelOnsite ? 'Yes ✓' : 'No ✗'}</span></div>
-        ${(() => { const d = formatDistance(distanceMiles(userLat, userLng, c.lat, c.lng)); return d ? `<div class="stat-row"><span class="stat-label">📍 Distance</span><span class="stat-value">${d} from you</span></div>` : ''; })()}
+        ${(() => { const d = formatDistance(distanceMiles(userLat, userLng, c.lat, c.lng)); return d ? `<div class="stat-row"><span class=stat-label>Distance</span><span class="stat-value">${d} from you</span></div>` : ''; })()}
         ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--muted);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
@@ -2828,7 +2877,7 @@ function renderWinsFeed() {
         <div class="win-amount">$${Number(w.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</div>
         <div class="win-machine">🎰 ${w.machine}</div>
         <div class="win-meta">📍 ${w.casino} · ${timeAgo}</div>
-        ${w.notes ? `<div style="font-size:0.78rem;color:#aaa;margin-top:6px;border-top:1px solid #1a4a1a;padding-top:6px">${w.notes}</div>` : ''}
+        ${w.notes ? `<div style="font-size:0.78rem;color:var(--muted);margin-top:6px;border-top:1px solid #eceef4;padding-top:6px">${w.notes}</div>` : ''}
       </div>`;
   }).join('');
 }

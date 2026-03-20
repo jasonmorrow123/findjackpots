@@ -26,14 +26,20 @@ app.use(express.json());
 
 // Region definitions
 const REGIONS = {
-  'las-vegas': { states: ['NV'], city: 'Las Vegas', label: 'Las Vegas, NV', emoji: '🎰' },
-  'reno':      { states: ['NV'], city: 'Reno',      label: 'Reno, NV',      emoji: '🎲' },
-  'nevada':    { states: ['NV'], city: null,         label: 'All Nevada',    emoji: '🏜️' },
-  'midwest':   { states: ['MN','IA','IL','IN','MI','WI','MO','OH','ND','SD','NE','KS','KY'], city: null, label: 'Midwest', emoji: '🌽' },
-  'minnesota': { states: ['MN'], city: null, label: 'Minnesota', emoji: '🌲' },
-  'iowa':      { states: ['IA'], city: null, label: 'Iowa',      emoji: '🌾' },
-  'illinois':  { states: ['IL'], city: null, label: 'Illinois',  emoji: '🏙️' },
-  'michigan':  { states: ['MI'], city: null, label: 'Michigan',  emoji: '🚗' },
+  // ── Nevada ──────────────────────────────────────────────────────────────
+  'las-vegas': { states: ['NV'], city: 'Las Vegas', label: 'Las Vegas, NV',  emoji: '🎰' },
+  'reno':      { states: ['NV'], city: 'Reno',      label: 'Reno, NV',       emoji: '🎲' },
+  'nevada':    { states: ['NV'], city: null,         label: 'All Nevada',     emoji: '🏜️' },
+  // ── Midwest (all states) ─────────────────────────────────────────────────
+  'midwest':   { states: ['MN','IA','IL','IN','MI','WI','MO','OH','ND','SD','NE','KS','KY'], city: null, label: 'Midwest (All)', emoji: '🌽' },
+  'minnesota': { states: ['MN'], city: null, label: 'Minnesota',  emoji: '🌲' },
+  'iowa':      { states: ['IA'], city: null, label: 'Iowa',       emoji: '🌾' },
+  'illinois':  { states: ['IL'], city: null, label: 'Illinois',   emoji: '🏙️' },
+  'indiana':   { states: ['IN'], city: null, label: 'Indiana',    emoji: '🏎️' },
+  'michigan':  { states: ['MI'], city: null, label: 'Michigan',   emoji: '🚗' },
+  'wisconsin': { states: ['WI'], city: null, label: 'Wisconsin',  emoji: '🧀' },
+  'missouri':  { states: ['MO'], city: null, label: 'Missouri',   emoji: '🎵' },
+  'ohio':      { states: ['OH'], city: null, label: 'Ohio',       emoji: '🌰' },
 };
 
 // Serve index.html at root
@@ -105,7 +111,7 @@ app.get('/api/casinos', async (req, res) => {
         c.ngcb_county, c.affiliate_url, c.affiliate_network, c.affiliate_commission_note,
         c.monthly_revenue_cents, c.revenue_report_month, c.revenue_source,
         c.loyalty_program_name, c.loyalty_tiers, c.loyalty_points_per_dollar,
-        c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking,
+        c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking, c.has_slots,
         r.rating, r.review_count,
         j.machine_name AS latest_jackpot_machine,
         j.amount_cents AS latest_jackpot_cents,

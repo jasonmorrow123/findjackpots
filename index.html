@@ -633,6 +633,278 @@
       .search-section h1 { font-size: 1.4rem; }
       .casino-grid { grid-template-columns: 1fr; }
     }
+
+    /* ═══════════════════════════════════════════
+       DAILY SPIN SECTION
+    ═══════════════════════════════════════════ */
+    .daily-spin-section {
+      background: linear-gradient(135deg, #0a0a1a, #1a0a2e);
+      border-top: 1px solid #2a2a3e;
+      border-bottom: 1px solid #2a2a3e;
+      padding: 32px 24px;
+    }
+    .daily-spin-inner { max-width: 900px; margin: 0 auto; }
+    .spin-versions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .version-label {
+      text-align: center;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    @media (max-width: 700px) {
+      .spin-versions-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Version A: Classic ── */
+    .slot-machine-a {
+      background: #0d0d1f;
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 24px 20px 20px;
+      text-align: center;
+    }
+    .slot-title-a {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--gold);
+      margin: 0 0 4px;
+      letter-spacing: 1px;
+    }
+    .slot-subtitle-a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+    .reels-container-a {
+      position: relative;
+      display: inline-flex;
+      gap: 0;
+      background: #1a1a30;
+      border: 2px solid #3a3a5e;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .reel-a {
+      width: 100px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      line-height: 1;
+      background: #111128;
+      position: relative;
+      border-right: 2px solid #3a3a5e;
+      overflow: hidden;
+    }
+    .reel-a:last-child { border-right: none; }
+    .reel-a .reel-symbol {
+      transition: none;
+      user-select: none;
+    }
+    .reel-a.spinning .reel-symbol {
+      animation: spinSymbol 0.08s linear infinite;
+    }
+    @keyframes spinSymbol {
+      0%   { transform: translateY(0); opacity: 1; }
+      50%  { transform: translateY(-10px); opacity: 0.3; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .win-line-a {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #cc0000;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 10;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .win-line-a.flash {
+      background: var(--gold);
+      box-shadow: 0 0 16px var(--gold), 0 0 32px var(--gold);
+      animation: winLineFlash 0.5s ease-in-out 4;
+    }
+    @keyframes winLineFlash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+    .spin-btn-a {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 14px 48px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: 50px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-bottom: 14px;
+    }
+    .spin-btn-a:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(245,197,24,0.6);
+    }
+    .spin-btn-a:active:not(:disabled) { transform: scale(0.97); }
+    .spin-btn-a:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+    }
+    .result-msg-a {
+      min-height: 28px;
+      font-size: 0.92rem;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+    .result-msg-a .confetti { font-size: 1.4rem; animation: confettiBounce 0.6s ease infinite alternate; }
+    @keyframes confettiBounce {
+      from { transform: scale(1); }
+      to { transform: scale(1.3) rotate(10deg); }
+    }
+    .spin-cta-a {
+      font-size: 0.82rem;
+      color: var(--gold);
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 4px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .spin-cta-a.visible { opacity: 1; }
+
+    /* ── Version B: Modern ── */
+    .slot-machine-b {
+      background: #0a1a14;
+      border: 2px solid var(--green);
+      border-radius: 16px;
+      padding: 22px 20px 18px;
+      text-align: center;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+    .slot-title-b {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--green);
+      margin: 0 0 4px;
+    }
+    .slot-subtitle-b {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+    .drums-container-b {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .drum-b {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      background: #1a2e1a;
+      border: 3px solid #2a4a2a;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      perspective: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    .drum-b.spinning {
+      animation: drumSpin 0.15s linear infinite;
+    }
+    @keyframes drumSpin {
+      0%   { transform: rotateX(0deg); }
+      100% { transform: rotateX(360deg); }
+    }
+    .drum-b.pulse-win {
+      animation: drumPulse 0.4s ease-in-out 5;
+    }
+    @keyframes drumPulse {
+      0%, 100% { transform: scale(1); box-shadow: none; }
+      50% { transform: scale(1.15); box-shadow: 0 0 20px var(--green); }
+    }
+    .drum-b .drum-symbol { user-select: none; line-height: 1; }
+    .spin-btn-b {
+      width: 100%;
+      background: var(--green);
+      color: #000;
+      border: none;
+      padding: 13px 0;
+      font-size: 1rem;
+      font-weight: 800;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: opacity 0.15s, transform 0.15s;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .spin-btn-b:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+    .spin-btn-b:disabled { background: #2a4a2a; color: #666; cursor: not-allowed; }
+    .spin-icon-b { display: inline-block; }
+    .spin-btn-b.loading .spin-icon-b { animation: iconSpin 0.5s linear infinite; }
+    @keyframes iconSpin { to { transform: rotate(360deg); } }
+    .result-toast-b {
+      background: #0f2a1a;
+      border: 1px solid var(--green);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #ccc;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      margin-bottom: 8px;
+    }
+    .result-toast-b.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .lucky-casino-b {
+      font-size: 0.82rem;
+      color: var(--green);
+      margin-top: 6px;
+    }
+    .lucky-casino-b a {
+      color: var(--green);
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .spin-cta-b {
+      font-size: 0.82rem;
+      color: var(--green);
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 6px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .spin-cta-b.visible { opacity: 1; }
   </style>
 </head>
 <body>
@@ -646,7 +918,7 @@
   <div style="display:flex;gap:10px;align-items:center">
     <div style="display:flex;align-items:center;gap:8px">
       <span id="currentRegionLabel" style="font-size:0.8rem;color:var(--muted)">📍 Las Vegas, NV</span>
-      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change Region</button>
+      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change Location</button>
     </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
@@ -660,6 +932,54 @@
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search casino name, area, or game type..." oninput="filterCasinos()" />
     <button onclick="filterCasinos()">Search</button>
+  </div>
+</div>
+
+<!-- DAILY SPIN SECTION -->
+<div class="daily-spin-section" id="daily-spin-section">
+  <div class="daily-spin-inner">
+    <h2 style="text-align:center;margin-bottom:24px;font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px">🎰 Daily Spin — Choose Your Favorite Style</h2>
+    <div class="spin-versions-grid">
+
+      <!-- ═══ OPTION A: Classic 3-Reel ═══ -->
+      <div class="spin-version">
+        <div class="version-label">Option A — Classic</div>
+        <div class="slot-machine-a" id="slot-a">
+          <div class="slot-title-a">🎰 Daily Spin</div>
+          <div class="slot-subtitle-a">Spin once a day for your lucky casino!</div>
+          <div class="reels-container-a" id="reels-a">
+            <div class="reel-a" id="reel-a-0"><span class="reel-symbol" id="sym-a-0">🍒</span></div>
+            <div class="reel-a" id="reel-a-1"><span class="reel-symbol" id="sym-a-1">⭐</span></div>
+            <div class="reel-a" id="reel-a-2"><span class="reel-symbol" id="sym-a-2">🔔</span></div>
+            <div class="win-line-a" id="win-line-a"></div>
+          </div>
+          <br>
+          <button class="spin-btn-a" id="spin-btn-a" onclick="spinSlotA()">SPIN</button>
+          <div class="result-msg-a" id="result-a"></div>
+          <a class="spin-cta-a" id="cta-a" onclick="scrollToWins()">🏆 See today's top jackpots</a>
+        </div>
+      </div>
+
+      <!-- ═══ OPTION B: Modern Lucky Spinner ═══ -->
+      <div class="spin-version">
+        <div class="version-label">Option B — Modern</div>
+        <div class="slot-machine-b" id="slot-b">
+          <div class="slot-title-b">✨ Your Daily Lucky Spin</div>
+          <div class="slot-subtitle-b">Tap to reveal your lucky casino today</div>
+          <div class="drums-container-b">
+            <div class="drum-b" id="drum-b-0"><span class="drum-symbol" id="sym-b-0">🍒</span></div>
+            <div class="drum-b" id="drum-b-1"><span class="drum-symbol" id="sym-b-1">⭐</span></div>
+            <div class="drum-b" id="drum-b-2"><span class="drum-symbol" id="sym-b-2">🔔</span></div>
+          </div>
+          <button class="spin-btn-b" id="spin-btn-b" onclick="spinSlotB()">
+            <span class="spin-icon-b">🎲</span> SPIN
+          </button>
+          <div class="result-toast-b" id="result-b"></div>
+          <a class="spin-cta-b" id="cta-b" onclick="scrollToWins()">🏆 See today's top jackpots</a>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -762,7 +1082,7 @@
       <div>
         <div style="font-size:1.5rem">📍</div>
         <div style="font-size:1.1rem;font-weight:800;margin-top:4px">Choose Location</div>
-        <div style="font-size:0.82rem;color:var(--muted)">Select a region to explore casinos</div>
+        <div style="font-size:0.82rem;color:var(--muted)">Select a state or region to explore casinos</div>
       </div>
       <button class="modal-close" onclick="closeRegionPickerBtn()">✕</button>
     </div>
@@ -1143,7 +1463,7 @@ async function loadCasinos(region = 'las-vegas') {
         bingo: c.has_bingo || false,
         poker: c.has_poker || false,
         sports: c.has_sportsbook || false,
-        slots: true,
+        slots: c.has_slots !== false,
         hot: !!(c.latest_jackpot_date && (new Date() - new Date(c.latest_jackpot_date)) < 7 * 86400000),
         tables: [],
         minBet: 'Varies',
@@ -1946,6 +2266,271 @@ function urlBase64ToUint8Array(base64String) {
       }
     }
   } catch (e) { /* ignore */ }
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   DAILY SPIN — Slot Machine (Option A: Classic, Option B: Modern)
+═══════════════════════════════════════════════════════════ */
+(function() {
+  'use strict';
+
+  const SYMBOLS = ['🍒','🍒','💎','7️⃣','🔔','⭐','🎰','BAR'];
+  const SPIN_KEY_A = 'jackpotmap_spin_a';
+  const SPIN_KEY_B = 'jackpotmap_spin_b';
+
+  // Symbol → background color for Version B drums
+  const DRUM_COLORS = {
+    '🍒': '#4a1010',
+    '💎': '#102040',
+    '7️⃣': '#3a2e00',
+    '⭐': '#2a1a4a',
+    '🔔': '#3a2000',
+    '🎰': '#1a0a2e',
+    'BAR': '#1a1a1a'
+  };
+  const DRUM_BORDER_COLORS = {
+    '🍒': '#cc2222',
+    '💎': '#2244cc',
+    '7️⃣': '#c8a800',
+    '⭐': '#8833cc',
+    '🔔': '#cc6600',
+    '🎰': '#7722cc',
+    'BAR': '#555555'
+  };
+
+  function randomSymbol() {
+    return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+  }
+
+  function hasSpunToday(key) {
+    const last = localStorage.getItem(key);
+    if (!last) return false;
+    const lastDate = new Date(parseInt(last));
+    return lastDate.toDateString() === new Date().toDateString();
+  }
+
+  function recordSpin(key) {
+    localStorage.setItem(key, Date.now().toString());
+  }
+
+  function scrollToWins() {
+    const el = document.querySelector('.community-wins') || document.querySelector('[id*="win"]') || document.querySelector('section');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+  // Expose to onclick in HTML
+  window.scrollToWins = scrollToWins;
+
+  /* ─────────────────────────────────
+     VERSION A: Classic 3-Reel
+  ───────────────────────────────── */
+  let spinningA = false;
+
+  function initSlotA() {
+    const btn = document.getElementById('spin-btn-a');
+    if (!btn) return;
+    if (hasSpunToday(SPIN_KEY_A)) {
+      btn.disabled = true;
+      document.getElementById('result-a').innerHTML = '⏰ Come back tomorrow!';
+      document.getElementById('cta-a').classList.add('visible');
+    }
+  }
+
+  window.spinSlotA = function() {
+    if (spinningA || hasSpunToday(SPIN_KEY_A)) return;
+    spinningA = true;
+
+    const btn = document.getElementById('spin-btn-a');
+    const resultEl = document.getElementById('result-a');
+    const ctaEl = document.getElementById('cta-a');
+    const winLine = document.getElementById('win-line-a');
+    btn.disabled = true;
+    resultEl.innerHTML = '';
+    ctaEl.classList.remove('visible');
+    winLine.classList.remove('flash');
+
+    // Pick final symbols
+    const finals = [randomSymbol(), randomSymbol(), randomSymbol()];
+
+    // Spin all reels simultaneously with cycling animation
+    const reelEls = [
+      document.getElementById('reel-a-0'),
+      document.getElementById('reel-a-1'),
+      document.getElementById('reel-a-2')
+    ];
+    const symEls = [
+      document.getElementById('sym-a-0'),
+      document.getElementById('sym-a-1'),
+      document.getElementById('sym-a-2')
+    ];
+
+    // Start spinning CSS animation on all reels
+    reelEls.forEach(r => r.classList.add('spinning'));
+
+    // Cycle symbols rapidly during spin
+    let cycleCount = 0;
+    const cycleInterval = setInterval(() => {
+      symEls.forEach(s => { s.textContent = randomSymbol(); });
+      cycleCount++;
+    }, 75);
+
+    // Stop reels left → right with 300ms stagger
+    const stopDelays = [1200, 1500, 1800];
+    stopDelays.forEach((delay, i) => {
+      setTimeout(() => {
+        reelEls[i].classList.remove('spinning');
+        symEls[i].textContent = finals[i];
+      }, delay);
+    });
+
+    // After last reel stops
+    setTimeout(() => {
+      clearInterval(cycleInterval);
+      spinningA = false;
+      recordSpin(SPIN_KEY_A);
+      btn.disabled = true;
+
+      // Evaluate result
+      const matches = countMatches(finals);
+      if (matches === 3) {
+        winLine.classList.add('flash');
+        resultEl.innerHTML = '<span class="confetti">🎉</span> JACKPOT! Triple match! <span class="confetti">🎊</span>';
+      } else if (matches === 2) {
+        resultEl.innerHTML = 'So close! 😤 Check today\'s jackpots →';
+      } else {
+        resultEl.innerHTML = 'No match — try your luck at a real casino! 🎰';
+      }
+      ctaEl.classList.add('visible');
+    }, 2000);
+  };
+
+  /* ─────────────────────────────────
+     VERSION B: Modern Lucky Spinner
+  ───────────────────────────────── */
+  let spinningB = false;
+
+  function initSlotB() {
+    const btn = document.getElementById('spin-btn-b');
+    if (!btn) return;
+    if (hasSpunToday(SPIN_KEY_B)) {
+      btn.disabled = true;
+      showToastB('⏰ Come back tomorrow!', false);
+      document.getElementById('cta-b').classList.add('visible');
+    }
+  }
+
+  function setDrumColor(drumEl, symbol) {
+    drumEl.style.background = DRUM_COLORS[symbol] || '#1a2e1a';
+    drumEl.style.borderColor = DRUM_BORDER_COLORS[symbol] || '#2a4a2a';
+  }
+
+  function showToastB(msg, slide) {
+    const toast = document.getElementById('result-b');
+    toast.innerHTML = msg;
+    if (slide) {
+      toast.classList.remove('visible');
+      requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('visible')));
+    } else {
+      toast.classList.add('visible');
+    }
+  }
+
+  window.spinSlotB = function() {
+    if (spinningB || hasSpunToday(SPIN_KEY_B)) return;
+    spinningB = true;
+
+    const btn = document.getElementById('spin-btn-b');
+    const ctaEl = document.getElementById('cta-b');
+    const drumEls = [
+      document.getElementById('drum-b-0'),
+      document.getElementById('drum-b-1'),
+      document.getElementById('drum-b-2')
+    ];
+    const symEls = [
+      document.getElementById('sym-b-0'),
+      document.getElementById('sym-b-1'),
+      document.getElementById('sym-b-2')
+    ];
+
+    btn.disabled = true;
+    btn.classList.add('loading');
+    ctaEl.classList.remove('visible');
+    document.getElementById('result-b').classList.remove('visible');
+
+    const finals = [randomSymbol(), randomSymbol(), randomSymbol()];
+
+    // Start 3D drum spin
+    drumEls.forEach(d => d.classList.add('spinning'));
+
+    // Cycle symbols during animation
+    const cycleInterval = setInterval(() => {
+      symEls.forEach((s, i) => {
+        const sym = randomSymbol();
+        s.textContent = sym;
+        setDrumColor(drumEls[i], sym);
+      });
+    }, 80);
+
+    // All drums stop simultaneously at 1.5s
+    setTimeout(() => {
+      clearInterval(cycleInterval);
+      drumEls.forEach(d => d.classList.remove('spinning'));
+      symEls.forEach((s, i) => {
+        s.textContent = finals[i];
+        setDrumColor(drumEls[i], finals[i]);
+      });
+
+      btn.classList.remove('loading');
+      spinningB = false;
+      recordSpin(SPIN_KEY_B);
+      btn.disabled = true;
+
+      const matches = countMatches(finals);
+      if (matches >= 2) {
+        drumEls.forEach(d => {
+          d.classList.remove('pulse-win');
+          void d.offsetWidth; // reflow to restart animation
+          d.classList.add('pulse-win');
+        });
+      }
+
+      // Build result message
+      let msg = '';
+      if (matches === 3) {
+        msg = '🎉 <strong>JACKPOT!</strong> All three match!';
+      } else if (matches === 2) {
+        msg = '😤 <strong>So close!</strong> Two of three matched.';
+      } else {
+        msg = '🎰 No match — your lucky casino awaits!';
+      }
+
+      // Lucky casino feature
+      if (window.CASINOS && window.CASINOS.length > 0) {
+        const casino = window.CASINOS[Math.floor(Math.random() * window.CASINOS.length)];
+        const cid = casino.id || 0;
+        msg += `<div class="lucky-casino-b">🍀 <strong>Your Lucky Casino Today:</strong> <a onclick="if(window.openModal)openModal(${cid})">${casino.name}</a></div>`;
+      }
+
+      showToastB(msg, true);
+      ctaEl.classList.add('visible');
+    }, 1600);
+  };
+
+  /* ─────────────────────────────────
+     Shared helpers
+  ───────────────────────────────── */
+  function countMatches(arr) {
+    const freq = {};
+    arr.forEach(s => freq[s] = (freq[s] || 0) + 1);
+    return Math.max(...Object.values(freq));
+  }
+
+  // Init both when DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { initSlotA(); initSlotB(); });
+  } else {
+    initSlotA();
+    initSlotB();
+  }
 })();
 </script>
 </body>

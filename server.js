@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 3000;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://jasonmorrow@localhost:5432/jackpotmap',
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+  ssl: process.env.DATABASE_URL
+    ? { rejectUnauthorized: false, ca: undefined }
+    : false,
 });
 
 // Load VAPID keys — env vars in production, file locally
@@ -608,6 +610,20 @@ app.get('/api/deal-of-day', async (req, res) => {
     res.json(result.rows[0]);
   } catch(err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/migrate — create schema (one-time, protected by secret)
+app.post('/api/migrate', async (req, res) => {
+  if (req.headers['x-migrate-secret'] !== process.env.MIGRATE_SECRET) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  try {
+    const { execSync } = require('child_process');
+    execSync('node migrate.js', { env: process.env, cwd: __dirname });
+    res.json({ success: true, message: 'Migration complete' });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
   }
 });
 

@@ -18,9 +18,12 @@ services:
   - key: NODE_ENV
     value: production
     scope: RUN_TIME
-databases:
-- name: findjackpots-db
-  engine: PG
-  version: "15"
-  size: db-s-dev-database
-  num_nodes: 1
+  - key: VAPID_PUBLIC_KEY
+    value: BB8gaqvbK6lH-aVul2FkGAIH9nbdKagdOuLLpSC5y4JhUb1j2OS-jqMV4rqTcKdClepKQi0ylIhEGlkQvmC0u4E
+    scope: RUN_TIME
+  - key: VAPID_PRIVATE_KEY
+    scope: RUN_TIME
+    type: SECRET
+  - key: MIGRATE_SECRET
+    scope: RUN_TIME
+    type: SECRET

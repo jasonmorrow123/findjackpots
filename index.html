@@ -62,6 +62,52 @@
     .logo-icon { font-size: 1.4rem; }
     .logo span { color: rgba(255,255,255,0.85); font-weight: 500; }
     .tagline { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 1px; font-weight: 400; display: none; }
+    /* ── HEADER SEARCH ── */
+    .header-search-wrap {
+      flex: 1;
+      max-width: 480px;
+      margin: 0 24px;
+    }
+    .header-search-bar {
+      display: flex;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 99px;
+      overflow: hidden;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .header-search-bar:focus-within {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.6);
+    }
+    .header-search-input {
+      flex: 1;
+      padding: 9px 18px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .header-search-input::placeholder { color: rgba(255,255,255,0.65); }
+    .header-search-btn {
+      padding: 7px 18px;
+      margin: 4px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 99px;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .header-search-btn:hover { background: rgba(255,255,255,0.32); }
+    @media (max-width: 768px) { .header-search-wrap { display: none; } }
+
     /* Header buttons — white style on blue bg */
     header .btn-secondary {
       background: rgba(255,255,255,0.15);
@@ -1609,21 +1655,24 @@
 
 <!-- HEADER -->
 <header>
-  <div>
+  <!-- Logo -->
+  <div style="flex-shrink:0">
     <div class="logo"><span class="logo-icon">🎰</span> Find<span>Jackpots</span></div>
-    <div class="tagline">The smartest way to pick your casino</div>
   </div>
-  <div style="display:flex;gap:10px;align-items:center">
-    <div style="display:flex;align-items:center;gap:8px">
-      <span id="currentRegionLabel" style="font-size:0.8rem;color:rgba(255,255,255,0.85)">📍 Las Vegas, NV</span>
-      <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem;border-radius:99px" onclick="openRegionPicker()">Change Location</button>
+  <!-- Centered search bar -->
+  <div class="header-search-wrap">
+    <div class="header-search-bar">
+      <input type="text" id="searchInputHeader" class="header-search-input" placeholder="Search casinos, cities, game types..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()" />
+      <button class="header-search-btn" onclick="searchAndScroll()">Search</button>
     </div>
-    <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
-    <div class="font-size-btns" title="Text size">
-      <button class="font-size-btn" onclick="setFontSize('normal')" id="fsBtn1">A</button>
-      <button class="font-size-btn" onclick="setFontSize('large')" id="fsBtn2">AA</button>
-      <button class="font-size-btn" onclick="setFontSize('xlarge')" id="fsBtn3">AAA</button>
+  </div>
+  <!-- Right controls -->
+  <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:6px">
+      <span id="currentRegionLabel" style="font-size:0.8rem;color:rgba(255,255,255,0.85);white-space:nowrap">📍 Las Vegas, NV</span>
+      <button class="btn btn-secondary" style="flex:none;padding:7px 14px;font-size:0.8rem;border-radius:99px" onclick="openRegionPicker()">Change Location</button>
     </div>
+    <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:7px 12px;font-size:0.8rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
   </div>
 </header>
@@ -1668,6 +1717,19 @@
   </div>
 </div>
 
+<!-- DEAL OF THE DAY -->
+<div id="dealOfDayBanner" style="display:none">
+  <div class="deal-inner">
+    <div class="deal-badge">🔥 Deal of the Day</div>
+    <div class="deal-content">
+      <div class="deal-title" id="dealTitle">Loading...</div>
+      <div class="deal-meta" id="dealMeta"></div>
+    </div>
+    <div class="deal-prize" id="dealPrize"></div>
+    <button class="deal-cta" id="dealCta">View Casino →</button>
+  </div>
+</div>
+
 <!-- DAILY SPIN SECTION -->
 <div class="daily-spin-section" id="daily-spin-section">
   <div class="daily-spin-inner">
@@ -1690,19 +1752,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- DEAL OF THE DAY -->
-<div id="dealOfDayBanner" style="display:none">
-  <div class="deal-inner">
-    <div class="deal-badge">🔥 Deal of the Day</div>
-    <div class="deal-content">
-      <div class="deal-title" id="dealTitle">Loading...</div>
-      <div class="deal-meta" id="dealMeta"></div>
-    </div>
-    <div class="deal-prize" id="dealPrize"></div>
-    <button class="deal-cta" id="dealCta">View Casino →</button>
   </div>
 </div>
 
@@ -2552,12 +2601,12 @@ function searchAndScroll() {
   }, 50);
 }
 
-// Keep both search inputs in sync
+// Keep all 3 search inputs in sync
 function syncSearch(val) {
-  const main = document.getElementById('searchInput');
-  const sticky = document.getElementById('searchInputSticky');
-  if (main && main.value !== val) main.value = val;
-  if (sticky && sticky.value !== val) sticky.value = val;
+  ['searchInput','searchInputSticky','searchInputHeader'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value !== val) el.value = val;
+  });
   filterCasinos();
 }
 

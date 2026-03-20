@@ -112,6 +112,8 @@ app.get('/api/casinos', async (req, res) => {
         c.monthly_revenue_cents, c.revenue_report_month, c.revenue_source,
         c.loyalty_program_name, c.loyalty_tiers, c.loyalty_points_per_dollar,
         c.has_bingo, c.has_poker, c.has_sportsbook, c.has_hotel, c.free_parking, c.has_slots,
+        c.image_url,
+        c.phone,
         r.rating, r.review_count,
         j.machine_name AS latest_jackpot_machine,
         j.amount_cents AS latest_jackpot_cents,
@@ -462,8 +464,9 @@ app.get('/api/events', async (req, res) => {
     // Get one-time events in range
     const oneTimeResult = await pool.query(`
       SELECT
-        ce.id, ce.casino_id, ce.title, ce.event_type, ce.event_date,
-        ce.start_time, ce.end_time, ce.description, ce.prize_amount_cents,
+        ce.id, ce.casino_id, ce.title, ce.event_type,
+        TO_CHAR(ce.event_date, 'YYYY-MM-DD') AS event_date,
+        ce.start_time::TEXT, ce.end_time::TEXT, ce.description, ce.prize_amount_cents,
         ce.recurring, ce.recurring_days, ce.source_url,
         c.name AS casino_name, c.city, c.state, c.slug AS casino_slug
       FROM casino_events ce
@@ -491,7 +494,7 @@ app.get('/api/events', async (req, res) => {
     const recurringResult = await pool.query(`
       SELECT
         ce.id, ce.casino_id, ce.title, ce.event_type,
-        ce.start_time, ce.end_time, ce.description, ce.prize_amount_cents,
+        ce.start_time::TEXT, ce.end_time::TEXT, ce.description, ce.prize_amount_cents,
         ce.recurring, ce.recurring_days, ce.source_url,
         c.name AS casino_name, c.city, c.state, c.slug AS casino_slug
       FROM casino_events ce
@@ -568,6 +571,36 @@ app.get('/api/events/upcoming', async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error('/api/events/upcoming error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/deal-of-day — best casino promotion today or next 2 days in the region
+app.get('/api/deal-of-day', async (req, res) => {
+  try {
+    const { region } = req.query;
+    const regionDef = region && REGIONS[region] ? REGIONS[region] : REGIONS['las-vegas'];
+    const today = new Date().toISOString().split('T')[0];
+
+    const result = await pool.query(`
+      SELECT ce.title, ce.description, ce.prize_amount_cents, ce.event_type,
+             TO_CHAR(ce.event_date, 'YYYY-MM-DD') as event_date,
+             ce.start_time::TEXT,
+             c.name as casino_name, c.id as casino_id, c.city, c.state, c.image_url
+      FROM casino_events ce
+      JOIN casinos c ON c.id = ce.casino_id
+      WHERE ce.event_date BETWEEN $1 AND ($1::date + interval '2 days')
+        AND c.state = ANY($2)
+        AND ce.event_type IN ('drawing', 'promotion', 'tournament')
+      ORDER BY ce.prize_amount_cents DESC NULLS LAST, ce.event_date ASC
+      LIMIT 1
+    `, [today, regionDef.states]);
+
+    if (result.rows.length === 0) {
+      return res.json(null);
+    }
+    res.json(result.rows[0]);
+  } catch(err) {
     res.status(500).json({ error: err.message });
   }
 });

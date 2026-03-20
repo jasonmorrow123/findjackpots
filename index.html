@@ -16,6 +16,97 @@
       --muted: #888;
       --radius: 12px;
     }
+
+    /* ── LIGHT MODE ── */
+    body.light-mode {
+      --dark: #f0f0f5;
+      --card: #ffffff;
+      --card2: #f7f7fc;
+      --text: #1a1a2e;
+      --muted: #666;
+    }
+    body.light-mode header {
+      background: linear-gradient(135deg, #f0f0f5 0%, #e8e0f5 50%, #f0f0f5 100%);
+    }
+    body.light-mode .search-section {
+      background: linear-gradient(180deg, #e8e0f5 0%, #f0f0f5 100%);
+    }
+    body.light-mode .search-bar input {
+      background: #fff;
+      border-color: #ddd;
+      color: var(--text);
+    }
+    body.light-mode .chip {
+      border-color: #ccc;
+      color: var(--text);
+    }
+    body.light-mode .chip:hover, body.light-mode .chip.active {
+      background: var(--gold);
+      color: #000;
+    }
+    body.light-mode .sort-select {
+      background: #fff;
+      border-color: #ddd;
+      color: var(--text);
+    }
+    body.light-mode .casino-card {
+      border-color: #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    body.light-mode .card-header { background: #f0f0f8; }
+    body.light-mode .casino-name { color: var(--text); }
+    body.light-mode .casino-location { color: var(--muted); }
+    body.light-mode .card-header.has-image { background: none; }
+    /* Force white text on photo headers in light mode */
+    body.light-mode .card-header.has-image .casino-name,
+    body.light-mode .card-header.has-image .casino-location,
+    body.light-mode .card-header.has-image .casino-emoji,
+    body.light-mode .card-header.has-image div[style*="color:var(--muted)"] {
+      color: #fff !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    }
+    body.light-mode .stat-row { border-bottom-color: #eee; }
+    body.light-mode .tag { background: #e8e8f5; color: #555; }
+    body.light-mode .tag.hot { background: #fde8ec; color: var(--accent); }
+    body.light-mode .tag.bingo { background: #e8f5ef; color: #007a55; }
+    body.light-mode .tag.poker { background: #e8eef5; color: #1a5fc8; }
+    body.light-mode .tag.slots { background: #fdf5e8; color: #8a6200; }
+    body.light-mode .tag.sports { background: #f0e8f5; color: #6a00c8; }
+    body.light-mode .card-footer { background: #f0f0f5; }
+    body.light-mode .btn-secondary { background: #e0e0ea; color: var(--text); }
+    body.light-mode .modal { background: #fff; }
+    body.light-mode .modal-header { background: #f7f7fc; }
+    body.light-mode .stat-row .stat-label { color: #555; }
+    body.light-mode footer { border-top-color: #ddd; }
+    body.light-mode .community-section {
+      background: linear-gradient(135deg, #f5fff8, #f0f0f5);
+      border-color: #cce5d8;
+    }
+    body.light-mode .win-card { background: #f5fff8; border-color: #cce5d8; }
+    body.light-mode .market-section { background: linear-gradient(135deg, #eef0f8, #f5eeff); }
+    body.light-mode .opp-card { background: #fff; border-color: #e0e0ea; }
+    body.light-mode .events-section { background: linear-gradient(135deg, #eef0f8, #f5eeff); }
+    body.light-mode .day-col { background: #fff; border-color: #e0e0ea; }
+    body.light-mode .daily-spin-section { background: linear-gradient(135deg, #f0f0f5, #ede8f5); }
+
+    /* ── TOGGLE BUTTON ── */
+    .mode-toggle {
+      background: transparent;
+      border: 1.5px solid #444;
+      color: var(--text);
+      padding: 7px 14px;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .mode-toggle:hover { border-color: var(--gold); color: var(--gold); }
+    body.light-mode .mode-toggle { border-color: #aaa; color: var(--text); }
+    body.light-mode .mode-toggle:hover { border-color: var(--gold); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
@@ -168,10 +259,28 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
+      position: relative;
     }
-    .casino-emoji { font-size: 2.2rem; }
-    .casino-name { font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
-    .casino-location { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+    .card-header.has-image {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .card-header.has-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(13,13,30,0.55) 0%, rgba(13,13,30,0.85) 100%);
+      border-radius: 0;
+      pointer-events: none;
+    }
+    body.light-mode .card-header.has-image::before {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.75) 100%);
+    }
+    .card-header.has-image > * { position: relative; z-index: 1; }
+    .casino-emoji { font-size: 2.2rem; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+    .casino-name { font-size: 1.1rem; font-weight: 700; line-height: 1.2; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+    .casino-location { font-size: 0.8rem; color: var(--muted); margin-top: 3px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
     .score-badge {
       min-width: 46px;
       height: 46px;
@@ -1175,6 +1284,151 @@
       transition: opacity 0.4s;
     }
     .spin-cta-b.visible { opacity: 1; }
+
+    /* ═══════════════════════════════════════════
+       FEATURE 1: FONT SIZE SELECTOR
+    ═══════════════════════════════════════════ */
+    .font-size-btns {
+      display: flex;
+      border: 1.5px solid #444;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .font-size-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 6px 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.78rem;
+      transition: all 0.15s;
+    }
+    .font-size-btn:first-child { font-size: 0.7rem; }
+    .font-size-btn:last-child { font-size: 0.92rem; }
+    .font-size-btn.active { background: var(--gold); color: #000; }
+    .font-size-btn:hover:not(.active) { color: var(--text); }
+
+    body.font-large { font-size: 17px; }
+    body.font-xlarge { font-size: 20px; }
+    body.font-large .casino-name { font-size: 1.2rem; }
+    body.font-xlarge .casino-name { font-size: 1.35rem; }
+    body.font-large .stat-row { font-size: 0.95rem; }
+    body.font-xlarge .stat-row { font-size: 1.05rem; }
+    body.font-large .chip { font-size: 0.9rem; padding: 9px 18px; }
+    body.font-xlarge .chip { font-size: 1rem; padding: 10px 20px; }
+
+    /* ═══════════════════════════════════════════
+       FEATURE 3: TAP-TO-CALL BUTTON
+    ═══════════════════════════════════════════ */
+    .btn-call {
+      flex: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #1a3d2e;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .btn-call:hover { background: #1f4f38; }
+
+    /* ═══════════════════════════════════════════
+       FEATURE 4: DEAL OF THE DAY BANNER
+    ═══════════════════════════════════════════ */
+    #dealOfDayBanner {
+      background: linear-gradient(135deg, #1a0a0a, #2a0a1a);
+      border-top: 2px solid var(--accent);
+      border-bottom: 1px solid #3a1a2a;
+      padding: 14px 24px;
+    }
+    .deal-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .deal-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .deal-content { flex: 1; min-width: 150px; }
+    .deal-title { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .deal-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .deal-prize {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .deal-cta {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .deal-cta:hover { opacity: 0.85; }
+    body.light-mode #dealOfDayBanner { background: linear-gradient(135deg, #fff0f3, #fff); border-top-color: var(--accent); }
+    body.light-mode .deal-title { color: var(--text); }
+
+    /* ═══════════════════════════════════════════
+       FEATURE 5: BEST FOR SHORTCUTS
+    ═══════════════════════════════════════════ */
+    .best-for-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 1200px;
+      margin: 10px auto 0;
+      padding: 0 24px;
+      align-items: center;
+    }
+    .best-for-btn {
+      padding: 9px 18px;
+      border-radius: 99px;
+      border: 1.5px solid #2a3a5e;
+      background: linear-gradient(135deg, #1a1a3e, #111128);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .best-for-btn:hover {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #2a2a4e, #1a1a38);
+      color: var(--gold);
+    }
+    body.light-mode .best-for-btn {
+      background: #fff;
+      border-color: #ddd;
+      color: var(--text);
+    }
+    body.light-mode .best-for-btn:hover {
+      border-color: var(--gold);
+      background: #fffbea;
+    }
   </style>
 </head>
 <body>
@@ -1191,6 +1445,12 @@
       <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem" onclick="openRegionPicker()">Change Location</button>
     </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
+    <div class="font-size-btns" title="Text size">
+      <button class="font-size-btn" onclick="setFontSize('normal')" id="fsBtn1">A</button>
+      <button class="font-size-btn" onclick="setFontSize('large')" id="fsBtn2">AA</button>
+      <button class="font-size-btn" onclick="setFontSize('xlarge')" id="fsBtn3">AAA</button>
+    </div>
+    <button class="mode-toggle" id="modeToggleBtn" onclick="toggleMode()" title="Switch between dark and light mode">🌙 Dark</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
   </div>
 </header>
@@ -1230,6 +1490,19 @@
   </div>
 </div>
 
+<!-- DEAL OF THE DAY -->
+<div id="dealOfDayBanner" style="display:none">
+  <div class="deal-inner">
+    <div class="deal-badge">🔥 Deal of the Day</div>
+    <div class="deal-content">
+      <div class="deal-title" id="dealTitle">Loading...</div>
+      <div class="deal-meta" id="dealMeta"></div>
+    </div>
+    <div class="deal-prize" id="dealPrize"></div>
+    <button class="deal-cta" id="dealCta">View Casino →</button>
+  </div>
+</div>
+
 <!-- FILTERS -->
 <div class="filters">
   <span class="filter-label">Filter:</span>
@@ -1239,6 +1512,17 @@
   <button class="chip" onclick="setFilter('slots', this)">🎰 Loose Slots</button>
   <button class="chip" onclick="setFilter('sports', this)">🏈 Sportsbook</button>
   <button class="chip" onclick="setFilter('hot', this)">🔥 Hot Jackpots</button>
+</div>
+
+<!-- BEST FOR SHORTCUTS -->
+<div class="best-for-section">
+  <span class="filter-label">Best for:</span>
+  <button class="best-for-btn" onclick="applyBestFor('bingo')">🟢 Bingo Players</button>
+  <button class="best-for-btn" onclick="applyBestFor('poker')">♠️ Poker Players</button>
+  <button class="best-for-btn" onclick="applyBestFor('slots')">🎰 Slot Lovers</button>
+  <button class="best-for-btn" onclick="applyBestFor('hot')">🔥 Hot Jackpots</button>
+  <button class="best-for-btn" onclick="applyBestFor('hotel')">🏨 Overnight Stays</button>
+  <button class="best-for-btn" onclick="applyBestFor('parking')">🅿️ Free Parking</button>
 </div>
 
 <!-- RESULTS HEADER -->
@@ -1286,6 +1570,7 @@
         <div class="events-view-toggle">
           <button class="events-view-btn active" id="viewBtnWeek" onclick="setEventsView('week')">Week</button>
           <button class="events-view-btn" id="viewBtnList" onclick="setEventsView('list')">List</button>
+          <button class="events-view-btn" id="viewBtnMonth" onclick="setEventsView('month')">Month</button>
         </div>
       </div>
     </div>
@@ -1297,6 +1582,11 @@
 
     <!-- List view -->
     <div class="events-list" id="eventsListView">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Month view -->
+    <div class="events-list" id="eventsMonthView" style="display:none">
       <!-- Populated by JS -->
     </div>
 
@@ -1755,6 +2045,9 @@ async function loadCasinos(region = 'las-vegas') {
         loyaltyProgram: c.loyalty_program_name || c.chain || 'Rewards Program',
         loyaltyTiers: c.loyalty_tiers || [],
         loyaltyScore: c.rating ? Math.min(10, c.rating * 2) : 5.0,
+        yelpRating: c.rating ? parseFloat(c.rating) : null,
+        reviewCount: c.review_count ? parseInt(c.review_count).toLocaleString() : null,
+        phone: c.phone || null,
         pointsPerDollar: c.loyalty_points_per_dollar || 'N/A',
         freePlay: true,
         bingo: c.has_bingo || false,
@@ -1766,6 +2059,7 @@ async function loadCasinos(region = 'las-vegas') {
         minBet: 'Varies',
         parkingFree: c.free_parking || false,
         hotelOnsite: c.has_hotel || false,
+        imageUrl: c.image_url || null,
         recentJackpots: c.latest_jackpot_machine ? [{
           game: c.latest_jackpot_machine,
           amount: '$' + formatAmount((c.latest_jackpot_cents || 0) / 100),
@@ -1867,6 +2161,9 @@ async function selectRegion(regionId, label) {
   // Reload casinos for new region
   await loadCasinos(regionId);
 
+  // Reload deal of the day for new region
+  loadDealOfDay(regionId);
+
   // Sync events calendar to new region
   calendarRegion = regionId;
   document.getElementById('eventsRegionBadge').textContent = label;
@@ -1897,7 +2194,7 @@ function renderCards(data) {
     ].filter(Boolean).join('');
 
     card.innerHTML = `
-      <div class="card-header">
+      <div class="card-header${c.imageUrl ? ' has-image' : ''}"${c.imageUrl ? ` style="background-image:url('${c.imageUrl}')"` : ''}>
         <div style="display:flex;gap:12px;align-items:flex-start">
           <div class="casino-emoji">${c.emoji}</div>
           <div>
@@ -1909,6 +2206,14 @@ function renderCards(data) {
         <div class="score-badge ${c.scoreClass}" title="Overall Score">${c.score}</div>
       </div>
       <div class="card-body">
+        ${c.yelpRating ? `
+        <div class="stat-row">
+          <span class="stat-label">⭐ Yelp Rating</span>
+          <span class="stat-value ${c.yelpRating >= 4 ? 'green' : c.yelpRating >= 3 ? 'gold' : 'red'}">
+            ${c.yelpRating.toFixed(1)} ★
+            ${c.reviewCount ? `<span style="font-size:0.78rem;color:var(--muted)">(${c.reviewCount})</span>` : ''}
+          </span>
+        </div>` : ''}
         <div class="stat-row">
           <span class="stat-label">🎰 Slot Payback</span>
           <span class="stat-value green">${c.slotPayback}</span>
@@ -1940,6 +2245,7 @@ function renderCards(data) {
         <button class="btn btn-secondary" onclick="toggleCompare(${c.id}, event)" id="cmp-${c.id}">
           ${inCompare ? '✓ Comparing' : '+ Compare'}
         </button>
+        ${c.phone ? `<a class="btn btn-call" href="tel:${c.phone}" title="Call ${c.name}" onclick="event.stopPropagation()">📞 Call</a>` : ''}
       </div>
     `;
     grid.appendChild(card);
@@ -2467,11 +2773,108 @@ function renderWinsFeed() {
   }).join('');
 }
 
+// ── DARK / LIGHT MODE TOGGLE ─────────────────────────────────────────────────
+function toggleMode() {
+  const isLight = document.body.classList.toggle('light-mode');
+  localStorage.setItem('jackpotmap_mode', isLight ? 'light' : 'dark');
+  updateModeBtn(isLight);
+}
+
+function updateModeBtn(isLight) {
+  const btn = document.getElementById('modeToggleBtn');
+  if (!btn) return;
+  btn.textContent = isLight ? '🌙 Dark' : '☀️ Light';
+}
+
+// Restore saved preference on load
+(function() {
+  const saved = localStorage.getItem('jackpotmap_mode');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    // Update button after DOM ready
+    document.addEventListener('DOMContentLoaded', () => updateModeBtn(true));
+    // Also try immediately in case DOM is already ready
+    updateModeBtn(true);
+  }
+})();
+
+// ── FEATURE 1: FONT SIZE SELECTOR ──────────────────────────────
+function setFontSize(size) {
+  document.body.classList.remove('font-normal', 'font-large', 'font-xlarge');
+  document.body.classList.add('font-' + size);
+  localStorage.setItem('jackpotmap_fontsize', size);
+  ['fsBtn1','fsBtn2','fsBtn3'].forEach(id => document.getElementById(id)?.classList.remove('active'));
+  const map = { normal: 'fsBtn1', large: 'fsBtn2', xlarge: 'fsBtn3' };
+  document.getElementById(map[size])?.classList.add('active');
+}
+// Restore font size on load
+(function() {
+  const saved = localStorage.getItem('jackpotmap_fontsize') || 'normal';
+  setFontSize(saved);
+})();
+
+// ── FEATURE 4: DEAL OF THE DAY ──────────────────────────────────
+async function loadDealOfDay(region) {
+  try {
+    const res = await fetch(`/api/deal-of-day?region=${region}`);
+    const deal = await res.json();
+    const banner = document.getElementById('dealOfDayBanner');
+    if (!deal || !banner) return;
+
+    document.getElementById('dealTitle').textContent = deal.title;
+    document.getElementById('dealMeta').textContent =
+      `📍 ${deal.casino_name} · ${deal.city}, ${deal.state}` +
+      (deal.start_time ? ` · ${formatTime(deal.start_time)}` : '');
+
+    const prizeEl = document.getElementById('dealPrize');
+    prizeEl.textContent = deal.prize_amount_cents
+      ? '$' + Math.round(deal.prize_amount_cents / 100).toLocaleString()
+      : deal.event_type === 'promotion' ? '🎁 Promo' : '🏆 Event';
+
+    const ctaBtn = document.getElementById('dealCta');
+    ctaBtn.onclick = () => {
+      const casino = CASINOS.find(c => c.id === deal.casino_id);
+      if (casino) openModal(casino.id);
+    };
+
+    banner.style.display = 'block';
+  } catch(e) {
+    // Silently fail — not critical
+  }
+}
+
+// ── FEATURE 5: BEST FOR SHORTCUTS ──────────────────────────────
+function applyBestFor(type) {
+  if (type === 'hotel') {
+    const filtered = CASINOS.filter(c => c.hotelOnsite);
+    renderCards(filtered);
+    const regionLabelNow = (typeof availableRegions !== 'undefined' && availableRegions.find(r => r.id === currentRegion))?.label || currentRegion;
+    document.getElementById('resultsCount').textContent =
+      `Showing ${filtered.length} casino${filtered.length !== 1 ? 's' : ''} with hotel on-site — ${regionLabelNow}`;
+    return;
+  }
+  if (type === 'parking') {
+    const filtered = CASINOS.filter(c => c.parkingFree);
+    renderCards(filtered);
+    const regionLabelNow = (typeof availableRegions !== 'undefined' && availableRegions.find(r => r.id === currentRegion))?.label || currentRegion;
+    document.getElementById('resultsCount').textContent =
+      `Showing ${filtered.length} casino${filtered.length !== 1 ? 's' : ''} with free parking — ${regionLabelNow}`;
+    return;
+  }
+  // Use existing chip filter system for bingo / poker / slots / hot
+  const chipMap = { bingo: 1, poker: 2, slots: 3, hot: 5 };
+  const chips = document.querySelectorAll('.chip');
+  if (chips[chipMap[type]]) {
+    chips[chipMap[type]].click();
+  }
+}
+
 // Init
 loadRegions();
 loadCasinos();
 renderWinsFeed();
 loadLiveData();
+loadDealOfDay(currentRegion);
 
 // ─── Push Notifications ───────────────────────────────────────────────────────
 
@@ -2908,36 +3311,61 @@ function setEventsView(view) {
   eventsView = view;
   document.getElementById('viewBtnWeek').classList.toggle('active', view === 'week');
   document.getElementById('viewBtnList').classList.toggle('active', view === 'list');
-  document.getElementById('eventsWeekGrid').classList.toggle('list-hidden', view === 'list');
-  document.getElementById('eventsListView').classList.toggle('active', view === 'list');
-  renderCalendar();
+  document.getElementById('viewBtnMonth').classList.toggle('active', view === 'month');
+  document.getElementById('eventsWeekGrid').style.display = view === 'week' ? '' : 'none';
+  document.getElementById('eventsListView').style.display = view === 'list' ? 'block' : 'none';
+  document.getElementById('eventsMonthView').style.display = view === 'month' ? 'block' : 'none';
+  // Load 30 days for month view, 7 for others
+  const days = view === 'month' ? 31 : 7;
+  const start = view === 'month'
+    ? dateToStr(new Date(currentWeekStart.getFullYear(), currentWeekStart.getMonth(), 1))
+    : dateToStr(currentWeekStart);
+  loadEvents(calendarRegion, start, days);
 }
 
 function eventsNavPrev() {
-  currentWeekStart.setDate(currentWeekStart.getDate() - 7);
-  loadEvents(calendarRegion, dateToStr(currentWeekStart), 7);
+  if (eventsView === 'month') {
+    currentWeekStart = new Date(currentWeekStart.getFullYear(), currentWeekStart.getMonth() - 1, 1);
+    loadEvents(calendarRegion, dateToStr(currentWeekStart), 31);
+  } else {
+    currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+    loadEvents(calendarRegion, dateToStr(currentWeekStart), 7);
+  }
 }
 
 function eventsNavNext() {
-  currentWeekStart.setDate(currentWeekStart.getDate() + 7);
-  loadEvents(calendarRegion, dateToStr(currentWeekStart), 7);
+  if (eventsView === 'month') {
+    currentWeekStart = new Date(currentWeekStart.getFullYear(), currentWeekStart.getMonth() + 1, 1);
+    loadEvents(calendarRegion, dateToStr(currentWeekStart), 31);
+  } else {
+    currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+    loadEvents(calendarRegion, dateToStr(currentWeekStart), 7);
+  }
 }
 
 function eventsNavToday() {
   currentWeekStart = getMonday(new Date());
-  loadEvents(calendarRegion, dateToStr(currentWeekStart), 7);
+  const days = eventsView === 'month' ? 31 : 7;
+  loadEvents(calendarRegion, dateToStr(currentWeekStart), days);
 }
 
 function renderCalendar() {
   updateWeekLabel();
   if (eventsView === 'week') {
     renderWeekView();
-  } else {
+  } else if (eventsView === 'list') {
     renderListView();
+  } else {
+    renderMonthView();
   }
 }
 
 function updateWeekLabel() {
+  if (eventsView === 'month') {
+    const label = currentWeekStart.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    document.getElementById('eventsWeekLabel').textContent = label;
+    return;
+  }
   const end = new Date(currentWeekStart);
   end.setDate(end.getDate() + 6);
   const startFmt = currentWeekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -3054,6 +3482,94 @@ function renderListView() {
     
     listEl.appendChild(group);
   });
+}
+
+function renderMonthView() {
+  const monthEl = document.getElementById('eventsMonthView');
+  monthEl.innerHTML = '';
+
+  const year = currentWeekStart.getFullYear();
+  const month = currentWeekStart.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const todayStr = dateToStr(new Date());
+
+  // Group events by date
+  const byDate = {};
+  allEvents.forEach(ev => {
+    if (!byDate[ev.event_date]) byDate[ev.event_date] = [];
+    byDate[ev.event_date].push(ev);
+  });
+
+  // Build month grid CSS
+  monthEl.style.display = 'block';
+
+  // Day-of-week headers
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const header = document.createElement('div');
+  header.style.cssText = 'display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;';
+  dayNames.forEach(d => {
+    const h = document.createElement('div');
+    h.style.cssText = 'text-align:center;font-size:0.7rem;color:var(--muted);font-weight:700;padding:4px 0;text-transform:uppercase;letter-spacing:0.5px;';
+    h.textContent = d;
+    header.appendChild(h);
+  });
+  monthEl.appendChild(header);
+
+  // Grid
+  const grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(7,1fr);gap:4px;';
+
+  // Leading blank cells (Mon=0 offset)
+  const startDow = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+  for (let i = 0; i < startDow; i++) {
+    const blank = document.createElement('div');
+    blank.style.cssText = 'min-height:80px;';
+    grid.appendChild(blank);
+  }
+
+  // Day cells
+  for (let d = 1; d <= lastDay.getDate(); d++) {
+    const dateObj = new Date(year, month, d);
+    const dateStr = dateToStr(dateObj);
+    const dayEvents = byDate[dateStr] || [];
+    const isToday = dateStr === todayStr;
+
+    const cell = document.createElement('div');
+    cell.style.cssText = `
+      min-height:80px; background:${isToday ? '#1a1a2e' : '#111120'};
+      border:1px solid ${isToday ? 'var(--gold)' : '#2a2a3e'};
+      border-radius:8px; padding:6px; position:relative; overflow:hidden;
+    `;
+
+    const dayNum = document.createElement('div');
+    dayNum.style.cssText = `font-size:0.85rem;font-weight:700;margin-bottom:4px;color:${isToday ? 'var(--gold)' : 'var(--text)'};`;
+    dayNum.textContent = d;
+    cell.appendChild(dayNum);
+
+    dayEvents.slice(0, 3).forEach(ev => {
+      const pill = document.createElement('div');
+      pill.className = `event-pill ${ev.event_type || 'other'}`;
+      pill.style.cssText += 'margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;';
+      pill.textContent = ev.title;
+      pill.title = ev.title;
+      pill.addEventListener('click', () => openEventDetail(ev));
+      cell.appendChild(pill);
+    });
+
+    if (dayEvents.length > 3) {
+      const more = document.createElement('div');
+      more.style.cssText = 'font-size:0.68rem;color:var(--muted);margin-top:2px;cursor:pointer;';
+      more.textContent = `+${dayEvents.length - 3} more`;
+      more.addEventListener('click', () => {
+        setEventsView('list');
+      });
+      cell.appendChild(more);
+    }
+
+    grid.appendChild(cell);
+  }
+  monthEl.appendChild(grid);
 }
 
 function openEventDetail(ev) {

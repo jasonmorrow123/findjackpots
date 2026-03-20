@@ -389,6 +389,189 @@ app.post('/api/push/test', async (req, res) => {
   }
 });
 
+// ─────────────────────────────────────────
+// CASINO EVENTS ENDPOINTS
+// ─────────────────────────────────────────
+
+// Helper: get day-of-week name from a Date object
+function getDayName(date) {
+  return ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][date.getDay()];
+}
+
+// Helper: expand recurring events into concrete dates within range
+function expandRecurring(event, startDate, endDate) {
+  const results = [];
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (event.recurring === 'daily') {
+    let cur = new Date(start);
+    while (cur <= end) {
+      results.push({ ...event, event_date: cur.toISOString().split('T')[0] });
+      cur.setDate(cur.getDate() + 1);
+    }
+  } else if (event.recurring === 'weekly' && event.recurring_days && event.recurring_days.length > 0) {
+    let cur = new Date(start);
+    while (cur <= end) {
+      const dayName = getDayName(cur);
+      if (event.recurring_days.includes(dayName)) {
+        results.push({ ...event, event_date: cur.toISOString().split('T')[0] });
+      }
+      cur.setDate(cur.getDate() + 1);
+    }
+  } else if (event.recurring === 'monthly') {
+    // Find monthly occurrences within range
+    let cur = new Date(start);
+    while (cur <= end) {
+      results.push({ ...event, event_date: cur.toISOString().split('T')[0] });
+      cur.setMonth(cur.getMonth() + 1);
+    }
+  }
+  return results;
+}
+
+// GET /api/events — events for a date range, filtered by region/casino
+app.get('/api/events', async (req, res) => {
+  try {
+    const { date, days = 7, region, casino_id } = req.query;
+    const daysVal = Math.min(parseInt(days) || 7, 60);
+    const startDate = date || new Date().toISOString().split('T')[0];
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + daysVal - 1);
+    const endDateStr = endDate.toISOString().split('T')[0];
+
+    const regionDef = region && REGIONS[region] ? REGIONS[region] : null;
+
+    const params = [startDate, endDateStr];
+    const conditions = ['ce.event_date BETWEEN $1 AND $2'];
+
+    if (casino_id) {
+      params.push(parseInt(casino_id));
+      conditions.push(`ce.casino_id = $${params.length}`);
+    } else if (regionDef) {
+      params.push(regionDef.states);
+      conditions.push(`c.state = ANY($${params.length})`);
+      if (regionDef.city) {
+        params.push(regionDef.city);
+        conditions.push(`c.city ILIKE $${params.length}`);
+      }
+    }
+
+    const whereClause = conditions.join(' AND ');
+
+    // Get one-time events in range
+    const oneTimeResult = await pool.query(`
+      SELECT
+        ce.id, ce.casino_id, ce.title, ce.event_type, ce.event_date,
+        ce.start_time, ce.end_time, ce.description, ce.prize_amount_cents,
+        ce.recurring, ce.recurring_days, ce.source_url,
+        c.name AS casino_name, c.city, c.state, c.slug AS casino_slug
+      FROM casino_events ce
+      JOIN casinos c ON c.id = ce.casino_id
+      WHERE ${whereClause} AND ce.recurring IS NULL
+      ORDER BY ce.event_date ASC, ce.start_time ASC NULLS LAST
+    `, params);
+
+    // Get recurring events and expand them
+    const recurringParams = [];
+    const recurringConditions = ['ce.recurring IS NOT NULL'];
+
+    if (casino_id) {
+      recurringParams.push(parseInt(casino_id));
+      recurringConditions.push(`ce.casino_id = $${recurringParams.length}`);
+    } else if (regionDef) {
+      recurringParams.push(regionDef.states);
+      recurringConditions.push(`c.state = ANY($${recurringParams.length})`);
+      if (regionDef.city) {
+        recurringParams.push(regionDef.city);
+        recurringConditions.push(`c.city ILIKE $${recurringParams.length}`);
+      }
+    }
+
+    const recurringResult = await pool.query(`
+      SELECT
+        ce.id, ce.casino_id, ce.title, ce.event_type,
+        ce.start_time, ce.end_time, ce.description, ce.prize_amount_cents,
+        ce.recurring, ce.recurring_days, ce.source_url,
+        c.name AS casino_name, c.city, c.state, c.slug AS casino_slug
+      FROM casino_events ce
+      JOIN casinos c ON c.id = ce.casino_id
+      WHERE ${recurringConditions.join(' AND ')}
+    `, recurringParams);
+
+    // Expand recurring events into concrete dates
+    const expandedRecurring = [];
+    for (const event of recurringResult.rows) {
+      const expanded = expandRecurring(event, startDate, endDateStr);
+      expandedRecurring.push(...expanded);
+    }
+
+    // Merge and sort
+    const allEvents = [...oneTimeResult.rows, ...expandedRecurring];
+    allEvents.sort((a, b) => {
+      if (a.event_date < b.event_date) return -1;
+      if (a.event_date > b.event_date) return 1;
+      const at = a.start_time || '23:59:59';
+      const bt = b.start_time || '23:59:59';
+      return at < bt ? -1 : 1;
+    });
+
+    res.json(allEvents);
+  } catch (err) {
+    console.error('/api/events error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/events/upcoming — next N upcoming events in a region
+app.get('/api/events/upcoming', async (req, res) => {
+  try {
+    const { region, casino_id, limit = 20 } = req.query;
+    const limitVal = Math.min(parseInt(limit) || 20, 100);
+    const today = new Date().toISOString().split('T')[0];
+    const future = new Date();
+    future.setDate(future.getDate() + 30);
+    const futureStr = future.toISOString().split('T')[0];
+
+    const regionDef = region && REGIONS[region] ? REGIONS[region] : null;
+    const params = [today, futureStr];
+    const conditions = ['ce.event_date BETWEEN $1 AND $2'];
+
+    if (casino_id) {
+      params.push(parseInt(casino_id));
+      conditions.push(`ce.casino_id = $${params.length}`);
+    } else if (regionDef) {
+      params.push(regionDef.states);
+      conditions.push(`c.state = ANY($${params.length})`);
+      if (regionDef.city) {
+        params.push(regionDef.city);
+        conditions.push(`c.city ILIKE $${params.length}`);
+      }
+    }
+
+    params.push(limitVal);
+    const whereClause = conditions.join(' AND ');
+
+    const result = await pool.query(`
+      SELECT
+        ce.id, ce.casino_id, ce.title, ce.event_type, ce.event_date,
+        ce.start_time, ce.end_time, ce.description, ce.prize_amount_cents,
+        ce.recurring, ce.source_url,
+        c.name AS casino_name, c.city, c.state, c.slug AS casino_slug
+      FROM casino_events ce
+      JOIN casinos c ON c.id = ce.casino_id
+      WHERE ${whereClause}
+      ORDER BY ce.event_date ASC, ce.start_time ASC NULLS LAST
+      LIMIT $${params.length}
+    `, params);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('/api/events/upcoming error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`JackpotMap API server running at http://localhost:${PORT}`);
 });

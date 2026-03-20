@@ -110,6 +110,12 @@ cron.schedule('0 3 1 * *', async () => {
   catch (e) { logger.error('NGCB location scraper failed:', e.message); }
 });
 
+// Casino Events scraper: daily at 6am
+cron.schedule('0 6 * * *', async () => {
+  try { await runScript('events-scraper.js'); }
+  catch (e) { logger.error('Events scraper failed:', e.message); }
+});
+
 // ─────────────────────────────────────────
 
 logger.info('🎰 JackpotMap Pipeline Orchestrator running');
@@ -123,6 +129,7 @@ logger.info('  • NGCB registry:  1st of month at 3am');
 logger.info('  • Iowa revenue:   10th of month at 4am');
 logger.info('  • Illinois rev:   15th of month at 4am');
 logger.info('  • MN/WI winners:  every 6 hours');
+logger.info('  • Events scraper: daily at 6am');
 logger.info('  • Push notifier:  auto-runs after winner/reddit scrapers');
 logger.info('  • Twitter stream: run separately (node twitter-monitor.js)');
 logger.info('\nPress Ctrl+C to stop.\n');

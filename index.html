@@ -2652,6 +2652,46 @@ function submitWin(e) {
 }
 
 
+function formatTime(timeStr) {
+  if (!timeStr) return '';
+  const [h, m] = timeStr.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return `${hour}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+function formatDateShort(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function openEventDetail(ev) {
+  const modal = document.getElementById('eventDetailModal');
+  const content = document.getElementById('eventDetailContent');
+  if (!modal || !content) return;
+  const type = ev.event_type || 'other';
+  const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+  const timeStr = ev.start_time ? formatTime(ev.start_time) : '';
+  const prizeStr = ev.prize_amount_cents
+    ? `<div style="font-size:1.1rem;font-weight:700;color:var(--primary);margin:8px 0">💰 $${Math.round(ev.prize_amount_cents/100).toLocaleString()}</div>`
+    : '';
+  const descStr = ev.description ? `<div style="font-size:0.85rem;color:var(--text-secondary);margin:10px 0">${ev.description}</div>` : '';
+  content.innerHTML = `
+    <div style="display:inline-block;padding:4px 12px;border-radius:99px;font-size:0.75rem;font-weight:700;background:#EFF6FF;color:var(--primary);margin-bottom:10px">${typeLabel}</div>
+    <div style="font-size:1.15rem;font-weight:700;margin-bottom:6px">${ev.title}</div>
+    <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px">📍 ${ev.casino_name || ''} · ${ev.city || ''}</div>
+    ${timeStr ? `<div style="font-size:0.85rem;margin-bottom:4px">⏰ ${timeStr}</div>` : ''}
+    ${prizeStr}${descStr}
+    ${ev.source_url ? `<div style="margin-top:10px"><a href="${ev.source_url}" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--text-secondary);text-decoration:underline">View on casino website ↗</a></div>` : ''}
+  `;
+  modal.classList.add('open');
+}
+
+function closeEventDetail() {
+  const modal = document.getElementById('eventDetailModal');
+  if (modal) modal.classList.remove('open');
+}
+
 function formatTimeAgo(date) {
   const now = new Date();
   const diff = Math.floor((now - new Date(date)) / 1000);

@@ -128,7 +128,7 @@
     /* ── HERO / SEARCH ── */
     .search-section {
       background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 60%, #F0FDF4 100%);
-      padding: 64px 24px 56px;
+      padding: 56px 24px 48px;
       text-align: center;
       border-bottom: 1px solid var(--border);
       position: relative;
@@ -227,27 +227,6 @@
       overflow-x: auto;
     }
     .filters::-webkit-scrollbar { display: none; }
-    .filter-search-wrap {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-    }
-    .filter-search-input {
-      width: 200px;
-      padding: 7px 14px;
-      border-radius: 99px;
-      border: 1.5px solid var(--border);
-      background: var(--page-bg);
-      color: var(--text);
-      font-size: 0.82rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.15s, width 0.2s ease;
-    }
-    .filter-search-input:focus {
-      border-color: var(--primary);
-      width: 240px;
-    }
     .filter-divider {
       width: 1px;
       height: 20px;
@@ -1711,23 +1690,6 @@
   </svg>
   <h1>Find Your <em>Lucky</em> Casino</h1>
   <p id="searchSubtext">Compare jackpots, rewards programs, games in Las Vegas</p>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search casino name, area, or game type..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()" />
-    <button onclick="searchAndScroll()">Search</button>
-  </div>
-</div>
-
-<!-- DEAL OF THE DAY -->
-<div id="dealOfDayBanner" style="display:none">
-  <div class="deal-inner">
-    <div class="deal-badge">🔥 Deal of the Day</div>
-    <div class="deal-content">
-      <div class="deal-title" id="dealTitle">Loading...</div>
-      <div class="deal-meta" id="dealMeta"></div>
-    </div>
-    <div class="deal-prize" id="dealPrize"></div>
-    <button class="deal-cta" id="dealCta">View Casino →</button>
-  </div>
 </div>
 
 <!-- DAILY SPIN SECTION -->
@@ -1758,10 +1720,6 @@
 <!-- FILTERS -->
 <div class="filter-bar-wrap">
   <div class="filters">
-    <div class="filter-search-wrap">
-      <input type="text" id="searchInputSticky" class="filter-search-input" placeholder="Search casinos..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()" />
-    </div>
-    <div class="filter-divider"></div>
     <button class="chip active" onclick="setFilter('all', this)">All</button>
     <button class="chip" onclick="setFilter('bingo', this)">Bingo</button>
     <button class="chip" onclick="setFilter('poker', this)">Poker</button>
@@ -2559,7 +2517,7 @@ function renderCards(data) {
 }
 
 function filterCasinos() {
-  const query = document.getElementById('searchInput').value.toLowerCase();
+  const query = (document.getElementById('searchInputHeader') || document.getElementById('searchInput') || {value:''}).value.toLowerCase();
   let results = CASINOS.filter(c => {
     const matchesSearch = !query ||
       c.name.toLowerCase().includes(query) ||
@@ -2601,14 +2559,7 @@ function searchAndScroll() {
   }, 50);
 }
 
-// Keep all 3 search inputs in sync
-function syncSearch(val) {
-  ['searchInput','searchInputSticky','searchInputHeader'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.value !== val) el.value = val;
-  });
-  filterCasinos();
-}
+function syncSearch(val) { filterCasinos(); }
 
 function sortCasinos(val) {
   let sorted = [...CASINOS];

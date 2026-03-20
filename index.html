@@ -1584,53 +1584,6 @@
     /* ═══════════════════════════════════════════
        FEATURE 5: BEST FOR SHORTCUTS — collapsible
     ═══════════════════════════════════════════ */
-    .best-for-section {
-      max-width: 1200px;
-      margin: 12px auto 0;
-      padding: 0 24px;
-    }
-    .best-for-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 16px;
-      border-radius: 99px;
-      border: 1.5px solid var(--border);
-      background: #ffffff;
-      color: var(--text-secondary);
-      font-size: 0.82rem;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .best-for-toggle:hover { border-color: var(--primary); color: var(--primary); }
-    .best-for-dropdown {
-      display: none;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-      align-items: center;
-    }
-    .best-for-dropdown.open { display: flex; }
-    .best-for-btn {
-      padding: 8px 18px;
-      border-radius: 99px;
-      border: 1.5px solid var(--border);
-      background: var(--page-bg);
-      color: var(--text);
-      font-size: 0.82rem;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .best-for-btn:hover {
-      border-color: var(--primary);
-      background: #eef1f8;
-      color: var(--primary);
-    }
   </style>
 </head>
 <body>
@@ -1715,24 +1668,12 @@
     <button class="chip" onclick="setFilter('slots', this)">Loose Slots</button>
     <button class="chip" onclick="setFilter('sports', this)">Sportsbook</button>
     <button class="chip" onclick="setFilter('hot', this)">Hot Jackpots</button>
+    <button class="chip" onclick="applyBestFor('hotel')">Overnight Stays</button>
+    <button class="chip" onclick="applyBestFor('parking')">Free Parking</button>
     <button class="chip-clear" id="clearFiltersBtn" onclick="clearFilters()">✕ Clear</button>
   </div>
 </div>
 
-<!-- BEST FOR SHORTCUTS — collapsible -->
-<div class="best-for-section">
-  <button class="best-for-toggle" onclick="this.nextElementSibling.classList.toggle('open')">
-    Best for ▾
-  </button>
-  <div class="best-for-dropdown">
-    <button class="best-for-btn" onclick="applyBestFor('bingo')">Bingo Players</button>
-    <button class="best-for-btn" onclick="applyBestFor('poker')">Poker Players</button>
-    <button class="best-for-btn" onclick="applyBestFor('slots')">Slot Lovers</button>
-    <button class="best-for-btn" onclick="applyBestFor('hot')">🔥 Hot Jackpots</button>
-    <button class="best-for-btn" onclick="applyBestFor('hotel')">Overnight Stays</button>
-    <button class="best-for-btn" onclick="applyBestFor('parking')">Free Parking</button>
-  </div>
-</div>
 
 <!-- RESULTS HEADER -->
 <div class="results-header">

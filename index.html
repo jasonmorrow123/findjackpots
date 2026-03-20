@@ -36,8 +36,8 @@
 
     /* ── HEADER ── */
     header {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
+      background: var(--primary);
+      border-bottom: none;
       padding: 0 32px;
       height: 64px;
       display: flex;
@@ -48,7 +48,7 @@
       position: sticky;
       top: 0;
       z-index: 40;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 12px rgba(37,99,235,0.25);
     }
     .logo {
       display: flex;
@@ -56,12 +56,28 @@
       gap: 8px;
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--text);
+      color: #ffffff;
       letter-spacing: -0.02em;
     }
     .logo-icon { font-size: 1.4rem; }
-    .logo span { color: var(--primary); }
-    .tagline { font-size: 0.8rem; color: var(--text-secondary); margin-top: 1px; font-weight: 400; display: none; }
+    .logo span { color: rgba(255,255,255,0.85); font-weight: 500; }
+    .tagline { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 1px; font-weight: 400; display: none; }
+    /* Header buttons — white style on blue bg */
+    header .btn-secondary {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    header .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+    header .report-win-btn {
+      background: #ffffff;
+      color: var(--primary);
+    }
+    header .report-win-btn:hover { background: rgba(255,255,255,0.9); }
+    header .font-size-btns { border-color: rgba(255,255,255,0.3); }
+    header .font-size-btn { color: rgba(255,255,255,0.7); }
+    header .font-size-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+    header #push-bell-btn { color: rgba(255,255,255,0.85); }
 
     /* ── HERO / SEARCH ── */
     .search-section {
@@ -1557,7 +1573,7 @@
   </div>
   <div style="display:flex;gap:10px;align-items:center">
     <div style="display:flex;align-items:center;gap:8px">
-      <span id="currentRegionLabel" style="font-size:0.8rem;color:var(--text-secondary)">📍 Las Vegas, NV</span>
+      <span id="currentRegionLabel" style="font-size:0.8rem;color:rgba(255,255,255,0.85)">📍 Las Vegas, NV</span>
       <button class="btn btn-secondary" style="flex:none;padding:8px 16px;font-size:0.82rem;border-radius:99px" onclick="openRegionPicker()">Change Location</button>
     </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:8px 14px;font-size:0.82rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>

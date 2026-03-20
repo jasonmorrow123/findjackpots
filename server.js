@@ -7,16 +7,22 @@ const webpush = require('web-push');
 const { AFFILIATE_CONFIG } = require('./affiliates');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const pool = new Pool({
-  connectionString: 'postgresql://jasonmorrow@localhost:5432/jackpotmap',
+  connectionString: process.env.DATABASE_URL || 'postgresql://jasonmorrow@localhost:5432/jackpotmap',
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
-// Load VAPID keys and configure web-push
-const vapidKeys = JSON.parse(fs.readFileSync(path.join(__dirname, 'vapid-keys.json'), 'utf8'));
+// Load VAPID keys — env vars in production, file locally
+let vapidKeys;
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+  vapidKeys = { publicKey: process.env.VAPID_PUBLIC_KEY, privateKey: process.env.VAPID_PRIVATE_KEY };
+} else {
+  vapidKeys = JSON.parse(fs.readFileSync(path.join(__dirname, 'vapid-keys.json'), 'utf8'));
+}
 webpush.setVapidDetails(
-  'mailto:data@jackpotmap.com',
+  'mailto:data@findjackpots.com',
   vapidKeys.publicKey,
   vapidKeys.privateKey
 );

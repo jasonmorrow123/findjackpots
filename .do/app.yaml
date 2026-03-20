@@ -1,0 +1,26 @@
+name: findjackpots
+region: nyc
+services:
+- name: web
+  github:
+    repo: jasonmorrow123/findjackpots
+    branch: main
+    deploy_on_push: true
+  run_command: node server.js
+  environment_slug: node-js
+  instance_size_slug: basic-xxs
+  instance_count: 1
+  http_port: 3000
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    type: SECRET
+  - key: NODE_ENV
+    value: production
+    scope: RUN_TIME
+databases:
+- name: findjackpots-db
+  engine: PG
+  version: "15"
+  size: db-s-dev-database
+  num_nodes: 1

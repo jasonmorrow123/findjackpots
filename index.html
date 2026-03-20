@@ -3271,10 +3271,10 @@ function urlBase64ToUint8Array(base64String) {
 
   // Init both when DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { initSlotA(); initSlotB(); });
+    document.addEventListener('DOMContentLoaded', function() { initSlotA(); });
   } else {
     initSlotA();
-    initSlotB();
+    initSlotA();
   }
 })();
 

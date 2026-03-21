@@ -88,6 +88,22 @@
     .logo-icon { font-size: 1.4rem; }
     .logo span { color: rgba(255,255,255,0.85); font-weight: 500; }
     .tagline { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 1px; font-weight: 400; display: none; }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    @media (max-width: 768px) {
+      .header-location { display: none; }
+      .header-actions { gap: 6px; }
+    }
+
     /* ── HEADER SEARCH ── */
     .header-search-wrap {
       flex: 1;
@@ -875,19 +891,119 @@
     /* Event detail modal */
     /* Events legend */
 
+    /* ═══════════════════════════════════════
+       MOBILE — 768px and below
+    ═══════════════════════════════════════ */
     @media (max-width: 768px) {
-      .week-grid {
-        grid-template-columns: repeat(3, 1fr);
-        overflow-x: auto;
+
+      /* Header — compact, logo only + key actions */
+      header {
+        padding: 0 16px;
+        height: 56px;
       }
-      .events-header { flex-direction: column; align-items: flex-start; }
-      .events-controls { width: 100%; }
+      header .logo svg { height: 32px; }
+      .header-search-wrap { display: none; }
+      header > div:last-child {
+        gap: 6px;
+      }
+      header > div:last-child > div:first-child {
+        display: none; /* hide location label on mobile */
+      }
+      header .report-win-btn {
+        padding: 7px 12px;
+        font-size: 0.78rem;
+      }
+      header .btn-secondary {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+      }
+      header .font-size-btns { display: none; }
+
+      /* Sticky filter bar offset */
+      .filter-bar-wrap { top: 56px; }
+
+      /* Hero section */
+      .search-section { padding: 20px 16px 14px; }
+      .search-section h1 { font-size: 1.8rem; }
+      .search-section p { font-size: 0.88rem; }
+
+      /* Hero wrap sections */
+      #dealOfDayBanner { padding: 0 16px 8px; }
+      .daily-spin-section { padding: 6px 16px 10px; }
+
+      /* Deal of day card */
+      .deal-inner {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 16px;
+      }
+      .deal-content { min-width: 0; flex: 1; }
+      .deal-title { font-size: 0.88rem; }
+      .deal-prize { font-size: 1rem; }
+
+      /* Daily spin — stack vertically */
+      .slot-inline-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .slot-inline-left { text-align: center; min-width: unset; }
+      .slot-inline-right { min-width: unset; width: 100%; align-items: center; }
+
+      /* Filter bar */
+      .filters { padding: 10px 16px; gap: 6px; }
+      .chip { padding: 6px 12px; font-size: 0.78rem; }
+
+      /* Results header */
+      .results-header { padding: 0 16px; margin-top: 20px; }
+
+      /* Casino grid — single column */
+      .casino-grid {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      /* Cards */
+      .card-header { padding: 16px 16px 12px; }
+      .card-body { padding: 14px 16px; }
+      .card-footer { padding: 12px 16px; gap: 6px; }
+      .casino-name { font-size: 1rem; }
+
+      /* Community wins */
+      .community-inner { padding: 0 16px; }
+      .wins-feed { grid-template-columns: 1fr; }
+
+      /* Market section */
+      .market-inner { padding: 0 16px; }
+      .opp-grid { grid-template-columns: 1fr 1fr; }
+
+      /* Modals — full screen on mobile */
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal {
+        border-radius: 20px 20px 0 0;
+        max-height: 90vh;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* Compare bar */
+      .compare-bar { padding: 10px 16px; }
+
+      /* Footer */
+      footer { padding: 20px 16px; }
     }
 
-    @media (max-width: 600px) {
-      .search-section h1 { font-size: 1.4rem; }
-      .casino-grid { grid-template-columns: 1fr; }
-      .week-grid { grid-template-columns: repeat(3, 1fr); }
+    /* ═══════════════════════════════════════
+       SMALL PHONES — 400px and below
+    ═══════════════════════════════════════ */
+    @media (max-width: 400px) {
+      .search-section h1 { font-size: 1.5rem; }
+      .opp-grid { grid-template-columns: 1fr; }
+      .score-badge { min-width: 40px; height: 40px; font-size: 0.9rem; }
+      .card-footer { flex-wrap: wrap; }
+      .btn { padding: 8px 12px; font-size: 0.78rem; }
     }
 
     /* ═══════════════════════════════════════════
@@ -1389,12 +1505,12 @@
     </div>
   </div>
   <!-- Right controls -->
-  <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
-    <div style="display:flex;align-items:center;gap:6px">
+  <div class="header-actions">
+    <div class="header-location">
       <span id="currentRegionLabel" style="font-size:0.8rem;color:rgba(255,255,255,0.85);white-space:nowrap">📍 Las Vegas, NV</span>
       <button class="btn btn-secondary" style="flex:none;padding:7px 14px;font-size:0.8rem;border-radius:99px" onclick="openRegionPicker()">Change Location</button>
     </div>
-    <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:7px 12px;font-size:0.8rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔 Notify Me</button>
+    <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:7px 12px;font-size:0.8rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
   </div>
 </header>

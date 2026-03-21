@@ -50,6 +50,26 @@ const REGIONS = {
   'wisconsin': { states: ['WI'], city: null, label: 'Wisconsin',  emoji: '🧀' },
   'missouri':  { states: ['MO'], city: null, label: 'Missouri',   emoji: '🎵' },
   'ohio':      { states: ['OH'], city: null, label: 'Ohio',       emoji: '🌰' },
+  // ── East Coast ───────────────────────────────────────────────────────────────
+  'east-coast':     { states: ['CT','DE','FL','MA','MD','ME','MS','NC','NH','NJ','NY','PA','RI','SC','VA','WV'], city: null, label: 'East Coast (All)', emoji: '🗽' },
+  'atlantic-city':  { states: ['NJ'], city: 'Atlantic City', label: 'Atlantic City, NJ', emoji: '🎰' },
+  'new-jersey':     { states: ['NJ'], city: null, label: 'New Jersey',     emoji: '🏖️' },
+  'new-york':       { states: ['NY'], city: null, label: 'New York',        emoji: '🗽' },
+  'pennsylvania':   { states: ['PA'], city: null, label: 'Pennsylvania',    emoji: '🔔' },
+  'connecticut':    { states: ['CT'], city: null, label: 'Connecticut',     emoji: '⚓' },
+  'massachusetts':  { states: ['MA'], city: null, label: 'Massachusetts',   emoji: '🦞' },
+  'maryland':       { states: ['MD'], city: null, label: 'Maryland',        emoji: '🦀' },
+  'florida':        { states: ['FL'], city: null, label: 'Florida',         emoji: '🌴' },
+  'mississippi':    { states: ['MS'], city: null, label: 'Mississippi',     emoji: '🎸' },
+  'biloxi':         { states: ['MS'], city: 'Biloxi', label: 'Biloxi, MS',  emoji: '🎲' },
+  'west-virginia':  { states: ['WV'], city: null, label: 'West Virginia',   emoji: '⛰️' },
+  'north-carolina': { states: ['NC'], city: null, label: 'North Carolina',  emoji: '🏔️' },
+  'virginia':       { states: ['VA'], city: null, label: 'Virginia',        emoji: '🌿' },
+  'delaware':       { states: ['DE'], city: null, label: 'Delaware',        emoji: '🏛️' },
+  'rhode-island':   { states: ['RI'], city: null, label: 'Rhode Island',    emoji: '⚓' },
+  'maine':          { states: ['ME'], city: null, label: 'Maine',           emoji: '🦞' },
+  'south-carolina': { states: ['SC'], city: null, label: 'South Carolina',  emoji: '🌴' },
+  'new-hampshire':  { states: ['NH'], city: null, label: 'New Hampshire',   emoji: '🍁' },
 };
 
 // Serve index.html at root
@@ -685,12 +705,34 @@ app.get('/api/locate', (req, res) => {
     WI: { minLat: 42.5, maxLat: 47.1, minLng: -92.9,  maxLng: -86.2  },
     MO: { minLat: 36.0, maxLat: 40.6, minLng: -95.8,  maxLng: -89.1  },
     OH: { minLat: 38.4, maxLat: 42.3, minLng: -84.8,  maxLng: -80.5  },
+    NJ: { minLat: 38.9, maxLat: 41.4, minLng: -75.6,  maxLng: -73.9  },
+    NY: { minLat: 40.5, maxLat: 45.0, minLng: -79.8,  maxLng: -71.9  },
+    PA: { minLat: 39.7, maxLat: 42.3, minLng: -80.5,  maxLng: -74.7  },
+    CT: { minLat: 40.9, maxLat: 42.1, minLng: -73.7,  maxLng: -71.8  },
+    MA: { minLat: 41.2, maxLat: 42.9, minLng: -73.5,  maxLng: -69.9  },
+    MD: { minLat: 37.9, maxLat: 39.7, minLng: -79.5,  maxLng: -75.0  },
+    FL: { minLat: 24.4, maxLat: 31.0, minLng: -87.6,  maxLng: -80.0  },
+    MS: { minLat: 30.1, maxLat: 35.0, minLng: -91.7,  maxLng: -88.1  },
+    WV: { minLat: 37.2, maxLat: 40.6, minLng: -82.6,  maxLng: -77.7  },
+    NC: { minLat: 33.8, maxLat: 36.6, minLng: -84.3,  maxLng: -75.5  },
+    VA: { minLat: 36.5, maxLat: 39.5, minLng: -83.7,  maxLng: -75.2  },
+    DE: { minLat: 38.4, maxLat: 39.8, minLng: -75.8,  maxLng: -75.0  },
+    RI: { minLat: 41.1, maxLat: 42.0, minLng: -71.9,  maxLng: -71.1  },
+    ME: { minLat: 43.0, maxLat: 47.5, minLng: -71.1,  maxLng: -66.9  },
+    SC: { minLat: 32.0, maxLat: 35.2, minLng: -83.4,  maxLng: -78.5  },
+    NH: { minLat: 42.7, maxLat: 45.3, minLng: -72.6,  maxLng: -70.6  },
   };
 
   const STATE_TO_REGION = {
-    NV: lat < 40.5 ? (lng < -116 ? 'las-vegas' : 'las-vegas') : 'reno',
-    MN: 'minnesota', IA: 'iowa', IL: 'illinois', IN: 'indiana',
+    NV: lat < 39.5 ? 'las-vegas' : 'reno',
+    MN: 'minnesota', IA: 'iowa',    IL: 'illinois',  IN: 'indiana',
     MI: 'michigan',  WI: 'wisconsin', MO: 'missouri', OH: 'ohio',
+    NJ: 'new-jersey',   NY: 'new-york',      PA: 'pennsylvania',
+    CT: 'connecticut',  MA: 'massachusetts', MD: 'maryland',
+    FL: 'florida',      MS: 'mississippi',   WV: 'west-virginia',
+    NC: 'north-carolina', VA: 'virginia',    DE: 'delaware',
+    RI: 'rhode-island', ME: 'maine',         SC: 'south-carolina',
+    NH: 'new-hampshire',
   };
 
   // Las Vegas vs Reno refinement

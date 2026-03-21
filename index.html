@@ -104,6 +104,49 @@
       .header-actions { gap: 6px; }
     }
 
+    /* ── MOBILE SEARCH BAR (below header) ── */
+    .mobile-search-bar {
+      display: none;
+      padding: 10px 16px;
+      background: var(--page-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-search-bar .msb-inner {
+      display: flex;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .mobile-search-bar .msb-inner:focus-within { border-color: var(--primary); }
+    .mobile-search-bar input {
+      flex: 1;
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+    }
+    .mobile-search-bar button {
+      padding: 8px 14px;
+      margin: 4px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .mobile-search-bar { display: block; }
+      .filter-bar-wrap { top: 106px; } /* 56px header + 50px mobile search */
+    }
+
     /* ── HEADER SEARCH ── */
     .header-search-wrap {
       flex: 1;
@@ -1006,6 +1049,27 @@
       .btn { padding: 8px 12px; font-size: 0.78rem; }
     }
 
+    /* ═══════════════════════════════════════
+       LANDSCAPE PHONES
+    ═══════════════════════════════════════ */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header { height: 48px; }
+      .mobile-search-bar { padding: 6px 16px; }
+      .filter-bar-wrap { top: 96px; }
+      .search-section { padding: 12px 16px 8px; }
+      .search-section h1 { font-size: 1.4rem; margin-bottom: 4px; }
+      .search-section p { display: none; }
+      #dealOfDayBanner { padding: 0 16px 4px; }
+      .daily-spin-section { padding: 4px 16px 6px; }
+      .slot-inline-layout { flex-direction: row; gap: 16px; }
+      .slot-inline-left { display: none; } /* hide label in landscape */
+      .casino-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 16px;
+      }
+      .modal { max-height: 95vh; }
+    }
+
     /* ═══════════════════════════════════════════
        DAILY SPIN SECTION — de-emphasized
     ═══════════════════════════════════════════ */
@@ -1514,6 +1578,14 @@
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
   </div>
 </header>
+
+<!-- MOBILE SEARCH BAR -->
+<div class="mobile-search-bar">
+  <div class="msb-inner">
+    <input type="text" id="searchInputMobile" placeholder="Search casinos, cities..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()"/>
+    <button onclick="searchAndScroll()">Search</button>
+  </div>
+</div>
 
 <!-- HERO WRAP — pattern spans search + deal + spin -->
 <div class="hero-wrap">
@@ -2350,7 +2422,7 @@ function renderCards(data) {
 }
 
 function filterCasinos() {
-  const query = (document.getElementById('searchInputHeader') || document.getElementById('searchInput') || {value:''}).value.toLowerCase();
+  const query = (document.getElementById('searchInputHeader') || document.getElementById('searchInputMobile') || document.getElementById('searchInput') || {value:''}).value.toLowerCase();
   let results = CASINOS.filter(c => {
     const matchesSearch = !query ||
       c.name.toLowerCase().includes(query) ||
@@ -2392,7 +2464,13 @@ function searchAndScroll() {
   }, 50);
 }
 
-function syncSearch(val) { filterCasinos(); }
+function syncSearch(val) {
+  ['searchInputHeader','searchInputMobile'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value !== val) el.value = val;
+  });
+  filterCasinos();
+}
 
 function sortCasinos(val) {
   let sorted = [...CASINOS];

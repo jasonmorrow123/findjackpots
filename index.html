@@ -1791,7 +1791,7 @@
     <div class="winner-body">
       <div class="winner-label">
         <div class="winner-live-dot"></div>
-        <div class="winner-label-text">Lucky Winner of the Day</div>
+        <div class="winner-label-text">Today's Biggest Jackpot</div>
       </div>
       <div class="winner-amount" id="winnerAmount">—</div>
       <div class="winner-desc" id="winnerDesc">Loading...</div>
@@ -3379,7 +3379,7 @@ async function loadWinnerOfDay() {
       regional: isIpGeo
         ? '🏆 Lucky Winner Nearby*'
         : '🏆 Lucky Winner Nearby',
-      national: '🏆 Lucky Winner of the Day',
+      national: '🏆 Today\'s Biggest Jackpot',
     };
     const labelEl = document.querySelector('.winner-label-text');
     if (labelEl) {

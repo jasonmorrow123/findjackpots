@@ -609,6 +609,112 @@ app.get('/api/events/upcoming', async (req, res) => {
   }
 });
 
+// GET /api/winner-of-day — jackpot with highest amount in last 7 days (falls back to 30)
+app.get('/api/winner-of-day', async (req, res) => {
+  try {
+    // Try last 7 days first
+    let result = await pool.query(`
+      SELECT
+        j.machine_name,
+        j.amount_cents,
+        j.won_at,
+        j.source,
+        j.raw_text,
+        c.name AS casino_name,
+        c.city,
+        c.state
+      FROM jackpots j
+      LEFT JOIN casinos c ON c.id = j.casino_id
+      WHERE j.won_at >= NOW() - INTERVAL '7 days'
+        AND j.amount_cents > 0
+      ORDER BY j.amount_cents DESC
+      LIMIT 1
+    `);
+
+    // Fall back to last 30 days
+    if (result.rows.length === 0) {
+      result = await pool.query(`
+        SELECT
+          j.machine_name,
+          j.amount_cents,
+          j.won_at,
+          j.source,
+          j.raw_text,
+          c.name AS casino_name,
+          c.city,
+          c.state
+        FROM jackpots j
+        LEFT JOIN casinos c ON c.id = j.casino_id
+        WHERE j.won_at >= NOW() - INTERVAL '30 days'
+          AND j.amount_cents > 0
+        ORDER BY j.amount_cents DESC
+        LIMIT 1
+      `);
+    }
+
+    // Also try created_at if won_at is sparse
+    if (result.rows.length === 0) {
+      result = await pool.query(`
+        SELECT
+          j.machine_name,
+          j.amount_cents,
+          j.won_at,
+          j.source,
+          j.raw_text,
+          c.name AS casino_name,
+          c.city,
+          c.state
+        FROM jackpots j
+        LEFT JOIN casinos c ON c.id = j.casino_id
+        WHERE j.amount_cents > 0
+        ORDER BY j.amount_cents DESC
+        LIMIT 1
+      `);
+    }
+
+    if (result.rows.length === 0) {
+      return res.json(null);
+    }
+
+    const row = result.rows[0];
+    res.json({
+      winner_name: null, // winner_name not stored in DB yet
+      machine_name: row.machine_name || 'Slot Machine',
+      amount_cents: row.amount_cents,
+      casino_name: row.casino_name || 'Unknown Casino',
+      city: row.city || null,
+      state: row.state ? row.state.trim() : null,
+      win_date: row.won_at || null,
+      source: row.source,
+    });
+  } catch (err) {
+    console.error('/api/winner-of-day error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/casinos/:id/restaurants — restaurants at a specific casino
+app.get('/api/casinos/:id/restaurants', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(`
+      SELECT id, name, cuisine, rating, review_count, price_range, yelp_url
+      FROM restaurants
+      WHERE casino_id = $1
+      ORDER BY rating DESC NULLS LAST, review_count DESC NULLS LAST
+      LIMIT 5
+    `, [id]);
+    res.json(result.rows);
+  } catch (err) {
+    // Table may not exist yet
+    if (err.message.includes('does not exist')) {
+      return res.json([]);
+    }
+    console.error('/api/casinos/:id/restaurants error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/deal-of-day — best casino promotion today or next 2 days in the region
 app.get('/api/deal-of-day', async (req, res) => {
   try {

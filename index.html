@@ -1531,7 +1531,138 @@
       transition: opacity 0.2s ease;
     }
     .deal-cta:hover { opacity: 0.88; }
-    
+
+    /* ═══════════════════════════════════════════
+       LUCKY WINNER OF THE DAY — full-width banner
+    ═══════════════════════════════════════════ */
+    #winnerBanner {
+      display: none;
+      background: linear-gradient(100deg, #0f172a 0%, #1e1b4b 55%, #0f172a 100%);
+      border-top: 3px solid #f2c94c;
+      border-bottom: 3px solid #f2c94c;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle shimmer stripe across the banner */
+    #winnerBanner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        105deg,
+        transparent 0px,
+        transparent 120px,
+        rgba(242,201,76,0.04) 120px,
+        rgba(242,201,76,0.04) 240px
+      );
+      pointer-events: none;
+    }
+    .winner-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .winner-trophy {
+      font-size: 2.8rem;
+      line-height: 1;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 12px rgba(242,201,76,0.6));
+      animation: winner-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes winner-pulse {
+      0%, 100% { transform: scale(1);   filter: drop-shadow(0 0 10px rgba(242,201,76,0.5)); }
+      50%       { transform: scale(1.07); filter: drop-shadow(0 0 20px rgba(242,201,76,0.85)); }
+    }
+    .winner-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .winner-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .winner-label-text {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f2c94c;
+    }
+    .winner-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f2c94c;
+      flex-shrink: 0;
+      animation: live-blink 1.4s ease-in-out infinite;
+    }
+    @keyframes live-blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.25; transform: scale(0.7); }
+    }
+    .winner-amount {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #f2c94c;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 5px;
+      text-shadow: 0 0 30px rgba(242,201,76,0.35);
+    }
+    .winner-desc {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.92);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .winner-desc strong { color: #fff; font-weight: 700; }
+    .winner-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 5px;
+      flex-wrap: wrap;
+    }
+    .winner-casino {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .winner-casino strong { color: rgba(255,255,255,0.88); font-weight: 600; }
+    .winner-date {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+    }
+    .winner-source-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(242,201,76,0.15);
+      color: #f2c94c;
+      border: 1px solid rgba(242,201,76,0.35);
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+    }
+    .winner-divider {
+      color: rgba(255,255,255,0.2);
+      font-size: 0.75rem;
+    }
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .winner-inner  { padding: 14px 16px; gap: 12px; }
+      .winner-trophy { font-size: 2rem; }
+      .winner-amount { font-size: 1.8rem; }
+      .winner-desc   { font-size: 0.82rem; white-space: normal; }
+    }
 
     /* ═══════════════════════════════════════════
        FEATURE 5: BEST FOR SHORTCUTS — collapsible
@@ -1634,6 +1765,28 @@
 </div>
 
 </div><!-- /hero-wrap -->
+
+<!-- LUCKY WINNER OF THE DAY BANNER -->
+<div id="winnerBanner">
+  <div class="winner-inner">
+    <div class="winner-trophy">🏆</div>
+    <div class="winner-body">
+      <div class="winner-label">
+        <div class="winner-live-dot"></div>
+        <div class="winner-label-text">Lucky Winner of the Day</div>
+      </div>
+      <div class="winner-amount" id="winnerAmount">—</div>
+      <div class="winner-desc" id="winnerDesc">Loading...</div>
+      <div class="winner-meta">
+        <span class="winner-casino" id="winnerCasino"></span>
+        <span class="winner-divider" id="winnerDivider1" style="display:none">·</span>
+        <span class="winner-date" id="winnerDate"></span>
+        <span class="winner-divider" id="winnerDivider2" style="display:none">·</span>
+        <span class="winner-source-badge" id="winnerSource" style="display:none"></span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FILTERS -->
 <div class="filter-bar-wrap">
@@ -2359,6 +2512,7 @@ async function selectRegion(regionId, label) {
 
   // Reload deal of the day for new region
   loadDealOfDay(regionId);
+  loadWinnerOfDay();
 
   // Sync events calendar to new region
   calendarRegion = regionId;
@@ -2580,6 +2734,12 @@ async function openModal(id) {
         ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--text-secondary);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
+      <!-- Restaurants — filled async below -->
+      <div class="modal-section" id="restaurantsSection" style="display:none">
+        <h3>🍽️ Dining at this Casino</h3>
+        <div id="restaurantsList"></div>
+      </div>
+
       <a class="btn btn-primary" style="width:100%;padding:14px;font-size:0.95rem;border-radius:10px;display:block;text-align:center;text-decoration:none" href="${c.lat && c.lng ? `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.name + ' ' + (c.notes || ''))}`}" target="_blank" rel="noopener">📍 Get Directions</a>
 
       <div id="affiliateBtnZone" style="margin-top:0">
@@ -2702,6 +2862,42 @@ async function openModal(id) {
     const zone = document.getElementById('affiliateBtnZone');
     if (zone) zone.innerHTML = '';
   }
+
+  // ── Fetch restaurant data async ──
+  try {
+    const rRes = await fetch(`/api/casinos/${id}/restaurants`);
+    if (rRes.ok) {
+      const restaurants = await rRes.json();
+      // Filter out the sentinel no-data marker
+      const real = restaurants.filter(r => r.name !== '__no_restaurants__');
+      const section = document.getElementById('restaurantsSection');
+      const list    = document.getElementById('restaurantsList');
+      if (real.length > 0 && section && list) {
+        list.innerHTML = real.map(r => {
+          const stars = r.rating ? '★'.repeat(Math.round(r.rating)) + '☆'.repeat(5 - Math.round(r.rating)) : '';
+          const ratingLabel = r.rating ? r.rating.toFixed(1) : '';
+          const reviews = r.review_count ? `(${r.review_count.toLocaleString()})` : '';
+          const price = r.price_range || '';
+          const cuisine = r.cuisine || '';
+          const link = r.yelp_url
+            ? `<a href="${r.yelp_url}" target="_blank" rel="noopener" style="font-size:0.72rem;color:var(--primary);text-decoration:none;margin-left:6px">Yelp →</a>`
+            : '';
+          return `
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);gap:8px">
+              <div style="min-width:0">
+                <div style="font-weight:600;font-size:0.88rem;color:var(--text)">${r.name}${link}</div>
+                <div style="font-size:0.76rem;color:var(--text-secondary);margin-top:2px">${[cuisine, price].filter(Boolean).join(' · ')}</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                ${ratingLabel ? `<div style="font-size:0.88rem;font-weight:700;color:var(--gold)">${ratingLabel} <span style="font-size:0.7rem;color:var(--gold);letter-spacing:-1px">${stars}</span></div>` : ''}
+                ${reviews ? `<div style="font-size:0.7rem;color:var(--text-secondary)">${reviews}</div>` : ''}
+              </div>
+            </div>`;
+        }).join('');
+        section.style.display = '';
+      }
+    }
+  } catch(e) { /* silent — restaurants are a nice-to-have */ }
 }
 
 function closeModal(e) {
@@ -3088,6 +3284,78 @@ async function loadDealOfDay(region) {
   }
 }
 
+// ── LUCKY WINNER OF THE DAY ─────────────────────────────────────
+async function loadWinnerOfDay() {
+  try {
+    const res = await fetch('/api/winner-of-day');
+    if (!res.ok) return;
+    const winner = await res.json();
+    const banner = document.getElementById('winnerBanner');
+    if (!winner || !banner) return;
+
+    // Format the big dollar amount
+    const amt = '$' + Math.round(winner.amount_cents / 100).toLocaleString();
+    document.getElementById('winnerAmount').textContent = amt;
+
+    // Build the human sentence: "Jane D. hit the Wheel of Fortune Deluxe"
+    const who = winner.winner_name || 'A lucky player';
+    const machine = winner.machine_name;
+    let desc;
+    if (machine) {
+      desc = `<strong>${who}</strong> hit the <strong>${machine}</strong>`;
+    } else {
+      desc = `<strong>${who}</strong> walked away a winner`;
+    }
+    document.getElementById('winnerDesc').innerHTML = desc;
+
+    // Casino + location
+    const casinoEl = document.getElementById('winnerCasino');
+    if (winner.casino_name && winner.casino_name !== 'Unknown Casino') {
+      const loc = [winner.city, winner.state ? winner.state.trim() : null].filter(Boolean).join(', ');
+      casinoEl.innerHTML = `<strong>${winner.casino_name}</strong>${loc ? ' · ' + loc : ''}`;
+    }
+
+    // Date
+    const dateEl = document.getElementById('winnerDate');
+    if (winner.win_date) {
+      const d = new Date(winner.win_date);
+      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      dateEl.textContent = label;
+      document.getElementById('winnerDivider1').style.display = '';
+    }
+
+    // Source badge — friendly label
+    const sourceBadge = document.getElementById('winnerSource');
+    const sourceMap = {
+      'website': 'Casino Official',
+      'boyd':    'Boyd Gaming',
+      'reddit':  'Reddit',
+      'news':    'Google News',
+      'twitter': 'Twitter / X',
+      'user':    'User Report',
+      'gov':     'Gaming Board',
+    };
+    if (winner.source) {
+      const srcLower = winner.source.toLowerCase();
+      let friendlySource = sourceMap[srcLower] || null;
+      if (!friendlySource) {
+        // Partial match fallbacks
+        if (srcLower.includes('boyd')) friendlySource = 'Boyd Gaming';
+        else if (srcLower.includes('reddit')) friendlySource = 'Reddit';
+        else if (srcLower.includes('news')) friendlySource = 'Google News';
+        else friendlySource = winner.source.charAt(0).toUpperCase() + winner.source.slice(1);
+      }
+      sourceBadge.textContent = friendlySource;
+      sourceBadge.style.display = '';
+      document.getElementById('winnerDivider2').style.display = '';
+    }
+
+    banner.style.display = 'block';
+  } catch(e) {
+    // Silent — not critical if jackpot data is sparse
+  }
+}
+
 // ── FEATURE 5: BEST FOR SHORTCUTS ──────────────────────────────
 function applyBestFor(type) {
   if (type === 'hotel') {
@@ -3272,6 +3540,7 @@ async function initApp() {
         applyRegion(region, label);
         await loadCasinos(region);
         loadDealOfDay(region);
+        loadWinnerOfDay();
         renderWinsFeed();
         loadLiveData();
         // Silently refresh coords in background without blocking UI
@@ -3297,10 +3566,12 @@ async function initApp() {
 
     await loadCasinos(region);
     loadDealOfDay(region);
+    loadWinnerOfDay();
   } catch(e) {
     // Permission denied or timeout — fall back to Las Vegas
     await loadCasinos('las-vegas');
     loadDealOfDay('las-vegas');
+    loadWinnerOfDay();
   }
 
   renderWinsFeed();

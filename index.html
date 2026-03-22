@@ -3303,11 +3303,67 @@ async function loadDealOfDay(region) {
 }
 
 // ── LUCKY WINNER OF THE DAY ─────────────────────────────────────
+// Region center coordinates for fallback location detection
+const REGION_CENTERS = {
+  'minnesota': { lat: 46.3,  lng: -94.3  },
+  'iowa':      { lat: 42.0,  lng: -93.5  },
+  'illinois':  { lat: 40.0,  lng: -89.0  },
+  'wisconsin': { lat: 44.5,  lng: -89.5  },
+  'michigan':  { lat: 44.3,  lng: -85.6  },
+  'missouri':  { lat: 38.5,  lng: -92.3  },
+  'indiana':   { lat: 39.8,  lng: -86.1  },
+  'ohio':      { lat: 40.4,  lng: -82.9  },
+  'las-vegas': { lat: 36.1,  lng: -115.1 },
+  'reno':      { lat: 39.5,  lng: -119.8 },
+  'nevada':    { lat: 38.8,  lng: -116.4 },
+  'midwest':   { lat: 41.8,  lng: -93.1  },
+};
+
+// Resolve best available lat/lng using the priority chain:
+// 1. GPS (userLat/userLng), 2. selected region center, 3. IP geo (cached), 4. nothing
+async function resolveWinnerCoords() {
+  // Priority 1: GPS
+  if (userLat != null && userLng != null) {
+    return { lat: userLat, lng: userLng, source: 'gps' };
+  }
+
+  // Priority 2: Selected region center
+  if (currentRegion && REGION_CENTERS[currentRegion]) {
+    const c = REGION_CENTERS[currentRegion];
+    return { lat: c.lat, lng: c.lng, source: 'region' };
+  }
+
+  // Priority 3: IP geolocation (with 24h localStorage cache)
+  try {
+    const cacheKey = 'ip_geo_cache';
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed && parsed.ts && (Date.now() - parsed.ts) < 86400000) {
+        return { lat: parsed.lat, lng: parsed.lng, source: 'ip' };
+      }
+    }
+    const ipRes = await fetch('https://ipapi.co/json/');
+    if (ipRes.ok) {
+      const ipData = await ipRes.json();
+      if (ipData && ipData.latitude && ipData.longitude) {
+        const geo = { lat: ipData.latitude, lng: ipData.longitude, ts: Date.now() };
+        try { localStorage.setItem(cacheKey, JSON.stringify(geo)); } catch(e) {}
+        return { lat: geo.lat, lng: geo.lng, source: 'ip' };
+      }
+    }
+  } catch(e) { /* silent */ }
+
+  // Priority 4: National fallback — no coords
+  return { lat: null, lng: null, source: 'national' };
+}
+
 async function loadWinnerOfDay() {
   try {
-    // Pass user coords so the API can return the nearest winner first
-    const latLng = (userLat != null && userLng != null)
-      ? `?lat=${userLat}&lng=${userLng}`
+    // Resolve coordinates using the fallback chain
+    const coords = await resolveWinnerCoords();
+    const latLng = (coords.lat != null && coords.lng != null)
+      ? `?lat=${coords.lat}&lng=${coords.lng}`
       : '';
     const res = await fetch(`/api/winner-of-day${latLng}`);
     if (!res.ok) return;
@@ -3315,14 +3371,28 @@ async function loadWinnerOfDay() {
     const banner = document.getElementById('winnerBanner');
     if (!winner || !banner) return;
 
-    // Update banner label based on scope
+    // Update banner label based on scope and location source
+    const isIpGeo = coords.source === 'ip';
     const scopeLabels = {
-      local:    '🏆 Lucky Winner Near You',
-      regional: '🏆 Lucky Winner Nearby',
+      local:    isIpGeo
+        ? '🏆 Lucky Winner Near You*'
+        : '🏆 Lucky Winner Near You',
+      regional: isIpGeo
+        ? '🏆 Lucky Winner Nearby*'
+        : '🏆 Lucky Winner Nearby',
       national: '🏆 Lucky Winner of the Day',
     };
     const labelEl = document.querySelector('.winner-label-text');
-    if (labelEl) labelEl.textContent = scopeLabels[winner.scope] || scopeLabels.national;
+    if (labelEl) {
+      labelEl.textContent = scopeLabels[winner.scope] || scopeLabels.national;
+      if (isIpGeo && winner.scope !== 'national') {
+        labelEl.title = 'Based on approximate location';
+        labelEl.style.cursor = 'help';
+      } else {
+        labelEl.title = '';
+        labelEl.style.cursor = '';
+      }
+    }
 
     // Format the big dollar amount
     const amt = '$' + Math.round(winner.amount_cents / 100).toLocaleString();

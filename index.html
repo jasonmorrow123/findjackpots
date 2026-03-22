@@ -2651,9 +2651,7 @@ function filterCasinos() {
     return matchesSearch && matchesFilter;
   });
   // Apply current sort before rendering
-  const sortEl = document.querySelector('.sort-select');
-  const sortVal = sortEl ? sortEl.value : 'score';
-  results = applySortOrder(results, sortVal);
+  results = applySortOrder(results, currentSort || 'score');
   renderCards(results);
 }
 
@@ -2702,7 +2700,9 @@ function syncSearch(val) {
   filterCasinos();
 }
 
+let currentSort = 'score';
 function sortCasinos(val) {
+  currentSort = val || 'score';
   filterCasinos();
 }
 function sortCasinosOld(val) {

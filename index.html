@@ -500,6 +500,20 @@
       font-weight: 500;
       letter-spacing: 0.3px;
     }
+    .restaurant-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      background: #F1F5F9;
+      border-radius: 99px;
+      padding: 3px 10px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      flex-wrap: wrap;
+    }
     .tag.hot { background: #FEF2F2; color: #DC2626; }
 
     /* Card footer */
@@ -2557,6 +2571,7 @@ function renderCards(data) {
           <span class="stat-value ${c.parkingFree ? 'green' : ''}">${c.parkingFree ? 'Free' : 'Paid'}</span>
         </div>
         <div class="tags">${tagHtml}</div>
+        <div id="restaurant-badge-${c.id}"></div>
         ${renderCardEvents(c.id)}
       </div>
       <div class="card-footer">
@@ -2572,6 +2587,23 @@ function renderCards(data) {
     `;
     grid.appendChild(card);
   });
+
+  // Batch fetch restaurant summaries and inject badges
+  if (data.length > 0) {
+    const ids = data.map(c => c.id).join(',');
+    fetch(`/api/restaurants/batch-summary?ids=${ids}`)
+      .then(r => r.json())
+      .then(summaries => {
+        for (const [casinoId, summary] of Object.entries(summaries)) {
+          if (!summary || summary.total === 0) continue;
+          const el = document.getElementById(`restaurant-badge-${casinoId}`);
+          if (!el) continue;
+          const cats = summary.categories.join(' · ');
+          el.innerHTML = `<span class="restaurant-badge">🍽️ ${summary.total} restaurant${summary.total !== 1 ? 's' : ''} · ${cats}</span>`;
+        }
+      })
+      .catch(() => {}); // Silently fail if endpoint not ready
+  }
 }
 
 function filterCasinos() {

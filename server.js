@@ -755,6 +755,75 @@ app.get('/api/casinos/:id/restaurants', async (req, res) => {
   }
 });
 
+// GET /api/casinos/:id/restaurant-summary — category summary for tile display
+app.get('/api/casinos/:id/restaurant-summary', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(`
+      SELECT category, COUNT(*) as count
+      FROM restaurants
+      WHERE casino_id = $1 AND name != '__no_restaurants__' AND category IS NOT NULL
+      GROUP BY category
+      ORDER BY
+        CASE category
+          WHEN 'Fine Dining' THEN 1
+          WHEN 'Casual Dining' THEN 2
+          WHEN 'Buffet' THEN 3
+          WHEN 'Bar & Lounge' THEN 4
+          WHEN 'Quick Bite' THEN 5
+          ELSE 6
+        END
+    `, [id]);
+    const total = result.rows.reduce((sum, r) => sum + parseInt(r.count), 0);
+    const categories = result.rows.map(r => r.category);
+    res.json({ total, categories });
+  } catch (err) {
+    if (err.message.includes('does not exist')) return res.json({ total: 0, categories: [] });
+    console.error('/api/casinos/:id/restaurant-summary error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/restaurants/batch-summary — batch category summaries for tile display
+app.get('/api/restaurants/batch-summary', async (req, res) => {
+  try {
+    const ids = (req.query.ids || '').split(',').map(id => parseInt(id)).filter(n => !isNaN(n));
+    if (!ids.length) return res.json({});
+    const result = await pool.query(`
+      SELECT casino_id, category, COUNT(*) as count
+      FROM restaurants
+      WHERE casino_id = ANY($1) AND name != '__no_restaurants__' AND category IS NOT NULL
+      GROUP BY casino_id, category
+      ORDER BY casino_id,
+        CASE category
+          WHEN 'Fine Dining' THEN 1
+          WHEN 'Casual Dining' THEN 2
+          WHEN 'Buffet' THEN 3
+          WHEN 'Bar & Lounge' THEN 4
+          WHEN 'Quick Bite' THEN 5
+          ELSE 6
+        END
+    `, [ids]);
+    const summary = {};
+    for (const id of ids) summary[id] = { total: 0, categories: [] };
+    for (const row of result.rows) {
+      const s = summary[row.casino_id];
+      s.total += parseInt(row.count);
+      s.categories.push(row.category);
+    }
+    res.json(summary);
+  } catch (err) {
+    if (err.message.includes('does not exist')) {
+      const ids = (req.query.ids || '').split(',').map(id => parseInt(id)).filter(n => !isNaN(n));
+      const empty = {};
+      for (const id of ids) empty[id] = { total: 0, categories: [] };
+      return res.json(empty);
+    }
+    console.error('/api/restaurants/batch-summary error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/deal-of-day — best casino promotion today or next 2 days in the region
 app.get('/api/deal-of-day', async (req, res) => {
   try {

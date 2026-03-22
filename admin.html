@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FindJackpots — Affiliate Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563EB;
+      --green: #059669;
+      --yellow: #D97706;
+      --red: #DC2626;
+      --border: #E2E8F0;
+      --bg: #F8FAFC;
+      --card: #ffffff;
+      --text: #0F172A;
+      --muted: #6B7280;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+
+    /* Header */
+    header {
+      background: var(--primary);
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 { color: #fff; font-size: 1.1rem; font-weight: 700; }
+    header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; }
+    header a:hover { color: #fff; }
+
+    /* Layout */
+    .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { font-size: 2rem; font-weight: 700; margin-top: 4px; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-value.blue { color: var(--primary); }
+
+    /* Filters */
+    .toolbar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .toolbar input, .toolbar select {
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--text);
+      outline: none;
+      background: var(--bg);
+    }
+    .toolbar input { width: 260px; }
+    .toolbar input:focus, .toolbar select:focus { border-color: var(--primary); }
+    .toolbar .count { margin-left: auto; color: var(--muted); font-size: 0.85rem; }
+
+    /* Table */
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--bg);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #F1F5F9;
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #F8FAFC; }
+
+    /* Status badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .badge.active  { background: #D1FAE5; color: #065F46; }
+    .badge.pending { background: #FEF3C7; color: #92400E; }
+    .badge.none    { background: #F1F5F9; color: #6B7280; }
+
+    /* Edit form */
+    .edit-btn {
+      padding: 6px 12px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .edit-btn:hover { opacity: 0.85; }
+    .edit-btn.secondary { background: #F1F5F9; color: var(--text); }
+
+    /* Modal */
+    .modal-bg {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h2 { font-size: 1rem; font-weight: 700; }
+    .modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted); padding: 4px; }
+    .modal-body { padding: 20px 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      background: var(--bg);
+    }
+    .form-input:focus, .form-select:focus { border-color: var(--primary); background: #fff; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-save {
+      padding: 9px 20px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-save:hover { opacity: 0.88; }
+    .btn-cancel {
+      padding: 9px 20px;
+      background: #F1F5F9;
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Network colors */
+    .net-cj       { color: #0070f3; }
+    .net-impact   { color: #7c3aed; }
+    .net-rakuten  { color: #bf1b1b; }
+    .net-shareasale { color: #059669; }
+    .net-direct   { color: #D97706; }
+
+    .url-cell { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.78rem; color: var(--primary); }
+    .cpa-cell { font-weight: 600; color: var(--green); }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 0.88rem; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🎰 FindJackpots — Affiliate Manager</h1>
+  <a href="/">← Back to Site</a>
+</header>
+
+<div class="container">
+  <!-- Stats -->
+  <div class="stats" id="statsRow">
+    <div class="stat-card"><div class="stat-label">Total Casinos</div><div class="stat-value blue" id="statTotal">—</div></div>
+    <div class="stat-card"><div class="stat-label">Active Links</div><div class="stat-value green" id="statActive">—</div></div>
+    <div class="stat-card"><div class="stat-label">Pending Approval</div><div class="stat-value yellow" id="statPending">—</div></div>
+    <div class="stat-card"><div class="stat-label">Est. Monthly Revenue</div><div class="stat-value green" id="statRevenue">—</div></div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <input type="text" id="searchInput" placeholder="Search casino name..." oninput="render()"/>
+    <select id="statusFilter" onchange="render()">
+      <option value="">All Statuses</option>
+      <option value="active">Active</option>
+      <option value="pending">Pending</option>
+      <option value="none">No Program</option>
+    </select>
+    <select id="stateFilter" onchange="render()">
+      <option value="">All States</option>
+    </select>
+    <select id="networkFilter" onchange="render()">
+      <option value="">All Networks</option>
+      <option value="CJ">CJ.com</option>
+      <option value="Impact">Impact.com</option>
+      <option value="Rakuten">Rakuten</option>
+      <option value="ShareASale">ShareASale</option>
+      <option value="Direct">Direct</option>
+    </select>
+    <span class="count" id="countLabel">Loading...</span>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Casino</th>
+          <th>State</th>
+          <th>Status</th>
+          <th>Network</th>
+          <th>Affiliate URL</th>
+          <th>CPA</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Edit Affiliate</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId"/>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select class="form-select" id="editStatus">
+          <option value="none">No Program</option>
+          <option value="pending">Pending Approval</option>
+          <option value="active">Active</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Network</label>
+        <select class="form-select" id="editNetwork">
+          <option value="">— None —</option>
+          <option value="CJ">CJ.com (Commission Junction)</option>
+          <option value="Impact">Impact.com</option>
+          <option value="Rakuten">Rakuten Advertising</option>
+          <option value="ShareASale">ShareASale</option>
+          <option value="Direct">Direct Program</option>
+          <option value="DraftKings">DraftKings Affiliates</option>
+          <option value="FanDuel">FanDuel Affiliates</option>
+          <option value="BetMGM">BetMGM Affiliates</option>
+          <option value="Caesars">Caesars Affiliates</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Affiliate URL</label>
+        <input type="url" class="form-input" id="editUrl" placeholder="https://click.cj.com/..."/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Network Program ID (optional)</label>
+        <input type="text" class="form-input" id="editNetworkId" placeholder="e.g. 12345678"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CPA Amount (per signup, in $)</label>
+        <input type="number" class="form-input" id="editCpa" placeholder="e.g. 50" min="0" step="1"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <input type="text" class="form-input" id="editNotes" placeholder="e.g. Approved 2024-03, pays Net-30"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveAffiliate()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let allCasinos = [];
+
+async function loadData() {
+  try {
+    const res = await fetch('/api/admin/affiliates', { headers: { 'x-admin-token': 'fj-admin-2024' } });
+    allCasinos = await res.json();
+    populateStateFilter();
+    updateStats();
+    render();
+  } catch(e) {
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#DC2626">Failed to load — make sure you\'re logged in as admin</td></tr>';
+  }
+}
+
+function populateStateFilter() {
+  const states = [...new Set(allCasinos.map(c => c.state))].sort();
+  const sel = document.getElementById('stateFilter');
+  states.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+}
+
+function updateStats() {
+  const active = allCasinos.filter(c => c.affiliate_status === 'active').length;
+  const pending = allCasinos.filter(c => c.affiliate_status === 'pending').length;
+  const rev = allCasinos.filter(c => c.affiliate_status === 'active' && c.affiliate_cpa_cents)
+    .reduce((sum, c) => sum + (c.affiliate_cpa_cents / 100), 0);
+  document.getElementById('statTotal').textContent = allCasinos.length;
+  document.getElementById('statActive').textContent = active;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statRevenue').textContent = rev > 0 ? '$' + Math.round(rev).toLocaleString() + ' est.' : '$0';
+}
+
+function render() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  const state = document.getElementById('stateFilter').value;
+  const network = document.getElementById('networkFilter').value;
+
+  const filtered = allCasinos.filter(c => {
+    if (q && !c.name.toLowerCase().includes(q)) return false;
+    if (status && c.affiliate_status !== status) return false;
+    if (state && c.state !== state) return false;
+    if (network && c.affiliate_network !== network) return false;
+    return true;
+  });
+
+  document.getElementById('countLabel').textContent = `${filtered.length} of ${allCasinos.length} casinos`;
+
+  const tbody = document.getElementById('tableBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">No casinos match filters</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(c => `
+    <tr>
+      <td><strong>${c.name}</strong><br><span style="font-size:0.75rem;color:var(--muted)">${c.chain || ''}</span></td>
+      <td>${c.state}</td>
+      <td><span class="badge ${c.affiliate_status || 'none'}">${(c.affiliate_status || 'none').toUpperCase()}</span></td>
+      <td class="net-${(c.affiliate_network||'').toLowerCase()}">${c.affiliate_network || '—'}</td>
+      <td class="url-cell">${c.affiliate_url ? `<a href="${c.affiliate_url}" target="_blank">${c.affiliate_url}</a>` : '—'}</td>
+      <td class="cpa-cell">${c.affiliate_cpa_cents ? '$' + (c.affiliate_cpa_cents/100).toFixed(0) : '—'}</td>
+      <td><button class="edit-btn" onclick="openModal(${c.id})">Edit</button></td>
+    </tr>
+  `).join('');
+}
+
+function openModal(id) {
+  const c = allCasinos.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('modalTitle').textContent = c.name;
+  document.getElementById('editId').value = id;
+  document.getElementById('editStatus').value = c.affiliate_status || 'none';
+  document.getElementById('editNetwork').value = c.affiliate_network || '';
+  document.getElementById('editUrl').value = c.affiliate_url || '';
+  document.getElementById('editNetworkId').value = c.affiliate_network_id || '';
+  document.getElementById('editCpa').value = c.affiliate_cpa_cents ? (c.affiliate_cpa_cents/100) : '';
+  document.getElementById('editNotes').value = c.affiliate_commission_note || '';
+  document.getElementById('modalBg').classList.add('open');
+}
+
+function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
+
+async function saveAffiliate() {
+  const id = document.getElementById('editId').value;
+  const cpa = document.getElementById('editCpa').value;
+  const data = {
+    affiliate_status: document.getElementById('editStatus').value,
+    affiliate_network: document.getElementById('editNetwork').value || null,
+    affiliate_url: document.getElementById('editUrl').value || null,
+    affiliate_network_id: document.getElementById('editNetworkId').value || null,
+    affiliate_cpa_cents: cpa ? Math.round(parseFloat(cpa) * 100) : null,
+    affiliate_commission_note: document.getElementById('editNotes').value || null,
+  };
+
+  try {
+    const res = await fetch(`/api/admin/affiliates/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': 'fj-admin-2024' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    // Update local data
+    const idx = allCasinos.findIndex(c => c.id == id);
+    if (idx >= 0) Object.assign(allCasinos[idx], data);
+    updateStats();
+    render();
+    closeModal();
+    showToast('✅ Saved!');
+  } catch(e) {
+    showToast('❌ Error: ' + e.message);
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+loadData();
+</script>
+</body>
+</html>

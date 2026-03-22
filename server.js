@@ -639,6 +639,64 @@ app.get('/api/deal-of-day', async (req, res) => {
   }
 });
 
+// ─────────────────────────────────────────
+// ADMIN ROUTES (simple token auth)
+// ─────────────────────────────────────────
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'fj-admin-2024';
+
+function requireAdmin(req, res, next) {
+  const token = req.headers['x-admin-token'] || req.query.token;
+  if (token !== ADMIN_TOKEN) return res.status(401).json({ error: 'Unauthorized' });
+  next();
+}
+
+// Serve admin page
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+
+// GET /api/admin/affiliates — all casinos with affiliate data
+app.get('/api/admin/affiliates', requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT id, name, chain, state, city,
+             affiliate_url, affiliate_network, affiliate_network_id,
+             affiliate_cpa_cents, affiliate_commission_note,
+             affiliate_status, loyalty_program_name, website
+      FROM casinos
+      ORDER BY
+        CASE affiliate_status WHEN 'active' THEN 1 WHEN 'pending' THEN 2 ELSE 3 END,
+        state, name
+    `);
+    res.json(result.rows);
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// PATCH /api/admin/affiliates/:id — update affiliate data for one casino
+app.patch('/api/admin/affiliates/:id', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      affiliate_url, affiliate_network, affiliate_network_id,
+      affiliate_cpa_cents, affiliate_commission_note, affiliate_status
+    } = req.body;
+    await pool.query(`
+      UPDATE casinos SET
+        affiliate_url = $1,
+        affiliate_network = $2,
+        affiliate_network_id = $3,
+        affiliate_cpa_cents = $4,
+        affiliate_commission_note = $5,
+        affiliate_status = $6
+      WHERE id = $7
+    `, [affiliate_url, affiliate_network, affiliate_network_id,
+        affiliate_cpa_cents, affiliate_commission_note, affiliate_status, id]);
+    res.json({ success: true });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // POST /api/migrate — create schema (one-time, protected by secret)
 app.post('/api/migrate', async (req, res) => {
   if (req.headers['x-migrate-secret'] !== process.env.MIGRATE_SECRET) {

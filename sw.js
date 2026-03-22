@@ -1,4 +1,4 @@
-const CACHE = 'findjackpots-v1';
+const CACHE = 'findjackpots-v2';
 const STATIC = [
   '/',
   '/manifest.json',

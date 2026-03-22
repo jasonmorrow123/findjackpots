@@ -3,20 +3,20 @@
 <head>
   <meta name="ga-site-verification" content="lgWuEb22h5HDV0cUJ2ndonfF" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <title>FindJackpots — Find the Best Casino Jackpots &amp; Bonuses Near You</title>
   <meta name="description" content="FindJackpots is the Kayak for casinos — compare slot payouts, jackpots, bonuses, and promotions at casinos near you. Find where to play and win.">
   <meta name="keywords" content="casino jackpots, slot machine payouts, casino bonuses, best casino near me, casino comparison, casino promotions, slot jackpots, casino finder">
   <meta name="author" content="FindJackpots">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://findjackpots.com">
-  <meta name="theme-color" content="#2563EB">
+  <meta name="theme-color" content="#5c7aaa">
 
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="FindJackpots">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 
@@ -3968,6 +3968,76 @@ function urlBase64ToUint8Array(base64String) {
 })();
 
 // Calendar removed — events shown inline on cards
+
+// ── PWA Install Prompt ──────────────────────────────────────────────────────
+(function () {
+  var DISMISSED_KEY = 'pwa-dismissed';
+  var banner = null;
+
+  function createBanner(html, onInstall) {
+    var el = document.createElement('div');
+    el.id = 'pwa-install-banner';
+    el.style.cssText = [
+      'position:fixed', 'bottom:0', 'left:0', 'right:0', 'z-index:9999',
+      'background:#1e293b', 'color:#f1f5f9', 'padding:12px 16px',
+      'display:flex', 'align-items:center', 'justify-content:space-between',
+      'gap:12px', 'font-family:Inter,system-ui,sans-serif', 'font-size:14px',
+      'box-shadow:0 -2px 12px rgba(0,0,0,0.3)'
+    ].join(';');
+    el.innerHTML = html;
+    document.body.appendChild(el);
+    banner = el;
+
+    var dismissBtn = el.querySelector('.pwa-dismiss');
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', function () {
+        localStorage.setItem(DISMISSED_KEY, '1');
+        el.remove();
+      });
+    }
+    if (onInstall) {
+      var installBtn = el.querySelector('.pwa-install');
+      if (installBtn) installBtn.addEventListener('click', onInstall);
+    }
+  }
+
+  function dismissed() {
+    return localStorage.getItem(DISMISSED_KEY) === '1';
+  }
+
+  // Android Chrome — beforeinstallprompt
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (dismissed()) return;
+    createBanner(
+      '<span style="flex:1">📱 Add FindJackpots to your home screen for quick access</span>' +
+      '<button class="pwa-install" style="background:#5c7aaa;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;white-space:nowrap">Add to Home Screen</button>' +
+      '<button class="pwa-dismiss" style="background:transparent;color:#94a3b8;border:none;cursor:pointer;font-size:13px;padding:4px 8px;white-space:nowrap">Not Now</button>',
+      function () {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function () {
+          deferredPrompt = null;
+          if (banner) banner.remove();
+          localStorage.setItem(DISMISSED_KEY, '1');
+        });
+      }
+    );
+  });
+
+  // iOS Safari — no beforeinstallprompt, show manual instructions once
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+  if (isIOS && !isInStandaloneMode && !dismissed()) {
+    createBanner(
+      '<span style="flex:1">📱 Tap <strong>Share</strong> then <strong>"Add to Home Screen"</strong> to install FindJackpots</span>' +
+      '<button class="pwa-dismiss" style="background:transparent;color:#94a3b8;border:none;cursor:pointer;font-size:13px;padding:4px 8px;white-space:nowrap">✕</button>',
+      null
+    );
+  }
+})();
 
 </script>
 </body>

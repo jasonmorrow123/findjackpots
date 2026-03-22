@@ -1822,6 +1822,18 @@
   </div>
 </div>
 
+<!-- EMAIL SIGNUP BAR (below winner banner) -->
+<div id="emailSignupBar" style="background:#1e3a5f;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+  <span style="color:#fff;font-size:0.9rem;white-space:nowrap">🔔 Get daily jackpot alerts — free</span>
+  <div id="emailBarForm" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;">
+    <input id="emailBarInput" type="email" placeholder="you@example.com"
+      style="padding:7px 12px;border-radius:6px;border:none;font-size:0.85rem;min-width:200px;outline:none;">
+    <button onclick="subscribeEmail('bar')"
+      style="background:#5c7aaa;color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:0.85rem;font-weight:600;cursor:pointer;white-space:nowrap;">Subscribe</button>
+  </div>
+  <div id="emailBarSuccess" style="display:none;color:#7effa4;font-size:0.9rem;font-weight:600;">✅ You're in! Check your inbox.</div>
+</div>
+
 <!-- FILTERS -->
 <div class="filter-bar-wrap">
   <div class="filters">
@@ -1927,6 +1939,19 @@
     </div>
   </div>
 </div>
+
+<!-- EMAIL SIGNUP SECTION (above footer) -->
+<section id="emailSignupSection" style="background:#f4f7fb;padding:48px 16px;text-align:center;border-top:1px solid #dde3ed;">
+  <h2 style="margin:0 0 8px;font-size:1.5rem;color:#1e3a5f;font-weight:700;">Never Miss a Big Win</h2>
+  <p style="margin:0 0 24px;color:#556;font-size:0.95rem;">Get the biggest jackpot of the day delivered to your inbox. Free, unsubscribe anytime.</p>
+  <div id="emailSectionForm" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:460px;margin:0 auto;">
+    <input id="emailSectionInput" type="email" placeholder="Enter your email"
+      style="padding:12px 16px;border-radius:8px;border:1px solid #c0cde0;font-size:0.95rem;flex:1;min-width:220px;outline:none;color:#333;">
+    <button onclick="subscribeEmail('section')"
+      style="background:#5c7aaa;color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:0.95rem;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 2px 8px rgba(92,122,170,0.3);">Subscribe</button>
+  </div>
+  <div id="emailSectionSuccess" style="display:none;color:#2a7a4a;font-size:1rem;font-weight:600;margin-top:16px;">✅ You're in! Check your inbox.</div>
+</section>
 
 <div class="disclosure-banner">
   ⚠️ FindJackpots may earn a commission when you sign up for casino rewards programs through links on this site. <a href="#">Learn more</a>
@@ -4052,6 +4077,34 @@ function urlBase64ToUint8Array(base64String) {
     );
   }
 })();
+
+// Email signup handler
+async function subscribeEmail(source) {
+  const inputId = source === 'bar' ? 'emailBarInput' : 'emailSectionInput';
+  const formId  = source === 'bar' ? 'emailBarForm'  : 'emailSectionForm';
+  const successId = source === 'bar' ? 'emailBarSuccess' : 'emailSectionSuccess';
+  const email = (document.getElementById(inputId)?.value || '').trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById(inputId)?.focus();
+    return;
+  }
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, region: currentRegion })
+    });
+    const data = await res.json();
+    if (data.ok || data.error === 'duplicate') {
+      document.getElementById(formId).style.display = 'none';
+      document.getElementById(successId).style.display = 'block';
+    } else {
+      alert(data.error || 'Something went wrong. Please try again.');
+    }
+  } catch (e) {
+    alert('Could not connect. Please try again.');
+  }
+}
 
 </script>
 </body>

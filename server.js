@@ -1153,6 +1153,28 @@ app.get('/api/locate', (req, res) => {
   res.json({ state: null, region: 'las-vegas', label: 'Las Vegas, NV', fallback: true });
 });
 
+// POST /api/subscribe — capture email for daily jackpot alerts
+app.post('/api/subscribe', async (req, res) => {
+  const { email, region } = req.body || {};
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Invalid email address.' });
+  }
+  const client = await pool.connect();
+  try {
+    await client.query(
+      `INSERT INTO email_subscribers (email, region) VALUES ($1, $2)
+       ON CONFLICT (email) DO NOTHING`,
+      [email.toLowerCase().trim(), region || null]
+    );
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error('/api/subscribe error:', err.message);
+    return res.status(500).json({ error: 'Server error. Please try again.' });
+  } finally {
+    client.release();
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`JackpotMap API server running at http://localhost:${PORT}`);
 });

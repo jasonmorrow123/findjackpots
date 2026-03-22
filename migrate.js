@@ -128,6 +128,14 @@ async function migrate() {
         created_at TIMESTAMP DEFAULT NOW()
       );
 
+      CREATE TABLE IF NOT EXISTS email_subscribers (
+        id SERIAL PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        region TEXT,
+        subscribed_at TIMESTAMP DEFAULT NOW(),
+        active BOOLEAN DEFAULT TRUE
+      );
+
       CREATE INDEX IF NOT EXISTS idx_reviews_casino ON reviews(casino_id);
       CREATE INDEX IF NOT EXISTS idx_jackpots_casino ON jackpots(casino_id);
       CREATE INDEX IF NOT EXISTS idx_jackpots_date ON jackpots(created_at DESC);

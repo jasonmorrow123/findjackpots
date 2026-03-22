@@ -83,6 +83,130 @@ app.get('/sw.js', (req, res) => res.sendFile(path.join(__dirname, 'sw.js')));
 // Serve manifest and icons
 app.get('/manifest.json', (req, res) => res.sendFile(path.join(__dirname, 'manifest.json')));
 app.use('/icons', express.static(path.join(__dirname, 'icons')));
+// Privacy Policy
+app.get('/privacy', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — FindJackpots</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 24px; color: #1a1a2e; line-height: 1.7; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    h2 { font-size: 1.2rem; margin-top: 32px; color: #5c7aaa; }
+    a { color: #5c7aaa; }
+    .back { display: inline-block; margin-bottom: 32px; color: #5c7aaa; text-decoration: none; font-size: 0.9rem; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.85rem; color: #888; }
+  </style>
+</head>
+<body>
+  <a class="back" href="/">← Back to FindJackpots</a>
+  <h1>Privacy Policy</h1>
+  <p><strong>Last updated: March 22, 2026</strong></p>
+  <p>FindJackpots ("we," "us," or "our") operates findjackpots.com. This Privacy Policy explains how we collect, use, and protect your information when you use our website.</p>
+
+  <h2>Information We Collect</h2>
+  <p>We may collect the following types of information:</p>
+  <ul>
+    <li><strong>Location data:</strong> With your permission, we use your geographic location to show nearby casinos and relevant jackpot winners. You may deny location access at any time.</li>
+    <li><strong>Usage data:</strong> We collect anonymous data about how you use our site (pages visited, region selected, search queries) to improve our service.</li>
+    <li><strong>Submitted content:</strong> If you submit a jackpot win report, we collect the information you provide (casino name, machine, amount, optional photo).</li>
+    <li><strong>Push notification tokens:</strong> If you enable push notifications, we store a device token to send you alerts.</li>
+  </ul>
+
+  <h2>How We Use Your Information</h2>
+  <ul>
+    <li>To provide location-relevant casino and jackpot information</li>
+    <li>To improve our platform and user experience</li>
+    <li>To send push notifications you have opted into</li>
+    <li>To display relevant advertising via Google AdSense</li>
+  </ul>
+
+  <h2>Third-Party Services</h2>
+  <p>We use the following third-party services that may collect data:</p>
+  <ul>
+    <li><strong>Google AdSense:</strong> Displays advertising on our site. Google may use cookies to serve ads based on your interests. See <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a>.</li>
+    <li><strong>Yelp:</strong> We use Yelp data to display restaurant information for casinos.</li>
+    <li><strong>ipapi.co:</strong> Used for approximate location detection when GPS is not available.</li>
+  </ul>
+
+  <h2>Cookies</h2>
+  <p>We use cookies and localStorage to remember your region preference, location, and notification settings. We do not sell your personal data to third parties.</p>
+
+  <h2>Affiliate Links</h2>
+  <p>Some links on FindJackpots are affiliate links. If you click and make a purchase or sign up, we may earn a commission at no extra cost to you. We only link to reputable casino and gaming brands.</p>
+
+  <h2>Data Retention</h2>
+  <p>We retain submitted win reports and usage data for up to 2 years. You may request deletion of your data by contacting us.</p>
+
+  <h2>Children's Privacy</h2>
+  <p>FindJackpots is intended for adults 21 and older. We do not knowingly collect data from anyone under 18.</p>
+
+  <h2>Contact Us</h2>
+  <p>Questions about this Privacy Policy? Contact us at <a href="mailto:admin@findjackpots.com">admin@findjackpots.com</a>.</p>
+
+  <footer>
+    <p>&copy; 2026 FindJackpots · <a href="/">Home</a> · <a href="/terms">Terms of Use</a></p>
+  </footer>
+</body>
+</html>`);
+});
+
+// Terms of Use
+app.get('/terms', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Use — FindJackpots</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 24px; color: #1a1a2e; line-height: 1.7; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    h2 { font-size: 1.2rem; margin-top: 32px; color: #5c7aaa; }
+    a { color: #5c7aaa; }
+    .back { display: inline-block; margin-bottom: 32px; color: #5c7aaa; text-decoration: none; font-size: 0.9rem; }
+    footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.85rem; color: #888; }
+  </style>
+</head>
+<body>
+  <a class="back" href="/">← Back to FindJackpots</a>
+  <h1>Terms of Use</h1>
+  <p><strong>Last updated: March 22, 2026</strong></p>
+  <p>By using FindJackpots (findjackpots.com), you agree to these Terms of Use. Please read them carefully.</p>
+
+  <h2>Use of the Site</h2>
+  <p>FindJackpots is an informational platform for adults 21 and older. You may use this site only for lawful purposes and in accordance with these terms. You agree not to scrape, copy, or redistribute our data without written permission.</p>
+
+  <h2>Accuracy of Information</h2>
+  <p>We strive to provide accurate casino, jackpot, and promotional information, but we make no warranties about the completeness or accuracy of the data. Always verify promotions and details directly with the casino before making decisions.</p>
+
+  <h2>Gambling Disclaimer</h2>
+  <p>FindJackpots does not promote or encourage gambling. We provide comparison and informational tools only. Gambling involves financial risk. Please gamble responsibly. If you have a gambling problem, contact the National Problem Gambling Helpline at 1-800-522-4700.</p>
+
+  <h2>Affiliate Disclosure</h2>
+  <p>FindJackpots participates in affiliate marketing programs. Some links may result in us earning a commission if you sign up or make a purchase. This does not affect our editorial independence.</p>
+
+  <h2>User-Submitted Content</h2>
+  <p>By submitting a jackpot win report, you grant FindJackpots a non-exclusive license to display that content on our platform. You confirm the information is accurate to the best of your knowledge.</p>
+
+  <h2>Limitation of Liability</h2>
+  <p>FindJackpots is not liable for any losses or damages arising from your use of this site or reliance on information provided here.</p>
+
+  <h2>Changes to Terms</h2>
+  <p>We may update these terms at any time. Continued use of the site after changes constitutes acceptance of the new terms.</p>
+
+  <h2>Contact</h2>
+  <p>Questions? Email us at <a href="mailto:admin@findjackpots.com">admin@findjackpots.com</a>.</p>
+
+  <footer>
+    <p>&copy; 2026 FindJackpots · <a href="/">Home</a> · <a href="/privacy">Privacy Policy</a></p>
+  </footer>
+</body>
+</html>`);
+});
+
 app.get('/googleb0ba27dead70807a.html', (req, res) => {
   res.send('google-site-verification: googleb0ba27dead70807a.html');
 });

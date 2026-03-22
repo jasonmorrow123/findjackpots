@@ -1721,7 +1721,7 @@
   <!-- Right controls -->
   <div class="header-actions">
     <div class="header-location">
-      <span id="currentRegionLabel" style="font-size:0.8rem;color:rgba(255,255,255,0.85);white-space:nowrap">📍 Las Vegas, NV</span>
+      <span id="currentRegionLabel" style="font-size:0.8rem;color:rgba(255,255,255,0.85);white-space:nowrap">Las Vegas, NV</span>
       <button class="btn btn-secondary" style="flex:none;padding:7px 14px;font-size:0.8rem;border-radius:99px" onclick="openRegionPicker()">Change Location</button>
     </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:7px 12px;font-size:0.8rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔</button>
@@ -2493,7 +2493,6 @@ function openRegionPicker() {
   const body = document.getElementById('regionPickerBody');
   body.innerHTML = availableRegions.map(r => `
     <div class="region-option ${r.id === currentRegion ? 'active' : ''}" onclick="selectRegion('${r.id}', '${r.label}')">
-      <span style="font-size:1.4rem">${r.emoji}</span>
       <div>
         <div style="font-weight:700;font-size:0.95rem">${r.label}</div>
         ${r.id === currentRegion ? '<div style="font-size:0.75rem;color:var(--green)">✓ Currently viewing</div>' : ''}
@@ -2515,7 +2514,7 @@ function closeRegionPickerBtn() {
 
 async function selectRegion(regionId, label) {
   currentRegion = regionId;
-  document.getElementById('currentRegionLabel').textContent = '📍 ' + label;
+  document.getElementById('currentRegionLabel').textContent = label;
   document.getElementById('regionPickerOverlay').classList.remove('open');
 
   // Update search subtext
@@ -3636,7 +3635,7 @@ function getPosition() {
 function applyRegion(region, label) {
   currentRegion = region;
   calendarRegion = region;
-  document.getElementById('currentRegionLabel').textContent = '📍 ' + label;
+  document.getElementById('currentRegionLabel').textContent = label;
   document.getElementById('eventsRegionBadge').textContent = label;
   const subtext = REGION_SUBTEXTS[region] || `Explore casinos — ${label}`;
   document.getElementById('searchSubtext').textContent = subtext;

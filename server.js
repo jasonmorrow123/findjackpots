@@ -87,6 +87,25 @@ app.get('/googleb0ba27dead70807a.html', (req, res) => {
   res.send('google-site-verification: googleb0ba27dead70807a.html');
 });
 
+// Sitemap
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT id, name, city, state FROM casinos ORDER BY id LIMIT 1000`);
+    const base = 'https://findjackpots.com';
+    const today = new Date().toISOString().split('T')[0];
+    let urls = `  <url><loc>${base}/</loc><changefreq>daily</changefreq><priority>1.0</priority><lastmod>${today}</lastmod></url>\n`;
+    for (const c of result.rows) {
+      const slug = encodeURIComponent(c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+      urls += `  <url><loc>${base}/casino/${c.id}/${slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
+    }
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}</urlset>`;
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // GET /api/regions — return list of available regions for the frontend picker
 app.get('/api/regions', (req, res) => {
   const list = Object.entries(REGIONS).map(([id, r], i) => ({

@@ -116,6 +116,18 @@ async function migrate() {
         voted_at TIMESTAMPTZ DEFAULT NOW()
       );
 
+      CREATE TABLE IF NOT EXISTS restaurants (
+        id SERIAL PRIMARY KEY,
+        casino_id INTEGER REFERENCES casinos(id),
+        name TEXT,
+        cuisine TEXT,
+        rating NUMERIC(2,1),
+        review_count INTEGER,
+        price_range TEXT,
+        yelp_url TEXT,
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+
       CREATE INDEX IF NOT EXISTS idx_reviews_casino ON reviews(casino_id);
       CREATE INDEX IF NOT EXISTS idx_jackpots_casino ON jackpots(casino_id);
       CREATE INDEX IF NOT EXISTS idx_jackpots_date ON jackpots(created_at DESC);

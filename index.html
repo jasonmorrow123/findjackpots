@@ -3315,22 +3315,32 @@ async function loadWinnerOfDay() {
     const amt = '$' + Math.round(winner.amount_cents / 100).toLocaleString();
     document.getElementById('winnerAmount').textContent = amt;
 
-    // Build the human sentence: "Jane D. hit the Wheel of Fortune Deluxe"
+    // Build the human sentence with casino name baked in
     const who = winner.winner_name || 'A lucky player';
     const machine = winner.machine_name;
+    const casinoName = (winner.casino_name && winner.casino_name !== 'Unknown Casino') ? winner.casino_name : null;
+    const loc = [winner.city, winner.state ? winner.state.trim() : null].filter(Boolean).join(', ');
+    const casinoFull = casinoName
+      ? `<strong>${casinoName}</strong>${loc ? ', ' + loc : ''}`
+      : null;
+
     let desc;
-    if (machine) {
+    if (machine && casinoFull) {
+      desc = `<strong>${who}</strong> hit the <strong>${machine}</strong> at ${casinoFull}`;
+    } else if (machine) {
       desc = `<strong>${who}</strong> hit the <strong>${machine}</strong>`;
+    } else if (casinoFull) {
+      desc = `<strong>${who}</strong> won at ${casinoFull}`;
     } else {
       desc = `<strong>${who}</strong> walked away a winner`;
     }
     document.getElementById('winnerDesc').innerHTML = desc;
 
-    // Casino + location
+    // Casino + location (meta row — kept for secondary display, but hide if already in desc)
     const casinoEl = document.getElementById('winnerCasino');
-    if (winner.casino_name && winner.casino_name !== 'Unknown Casino') {
-      const loc = [winner.city, winner.state ? winner.state.trim() : null].filter(Boolean).join(', ');
-      casinoEl.innerHTML = `<strong>${winner.casino_name}</strong>${loc ? ' · ' + loc : ''}`;
+    if (casinoName && !machine) {
+      // Only show the meta casino line when it wasn't included in the desc sentence
+      casinoEl.innerHTML = `<strong>${casinoName}</strong>${loc ? ' · ' + loc : ''}`;
     }
 
     // Date

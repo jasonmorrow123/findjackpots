@@ -612,67 +612,59 @@ app.get('/api/events/upcoming', async (req, res) => {
   }
 });
 
-// GET /api/winner-of-day — jackpot with highest amount in last 7 days (falls back to 30)
+// GET /api/winner-of-day — best jackpot with real casino details
 app.get('/api/winner-of-day', async (req, res) => {
-  try {
-    // Try last 7 days first
-    let result = await pool.query(`
-      SELECT
-        j.machine_name,
-        j.amount_cents,
-        j.won_at,
-        j.source,
-        j.raw_text,
-        c.name AS casino_name,
-        c.city,
-        c.state
-      FROM jackpots j
-      LEFT JOIN casinos c ON c.id = j.casino_id
-      WHERE j.won_at >= NOW() - INTERVAL '7 days'
-        AND j.amount_cents > 0
-      ORDER BY j.amount_cents DESC
-      LIMIT 1
-    `);
+  // Shared query builder — always requires a real casino name via INNER JOIN.
+  // Uses COALESCE(won_at, created_at) so website records without won_at still
+  // participate in time-window filtering.
+  // Priority ordering: has machine_name first, then by amount descending.
+  const buildQuery = (extraWhere = '') => `
+    SELECT
+      j.machine_name,
+      j.amount_cents,
+      COALESCE(j.won_at, j.created_at) AS win_date,
+      j.source,
+      j.raw_text,
+      c.name  AS casino_name,
+      c.city,
+      c.state
+    FROM jackpots j
+    INNER JOIN casinos c ON c.id = j.casino_id
+    WHERE c.name IS NOT NULL AND c.name <> ''
+      ${extraWhere}
+    ORDER BY
+      CASE WHEN j.machine_name IS NOT NULL AND j.machine_name <> '' THEN 0 ELSE 1 END,
+      j.amount_cents DESC
+    LIMIT 1
+  `;
 
-    // Fall back to last 30 days
+  try {
+    let result;
+
+    // 1. Last 30 days, amount >= $500
+    result = await pool.query(buildQuery(
+      `AND j.amount_cents >= 50000
+       AND COALESCE(j.won_at, j.created_at) >= NOW() - INTERVAL '30 days'`
+    ));
+
+    // 2. Last 90 days, amount >= $500
     if (result.rows.length === 0) {
-      result = await pool.query(`
-        SELECT
-          j.machine_name,
-          j.amount_cents,
-          j.won_at,
-          j.source,
-          j.raw_text,
-          c.name AS casino_name,
-          c.city,
-          c.state
-        FROM jackpots j
-        LEFT JOIN casinos c ON c.id = j.casino_id
-        WHERE j.won_at >= NOW() - INTERVAL '30 days'
-          AND j.amount_cents > 0
-        ORDER BY j.amount_cents DESC
-        LIMIT 1
-      `);
+      result = await pool.query(buildQuery(
+        `AND j.amount_cents >= 50000
+         AND COALESCE(j.won_at, j.created_at) >= NOW() - INTERVAL '90 days'`
+      ));
     }
 
-    // Also try created_at if won_at is sparse
+    // 3. All-time, amount >= $1,000 — always has a casino name
     if (result.rows.length === 0) {
-      result = await pool.query(`
-        SELECT
-          j.machine_name,
-          j.amount_cents,
-          j.won_at,
-          j.source,
-          j.raw_text,
-          c.name AS casino_name,
-          c.city,
-          c.state
-        FROM jackpots j
-        LEFT JOIN casinos c ON c.id = j.casino_id
-        WHERE j.amount_cents > 0
-        ORDER BY j.amount_cents DESC
-        LIMIT 1
-      `);
+      result = await pool.query(buildQuery(
+        `AND j.amount_cents >= 100000`
+      ));
+    }
+
+    // 4. True last resort — any amount, just needs a casino name
+    if (result.rows.length === 0) {
+      result = await pool.query(buildQuery(''));
     }
 
     if (result.rows.length === 0) {
@@ -681,13 +673,13 @@ app.get('/api/winner-of-day', async (req, res) => {
 
     const row = result.rows[0];
     res.json({
-      winner_name: null, // winner_name not stored in DB yet
-      machine_name: row.machine_name || 'Slot Machine',
+      winner_name: null,
+      machine_name: row.machine_name || null,
       amount_cents: row.amount_cents,
-      casino_name: row.casino_name || 'Unknown Casino',
+      casino_name: row.casino_name,
       city: row.city || null,
       state: row.state ? row.state.trim() : null,
-      win_date: row.won_at || null,
+      win_date: row.win_date || null,
       source: row.source,
     });
   } catch (err) {

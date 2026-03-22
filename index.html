@@ -3395,10 +3395,7 @@ async function loadWinnerOfDay() {
     const who = winner.winner_name || 'A lucky player';
     const machine = winner.machine_name;
     const casinoName = (winner.casino_name && winner.casino_name !== 'Unknown Casino') ? winner.casino_name : null;
-    const loc = [winner.city, winner.state ? winner.state.trim() : null].filter(Boolean).join(', ');
-    const casinoFull = casinoName
-      ? `<strong>${casinoName}</strong>${loc ? ', ' + loc : ''}`
-      : null;
+    const casinoFull = casinoName ? `<strong>${casinoName}</strong>` : null;
 
     let desc;
     if (machine && casinoFull) {

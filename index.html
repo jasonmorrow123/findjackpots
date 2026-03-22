@@ -2623,7 +2623,25 @@ function filterCasinos() {
       (activeFilter === 'hot' && c.hot);
     return matchesSearch && matchesFilter;
   });
+  // Apply current sort before rendering
+  const sortEl = document.querySelector('.sort-select');
+  const sortVal = sortEl ? sortEl.value : 'score';
+  results = applySortOrder(results, sortVal);
   renderCards(results);
+}
+
+function applySortOrder(arr, val) {
+  const sorted = [...arr];
+  if (val === 'score') sorted.sort((a,b) => b.score - a.score);
+  else if (val === 'distance') sorted.sort((a,b) => {
+    const da = a.distanceMi ?? Infinity;
+    const db = b.distanceMi ?? Infinity;
+    return da - db;
+  });
+  else if (val === 'jackpot') sorted.sort((a,b) => parseFloat(b.largestJackpot.replace(/[$M,]/g,'')) - parseFloat(a.largestJackpot.replace(/[$M,]/g,'')));
+  else if (val === 'loyalty') sorted.sort((a,b) => b.loyaltyScore - a.loyaltyScore);
+  else if (val === 'payback') sorted.sort((a,b) => parseFloat(b.slotPayback) - parseFloat(a.slotPayback));
+  return sorted;
 }
 
 function setFilter(f, el) {
@@ -2658,6 +2676,9 @@ function syncSearch(val) {
 }
 
 function sortCasinos(val) {
+  filterCasinos();
+}
+function sortCasinosOld(val) {
   let sorted = [...CASINOS];
   if (val === 'score') sorted.sort((a,b) => b.score - a.score);
   else if (val === 'distance') {

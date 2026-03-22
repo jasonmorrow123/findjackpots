@@ -207,6 +207,12 @@ app.get('/terms', (req, res) => {
 </html>`);
 });
 
+// ads.txt for AdSense
+app.get('/ads.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('google.com, pub-1953658342958950, DIRECT, f08c47fec0942fa0\n');
+});
+
 app.get('/googleb0ba27dead70807a.html', (req, res) => {
   res.send('google-site-verification: googleb0ba27dead70807a.html');
 });

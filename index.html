@@ -3305,11 +3305,24 @@ async function loadDealOfDay(region) {
 // ── LUCKY WINNER OF THE DAY ─────────────────────────────────────
 async function loadWinnerOfDay() {
   try {
-    const res = await fetch('/api/winner-of-day');
+    // Pass user coords so the API can return the nearest winner first
+    const latLng = (userLat != null && userLng != null)
+      ? `?lat=${userLat}&lng=${userLng}`
+      : '';
+    const res = await fetch(`/api/winner-of-day${latLng}`);
     if (!res.ok) return;
     const winner = await res.json();
     const banner = document.getElementById('winnerBanner');
     if (!winner || !banner) return;
+
+    // Update banner label based on scope
+    const scopeLabels = {
+      local:    '🏆 Lucky Winner Near You',
+      regional: '🏆 Lucky Winner Nearby',
+      national: '🏆 Lucky Winner of the Day',
+    };
+    const labelEl = document.querySelector('.winner-label-text');
+    if (labelEl) labelEl.textContent = scopeLabels[winner.scope] || scopeLabels.national;
 
     // Format the big dollar amount
     const amt = '$' + Math.round(winner.amount_cents / 100).toLocaleString();
@@ -3333,6 +3346,11 @@ async function loadWinnerOfDay() {
       desc = `<strong>${who}</strong> won at ${casinoFull}`;
     } else {
       desc = `<strong>${who}</strong> walked away a winner`;
+    }
+
+    // Append distance hint if we have it
+    if (winner.distance_miles != null && winner.scope !== 'national') {
+      desc += ` <span style="opacity:0.65;font-size:0.82em">(${winner.distance_miles} mi away)</span>`;
     }
     document.getElementById('winnerDesc').innerHTML = desc;
 

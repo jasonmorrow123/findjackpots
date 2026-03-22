@@ -631,59 +631,82 @@ app.get('/api/events/upcoming', async (req, res) => {
   }
 });
 
-// GET /api/winner-of-day — best jackpot with real casino details
+// GET /api/winner-of-day — best jackpot with real casino details, location-aware
+// Accepts optional ?lat=&lng= to find the nearest winner first.
+// Scope: "local" (≤200 mi) → "regional" (≤500 mi) → "national" (anywhere)
 app.get('/api/winner-of-day', async (req, res) => {
-  // Shared query builder — always requires a real casino name via INNER JOIN.
-  // Uses COALESCE(won_at, created_at) so website records without won_at still
-  // participate in time-window filtering.
-  // Priority ordering: has machine_name first, then by amount descending.
-  const buildQuery = (extraWhere = '') => `
-    SELECT
-      j.machine_name,
-      j.amount_cents,
-      COALESCE(j.won_at, j.created_at) AS win_date,
-      j.source,
-      j.raw_text,
-      c.name  AS casino_name,
-      c.city,
-      c.state
-    FROM jackpots j
-    INNER JOIN casinos c ON c.id = j.casino_id
-    WHERE c.name IS NOT NULL AND c.name <> ''
-      ${extraWhere}
-    ORDER BY
-      CASE WHEN j.machine_name IS NOT NULL AND j.machine_name <> '' THEN 0 ELSE 1 END,
-      j.amount_cents DESC
-    LIMIT 1
-  `;
+  const lat = parseFloat(req.query.lat);
+  const lng = parseFloat(req.query.lng);
+  const hasLocation = !isNaN(lat) && !isNaN(lng);
+
+  // Haversine distance expression in miles (GREATEST/LEAST clamps acos domain).
+  // Returns NULL when no user location provided so the column always exists.
+  const distanceExpr = hasLocation
+    ? `(3959 * acos(GREATEST(-1.0, LEAST(1.0,
+        cos(radians(${lat})) * cos(radians(c.lat)) *
+        cos(radians(c.lng) - radians(${lng})) +
+        sin(radians(${lat})) * sin(radians(c.lat))
+      ))))`
+    : 'NULL::numeric';
+
+  // Build query with optional max-distance filter.
+  // Always INNER JOINs casinos, always requires amount_cents >= $500.
+  // Priority: has machine_name first, then biggest amount.
+  const buildQuery = (maxMiles = null) => {
+    const distanceFilter = (hasLocation && maxMiles != null)
+      ? `AND ${distanceExpr} <= ${maxMiles}`
+      : '';
+    return `
+      SELECT
+        j.machine_name,
+        j.amount_cents,
+        COALESCE(j.won_at, j.created_at) AS win_date,
+        j.source,
+        j.raw_text,
+        c.name AS casino_name,
+        c.city,
+        c.state,
+        ${distanceExpr} AS distance_miles
+      FROM jackpots j
+      INNER JOIN casinos c ON c.id = j.casino_id
+      WHERE c.name IS NOT NULL AND c.name <> ''
+        AND j.amount_cents >= 50000
+        ${distanceFilter}
+      ORDER BY
+        CASE WHEN j.machine_name IS NOT NULL AND j.machine_name <> '' THEN 0 ELSE 1 END,
+        j.amount_cents DESC
+      LIMIT 1
+    `;
+  };
 
   try {
     let result;
+    let scope = 'national';
 
-    // 1. Last 30 days, amount >= $500
-    result = await pool.query(buildQuery(
-      `AND j.amount_cents >= 50000
-       AND COALESCE(j.won_at, j.created_at) >= NOW() - INTERVAL '30 days'`
-    ));
+    if (hasLocation) {
+      // 1. Local: biggest winner within 200 miles
+      result = await pool.query(buildQuery(200));
+      if (result.rows.length > 0) {
+        scope = 'local';
+      }
 
-    // 2. Last 90 days, amount >= $500
-    if (result.rows.length === 0) {
-      result = await pool.query(buildQuery(
-        `AND j.amount_cents >= 50000
-         AND COALESCE(j.won_at, j.created_at) >= NOW() - INTERVAL '90 days'`
-      ));
-    }
+      // 2. Regional: biggest winner within 500 miles
+      if (result.rows.length === 0) {
+        result = await pool.query(buildQuery(500));
+        if (result.rows.length > 0) {
+          scope = 'regional';
+        }
+      }
 
-    // 3. All-time, amount >= $1,000 — always has a casino name
-    if (result.rows.length === 0) {
-      result = await pool.query(buildQuery(
-        `AND j.amount_cents >= 100000`
-      ));
-    }
-
-    // 4. True last resort — any amount, just needs a casino name
-    if (result.rows.length === 0) {
-      result = await pool.query(buildQuery(''));
+      // 3. National fallback: biggest winner anywhere
+      if (result.rows.length === 0) {
+        result = await pool.query(buildQuery(null));
+        scope = 'national';
+      }
+    } else {
+      // No location provided — national behavior (original)
+      result = await pool.query(buildQuery(null));
+      scope = 'national';
     }
 
     if (result.rows.length === 0) {
@@ -691,6 +714,7 @@ app.get('/api/winner-of-day', async (req, res) => {
     }
 
     const row = result.rows[0];
+    const distMiles = row.distance_miles != null ? Math.round(parseFloat(row.distance_miles)) : null;
     res.json({
       winner_name: null,
       machine_name: row.machine_name || null,
@@ -700,6 +724,8 @@ app.get('/api/winner-of-day', async (req, res) => {
       state: row.state ? row.state.trim() : null,
       win_date: row.win_date || null,
       source: row.source,
+      distance_miles: distMiles,
+      scope,
     });
   } catch (err) {
     console.error('/api/winner-of-day error:', err.message);

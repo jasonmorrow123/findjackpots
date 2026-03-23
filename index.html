@@ -1868,7 +1868,7 @@
 <!-- COMMUNITY WINS FEED -->
 <div class="community-section">
   <div class="community-inner">
-    <h2 style="font-size:1.4rem;font-weight:700;">🏆 Recent Community Wins <span id="liveIndicator" style="display:none;font-size:0.7rem;background:#cc0000;color:#fff;padding:2px 8px;border-radius:20px;vertical-align:middle;animation:pulse 2s infinite">🔴 Live</span></h2>
+    <h2 style="font-size:1.4rem;font-weight:700;">🏆 Recent Jackpot Winners</h2>
     <p class="section-sub">Real jackpots reported by FindJackpots users · <span id="winsCount" style="color:var(--green);font-weight:700">0 reports</span></p>
     <div class="wins-feed" id="winsFeed">
       <div class="wins-empty">
@@ -3232,22 +3232,20 @@ async function loadLiveData() {
     const rows = await res.json();
     if (!Array.isArray(rows) || rows.length === 0) return;
 
-    // Map DB rows to communityWins-compatible objects
-    liveJackpots = rows.map(r => ({
-      id: 'db-' + r.id,
-      casino: r.casino_name || 'Unknown Casino',
-      machine: r.machine_name || r.machine_type || 'Slot Machine',
-      amount: Math.round(r.amount_cents / 100),
-      notes: '',
-      verified: r.source === 'website' || r.verified === true,
-      timestamp: r.won_at || r.created_at,
-      reporter: r.source === 'website' ? 'Casino Website' : 'Community',
-      isLive: true,
-    }));
-
-    // Show the live indicator
-    const indicator = document.getElementById('liveIndicator');
-    if (indicator) indicator.style.display = 'inline';
+    // Map DB rows — filter out entries with no real casino name
+    liveJackpots = rows
+      .filter(r => r.casino_name && r.casino_name !== 'Unknown Casino' && r.casino_name.trim() !== '')
+      .map(r => ({
+        id: 'db-' + r.id,
+        casino: r.casino_name,
+        machine: r.machine_name || r.machine_type || 'Slot Machine',
+        amount: Math.round(r.amount_cents / 100),
+        notes: '',
+        verified: r.source === 'website',
+        timestamp: r.won_at || r.created_at,
+        reporter: r.source === 'website' ? 'Casino Official' : 'Community',
+        isLive: false,
+      }));
 
     // Re-render with live data prepended
     renderWinsFeed();
@@ -3277,10 +3275,11 @@ function renderWinsFeed() {
 
   feed.innerHTML = allWins.slice(0, 9).map(w => {
     const timeAgo = formatTimeAgo(w.timestamp);
-    const liveBadge = w.isLive ? '<span class="live-badge">Live</span>' : '';
+    const badgeLabel = w.verified ? '✓ Casino Verified' : w.isLive ? 'Reported' : 'Community';
+    const badgeClass = w.verified ? 'verified' : 'unverified';
     return `
       <div class="win-card ${w.verified ? 'verified' : ''}">
-        <span class="win-badge ${w.verified ? 'verified' : 'unverified'}">${w.verified ? '✓ Verified' : 'Community'}${liveBadge}</span>
+        <span class="win-badge ${badgeClass}">${badgeLabel}</span>
         <div class="win-amount">$${Number(w.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</div>
         <div class="win-machine">🎰 ${w.machine}</div>
         <div class="win-meta">📍 ${w.casino} · ${timeAgo}</div>

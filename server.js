@@ -785,9 +785,14 @@ app.get('/api/winner-of-day', async (req, res) => {
   // Build query with optional max-distance filter.
   // Always INNER JOINs casinos, always requires amount_cents >= $500.
   // Priority: has machine_name first, then biggest amount.
-  const buildQuery = (maxMiles = null) => {
+  // Build query with optional max-distance and max-age filters.
+  // Recency-first: prefer recent wins, then fall back to older/bigger ones.
+  const buildQuery = (maxMiles = null, maxAgeDays = null) => {
     const distanceFilter = (hasLocation && maxMiles != null)
       ? `AND ${distanceExpr} <= ${maxMiles}`
+      : '';
+    const ageFilter = maxAgeDays != null
+      ? `AND COALESCE(j.won_at, j.created_at) >= NOW() - INTERVAL '${maxAgeDays} days'`
       : '';
     return `
       SELECT
@@ -805,6 +810,7 @@ app.get('/api/winner-of-day', async (req, res) => {
       WHERE c.name IS NOT NULL AND c.name <> ''
         AND j.amount_cents >= 50000
         ${distanceFilter}
+        ${ageFilter}
       ORDER BY
         CASE WHEN j.machine_name IS NOT NULL AND j.machine_name <> '' THEN 0 ELSE 1 END,
         j.amount_cents DESC
@@ -816,30 +822,25 @@ app.get('/api/winner-of-day', async (req, res) => {
     let result;
     let scope = 'national';
 
-    if (hasLocation) {
-      // 1. Local: biggest winner within 200 miles
-      result = await pool.query(buildQuery(200));
-      if (result.rows.length > 0) {
-        scope = 'local';
+    // Recency-first cascade: 48hrs → 7 days → 30 days → all-time
+    // Each tier also tries local → regional → national if location provided
+    const timeWindows = [2, 7, 30, null]; // days; null = all-time
+
+    outerLoop:
+    for (const days of timeWindows) {
+      if (hasLocation) {
+        // Local (≤200 mi)
+        result = await pool.query(buildQuery(200, days));
+        if (result.rows.length > 0) { scope = 'local'; break outerLoop; }
+
+        // Regional (≤500 mi)
+        result = await pool.query(buildQuery(500, days));
+        if (result.rows.length > 0) { scope = 'regional'; break outerLoop; }
       }
 
-      // 2. Regional: biggest winner within 500 miles
-      if (result.rows.length === 0) {
-        result = await pool.query(buildQuery(500));
-        if (result.rows.length > 0) {
-          scope = 'regional';
-        }
-      }
-
-      // 3. National fallback: biggest winner anywhere
-      if (result.rows.length === 0) {
-        result = await pool.query(buildQuery(null));
-        scope = 'national';
-      }
-    } else {
-      // No location provided — national behavior (original)
-      result = await pool.query(buildQuery(null));
-      scope = 'national';
+      // National
+      result = await pool.query(buildQuery(null, days));
+      if (result.rows.length > 0) { scope = 'national'; break outerLoop; }
     }
 
     if (result.rows.length === 0) {

@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const webpush = require('web-push');
+const nodemailer = require('/Users/jasonmorrow/.openclaw/workspace/node_modules/nodemailer');
 const { AFFILIATE_CONFIG } = require('./affiliates');
 
 const app = express();
@@ -1155,6 +1156,136 @@ app.get('/api/locate', (req, res) => {
   res.json({ state: null, region: 'las-vegas', label: 'Las Vegas, NV', fallback: true });
 });
 
+// ─────────────────────────────────────────
+// WELCOME EMAIL
+// ─────────────────────────────────────────
+
+function buildWelcomeHTML(email) {
+  const unsubUrl = `https://findjackpots.com/unsubscribe?email=${encodeURIComponent(email)}`;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to FindJackpots</title>
+</head>
+<body style="margin:0;padding:0;background:#f7f7f7;font-family:Arial,Helvetica,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f7f7f7;padding:24px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+        <!-- Header -->
+        <tr>
+          <td style="background:#5c7aaa;padding:28px 32px;text-align:center;">
+            <div>
+              <img src="https://findjackpots.com/icons/icon-192.png" alt="FindJackpots" width="36" height="36" style="border-radius:8px;display:inline-block;vertical-align:middle;" />
+              <span style="font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:-0.5px;vertical-align:middle;margin-left:10px;">FindJackpots</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Hero -->
+        <tr>
+          <td style="padding:36px 32px 24px;text-align:center;">
+            <div style="font-size:56px;line-height:1;">🎉</div>
+            <h1 style="margin:16px 0 12px;font-size:26px;color:#1a1a2e;font-weight:bold;">You're in!</h1>
+            <p style="margin:0;color:#555;font-size:16px;line-height:1.6;">Welcome to FindJackpots — your daily source for the biggest casino jackpots, payout data, and deals near you. We're glad you're here.</p>
+          </td>
+        </tr>
+
+        <!-- What You'll Get -->
+        <tr>
+          <td style="padding:0 32px 32px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4f9;border-radius:12px;">
+              <tr>
+                <td style="padding:24px 28px;">
+                  <h2 style="margin:0 0 16px;font-size:17px;color:#1a1a2e;font-weight:bold;">What you'll get</h2>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td style="padding:8px 0;vertical-align:top;font-size:22px;width:36px;">🏆</td>
+                      <td style="padding:8px 0;vertical-align:top;">
+                        <span style="color:#1a1a2e;font-size:15px;font-weight:bold;">The biggest casino jackpot of the day</span><br>
+                        <span style="color:#666;font-size:14px;">Delivered every morning at 8 AM</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;vertical-align:top;font-size:22px;width:36px;">🎰</td>
+                      <td style="padding:8px 0;vertical-align:top;">
+                        <span style="color:#1a1a2e;font-size:15px;font-weight:bold;">Casino comparison data</span><br>
+                        <span style="color:#666;font-size:14px;">Payouts, bonuses, loyalty programs</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;vertical-align:top;font-size:22px;width:36px;">📍</td>
+                      <td style="padding:8px 0;vertical-align:top;">
+                        <span style="color:#1a1a2e;font-size:15px;font-weight:bold;">Localized winners</span><br>
+                        <span style="color:#666;font-size:14px;">We'll show wins near your area when available</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- CTA -->
+        <tr>
+          <td style="padding:0 32px 32px;text-align:center;">
+            <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#ffffff;text-decoration:none;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:bold;">Explore Casinos Now →</a>
+          </td>
+        </tr>
+
+        <!-- About -->
+        <tr>
+          <td style="padding:0 32px 32px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e8e8e8;">
+              <tr>
+                <td style="padding:24px 0 0;">
+                  <p style="color:#666;font-size:14px;line-height:1.7;margin:0;">FindJackpots helps you find the best casinos near you. Compare slot payouts, jackpots, bonuses, and loyalty programs all in one place.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="padding:0 32px 28px;text-align:center;">
+            <hr style="border:none;border-top:1px solid #e8e8e8;margin:0 0 20px;">
+            <p style="color:#999;font-size:12px;margin:0 0 8px;">You're receiving this because you subscribed at findjackpots.com</p>
+            <a href="${unsubUrl}" style="color:#5c7aaa;font-size:12px;text-decoration:underline;">Unsubscribe</a>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+async function sendWelcomeEmail(email) {
+  const transporter = nodemailer.createTransport({
+    host: 'mail.privateemail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'admin@findjackpots.com',
+      pass: '13474Coachford!',
+    },
+  });
+
+  await transporter.sendMail({
+    from: '"FindJackpots" <admin@findjackpots.com>',
+    to: email,
+    subject: 'Welcome to FindJackpots — Your Daily Jackpot Alerts Start Now 🏆',
+    html: buildWelcomeHTML(email),
+  });
+
+  console.log(`Welcome email sent to ${email}`);
+}
+
 // POST /api/subscribe — capture email for daily jackpot alerts
 app.post('/api/subscribe', async (req, res) => {
   const { email, region } = req.body || {};
@@ -1163,11 +1294,17 @@ app.post('/api/subscribe', async (req, res) => {
   }
   const client = await pool.connect();
   try {
-    await client.query(
+    const result = await client.query(
       `INSERT INTO email_subscribers (email, region) VALUES ($1, $2)
-       ON CONFLICT (email) DO NOTHING`,
+       ON CONFLICT (email) DO NOTHING
+       RETURNING email`,
       [email.toLowerCase().trim(), region || null]
     );
+    // Send welcome email only to new subscribers (not re-subs who conflicted)
+    if (result.rowCount > 0) {
+      // Send welcome email (async, don't block response)
+      sendWelcomeEmail(email.toLowerCase().trim()).catch(err => console.error('Welcome email failed:', err.message));
+    }
     return res.json({ ok: true });
   } catch (err) {
     console.error('/api/subscribe error:', err.message);

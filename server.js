@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const webpush = require('web-push');
-const nodemailer = require('/Users/jasonmorrow/.openclaw/workspace/node_modules/nodemailer');
+const nodemailer = require('nodemailer');
 const { AFFILIATE_CONFIG } = require('./affiliates');
 
 const app = express();

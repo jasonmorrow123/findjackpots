@@ -1358,4 +1358,3 @@ app.get('/unsubscribe', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`JackpotMap API server running at http://localhost:${PORT}`);
 });
-// Mon Mar 23 11:19:30 CDT 2026

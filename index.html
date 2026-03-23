@@ -3237,6 +3237,7 @@ async function loadLiveData() {
       .filter(r => r.casino_name && r.casino_name !== 'Unknown Casino' && r.casino_name.trim() !== '')
       .map(r => ({
         id: 'db-' + r.id,
+        casino_id: r.casino_id || null,
         casino: r.casino_name,
         machine: r.machine_name || r.machine_type || 'Slot Machine',
         amount: Math.round(r.amount_cents / 100),
@@ -3277,13 +3278,16 @@ function renderWinsFeed() {
     const timeAgo = formatTimeAgo(w.timestamp);
     const badgeLabel = w.verified ? '✓ Casino Verified' : w.isLive ? 'Reported' : 'Community';
     const badgeClass = w.verified ? 'verified' : 'unverified';
+    const clickable = w.casino_id ? `onclick="openModal(${w.casino_id})" style="cursor:pointer;"` : '';
+    const viewLink = w.casino_id ? `<div style="margin-top:8px;font-size:0.75rem;color:var(--primary);font-weight:500;">View Casino Details →</div>` : '';
     return `
-      <div class="win-card ${w.verified ? 'verified' : ''}">
+      <div class="win-card ${w.verified ? 'verified' : ''}" ${clickable}>
         <span class="win-badge ${badgeClass}">${badgeLabel}</span>
         <div class="win-amount">$${Number(w.amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</div>
         <div class="win-machine">🎰 ${w.machine}</div>
         <div class="win-meta">📍 ${w.casino} · ${timeAgo}</div>
         ${w.notes ? `<div style="font-size:0.78rem;color:var(--text-secondary);margin-top:6px;border-top:1px solid #eceef4;padding-top:6px">${w.notes}</div>` : ''}
+        ${viewLink}
       </div>`;
   }).join('');
 }

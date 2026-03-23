@@ -191,6 +191,19 @@ const NOISE_WORDS = new Set([
   'hours', 'location', 'directions', 'map', 'parking', 'accessibility',
   'bars', 'nightlife', 'pools', 'spa', 'golf', 'shows', 'concerts',
   'gift', 'shop', 'retail', 'wedding', 'meetings', 'groups',
+  'please stand by', 'post navigation', 'reserve a table',
+  'group dining', 'in-room dining', 'fine dining', 'casual dining',
+  'about us', 'get connected', 'gift cards', 'guest relations', 'community',
+  'unlock the best dining during your stay', 'great dining options',
+  'flavors worth savoring', 'food to dine for', 'feast on the flavors of paris',
+  'like a caesar', 'dine with us at wynn & encore',
+  'restaurant frequently asked questions',
+  'is there a dress code for the restaurants?',
+  'are children welcome in all of the restaurants?',
+  'can you accommodate large parties or group dining?',
+  'caesars rewards perks', 'caesars rewards visa® credit cards', 'caesars rewards air®',
+  'restaurant menus', 'sportsbook dining', 'bars & lounges', 'brunch', 'late night',
+  'celebration cakes', 'espresso', 'open 24 hours',
 ]);
 
 // Patterns that indicate non-restaurant content
@@ -207,6 +220,13 @@ const NOISE_PATTERNS = [
   /\bCDN\b|\bAPI\b|\bJSON\b/i,
   /\$\d+|\d+%/, // prices/percentages
   /^(Las Vegas|Nevada|Illinois|Michigan|Minnesota|Wisconsin|Pennsylvania|Chicago|Aurora)$/i, // city/state names
+  /sunday|monday|tuesday|wednesday|thursday|friday|saturday/i, // day names = hours text
+  /\bam\b|\bpm\b/i, // hours
+  /^\s*nbsp\s*$/, // HTML entity noise
+  /we['']re proud/i, // marketing fluff
+  /please stand by/i,
+  /post navigation/i,
+  /^date$/i, // "Date" from Wynn filter category, not a restaurant
 ];
 
 function isLikelyRestaurantName(text) {

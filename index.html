@@ -2903,7 +2903,7 @@ async function openModal(id) {
 
     // ── Affiliate / rewards button ──
     const zone = document.getElementById('affiliateBtnZone');
-    if (!zone) return;
+    if (!zone) { /* continue to restaurants even if affiliate zone missing */ }
 
     if (dbCasino.affiliate_url) {
       zone.innerHTML = `

@@ -870,11 +870,11 @@ app.get('/api/casinos/:id/restaurants', async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query(`
-      SELECT id, name, cuisine, rating, review_count, price_range, yelp_url
+      SELECT id, name, cuisine, category, rating, review_count, price_range, yelp_url
       FROM restaurants
-      WHERE casino_id = $1
+      WHERE casino_id = $1 AND name != '__no_restaurants__'
       ORDER BY rating DESC NULLS LAST, review_count DESC NULLS LAST
-      LIMIT 5
+      LIMIT 8
     `, [id]);
     res.json(result.rows);
   } catch (err) {

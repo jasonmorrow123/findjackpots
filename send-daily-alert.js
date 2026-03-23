@@ -64,7 +64,7 @@ function buildHTML(jackpot, subscriber) {
         <tr>
           <td style="background:#5c7aaa;padding:28px 32px;text-align:center;">
             <div style="font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:-0.5px;">🎰 FindJackpots</div>
-            <div style="font-size:13px;color:#c8d8f0;margin-top:6px;letter-spacing:0.5px;">The Kayak for Casinos</div>
+            <div style="font-size:13px;color:#c8d8f0;margin-top:6px;letter-spacing:0.5px;">Find Your Next Casino</div>
           </td>
         </tr>
 

@@ -1175,6 +1175,48 @@ app.post('/api/subscribe', async (req, res) => {
   }
 });
 
+// GET /unsubscribe?email=xxx — one-click unsubscribe
+app.get('/unsubscribe', async (req, res) => {
+  const email = (req.query.email || '').toLowerCase().trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).send('<h2>Invalid unsubscribe link.</h2>');
+  }
+  const client = await pool.connect();
+  try {
+    await client.query(
+      `UPDATE email_subscribers SET active = false WHERE email = $1`,
+      [email]
+    );
+  } catch (err) {
+    console.error('/unsubscribe error:', err.message);
+  } finally {
+    client.release();
+  }
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unsubscribed — FindJackpots</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f7f7f7; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+  .card { background: #fff; border-radius: 12px; padding: 48px 40px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); max-width: 400px; }
+  h1 { color: #1a1a2e; font-size: 22px; margin: 0 0 12px; }
+  p { color: #666; font-size: 15px; margin: 0 0 24px; }
+  a { color: #5c7aaa; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div style="font-size:48px;margin-bottom:16px;">✅</div>
+    <h1>You've been unsubscribed</h1>
+    <p>You won't receive any more daily jackpot alerts from FindJackpots.</p>
+    <a href="https://findjackpots.com">← Back to FindJackpots</a>
+  </div>
+</body>
+</html>`);
+});
+
 app.listen(PORT, () => {
   console.log(`JackpotMap API server running at http://localhost:${PORT}`);
 });

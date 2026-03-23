@@ -5,6 +5,8 @@
  * Usage: node scrapers/dining-scraper.js
  */
 
+require('dotenv').config({ path: __dirname + '/.env' });
+
 const https = require('https');
 const http = require('http');
 const { Pool } = require('pg');
@@ -19,8 +21,11 @@ const localPool = new Pool({
 });
 
 const prodPool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL,
+  host: process.env.PROD_DB_HOST || 'app-4de65bbd-1f1c-4198-bb13-4d77de20bbfd-do-user-34822266-0.g.db.ondigitalocean.com',
+  port: parseInt(process.env.PROD_DB_PORT || '25060'),
+  database: process.env.PROD_DB_NAME || 'findjackpots-db',
+  user: process.env.PROD_DB_USER || 'findjackpots-db',
+  password: process.env.PROD_DB_PASS,
   ssl: { rejectUnauthorized: false },
 });
 

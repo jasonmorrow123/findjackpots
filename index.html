@@ -1751,6 +1751,9 @@
     <input type="text" id="searchInputMobile" placeholder="Search casinos, cities..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()"/>
     <button onclick="searchAndScroll()">Search</button>
   </div>
+  <button onclick="openRegionPicker()" style="margin-top:6px;width:100%;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-secondary);font-size:0.82rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+    📍 <span id="mobileLocationLabel">Change Location</span>
+  </button>
 </div>
 
 <!-- HERO WRAP — pattern spans search + deal + spin -->
@@ -3681,6 +3684,9 @@ function applyRegion(region, label) {
   document.getElementById('eventsRegionBadge').textContent = label;
   const subtext = REGION_SUBTEXTS[region] || `Explore casinos — ${label}`;
   document.getElementById('searchSubtext').textContent = subtext;
+  // Sync mobile location button label
+  const mobileLabel = document.getElementById('mobileLocationLabel');
+  if (mobileLabel) mobileLabel.textContent = label;
 }
 
 async function initApp() {

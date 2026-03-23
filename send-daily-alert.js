@@ -63,8 +63,10 @@ function buildHTML(jackpot, subscriber) {
         <!-- Header -->
         <tr>
           <td style="background:#5c7aaa;padding:28px 32px;text-align:center;">
-            <div style="font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:-0.5px;">🎰 FindJackpots</div>
-            <div style="font-size:13px;color:#c8d8f0;margin-top:6px;letter-spacing:0.5px;">Find Your Next Casino</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+              <img src="https://findjackpots.com/icons/icon-192.png" alt="FindJackpots" width="36" height="36" style="border-radius:8px;display:inline-block;vertical-align:middle;" />
+              <span style="font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:-0.5px;vertical-align:middle;">FindJackpots</span>
+            </div>
           </td>
         </tr>
 

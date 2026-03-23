@@ -83,6 +83,8 @@ app.get('/sw.js', (req, res) => res.sendFile(path.join(__dirname, 'sw.js')));
 // Serve manifest and icons
 app.get('/manifest.json', (req, res) => res.sendFile(path.join(__dirname, 'manifest.json')));
 app.use('/icons', express.static(path.join(__dirname, 'icons')));
+app.get('/logo.svg', (req, res) => res.sendFile(path.join(__dirname, 'logo.svg')));
+app.get('/logo-icon.svg', (req, res) => res.sendFile(path.join(__dirname, 'logo-icon.svg')));
 // Privacy Policy
 app.get('/privacy', (req, res) => {
   res.send(`<!DOCTYPE html>

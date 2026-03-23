@@ -825,22 +825,20 @@ app.get('/api/winner-of-day', async (req, res) => {
     // Recency-first cascade: 48hrs → 7 days → 30 days → all-time
     // Each tier also tries local → regional → national if location provided
     const timeWindows = [2, 7, 30, null]; // days; null = all-time
+    let found = false;
 
-    outerLoop:
-    for (const days of timeWindows) {
+    for (let i = 0; i < timeWindows.length && !found; i++) {
+      const days = timeWindows[i];
       if (hasLocation) {
-        // Local (≤200 mi)
         result = await pool.query(buildQuery(200, days));
-        if (result.rows.length > 0) { scope = 'local'; break outerLoop; }
+        if (result.rows.length > 0) { scope = 'local'; found = true; break; }
 
-        // Regional (≤500 mi)
         result = await pool.query(buildQuery(500, days));
-        if (result.rows.length > 0) { scope = 'regional'; break outerLoop; }
+        if (result.rows.length > 0) { scope = 'regional'; found = true; break; }
       }
 
-      // National
       result = await pool.query(buildQuery(null, days));
-      if (result.rows.length > 0) { scope = 'national'; break outerLoop; }
+      if (result.rows.length > 0) { scope = 'national'; found = true; }
     }
 
     if (result.rows.length === 0) {

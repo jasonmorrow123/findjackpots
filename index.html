@@ -1854,8 +1854,8 @@
 <div class="results-header">
   <div class="results-count" id="resultsCount">Showing 8 casinos near Las Vegas, NV</div>
   <select class="sort-select" onchange="sortCasinos(this.value)">
-    <option value="score">Sort: Best Overall Score</option>
-    <option value="distance" selected>Sort: Nearest First</option>
+    <option value="score" id="sort-score-opt">Sort: Best Overall Score</option>
+    <option value="distance" id="sort-distance-opt">Sort: Nearest First</option>
     <option value="jackpot">Sort: Largest Jackpots</option>
     <option value="loyalty">Sort: Best Loyalty Program</option>
     <option value="payback">Sort: Highest Slot Payback</option>
@@ -2700,7 +2700,7 @@ function syncSearch(val) {
   filterCasinos();
 }
 
-let currentSort = 'distance';
+let currentSort = window.innerWidth <= 768 ? 'distance' : 'score';
 function sortCasinos(val) {
   currentSort = val || 'score';
   filterCasinos();
@@ -3752,6 +3752,9 @@ async function refreshLocationBackground() {
 
 // Init — single entry point, no race condition
 loadHelpfulCounts();
+// Sync sort dropdown to match default
+const _sortEl = document.querySelector('.sort-select');
+if (_sortEl) _sortEl.value = currentSort;
 initApp();
 
 // ─── Push Notifications ───────────────────────────────────────────────────────

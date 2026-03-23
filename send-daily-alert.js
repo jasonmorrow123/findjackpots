@@ -1,7 +1,7 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-const nodemailer = require('/Users/jasonmorrow/.openclaw/workspace/node_modules/nodemailer');
-const Imap = require('/Users/jasonmorrow/.openclaw/workspace/node_modules/imap');
+const nodemailer = require('nodemailer');
+const Imap = require('imap');
 const { Pool } = require('pg');
 
 // Load credentials from env vars (set in production) or fall back to local .env.local
@@ -160,15 +160,49 @@ async function run() {
   const client = await pool.connect();
   let jackpot, subscribers;
   try {
+    // Track last sent jackpot to avoid duplicates
+    // Use a simple file-based tracker
+    const fs = require('fs');
+    const trackFile = __dirname + '/.last-sent-jackpot.json';
+    let lastSent = {};
+    try { lastSent = JSON.parse(fs.readFileSync(trackFile, 'utf8')); } catch(_) {}
+
+    // Pick the best jackpot not sent in the last 6 days
+    // Rotate through top jackpots by amount, skipping recently sent ones
+    const recentlySentIds = lastSent.ids || [];
+    const excludeClause = recentlySentIds.length > 0
+      ? `AND j.id NOT IN (${recentlySentIds.map((_, i) => '$' + (i + 1)).join(',')})` : '';
+
     const jackpotRes = await client.query(`
-      SELECT j.machine_name, j.amount_cents, j.source,
+      SELECT j.id, j.machine_name, j.amount_cents, j.source,
              c.name as casino_name, c.city, c.state
       FROM jackpots j
       INNER JOIN casinos c ON j.casino_id = c.id
       WHERE c.name IS NOT NULL AND j.amount_cents >= 50000
+      ${excludeClause}
       ORDER BY j.amount_cents DESC
       LIMIT 1
-    `);
+    `, recentlySentIds);
+
+    // If all top jackpots have been sent, reset and start over
+    if (jackpotRes.rows.length === 0) {
+      lastSent = {};
+      const fallback = await client.query(`
+        SELECT j.id, j.machine_name, j.amount_cents, j.source,
+               c.name as casino_name, c.city, c.state
+        FROM jackpots j
+        INNER JOIN casinos c ON j.casino_id = c.id
+        WHERE c.name IS NOT NULL AND j.amount_cents >= 50000
+        ORDER BY j.amount_cents DESC LIMIT 1
+      `);
+      if (fallback.rows.length > 0) jackpotRes.rows.push(fallback.rows[0]);
+    }
+
+    // Save sent jackpot ID (keep last 6)
+    if (jackpotRes.rows.length > 0) {
+      const sentIds = [...(lastSent.ids || []), jackpotRes.rows[0].id].slice(-6);
+      fs.writeFileSync(trackFile, JSON.stringify({ ids: sentIds, lastDate: new Date().toISOString() }));
+    }
 
     if (jackpotRes.rows.length === 0) {
       console.log('No qualifying jackpots found. Aborting.');

@@ -171,12 +171,33 @@ function extractRestaurantNames(html) {
     if (isLikelyRestaurantName(text)) names.add(text);
   }
 
-  return [...names].filter(isLikelyRestaurantName).slice(0, 50);
+  // Decode HTML entities before returning
+  return [...names].map(decodeEntities).filter(isLikelyRestaurantName).slice(0, 50);
 }
 
 /** Strip HTML tags from a string */
 function stripTags(str) {
   return str.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+/** Decode common HTML entities */
+function decodeEntities(str) {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#039;/g, "'")
+    .replace(/&rsquo;/g, '\u2019')
+    .replace(/&lsquo;/g, '\u2018')
+    .replace(/&ndash;/g, '\u2013')
+    .replace(/&mdash;/g, '\u2014')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#\d+;/g, '')
+    .replace(/&#x[0-9a-fA-F]+;/g, '')
+    .replace(/&[a-z]+;/g, '')
+    .trim();
 }
 
 // Words that suggest navigation/UI elements, not restaurant names
@@ -202,8 +223,10 @@ const NOISE_WORDS = new Set([
   'are children welcome in all of the restaurants?',
   'can you accommodate large parties or group dining?',
   'caesars rewards perks', 'caesars rewards visa® credit cards', 'caesars rewards air®',
-  'restaurant menus', 'sportsbook dining', 'bars & lounges', 'brunch', 'late night',
-  'celebration cakes', 'espresso', 'open 24 hours',
+  'restaurant menus', 'sportsbook dining', 'bars & lounges', 'bars &amp; lounges',
+  'brunch', 'late night', 'celebration cakes', 'espresso', 'open 24 hours',
+  "we're proud to call wisconsin home.", 'treasure island resort & casino',
+  'potawatomi sportsbook', 'parlay: live music & sports',
 ]);
 
 // Patterns that indicate non-restaurant content
@@ -227,6 +250,9 @@ const NOISE_PATTERNS = [
   /please stand by/i,
   /post navigation/i,
   /^date$/i, // "Date" from Wynn filter category, not a restaurant
+  /^&nbsp;$/, // raw HTML entity
+  /we.re proud/i, // marketing fluff
+  /^\s*$/, // whitespace only after entity decode
 ];
 
 function isLikelyRestaurantName(text) {

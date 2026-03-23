@@ -2933,7 +2933,9 @@ async function openModal(id) {
     if (zone) zone.innerHTML = '';
   }
 
-  // ── Fetch restaurant data async ──
+  // ── Fetch restaurant data async (independent of above) ──
+  // Fire immediately after modal opens, not chained to other fetches
+  setTimeout(async () => {
   try {
     const rRes = await fetch(`/api/casinos/${id}/restaurants`);
     if (rRes.ok) {
@@ -2968,6 +2970,7 @@ async function openModal(id) {
       }
     }
   } catch(e) { /* silent — restaurants are a nice-to-have */ }
+  }, 100); // small delay to ensure modal DOM is ready
 }
 
 function closeModal(e) {

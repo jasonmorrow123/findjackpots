@@ -449,17 +449,21 @@
 
     /* Score badge — color coded */
     .score-badge {
-      min-width: 44px;
-      height: 44px;
+      min-width: 52px;
       border-radius: 10px;
       font-weight: 700;
       font-size: 1rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       letter-spacing: -0.02em;
+      padding: 6px 8px;
+      gap: 1px;
     }
+    .score-badge .score-num { font-size: 1.1rem; font-weight: 800; line-height: 1; }
+    .score-badge .score-lbl { font-size: 0.58rem; font-weight: 600; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1; }
     .score-badge.high { background: #D1FAE5; color: #065F46; }
     .score-badge.mid  { background: #FEF3C7; color: #92400E; }
     .score-badge.low  { background: #FEE2E2; color: #991B1B; }
@@ -1063,7 +1067,8 @@
     @media (max-width: 400px) {
       .search-section h1 { font-size: 1.5rem; }
       .opp-grid { grid-template-columns: 1fr; }
-      .score-badge { min-width: 40px; height: 40px; font-size: 0.9rem; }
+      .score-badge { min-width: 46px; font-size: 0.9rem; }
+      .score-badge .score-num { font-size: 1rem; }
       .card-footer { flex-wrap: wrap; }
       .btn { padding: 8px 12px; font-size: 0.78rem; }
     }
@@ -2584,7 +2589,7 @@ function renderCards(data) {
             ${c.chain && c.chain !== 'Independent' ? `<div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${c.chain}</div>` : ''}
           </div>
         </div>
-        <div class="score-badge ${c.scoreClass}" title="Overall Score">${c.score}</div>
+        <div class="score-badge ${c.scoreClass}"><span class="score-num">${c.score}</span><span class="score-lbl">Score</span></div>
       </div>
       <div class="card-body">
         ${(() => {

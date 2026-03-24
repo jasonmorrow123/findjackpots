@@ -266,74 +266,245 @@ const STATE_INFO = {
   MN: {
     name: 'Minnesota',
     slug: 'minnesota',
-    intro: `<p>Minnesota is home to a thriving tribal casino scene, with more than 20 casinos spread across the state — from the Twin Cities metro area to the Northwoods and Iron Range. Unlike many states, Minnesota's casinos are exclusively operated by Native American tribes under compacts with the state government, which means gambling revenue stays largely within tribal communities and funds education, healthcare, and infrastructure.</p>
-<p>The most popular casinos in Minnesota include Mystic Lake Casino Hotel near Prior Lake, which is the largest casino in the Upper Midwest, and Grand Casino Mille Lacs and Grand Casino Hinckley — both beloved destinations for day trips and weekend getaways. Treasure Island Resort & Casino, nestled along the Mississippi River south of the Twin Cities, offers one of the most scenic settings in the Midwest.</p>
-<p>Minnesota casinos typically feature thousands of slot machines, video poker, bingo, and pull-tabs. Poker rooms are popular, with Mystic Lake in particular hosting major tournaments. Most large Minnesota casinos have on-site hotels, spas, entertainment venues, and multiple dining options ranging from casual buffets to upscale steakhouses.</p>
-<p>Whether you're a Minnesota local looking for a weekend escape or a visitor from out of state, the state's casinos offer plenty of variety. Jackpots in Minnesota are reported frequently — with slot wins ranging from a few thousand dollars to over $1 million on progressive machines. Use FindJackpots to track recent wins, compare loyalty programs, and find the casino that best fits your style.</p>`,
+    intro: `<p>Gambling in Minnesota is a uniquely tribal affair — every one of the state's 20+ casinos is operated by a federally recognized Native American tribe under a compact with the state government. There are no commercial casinos in Minnesota, and sports betting remains unavailable, making tribal properties the only legal in-person gaming option in the state. That exclusivity has actually worked in players' favor: Minnesota's tribal casinos have invested heavily in their facilities, and the best casinos in Minnesota rival resort destinations anywhere in the Midwest.</p>
+<p>Topping every list is <strong>Mystic Lake Casino Hotel</strong> near Prior Lake — the largest casino in the Upper Midwest. With over 4,000 slot machines, a full table game floor, a world-class spa, luxury hotel, and top-tier entertainment, Mystic Lake is a destination unto itself. The <strong>Club M loyalty program</strong> is one of the most generous in the region: tiered rewards, free play credits, hotel discounts, and priority access to sold-out shows. Regular bonus-point events and birthday rewards make Club M worth signing up for before your first visit. Other leading Minnesota casino loyalty programs include Grand Rewards (Grand Casino Mille Lacs and Grand Casino Hinckley) and TI Rewards at Treasure Island Resort &amp; Casino near Red Wing.</p>
+<p>Slot jackpots in Minnesota are a major draw for players across the Upper Midwest. While tribal casinos aren't required to publicly report payout percentages, progressive jackpots — including multi-casino linked networks — regularly produce wins from tens of thousands of dollars into the seven-figure range. Dollar denomination slots and video poker machines tend to offer the best casino payouts in Minnesota, and FindJackpots tracks <a href="/biggest-jackpots">the biggest slot jackpot wins</a> from Minnesota casinos in real time so you always know where the action is.</p>
+<p>Beyond Mystic Lake, great options include Fond-du-Luth Casino in downtown Duluth, Black Bear Casino Resort near Carlton, Shooting Star Casino in Mahnomen, and the remote but spectacular Seven Clans casinos in the Red Lake Nation territory. Each property has its own character — from the woodsy, northwoods vibe of the UP-adjacent casinos to the polished resort feel of the metro-area properties.</p>
+<p>Minnesota's location makes it a natural hub for Midwest casino exploration. You're within a few hours of <a href="/casinos/wisconsin">Wisconsin's tribal casinos</a>, <a href="/casinos/iowa">Iowa's riverboat casinos</a>, and even <a href="/casinos/michigan">Michigan's Detroit casinos</a>. For a full cross-state comparison, see our <a href="/best-midwest-casinos">Best Midwest Casinos guide</a>, or use the <a href="/casino-jackpot-tracker">Jackpot Tracker</a> to find out which Minnesota casino is running hot right now.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Minnesota?',
+        a: 'Yes, gambling is legal in Minnesota. The state permits casino gambling exclusively at tribally operated casinos under compacts with the state government. There are 20+ tribal casinos statewide offering slots, table games, and poker. Commercial casinos and sports betting are not currently legal in Minnesota.',
+      },
+      {
+        q: 'What is the best casino in Minnesota?',
+        a: 'Mystic Lake Casino Hotel near Prior Lake is widely considered the best casino in Minnesota. It is the largest casino in the Upper Midwest with over 4,000 slot machines, live entertainment, a luxury hotel, spa, and the Club M loyalty program. Grand Casino Mille Lacs and Treasure Island Resort & Casino are also top-rated options.',
+      },
+      {
+        q: 'Do Minnesota casinos have slot machines?',
+        a: 'Yes, all Minnesota tribal casinos feature slot machines as a central part of their gaming floors. Machines range from penny slots to high-limit progressives, with jackpots frequently reaching six and seven figures. Many casinos also offer video poker and electronic table games alongside traditional slots.',
+      },
+      {
+        q: 'What casino has the best payouts in Minnesota?',
+        a: 'Minnesota tribal casinos are not required to publicly disclose payout percentages, but Mystic Lake and Grand Casino properties are consistently cited by players for strong slot returns. Dollar denomination slots and video poker machines typically offer better odds than penny slots. Use FindJackpots to see where recent big jackpots have hit.',
+      },
+    ],
   },
   NV: {
     name: 'Nevada',
     slug: 'nevada',
-    intro: `<p>Nevada is the undisputed capital of American casino gambling — home to Las Vegas, Reno, Laughlin, and dozens of smaller casino towns scattered across the desert. With a legacy stretching back to 1931 when Nevada became the first state to legalize commercial gambling, the Silver State has had nearly a century to perfect the art of the casino experience.</p>
-<p>Las Vegas alone hosts hundreds of casinos, ranging from the mega-resorts on the Strip — Bellagio, Caesars Palace, MGM Grand, The Venetian — to locals-focused properties in Henderson, Summerlin, and North Las Vegas. Reno, known as "The Biggest Little City in the World," offers its own vibrant casino scene with properties like the Peppermill and Grand Sierra Resort.</p>
-<p>Nevada casinos are renowned for some of the best slot payback percentages in the country — the Nevada Gaming Control Board requires casinos to publicly report payout data by denomination. This transparency makes Nevada one of the best states for serious slot players. Penny slots typically return 88–92%, while dollar slots often pay back 95% or more.</p>
-<p>From the glittering Strip to the laid-back locals casinos, Nevada offers every kind of gambling experience imaginable. Massive progressive jackpots — including Megabucks, which has produced some of the largest slot wins in history — are a regular feature across Las Vegas properties. FindJackpots tracks the biggest recent wins so you can find where the hot machines are right now.</p>`,
+    intro: `<p>Gambling in Nevada is unlike anywhere else in the world. Nevada became the first U.S. state to legalize commercial casino gambling in 1931, and over nine decades it has perfected the art of the casino experience. Whether you're chasing slot jackpots in Nevada, looking for the best casino payouts, or simply want to experience the energy of the Las Vegas Strip for the first time, Nevada delivers at every level.</p>
+<p>The best casinos in Nevada span the full spectrum. On the Strip, <strong>Bellagio</strong>, <strong>Caesars Palace</strong>, <strong>MGM Grand</strong>, <strong>The Venetian</strong>, and <strong>Wynn Las Vegas</strong> define global luxury gaming — massive floors, Michelin-starred restaurants, world-class entertainment, and hotel towers that stretch to the sky. Just a mile north, <strong>Fremont Street</strong> in downtown Las Vegas offers the old-Vegas experience: classic casinos like the Golden Nugget, lower table minimums, and the iconic Fremont Street Experience light canopy overhead. For locals, Station Casinos properties (Red Rock Resort, Green Valley Ranch, Sunset Station) and Boyd Gaming clubs offer outstanding value, tight slot action, and strong Nevada casino loyalty programs — including Station's Boarding Pass and Boyd's B Connected.</p>
+<p>Nevada casino payouts are among the best in the country, and it's not by accident. The <strong>Nevada Gaming Control Board</strong> requires all licensed casinos to report slot machine returns by denomination every month, and that data is publicly available. Dollar slots in Clark County (Las Vegas) typically return 95%+ to players. Penny slots average around 88–90%. This regulated transparency is a significant reason why serious slot players gravitate toward Nevada over other states.</p>
+<p>Slot jackpots in Nevada produce some of the most spectacular wins in casino history. <strong>Megabucks</strong> — a Nevada-wide progressive network with starting jackpots of $10 million — has generated wins exceeding $39 million. IGT's Wide Area Progressives and linked local progressives mean multi-million-dollar jackpots are a regular part of Nevada's casino landscape. FindJackpots tracks <a href="/biggest-jackpots">the biggest jackpot wins</a> from Nevada casinos so you can see which properties are paying out right now.</p>
+<p>Nevada casino loyalty programs are built to reward frequent visitors. <strong>Caesars Rewards</strong> (covering Caesars Palace, Harrah's, Horseshoe, Paris Las Vegas) and <strong>MGM Rewards</strong> (covering MGM Grand, Bellagio, Aria, Park MGM, Vdara) are the two dominant programs, each offering hotel comps, free play, dining credits, and event access across dozens of properties. Use the <a href="/casino-jackpot-tracker">FindJackpots Jackpot Tracker</a> to monitor which Nevada casinos are running hot, and check our <a href="/biggest-jackpots">biggest jackpots</a> page for the latest massive wins.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Nevada?',
+        a: 'Yes, Nevada has had legal commercial gambling since 1931, making it the oldest legal casino gambling jurisdiction in the United States. All forms of casino gambling — slots, table games, poker, sports betting — are legal for adults 21 and older. The Nevada Gaming Control Board licenses and regulates all casino operations.',
+      },
+      {
+        q: 'What is the best casino in Nevada?',
+        a: 'Bellagio and Caesars Palace on the Las Vegas Strip are perennially ranked among the best casinos in Nevada for their combination of gaming, amenities, entertainment, and overall experience. For value-focused players, Station Casinos properties like Red Rock Resort and Green Valley Ranch offer excellent locals-focused gaming with strong loyalty programs.',
+      },
+      {
+        q: 'Do Nevada casinos have slot machines?',
+        a: 'Yes, slot machines are the cornerstone of Nevada casino floors. Nevada has more slot machines per capita than any other state, ranging from penny slots to $100+ high-limit machines. Nevada is also home to Megabucks, a statewide progressive slot network with jackpots that regularly exceed $10 million.',
+      },
+      {
+        q: 'What casino has the best payouts in Nevada?',
+        a: 'The Nevada Gaming Control Board publishes monthly slot payout reports by casino and denomination. Dollar slots at major Las Vegas Strip casinos consistently return 95%+ to players. Locals casinos (Station Casinos, Boyd Gaming, Coast Casinos) often post higher average payback percentages than Strip mega-resorts, particularly on lower-denomination machines.',
+      },
+    ],
   },
   IA: {
     name: 'Iowa',
     slug: 'iowa',
-    intro: `<p>Iowa was a pioneer in Midwest casino gambling, launching riverboat casinos along the Mississippi and Missouri rivers in the early 1990s. Today the state boasts more than 20 licensed casinos — a mix of tribal operations, commercial riverboats, and land-based facilities — making it one of the most casino-dense Midwestern states per capita.</p>
-<p>Iowa's casino landscape spans the state from the Quad Cities on the east to Council Bluffs on the west, just across the Missouri River from Omaha. Highlights include Rhythm City Casino Resort in Davenport, Harrah's Council Bluffs (one of the largest in the state), and Meskwaki Bingo Casino Hotel, an Iowa tribal casino near Tama that consistently ranks among the state's best.</p>
-<p>Iowa casinos feature slots, video poker, table games including blackjack, craps, roulette, and poker rooms. The Iowa Racing and Gaming Commission regulates all casinos and publishes monthly revenue data — useful for gauging which properties are paying out the most. Most major Iowa casinos have hotels, multiple restaurants, and event centers.</p>
-<p>Iowa's central location makes it an easy drive from Minnesota, Illinois, Wisconsin, and Nebraska, drawing regional visitors year-round. Jackpot activity is steady, particularly at tribal casinos like Meskwaki. FindJackpots aggregates Iowa jackpot reports so you can track recent wins and plan your next visit accordingly.</p>`,
+    intro: `<p>Iowa was a genuine pioneer in Midwest casino gambling, launching the country's first legal riverboat casinos along the Mississippi River in 1991. That early start gave Iowa decades to build a mature, well-regulated gaming industry. Today the state has over 20 licensed casinos — a mix of tribal operations, commercial riverboats, and modern land-based facilities — making Iowa one of the most casino-dense states in the Midwest on a per-capita basis.</p>
+<p>Gambling in Iowa is regulated by the <strong>Iowa Racing and Gaming Commission (IRGC)</strong>, which publishes detailed monthly revenue reports for every licensed casino in the state. This transparency is a genuine advantage for players: you can actually compare casino payouts in Iowa by looking at adjusted gross revenue trends, which gives a rough indication of how much each property is returning to players. The IRGC reports are publicly available and updated monthly.</p>
+<p>The best casinos in Iowa span from east to west. On the Mississippi River, <strong>Rhythm City Casino Resort</strong> in Davenport is one of the state's most modern facilities, having completed a major renovation in recent years. Further south, Isle Casino Hotel Bettendorf and Catfish Bend Casino in Burlington round out the Quad Cities and southeast Iowa options. On the western border, <strong>Harrah's Council Bluffs</strong> and Ameristar Casino Council Bluffs draw heavily from the Omaha metro area just across the Missouri River. In central Iowa, Prairie Meadows Casino, Race Track &amp; Hotel in Altoona is the state's top-grossing property, featuring over 2,000 slots, table games, and live horse racing.</p>
+<p>Iowa also has tribal gaming: the <strong>Meskwaki Bingo Casino Hotel</strong> near Tama, operated by the Sac and Fox Tribe of the Mississippi in Iowa, is one of the state's best-regarded casinos for slot jackpots in Iowa. Players report solid payouts and a well-run loyalty program. Iowa casino loyalty programs vary by operator — Caesars Rewards (at Harrah's), mychoice (at Hollywood/Penn properties), and independent programs at Iowa tribal casinos all offer free play, dining credits, and hotel discounts for frequent players.</p>
+<p>Iowa's central location makes it ideal for Midwest casino road trips. It's within easy driving distance of <a href="/casinos/minnesota">Minnesota's tribal casinos</a>, <a href="/casinos/illinois">Illinois riverboat casinos</a>, and <a href="/casinos/missouri">Missouri's casino corridor</a>. See the <a href="/best-midwest-casinos">Best Midwest Casinos guide</a> for cross-state comparisons, and use the <a href="/casino-jackpot-tracker">Jackpot Tracker</a> to follow recent Iowa jackpot wins.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Iowa?',
+        a: 'Yes, gambling is legal in Iowa. The state licenses commercial casinos, tribal gaming operations, and racinos (racing facilities with gaming). The Iowa Racing and Gaming Commission regulates all licensed gaming establishments. Iowa also offers sports betting and online sports wagering for adults 21 and older.',
+      },
+      {
+        q: 'What is the best casino in Iowa?',
+        a: 'Prairie Meadows Casino, Race Track & Hotel in Altoona is Iowa\'s top-grossing casino and a popular destination for its combination of slots, table games, live horse racing, and hotel amenities. Meskwaki Bingo Casino Hotel near Tama and Harrah\'s Council Bluffs are also consistently ranked among Iowa\'s best casinos.',
+      },
+      {
+        q: 'Do Iowa casinos have slot machines?',
+        a: 'Yes, all Iowa casinos feature slot machines. Both commercial and tribal casinos offer hundreds to thousands of slots including video slots, classic reel machines, video poker, and progressive jackpot games. The Iowa Racing and Gaming Commission regulates all gaming devices.',
+      },
+      {
+        q: 'What casino has the best payouts in Iowa?',
+        a: 'The Iowa Racing and Gaming Commission publishes monthly revenue reports for each casino, which can indicate relative payout performance. Prairie Meadows and Meskwaki are frequently cited by players for solid slot returns. Dollar denomination machines and video poker typically offer better odds than penny slots at any Iowa casino.',
+      },
+    ],
   },
   WI: {
     name: 'Wisconsin',
     slug: 'wisconsin',
-    intro: `<p>Wisconsin's casino industry is built entirely on tribal gaming, with 11 federally recognized tribes operating more than 25 casinos across the state. From the shores of Lake Superior in the north to the Chicago suburbs at the southern border, Wisconsin offers a diverse and well-distributed casino landscape that draws millions of visitors each year.</p>
-<p>The largest and most well-known Wisconsin casino is Potawatomi Hotel & Casino in Milwaukee — a massive urban destination casino with 3,000 slot machines, a full complement of table games, a poker room, multiple restaurants, and a hotel. Ho-Chunk Gaming Wisconsin Dells is another standout, combining casino thrills with proximity to the state's top tourist destination. Up north, casinos like Lake of the Torches in Lac du Flambeau and St. Croix Casino in Turtle Lake draw visitors to the Wisconsin Northwoods.</p>
-<p>Wisconsin tribes offer generous players club programs, with many casinos offering free play, drawings, and point multiplier days to reward regular visitors. Slot payouts at Wisconsin tribal casinos are not publicly disclosed (tribal casinos are exempt from state reporting requirements), but players consistently report solid return rates — particularly on dollar slots and video poker.</p>
-<p>Whether you're in Milwaukee, Green Bay, Madison, or the Wisconsin Northwoods, there's likely a tribal casino within a short drive. Use FindJackpots to compare Wisconsin casinos by amenities, loyalty programs, and recent jackpot activity.</p>`,
+    intro: `<p>Gambling in Wisconsin is entirely a tribal affair — the state has no commercial casinos. Eleven federally recognized Native American tribes operate more than 25 casinos across Wisconsin, from the shores of Lake Superior in the north to the Illinois border in the south. This tribal exclusivity has driven significant investment: Wisconsin's best casinos are genuinely world-class facilities with resort amenities, live entertainment, and some of the most competitive loyalty programs in the Midwest.</p>
+<p>The largest and most prominent casino in Wisconsin is <strong>Potawatomi Hotel &amp; Casino</strong> in Milwaukee, operated by the Forest County Potawatomi Community. With over 3,000 slot machines, a full table game floor, a dedicated poker room, a luxury hotel, multiple restaurants, and a 500-seat bingo hall, Potawatomi is the closest thing Wisconsin has to a Las Vegas-style destination casino. Its <strong>Bingo &amp; More Rewards</strong> loyalty program offers tiered free play, dining comps, and hotel discounts, making it one of the best Wisconsin casino loyalty programs for regular players.</p>
+<p>The <strong>Ho-Chunk Nation</strong> operates an impressive network of gaming facilities: Ho-Chunk Gaming Wisconsin Dells (adjacent to the state's most popular tourist destination), Ho-Chunk Gaming Madison, Ho-Chunk Gaming Black River Falls, and others. The <strong>Oneida Nation</strong> operates Oneida Casino near Green Bay, a major destination for Packers fans and northern Wisconsin visitors. Up north, tribal casinos like <strong>Lake of the Torches</strong> in Lac du Flambeau, <strong>St. Croix Casino</strong> in Turtle Lake, and the Mole Lake Sokaogon Chippewa Community's casinos serve visitors to Wisconsin's Northwoods lake country.</p>
+<p>Slot jackpots in Wisconsin are a popular topic but somewhat opaque: tribal casinos are exempt from state gaming revenue reporting requirements, so payout data isn't publicly available the way it is in Nevada or Iowa. What players do know is that Wisconsin casinos run regular jackpot promotions, drawing events, and progressive machines with frequent mid-range wins. Use FindJackpots to track <a href="/biggest-jackpots">the biggest recent jackpots</a> and see where Wisconsin wins are being reported.</p>
+<p>Casino payouts in Wisconsin vary by property and game type, and Wisconsin casino loyalty programs are a key differentiator. Beyond Potawatomi and Ho-Chunk, programs like Oneida One Club and the various rewards clubs at Ojibwe-operated casinos offer meaningful value — free play on visits, birthday bonuses, and invite-only events. For Midwest comparisons, check our <a href="/best-midwest-casinos">Best Midwest Casinos guide</a> and use the <a href="/casino-jackpot-tracker">Jackpot Tracker</a> to find active Wisconsin wins.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Wisconsin?',
+        a: 'Yes, gambling is legal in Wisconsin, but only at tribally operated casinos. Wisconsin has no commercial casinos. Eleven federally recognized tribes operate more than 25 casinos under compacts with the state government. Lottery and charitable gaming are also legal. Sports betting and online casino gaming are not currently legal in Wisconsin.',
+      },
+      {
+        q: 'What is the best casino in Wisconsin?',
+        a: 'Potawatomi Hotel & Casino in Milwaukee is widely considered the best casino in Wisconsin, offering over 3,000 slot machines, table games, a poker room, luxury hotel, and multiple dining options. Ho-Chunk Gaming Wisconsin Dells and Oneida Casino near Green Bay are also top-rated Wisconsin casinos.',
+      },
+      {
+        q: 'Do Wisconsin casinos have slot machines?',
+        a: 'Yes, all Wisconsin tribal casinos feature slot machines as their primary gaming offering. Machines range from penny video slots to high-limit progressive games. Video poker is also widely available. Wisconsin tribal casinos are not required to report payout percentages publicly.',
+      },
+      {
+        q: 'What casino has the best payouts in Wisconsin?',
+        a: 'Wisconsin tribal casinos do not publicly disclose slot payout percentages. However, Potawatomi and Ho-Chunk Gaming properties are consistently well-regarded by players for return rates and game variety. Dollar denomination slots and video poker machines generally offer better odds. Use FindJackpots to see recent jackpot wins from Wisconsin casinos.',
+      },
+    ],
   },
   IL: {
     name: 'Illinois',
     slug: 'illinois',
-    intro: `<p>Illinois has a robust commercial casino industry regulated by the Illinois Gaming Board, with casinos operating in riverboat and land-based formats throughout the state. The Chicago area alone has several major casinos within easy driving distance, including Hollywood Casino Aurora, Rivers Casino in Des Plaines, and Grand Victoria Casino in Elgin — making Chicagoland one of the most casino-rich metropolitan areas in the country.</p>
-<p>Illinois casinos are notable for their transparency: the Gaming Board publishes detailed monthly reports including adjusted gross revenue, game counts, and historical trends by property. This data makes Illinois one of the best-documented casino markets in the Midwest. Rivers Casino in Des Plaines is consistently one of the highest-grossing casinos in the United States, regularly generating over $50 million in monthly gaming revenue.</p>
-<p>The state expanded gaming significantly with legislation in recent years, authorizing new casino licenses including a Chicago city casino, sports betting, and additional positions at existing properties. This expansion means Illinois' casino landscape is actively growing and improving for players.</p>
-<p>Illinois casinos feature the full range of games: slots, video poker, blackjack, craps, roulette, and poker. The proximity to Chicago's population of nearly 3 million means weekends can be busy, so it's worth checking current jackpot activity and plan accordingly. FindJackpots tracks recent Illinois casino wins so you can time your visit when the machines are hot.</p>`,
+    intro: `<p>Illinois has one of the most dynamic commercial casino industries in the Midwest, with a mix of riverboat and land-based facilities spread across the state. The Illinois Gaming Board (IGB) regulates all licensed casinos and publishes detailed monthly revenue reports — making gambling in Illinois one of the most transparent gaming markets in the country. That data is publicly accessible and useful for comparing casino payouts in Illinois across different properties.</p>
+<p>The best casinos in Illinois are concentrated around the Chicago metro area. <strong>Rivers Casino</strong> in Des Plaines is the state's highest-grossing casino by a wide margin, regularly generating over $50–60 million in monthly adjusted gross revenue — one of the top single-property gaming revenues in the entire United States. Its location just minutes from O'Hare Airport makes it convenient for travelers. <strong>Hollywood Casino Aurora</strong> has operated along the Fox River since the riverboat era and remains a popular destination for western Chicago suburbs. <strong>Grand Victoria Casino</strong> in Elgin and <strong>Harrah's Joliet</strong> round out the Chicago-area options.</p>
+<p>Outside Chicagoland, <strong>Hollywood Casino Joliet</strong>, <strong>Par-A-Dice Hotel Casino</strong> in East Peoria, and <strong>Jumer's Casino &amp; Hotel</strong> in Rock Island serve the central and western Illinois markets. Illinois expanded its gaming law in 2019, authorizing six new casino licenses — including a Chicago city casino — along with sports betting. This expansion means Illinois casino gaming is actively growing, with new properties opening in the coming years that will add significant competition and choice for players.</p>
+<p>Slot jackpots in Illinois are plentiful, particularly at the high-volume Chicago-area properties. Rivers Casino and Hollywood Aurora both see significant jackpot activity. Illinois casino loyalty programs include mychoice (the Penn Entertainment/Hollywood Casino network) and Rush Rewards (Rivers Casino), both offering tiered free play, hotel discounts, dining comps, and event access. Illinois is also one of the few states where you can cross-reference loyalty points earned in-state with national casino networks, giving frequent players substantial value.</p>
+<p>For Midwest players, Illinois connects naturally with <a href="/casinos/indiana">Indiana's casino corridor</a> to the east and <a href="/casinos/iowa">Iowa's riverboat casinos</a> to the west. Check the <a href="/best-midwest-casinos">Best Midwest Casinos guide</a> for regional comparisons and use the <a href="/casino-jackpot-tracker">Jackpot Tracker</a> to follow recent Illinois wins.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Illinois?',
+        a: 'Yes, gambling is legal in Illinois. The state licenses commercial casinos (both riverboat and land-based), racinos, and video gaming terminals (VGTs) at bars and restaurants. Sports betting is also legal. The Illinois Gaming Board regulates all licensed gaming. The legal gambling age is 21.',
+      },
+      {
+        q: 'What is the best casino in Illinois?',
+        a: 'Rivers Casino in Des Plaines is consistently the highest-grossing casino in Illinois and one of the top-revenue casinos in the entire United States. Hollywood Casino Aurora and Grand Victoria Casino in Elgin are also popular destinations. For a full resort experience, Par-A-Dice Hotel Casino in East Peoria is highly regarded.',
+      },
+      {
+        q: 'Do Illinois casinos have slot machines?',
+        a: 'Yes, all Illinois casinos feature slot machines. Rivers Casino in Des Plaines alone has over 1,000 slot and electronic gaming machines. Illinois also has thousands of video gaming terminals (VGTs) at licensed bars and restaurants statewide, offering additional slot-style gaming options.',
+      },
+      {
+        q: 'What casino has the best payouts in Illinois?',
+        a: 'The Illinois Gaming Board publishes monthly revenue and payout data for all licensed casinos. Rivers Casino in Des Plaines and Hollywood Casino Aurora have high gaming volumes which tend to support competitive payouts. Video poker machines and dollar slots typically offer better odds than penny slots at any Illinois casino.',
+      },
+    ],
   },
   MI: {
     name: 'Michigan',
     slug: 'michigan',
-    intro: `<p>Michigan offers a uniquely dual casino landscape: three world-class commercial casinos in downtown Detroit (MGM Grand Detroit, MotorCity Casino Hotel, and Greektown Casino-Hotel), plus more than 20 tribal casinos operated by 12 Native American tribes spread across the Upper Peninsula and Lower Michigan. Together they form one of the most diverse casino markets in the Midwest.</p>
-<p>The Detroit commercial casinos are major destination resorts, featuring thousands of slot machines, extensive table game floors, high-limit rooms, multiple restaurants, hotel accommodations, and entertainment venues. The Michigan Gaming Control Board regulates commercial casinos and requires monthly revenue reporting, giving players useful transparency into each property's performance.</p>
-<p>Michigan's tribal casinos range from the resort-scale Soaring Eagle Casino & Resort near Mount Pleasant (one of the largest in the Midwest) to smaller neighborhood casinos in the Upper Peninsula. Kewadin Casinos operates five locations in the UP, while Gun Lake Casino near Wayland and FireKeepers Casino Hotel near Battle Creek are popular destination casinos in Lower Michigan.</p>
-<p>Michigan also launched online casino gaming and sports betting in 2021, making it one of the most progressive gambling states in the country. BetMGM, DraftKings, FanDuel, and a dozen other operators are licensed, meaning Michigan players have plenty of options both in-person and online. FindJackpots covers Michigan's brick-and-mortar casino scene so you can compare jackpots, amenities, and loyalty programs before you visit.</p>`,
+    intro: `<p>Michigan offers one of the most diverse casino landscapes in the Midwest — a dual market of commercial and tribal gaming that gives players more options than almost any other state. Gambling in Michigan includes three world-class commercial casinos in downtown Detroit, over 20 tribal casinos operated by 12 Native American tribes, and a fully legal online casino market that launched in 2021. Few states can match Michigan's breadth of gaming options.</p>
+<p>The Detroit commercial casinos — <strong>MGM Grand Detroit</strong>, <strong>MotorCity Casino Hotel</strong>, and <strong>Greektown Casino-Hotel</strong> — are major destination resorts anchoring downtown Detroit's revitalized core. Each features thousands of slot machines, full table game floors, high-limit rooms, hotels, multiple restaurants, and entertainment venues. The <strong>Michigan Gaming Control Board</strong> regulates these commercial properties and requires detailed monthly revenue reporting, giving players valuable transparency into casino payouts in Michigan.</p>
+<p>Michigan's tribal casino scene is equally impressive. <strong>Soaring Eagle Casino &amp; Resort</strong> near Mount Pleasant, operated by the Saginaw Chippewa Indian Tribe, is one of the largest tribal casinos in the Midwest with over 4,000 machines and a major entertainment arena. <strong>Four Winds Casinos</strong>, operated by the Pokagon Band of Potawatomi Indians, run four properties in New Buffalo, South Bend (Indiana), Hartford, and Dowagiac — particularly popular with Chicago-area visitors. <strong>FireKeepers Casino Hotel</strong> near Battle Creek is another top-tier destination, frequently cited for solid slot jackpots in Michigan and a competitive loyalty program.</p>
+<p>Michigan casino loyalty programs span both tribal and commercial operators. MGM Rewards (at MGM Grand Detroit), M life (integrated with national MGM properties), and individual tribal clubs like Soaring Eagle Rewards all offer tiered benefits, free play, hotel comps, and dining credits. Michigan casino payouts at commercial properties are publicly reported and competitive with regional peers.</p>
+<p>Michigan's 2021 launch of online casino gaming and sports betting through DraftKings, BetMGM, FanDuel, and other operators makes it one of the most progressive gambling states in the country. Whether you prefer in-person or digital play, Michigan has you covered. Track <a href="/biggest-jackpots">the biggest Michigan jackpots</a>, compare properties on the <a href="/casino-jackpot-tracker">Jackpot Tracker</a>, or explore the <a href="/best-midwest-casinos">Best Midwest Casinos</a> guide for regional context.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Michigan?',
+        a: 'Yes, gambling is legal in Michigan. The state has three licensed commercial casinos in Detroit, over 20 tribal casinos statewide, and a fully legal online casino and sports betting market that launched in 2021. The Michigan Gaming Control Board regulates commercial casinos; tribal gaming is governed by tribal-state compacts. The legal gambling age is 21.',
+      },
+      {
+        q: 'What is the best casino in Michigan?',
+        a: 'MGM Grand Detroit is widely considered the best commercial casino in Michigan for its size, amenities, and loyalty program integration. Among tribal casinos, Soaring Eagle Casino & Resort near Mount Pleasant and Four Winds New Buffalo are consistently top-rated. FireKeepers Casino Hotel near Battle Creek is also highly regarded.',
+      },
+      {
+        q: 'Do Michigan casinos have slot machines?',
+        a: 'Yes, all Michigan casinos — both commercial and tribal — feature slot machines. Soaring Eagle alone has over 4,000 machines. Michigan commercial casinos report monthly gaming data, and all offer a range of slots from penny games to high-limit progressives capable of producing major jackpots.',
+      },
+      {
+        q: 'What casino has the best payouts in Michigan?',
+        a: 'The Michigan Gaming Control Board publishes monthly revenue reports for Detroit\'s three commercial casinos. MGM Grand Detroit and MotorCity Casino are frequently cited for competitive slot payouts. Among tribal casinos, Soaring Eagle and Four Winds New Buffalo are popular choices. Dollar slots and video poker typically offer the best return rates at any Michigan casino.',
+      },
+    ],
   },
   IN: {
     name: 'Indiana',
     slug: 'indiana',
-    intro: `<p>Indiana's casino industry is one of the most significant in the Midwest, with more than a dozen licensed commercial casinos generating billions in annual gaming revenue. The state was an early adopter of riverboat gambling in the 1990s, and today its casinos have largely transitioned to land-based or dockside facilities, offering a full resort experience rather than the original cruise-style gambling.</p>
-<p>Indiana's casino geography is strategic: properties in Hammond, East Chicago, and Michigan City serve the massive Chicago-area market, while casinos in Rising Sun, Elizabeth, Evansville, and Gary serve local markets and cross-border visitors from Ohio and Kentucky. Horseshoe Hammond is one of the largest riverboat casinos in the country by revenue, regularly posting over $50 million in monthly adjusted gross revenue.</p>
-<p>The Indiana Gaming Commission requires detailed monthly reporting from all licensed casinos, making Indiana one of the most transparent casino markets in the country. This data shows which properties are performing well and can give players insight into which casinos are attracting the most action. Hard Rock Casino Northern Indiana in Gary opened in 2021 and has quickly become one of the state's top performers.</p>
-<p>Indiana casinos feature slots, table games, poker rooms, sports betting, and — at the larger properties — hotels, multiple restaurants, and entertainment venues. Jackpot wins are frequently reported from Indiana's busy casino floors. FindJackpots tracks recent wins across all Indiana casinos so you can find where winners are hitting right now.</p>`,
+    intro: `<p>Indiana's casino industry has a rich history rooted in the riverboat gambling era of the 1990s — and today it has evolved into one of the most significant gaming markets in the Midwest. Gambling in Indiana is conducted through licensed commercial casinos regulated by the Indiana Gaming Commission (IGC), which requires detailed monthly reporting from all operators. That transparency makes Indiana one of the best-documented casino markets in the country for comparing casino payouts and property performance.</p>
+<p>The best casinos in Indiana include some of the highest-revenue gaming facilities in the United States. <strong>Horseshoe Hammond</strong>, located in Hammond just minutes from Chicago, is among the top-grossing riverboat casinos in the country, regularly posting $40–55 million in monthly adjusted gross revenue. Its proximity to Chicago's massive population makes it a perennial powerhouse. <strong>Hard Rock Casino Northern Indiana</strong>, which opened in Gary in 2021, has quickly become a major destination with over 2,000 machines, live table games, a hotel, and a full entertainment venue.</p>
+<p>Further south, <strong>Caesars Southern Indiana</strong> (formerly Horseshoe Southern Indiana) in Elizabeth is a resort-scale destination casino with a hotel, spa, multiple restaurants, and an entertainment center. <strong>Blue Chip Casino Hotel &amp; Spa</strong> in Michigan City serves Northwest Indiana and southwest Michigan. <strong>Belterra Casino Resort</strong> in Florence sits on the Ohio River and offers a genuine resort experience with golf, hotel, and multiple dining options. Indiana's casino geography spans from the Chicago metro suburbs all the way south to the Kentucky border, providing strong regional coverage.</p>
+<p>Indiana casino loyalty programs are led by <strong>Caesars Rewards</strong> (covering Caesars Southern Indiana, Horseshoe Hammond, and affiliated properties) and <strong>mychoice</strong> (the Penn Entertainment network covering Hollywood Casino Lawrenceburg and others). These are nationally networked programs, meaning points and tier status earned in Indiana can be used at partner properties across the country — a significant benefit for frequent casino travelers.</p>
+<p>Slot jackpots in Indiana are well-documented thanks to IGC reporting, and Indiana's high-volume casinos produce regular large wins. Track recent activity on the <a href="/casino-jackpot-tracker">FindJackpots Jackpot Tracker</a>, see the <a href="/biggest-jackpots">biggest jackpots</a> hitting right now, or compare Indiana with neighboring markets in our <a href="/best-midwest-casinos">Best Midwest Casinos guide</a>.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Indiana?',
+        a: 'Yes, gambling is legal in Indiana. The state licenses commercial casinos (including riverboat and land-based facilities), racinos at horse racing tracks, and sports betting. The Indiana Gaming Commission regulates all licensed casinos. The legal gambling age is 21 for casinos and 18 for the lottery.',
+      },
+      {
+        q: 'What is the best casino in Indiana?',
+        a: 'Horseshoe Hammond near Chicago is Indiana\'s highest-revenue casino and one of the top-grossing casinos in the country. Hard Rock Casino Northern Indiana in Gary is a newer property that has quickly become a premier destination. Caesars Southern Indiana in Elizabeth is the top choice for a full resort experience with hotel, spa, and entertainment.',
+      },
+      {
+        q: 'Do Indiana casinos have slot machines?',
+        a: 'Yes, all Indiana casinos feature slot machines. Indiana\'s larger properties like Horseshoe Hammond and Hard Rock Northern Indiana have 2,000+ machines each, ranging from penny slots to high-limit progressive games. Indiana Gaming Commission reporting tracks total gaming positions at each licensed property.',
+      },
+      {
+        q: 'What casino has the best payouts in Indiana?',
+        a: 'The Indiana Gaming Commission publishes monthly adjusted gross revenue data for all licensed casinos, which can indicate relative payout performance. High-volume properties like Horseshoe Hammond and Caesars Southern Indiana typically support competitive payouts due to machine volume. Dollar denomination slots and video poker offer better return rates than penny slots at any Indiana casino.',
+      },
+    ],
   },
   OH: {
     name: 'Ohio',
     slug: 'ohio',
-    intro: `<p>Ohio transformed its gambling landscape in 2012 with the opening of four commercial casinos in Cleveland, Columbus, Cincinnati, and Toledo — followed by the launch of numerous racinos (race tracks with video lottery terminals) across the state. Today Ohio is a major casino market with more than a dozen gaming facilities, all regulated by the Ohio Casino Control Commission.</p>
-<p>The four original Ohio casinos — JACK Cleveland Casino, Hollywood Casino Columbus, JACK Cincinnati Casino, and Hollywood Casino Toledo — are full-scale gaming resorts with thousands of slot machines, complete table game floors including poker rooms, and extensive dining and entertainment options. Each is located in a major urban center, making Ohio casino gaming highly accessible to the state's 11 million residents.</p>
-<p>Ohio racinos — facilities at horse racing tracks that offer video lottery terminals — add another dimension to the state's gaming scene. MGM Northfield Park, Hard Rock Rocksino Northfield Park, and JACK Thistledown Racino are among the most popular. While technically VLTs rather than Class III slot machines, these machines offer comparable entertainment and jackpot opportunities.</p>
-<p>Ohio legalized sports betting in 2023, adding another reason for sports fans to visit casinos that have integrated sportsbook operations. The state's gaming industry continues to grow and evolve, with regular updates to licensing and operations. FindJackpots tracks jackpot wins from Ohio's commercial casinos and racinos so you can see where the biggest payouts are happening.</p>`,
+    intro: `<p>Ohio launched its commercial casino industry in 2012, making it one of the newer gaming markets in the Midwest — but what it lacks in history, it makes up for with scale and regulation. Four full-scale commercial casinos opened in Ohio's major cities in 2012, quickly followed by a network of racinos (racing facilities with video lottery terminals) that extended gaming access across the state. Today, gambling in Ohio is a major industry regulated by the <strong>Ohio Casino Control Commission (OCCC)</strong>, which enforces strict standards and publishes regular financial reports.</p>
+<p>The four original Ohio commercial casinos are the anchors of the state's gaming scene. <strong>JACK Cleveland Casino</strong> occupies the historic Higbee Building in downtown Cleveland, offering slots, table games, a poker room, and multiple dining options. <strong>Hollywood Casino Columbus</strong> is one of the largest casinos in Ohio, featuring 2,200+ slot machines and an extensive table game floor. <strong>JACK Cincinnati Casino</strong> in downtown Cincinnati is a sleek modern facility that draws heavily from the Cincinnati metro area and nearby Kentucky. <strong>Hollywood Casino Toledo</strong> rounds out the original four, serving Northwest Ohio and Southeast Michigan visitors.</p>
+<p>Ohio racinos add another dimension to the state's gaming landscape. <strong>MGM Northfield Park</strong> north of Akron, <strong>Hard Rock Rocksino Northfield Park</strong> (now part of MGM), <strong>JACK Thistledown Racino</strong> in North Randall, and nearly a dozen other facilities offer video lottery terminals alongside live horse racing. While technically VLTs rather than Class III casino slots, these machines provide comparable entertainment and jackpot opportunities, and the facilities have been continuously upgraded since opening.</p>
+<p>Casino payouts in Ohio are reported monthly by the OCCC, and slot jackpots in Ohio are tracked at all commercial casino properties. The OCCC's reporting is among the most detailed in the Midwest, allowing players to compare adjusted gross revenue and gaming hold percentages across properties. Ohio casino loyalty programs include <strong>mychoice</strong> (Penn Entertainment/Hollywood Casinos), <strong>JACK Rewards</strong> (JACK casinos in Cleveland and Cincinnati), and <strong>MGM Rewards</strong> at Northfield Park.</p>
+<p>Ohio legalized sports betting in 2023, adding another reason to visit casinos that have integrated sportsbooks. See the <a href="/biggest-jackpots">biggest Ohio jackpots</a> happening now, use the <a href="/casino-jackpot-tracker">Jackpot Tracker</a> for real-time win data, and check the <a href="/best-midwest-casinos">Best Midwest Casinos guide</a> to compare Ohio with neighboring states like <a href="/casinos/indiana">Indiana</a> and <a href="/casinos/michigan">Michigan</a>.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Ohio?',
+        a: 'Yes, gambling is legal in Ohio. The state has four licensed commercial casinos, numerous racinos (racing facilities with video lottery terminals), and legal sports betting that launched in 2023. The Ohio Casino Control Commission regulates commercial casinos. The legal gambling age is 21 for casinos.',
+      },
+      {
+        q: 'What is the best casino in Ohio?',
+        a: 'Hollywood Casino Columbus is widely regarded as the best casino in Ohio for its size, variety of games, and amenities. JACK Cleveland Casino in downtown Cleveland and JACK Cincinnati Casino are also top-rated destinations. For a racino experience, MGM Northfield Park north of Akron is among the most popular in the state.',
+      },
+      {
+        q: 'Do Ohio casinos have slot machines?',
+        a: 'Yes, all Ohio commercial casinos feature Class III slot machines. Racinos across the state offer video lottery terminals (VLTs) that function similarly. Hollywood Casino Columbus alone has over 2,200 gaming machines. Ohio Casino Control Commission reporting covers all licensed gaming positions statewide.',
+      },
+      {
+        q: 'What casino has the best payouts in Ohio?',
+        a: 'The Ohio Casino Control Commission publishes monthly revenue and hold percentage data for commercial casinos. Hollywood Casino Columbus and JACK Cleveland Casino consistently show strong gaming volumes. Dollar denomination slots and video poker machines typically offer better return rates than penny slots. FindJackpots tracks recent jackpot wins across Ohio properties.',
+      },
+    ],
   },
   MO: {
     name: 'Missouri',
     slug: 'missouri',
-    intro: `<p>Missouri is a well-established casino state with 13 licensed commercial casinos distributed across the state, regulated by the Missouri Gaming Commission. Missouri legalized riverboat gambling in 1993, and while the original requirement that casinos float on water was later relaxed, the term "riverboat casino" remains part of Missouri's gaming identity — most properties are located along the Missouri and Mississippi rivers.</p>
-<p>Missouri's biggest casino markets are in the Kansas City metro area, where Ameristar Casino Resort Spa, Hollywood Casino Kansas City, and Argosy Casino Alton operate; and the St. Louis area, home to Lumière Place Casino, River City Casino, and Harrah's St. Louis. These properties range from modest gaming halls to full resort destinations with hotels, spas, multiple restaurants, and concert venues.</p>
-<p>The Missouri Gaming Commission publishes detailed monthly financial reports for each licensed casino, giving players and analysts insight into revenue trends and performance by property. This transparency is valuable for understanding which casinos are the most popular and potentially where machines are paying out the most.</p>
-<p>Missouri casinos offer the full complement of games including slots, video poker, blackjack, craps, roulette, and poker. Many properties run regular promotions including drawings, free play offers, and progressive jackpot tournaments. FindJackpots monitors jackpot activity across all Missouri casinos so you always know where the latest big wins are happening.</p>`,
+    intro: `<p>Missouri has been a commercial casino state since 1993 when it legalized riverboat gambling along its river corridors, and today it operates one of the most established gaming markets in the Midwest. With 13 licensed commercial casinos regulated by the <strong>Missouri Gaming Commission (MGC)</strong>, gambling in Missouri is a major industry that generates billions in annual revenue. The MGC publishes detailed monthly financial reports for every licensed casino, making Missouri one of the most transparent gaming markets in the country for players interested in comparing casino payouts.</p>
+<p>Missouri's casino geography follows its rivers. The <strong>Kansas City metro area</strong> hosts a cluster of major properties: <strong>Ameristar Casino Resort Spa Kansas City</strong> is one of the largest in the state, with a hotel, spa, multiple restaurants, and an expansive gaming floor. <strong>Hollywood Casino Kansas City</strong> and <strong>Argosy Casino Alton</strong> compete for the KC market, offering loyalty programs and regular jackpot promotions. In the <strong>St. Louis area</strong>, <strong>Lumiere Place Casino</strong> (operated by Caesars Entertainment) is a premier destination anchored to a full hotel and dining complex. <strong>River City Casino</strong> in Lemay and <strong>Harrah's St. Louis</strong> in Maryland Heights round out the metro offerings.</p>
+<p>The best casinos in Missouri also include notable properties outside the two major metros. <strong>Isle of Capri Casino Hotel Boonville</strong> sits along the Missouri River in central Missouri. <strong>Lady Luck Casino Caruthersville</strong> serves the Bootheel region near the Tennessee and Arkansas borders. <strong>Mark Twain Casino</strong> in La Grange occupies a scenic spot on the Mississippi River in northeast Missouri. Each property reflects Missouri's strong river heritage while offering modern gaming amenities.</p>
+<p>Slot jackpots in Missouri are regularly reported from the state's high-volume Kansas City and St. Louis properties. Missouri casino loyalty programs include <strong>Caesars Rewards</strong> (at Lumiere Place, Harrah's St. Louis), <strong>mychoice</strong> (at Hollywood Casino Kansas City and other Penn Gaming properties), and <strong>Ameristar's M life / MGM Rewards</strong> connection — giving Missouri players access to nationally networked reward programs with hotel, dining, and entertainment benefits across dozens of partner properties.</p>
+<p>Missouri is ideally positioned for Midwest casino travel, bordering <a href="/casinos/iowa">Iowa</a>, <a href="/casinos/illinois">Illinois</a>, <a href="/casinos/indiana">Indiana</a>, and Kansas. Track <a href="/biggest-jackpots">the biggest Missouri jackpot wins</a> in real time, use the <a href="/casino-jackpot-tracker">Jackpot Tracker</a> to find active Missouri machines, or see how Missouri stacks up in our <a href="/best-midwest-casinos">Best Midwest Casinos guide</a>.</p>`,
+    faqs: [
+      {
+        q: 'Is gambling legal in Missouri?',
+        a: 'Yes, gambling is legal in Missouri. The state licenses 13 commercial casinos — all located on or near the Missouri and Mississippi rivers — under the oversight of the Missouri Gaming Commission. Sports betting and online gambling are not currently legal in Missouri. The legal gambling age is 21.',
+      },
+      {
+        q: 'What is the best casino in Missouri?',
+        a: 'Ameristar Casino Resort Spa Kansas City is widely regarded as one of the best casinos in Missouri for its combination of gaming floor size, hotel, spa, and dining options. Lumiere Place Casino in St. Louis (operated by Caesars) and River City Casino in Lemay are also top-rated Missouri destinations.',
+      },
+      {
+        q: 'Do Missouri casinos have slot machines?',
+        a: 'Yes, all Missouri casinos feature slot machines as a core part of their gaming floors. Missouri\'s licensed casinos collectively offer thousands of slot machines ranging from penny video slots to high-limit progressive games. The Missouri Gaming Commission tracks and reports gaming positions at each licensed property.',
+      },
+      {
+        q: 'What casino has the best payouts in Missouri?',
+        a: 'The Missouri Gaming Commission publishes monthly revenue reports for all 13 licensed casinos. High-volume properties like Ameristar Kansas City and River City Casino in the St. Louis area tend to support competitive payout rates. Dollar slots and video poker machines offer better return rates than penny slots at any Missouri casino. Use FindJackpots to track recent jackpot wins statewide.',
+      },
+    ],
   },
 };
 
@@ -383,7 +554,7 @@ module.exports = function registerSEORoutes(app, pool) {
         `, [stateCode]);
         const jackpots = jackpotsResult.rows;
 
-        // JSON-LD
+        // JSON-LD: ItemList
         const jsonLd = {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
@@ -397,6 +568,18 @@ module.exports = function registerSEORoutes(app, pool) {
             url: `https://findjackpots.com/casino/${c.id}/${slugify(c.name)}`,
           })),
         };
+
+        // JSON-LD: FAQPage
+        const stateFaqs = info.faqs || [];
+        const faqJsonLd = stateFaqs.length > 0 ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: stateFaqs.map(f => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        } : null;
 
         // Casinos table rows
         const casinoRows = casinos.map(c => `
@@ -479,6 +662,18 @@ ${siteHeader()}
     <a class="cta-btn" href="https://findjackpots.com">Open FindJackpots App →</a>
   </div>
 
+  ${stateFaqs.length > 0 ? `
+  <div class="section">
+    <h2>Frequently Asked Questions: Gambling in ${stateName}</h2>
+    <dl>
+      ${stateFaqs.map(f => `
+      <div class="faq-item">
+        <dt>${f.q}</dt>
+        <dd>${f.a}</dd>
+      </div>`).join('')}
+    </dl>
+  </div>` : ''}
+
   <div class="section">
     <h2>Browse Casinos by State</h2>
     ${stateNavHtml(stateSlug)}
@@ -492,6 +687,7 @@ ${siteHeader()}
 </div>
 
 <script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>
+${faqJsonLd ? `<script type="application/ld+json">${JSON.stringify(faqJsonLd, null, 2)}</script>` : ''}
 
 ${siteFooter()}
 </body>

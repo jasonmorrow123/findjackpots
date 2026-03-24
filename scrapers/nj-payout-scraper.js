@@ -351,9 +351,9 @@ function getPATargetMonths() {
   return targets;
 }
 
-// PA casino name → DB name mappings
+// PA casino name → DB name mappings (null = not in DB, skip)
 const PA_NAME_MAP = {
-  'Mohegan Pennsylvania':                 'Mohegan Sun Pocono',
+  'Mohegan Pennsylvania':                 null, // not in DB (Mohegan Sun Pocono)
   'Parx Casino':                          'Parx Casino',
   "Harrah's Philadelphia":                "Harrah's Philadelphia Casino & Racetrack",
   'Presque Isle':                         null, // not in DB
@@ -365,7 +365,7 @@ const PA_NAME_MAP = {
   'Rivers Philadelphia':                  'Rivers Casino Philadelphia',
   'Valley Forge':                         'Valley Forge Casino Resort',
   'Nemacolin':                            null, // not in DB
-  'Live! Casino Pittsburgh':              'Live! Casino Pittsburgh',
+  'Live! Casino Pittsburgh':              null, // not in DB
   'Live! Casino Philadelphia':            null, // not in DB
   'Hollywood Casino York':                null, // not in DB
   'Hollywood Casino Morgantown':          null, // not in DB

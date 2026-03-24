@@ -2037,6 +2037,11 @@
 
 
 
+<!-- COMPARE FLOAT BUTTON -->
+<button id="compareFloatBtn" onclick="showCompare()" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#f2c94c;color:#1e3a5f;font-weight:700;font-size:1rem;padding:12px 28px;border-radius:30px;border:none;cursor:pointer;z-index:10000;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap;">
+  ⚖️ Compare Selected Casinos →
+</button>
+
 <!-- COMPARE BAR -->
 <div class="compare-bar" id="compareBar">
   <div class="compare-bar-left">
@@ -3366,6 +3371,11 @@ function updateCompareBar() {
   // Go button
   goBtn.disabled = n < 2;
   goBtn.textContent = n >= 2 ? `Compare ${n} →` : 'Compare →';
+  const floatBtn = document.getElementById('compareFloatBtn');
+  if (floatBtn) {
+    floatBtn.style.display = n >= 2 ? 'block' : 'none';
+    floatBtn.textContent = `⚖️ Compare ${n} Casinos →`;
+  }
 
   // Add btn in modal
   if (addBtn) addBtn.style.display = n < 3 ? '' : 'none';

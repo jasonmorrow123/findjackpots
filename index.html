@@ -4585,11 +4585,21 @@ function urlBase64ToUint8Array(base64String) {
       const matches = countMatches(finals);
       if (matches === 3) {
         winLine.classList.add('flash');
-        resultEl.innerHTML = '<span class="confetti">🎉</span> JACKPOT! Triple match! <span class="confetti">🎊</span>';
+        resultEl.innerHTML = '<span class="confetti">🎉</span> JACKPOT! Today\'s your lucky day! <span class="confetti">🎊</span><br><a href="/" onclick="scrollToGrid();return false;" style="display:inline-block;margin-top:8px;background:#f2c94c;color:#1e3a5f;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.9rem;text-decoration:none;">Find Your Winning Casino →</a>';
       } else if (matches === 2) {
-        resultEl.innerHTML = 'So close! 😤 Check today\'s jackpots →';
+        resultEl.innerHTML = '😤 So close! Check who\'s hitting jackpots near you today.';
       } else {
-        resultEl.innerHTML = 'No match — try your luck at a real casino! 🎰';
+        // Pull today's winner dynamically if available
+        fetch('/api/winner-of-day').then(r => r.json()).then(w => {
+          if (w && w.casino_name && w.amount_cents) {
+            const amt = '$' + Math.round(w.amount_cents/100).toLocaleString();
+            resultEl.innerHTML = '🎰 No match — but someone just won <strong>' + amt + '</strong> at ' + w.casino_name + '!<br><a href="/biggest-jackpots" style="display:inline-block;margin-top:6px;color:var(--primary);font-size:0.85rem;font-weight:600;">See Today\'s Biggest Jackpot →</a>';
+          } else {
+            resultEl.innerHTML = '🎰 No match today — but big jackpots are being won right now!<br><a href="/biggest-jackpots" style="display:inline-block;margin-top:6px;color:var(--primary);font-size:0.85rem;font-weight:600;">See Today\'s Biggest Jackpot →</a>';
+          }
+        }).catch(() => {
+          resultEl.innerHTML = '🎰 No match — try your luck at a real casino!';
+        });
       }
       ctaEl.classList.add('visible');
     }, 2000);

@@ -1984,6 +1984,7 @@
     <button class="chip" onclick="setFilter('slots', this)">Loose Slots</button>
     <button class="chip" onclick="setFilter('sports', this)">Sportsbook</button>
     <button class="chip" onclick="setFilter('hot', this)">Hot Jackpots</button>
+    <button class="chip" onclick="setFilter('deals', this)">🎁 Deals</button>
     <button class="chip" onclick="applyBestFor('hotel')">Overnight Stays</button>
     <button class="chip" onclick="applyBestFor('parking')">Free Parking</button>
     <button class="chip-clear" id="clearFiltersBtn" onclick="clearFilters()">✕ Clear</button>
@@ -2728,6 +2729,7 @@ async function selectRegion(regionId, label) {
 
 let activeFilter = 'all';
 let compareList = [];
+const CASINOS_WITH_PROMOS = new Set();
 
 function renderCards(data) {
   const grid = document.getElementById('casinoGrid');
@@ -2785,6 +2787,7 @@ function renderCards(data) {
         </div>
         <div class="tags">${tagHtml}</div>
         <div id="restaurant-badge-${c.id}"></div>
+        <div id="promo-badge-${c.id}" style="margin-top:4px;"></div>
         ${renderCardEvents(c.id)}
       </div>
       <div class="card-footer">
@@ -2816,6 +2819,32 @@ function renderCards(data) {
         }
       })
       .catch(() => {}); // Silently fail if endpoint not ready
+
+    // Batch fetch promotions and inject promo badge pills
+    fetch(`/api/promotions/batch-summary?ids=${ids}`)
+      .then(r => r.json())
+      .then(promoMap => {
+        const promoTypeConfig = {
+          bonus:      { bg: '#f2c94c20', text: '#c9a227', icon: '🎁' },
+          free_play:  { bg: '#26b56e20', text: '#26b56e', icon: '🎰' },
+          tournament: { bg: '#5c7aaa20', text: '#5c7aaa', icon: '🏆' },
+          drawing:    { bg: '#8b5cf620', text: '#8b5cf6', icon: '🎫' },
+        };
+        const defaultPromo = { bg: '#88888820', text: '#888', icon: '🎁' };
+
+        for (const [casinoId, promos] of Object.entries(promoMap)) {
+          if (!promos || promos.length === 0) continue;
+          CASINOS_WITH_PROMOS.add(parseInt(casinoId, 10));
+          const el = document.getElementById(`promo-badge-${casinoId}`);
+          if (!el) continue;
+          el.innerHTML = promos.slice(0, 2).map(p => {
+            const cfg = promoTypeConfig[p.promo_type] || defaultPromo;
+            const title = p.title.length > 35 ? p.title.substring(0, 35) + '…' : p.title;
+            return `<span style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;background:${cfg.bg};color:${cfg.text};margin:2px 2px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%">${cfg.icon} ${title}</span>`;
+          }).join('');
+        }
+      })
+      .catch(() => {});
   }
 }
 
@@ -2833,7 +2862,8 @@ function filterCasinos() {
       (activeFilter === 'poker' && c.poker) ||
       (activeFilter === 'slots' && c.slots) ||
       (activeFilter === 'sports' && c.sports) ||
-      (activeFilter === 'hot' && c.hot);
+      (activeFilter === 'hot' && c.hot) ||
+      (activeFilter === 'deals' && CASINOS_WITH_PROMOS.has(c.id));
     return matchesSearch && matchesFilter;
   });
   // Apply current sort before rendering
@@ -2942,15 +2972,22 @@ async function openModal(id) {
         ${c.notes}
       </div>
 
-      <div class="modal-section">
-        <h3>🏆 Loyalty Program — ${c.loyaltyProgram}</h3>
-        <div class="loyalty-tier">${tierHtml}</div>
-        <div style="margin-top:10px;font-size:0.83rem;color:var(--text-secondary)">
-          Earn rate: <strong style="color:var(--text)">${c.pointsPerDollar}</strong> &nbsp;·&nbsp;
-          Loyalty Score: <strong style="color:var(--gold)">${c.loyaltyScore}/10</strong> &nbsp;·&nbsp;
-          Free Play: <strong style="color:${c.freePlay ? 'var(--green)' : 'var(--red)'}">${c.freePlay ? 'Yes' : 'No'}</strong>
+      <div class="modal-section" id="loyaltySection">
+        <h3>💎 ${c.loyaltyProgram !== 'Rewards Program' ? c.loyaltyProgram : 'Loyalty Program'}</h3>
+        <div style="background:var(--page-bg);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:8px">
+          <div style="font-size:0.84rem;color:var(--text-secondary);margin-bottom:8px">
+            <span style="font-weight:600;color:var(--gold)">Earn:</span> <strong style="color:var(--text)">${c.pointsPerDollar !== 'N/A' ? c.pointsPerDollar + ' played' : 'See program details'}</strong>
+            &nbsp;·&nbsp;
+            <span style="font-weight:600;color:var(--gold)">Score:</span> <strong style="color:var(--text)">${c.loyaltyScore}/10</strong>
+            &nbsp;·&nbsp;
+            <span style="font-weight:600;color:var(--gold)">Free Play:</span> <strong style="color:${c.freePlay ? 'var(--green)' : 'var(--text-secondary)'}">${c.freePlay ? '✓ Yes' : 'No'}</strong>
+          </div>
+          <div class="loyalty-tier" style="margin-bottom:8px">${tierHtml}</div>
+          ${c.perks && c.perks.length > 0 ? `<ul style="margin:8px 0 0;list-style:none;padding:0">${perksHtml}</ul>` : ''}
         </div>
-        <ul style="margin-top:10px;list-style:none">${perksHtml}</ul>
+        <!-- Promo highlights injected async below -->
+        <div id="modalPromoHighlights" style="margin-top:12px"></div>
+        <!-- Join button injected async in affiliateBtnZone below -->
       </div>
 
       <div class="modal-section">
@@ -2979,9 +3016,9 @@ async function openModal(id) {
         ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--text-secondary);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
-      <!-- Promotions — filled async below -->
+      <!-- Promotions — filled async below (standalone section) -->
       <div class="modal-section" id="promotionsSection" style="display:none">
-        <h3>🎁 Current Promotions</h3>
+        <h3>🎁 Active Promotions</h3>
         <div id="promotionsList"></div>
       </div>
 
@@ -3092,24 +3129,27 @@ async function openModal(id) {
     const zone = document.getElementById('affiliateBtnZone');
     if (!zone) { /* continue to restaurants even if affiliate zone missing */ }
 
+    const progName = dbCasino.loyalty_program_name || c.loyaltyProgram || 'Rewards Program';
+    const joinLabel = progName !== 'Rewards Program' ? `Join ${progName} Free →` : 'Join Rewards Program Free →';
+
     if (dbCasino.affiliate_url) {
       zone.innerHTML = `
-        <a class="btn-affiliate" href="${dbCasino.affiliate_url}${encodeURIComponent(dbCasino.website || '')}" target="_blank" rel="noopener noreferrer">
-          🎰 Join Rewards Program
+        <a class="btn-affiliate" href="${dbCasino.affiliate_url}${encodeURIComponent(dbCasino.website || '')}" target="_blank" rel="noopener noreferrer" style="background:var(--gold);color:#1a1a1a;font-weight:700">
+          💎 ${joinLabel}
         </a>
         <div class="affiliate-disclosure-note">💰 We may earn a commission if you sign up</div>
       `;
     } else if (dbCasino.affiliate_network) {
       const websiteUrl = dbCasino.website || '#';
       zone.innerHTML = `
-        <a class="btn-affiliate website-fallback" href="${websiteUrl}" target="_blank" rel="noopener noreferrer">
-          🎰 Join ${c.loyaltyProgram} Rewards
+        <a class="btn-affiliate website-fallback" href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="background:var(--gold);color:#1a1a1a;font-weight:700">
+          💎 ${joinLabel}
         </a>
       `;
     } else if (dbCasino.website) {
       zone.innerHTML = `
-        <a class="btn-affiliate website-fallback" href="${dbCasino.website}" target="_blank" rel="noopener noreferrer">
-          🎰 Join Rewards Program
+        <a class="btn-affiliate website-fallback" href="${dbCasino.website}" target="_blank" rel="noopener noreferrer" style="background:var(--gold);color:#1a1a1a;font-weight:700">
+          💎 ${joinLabel}
         </a>
       `;
     } else {
@@ -3177,17 +3217,17 @@ async function loadModalPromotions(casinoId) {
     if (!promos.length) return;
 
     const typeColors = {
-      free_play:  { bg: '#1a3a2a', text: '#4ade80', label: 'Free Play' },
-      tournament: { bg: '#1a1f3a', text: '#818cf8', label: 'Tournament' },
-      drawing:    { bg: '#3a1a2a', text: '#f472b6', label: 'Drawing' },
-      concert:    { bg: '#3a2a10', text: '#fbbf24', label: 'Concert' },
-      food:       { bg: '#2a1a10', text: '#fb923c', label: 'Food' },
-      bonus:      { bg: '#2a1a3a', text: '#c084fc', label: 'Bonus' },
+      free_play:  { bg: '#1a3a2a', text: '#4ade80', label: 'Free Play',  icon: '🎰' },
+      tournament: { bg: '#1a1f3a', text: '#818cf8', label: 'Tournament', icon: '🏆' },
+      drawing:    { bg: '#3a1a2a', text: '#f472b6', label: 'Drawing',    icon: '🎫' },
+      concert:    { bg: '#3a2a10', text: '#fbbf24', label: 'Concert',    icon: '🎵' },
+      food:       { bg: '#2a1a10', text: '#fb923c', label: 'Food',       icon: '🍽️' },
+      bonus:      { bg: '#2a1a3a', text: '#c084fc', label: 'Bonus',      icon: '🎁' },
     };
 
-    list.innerHTML = promos.slice(0, 3).map(p => {
+    list.innerHTML = promos.slice(0, 5).map(p => {
       const tc = typeColors[p.promo_type] || typeColors.bonus;
-      const badge = `<span style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:0.68rem;font-weight:700;letter-spacing:.04em;background:${tc.bg};color:${tc.text};text-transform:uppercase">${tc.label}</span>`;
+      const badge = `<span style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:0.68rem;font-weight:700;letter-spacing:.04em;background:${tc.bg};color:${tc.text};text-transform:uppercase">${tc.icon} ${tc.label}</span>`;
       const endStr = p.end_date
         ? `<span style="font-size:0.71rem;color:var(--text-secondary)">Ends ${new Date(p.end_date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>`
         : '';
@@ -3208,6 +3248,23 @@ async function loadModalPromotions(casinoId) {
     }).join('');
 
     section.style.display = '';
+
+    // Also inject compact promo highlights into the loyalty section
+    const highlights = document.getElementById('modalPromoHighlights');
+    if (highlights && promos.length > 0) {
+      const top = promos.slice(0, 3);
+      highlights.innerHTML = `
+        <div style="font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:6px">🎁 Today's Promotions:</div>
+        ${top.map(p => {
+          const tc = typeColors[p.promo_type] || typeColors.bonus;
+          return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:0.82rem">
+            <span style="width:7px;height:7px;border-radius:50%;background:${tc.text};flex-shrink:0;display:inline-block"></span>
+            <span style="color:var(--text)">${p.title}</span>
+            <span style="padding:1px 6px;border-radius:99px;font-size:0.65rem;font-weight:700;background:${tc.bg};color:${tc.text};text-transform:uppercase">${tc.label}</span>
+          </div>`;
+        }).join('')}
+      `;
+    }
   } catch(e) { /* silent */ }
 }
 

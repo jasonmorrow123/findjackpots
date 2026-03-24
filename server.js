@@ -1035,6 +1035,42 @@ app.get('/api/casinos/:id/promotions', async (req, res) => {
   }
 });
 
+// GET /api/promotions/batch-summary?ids=1,2,3 — top 1-2 active promos per casino
+app.get('/api/promotions/batch-summary', async (req, res) => {
+  try {
+    const idsParam = req.query.ids || '';
+    const ids = idsParam.split(',').map(x => parseInt(x, 10)).filter(n => !isNaN(n));
+    if (ids.length === 0) return res.json({});
+
+    // Use DISTINCT ON to get top 2 per casino ordered by created_at DESC
+    const result = await pool.query(`
+      SELECT casino_id, title, promo_type
+      FROM (
+        SELECT casino_id, title, promo_type, created_at,
+               ROW_NUMBER() OVER (PARTITION BY casino_id ORDER BY created_at DESC) AS rn
+        FROM casino_promotions
+        WHERE casino_id = ANY($1)
+          AND active = true
+          AND (end_date IS NULL OR end_date >= CURRENT_DATE)
+      ) sub
+      WHERE rn <= 2
+      ORDER BY casino_id, rn
+    `, [ids]);
+
+    const grouped = {};
+    for (const row of result.rows) {
+      const key = String(row.casino_id);
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push({ title: row.title, promo_type: row.promo_type });
+    }
+    res.json(grouped);
+  } catch (err) {
+    if (err.message.includes('does not exist')) return res.json({});
+    console.error('/api/promotions/batch-summary error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/deal-of-day — best casino promotion today or next 2 days in the region
 app.get('/api/deal-of-day', async (req, res) => {
   try {

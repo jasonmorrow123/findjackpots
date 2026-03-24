@@ -4629,7 +4629,8 @@ function urlBase64ToUint8Array(base64String) {
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
-    if (dismissed()) return;
+    // Only show on mobile devices
+    if (dismissed() || window.innerWidth >= 768) return;
     createBanner(
       '<span style="flex:1">📱 Add FindJackpots to your home screen for quick access</span>' +
       '<button class="pwa-install" style="background:#5c7aaa;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;white-space:nowrap">Add to Home Screen</button>' +
@@ -4647,9 +4648,11 @@ function urlBase64ToUint8Array(base64String) {
   });
 
   // iOS Safari — no beforeinstallprompt, show manual instructions once
+  // Only show on actual mobile devices (screen width < 768px)
   var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isMobile = window.innerWidth < 768 || /android|mobile/i.test(navigator.userAgent);
   var isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
-  if (isIOS && !isInStandaloneMode && !dismissed()) {
+  if (isIOS && isMobile && !isInStandaloneMode && !dismissed()) {
     createBanner(
       '<span style="flex:1">📱 Tap <strong>Share</strong> then <strong>"Add to Home Screen"</strong> to install FindJackpots</span>' +
       '<button class="pwa-dismiss" style="background:transparent;color:#94a3b8;border:none;cursor:pointer;font-size:13px;padding:4px 8px;white-space:nowrap">✕</button>',

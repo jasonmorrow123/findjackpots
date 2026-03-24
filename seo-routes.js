@@ -1533,4 +1533,599 @@ ${siteFooter()}
     }
   });
 
+  // ─── BLOG ROUTES ──────────────────────────────────────────────────────────
+
+  // Blog post metadata (used for index page listing)
+  const BLOG_POSTS = [
+    {
+      slug: 'top-casinos-minnesota',
+      title: 'Top 5 Casinos in Minnesota — Jackpots, Payouts & Loyalty Programs (2026)',
+      date: '2026-03-01',
+      excerpt: 'Minnesota is home to 21 tribal casinos, some of the best in the Midwest. Here\'s what makes the top 5 stand out — from Mystic Lake\'s massive jackpots to Fortune Bay\'s lakeside charm.',
+    },
+    {
+      slug: 'how-to-find-loosest-slots',
+      title: 'How to Find the Loosest Slot Machines at Any Casino (2026 Guide)',
+      date: '2026-03-08',
+      excerpt: 'Not all slot machines pay out the same. Learn what slot payback percentage means, which states publish payout data, and proven tips for finding the best-paying slots on the floor.',
+    },
+    {
+      slug: 'biggest-casino-jackpots-2026',
+      title: 'Biggest Casino Jackpots of 2026 — Tracking the Largest US Slot Wins',
+      date: '2026-03-15',
+      excerpt: 'From six-figure local jackpots to life-changing progressive wins, 2026 has already seen some massive payouts. We break down the biggest jackpots and how to track them in real time.',
+    },
+    {
+      slug: 'casino-loyalty-programs-compared',
+      title: 'Casino Loyalty Programs Compared — Which Rewards Program Is Worth It?',
+      date: '2026-03-18',
+      excerpt: 'Caesars Rewards, MGM Rewards, Club M, mychoice, B Connected — there are dozens of casino loyalty cards out there. We compare the biggest programs so you can maximize your play.',
+    },
+    {
+      slug: 'midwest-casino-road-trip',
+      title: 'The Ultimate Midwest Casino Road Trip Guide — Minnesota to Iowa to Wisconsin',
+      date: '2026-03-22',
+      excerpt: 'Planning a casino road trip through the Midwest? We mapped out the best route from Minnesota through Iowa and into Wisconsin, with top casino stops, loyalty tips, and what to expect.',
+    },
+  ];
+
+  // Shared blog article <head> + styles
+  function blogHead({ title, description, canonical, datePublished, slug }) {
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: description,
+      datePublished: datePublished,
+      dateModified: datePublished,
+      url: canonical,
+      image: 'https://findjackpots.com/icons/icon-512.png',
+      author: { '@type': 'Person', name: 'Jason Morrow', url: 'https://findjackpots.com' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'FindJackpots',
+        url: 'https://findjackpots.com',
+        logo: { '@type': 'ImageObject', url: 'https://findjackpots.com/icons/icon-512.png' },
+      },
+    };
+    return `${htmlHead({ title, description, canonical, ogType: 'article' })}
+<style>
+  .blog-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 48px 24px 40px; text-align: center; }
+  .blog-hero .breadcrumb { font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; }
+  .blog-hero .breadcrumb a { color: #fff; }
+  .blog-hero h1 { margin: 0 0 16px; font-size: 2rem; font-weight: 800; line-height: 1.25; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .blog-hero .meta { font-size: 0.85rem; opacity: 0.75; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 40px 24px 60px; }
+  .article-body h2 { color: #1a1a2e; font-size: 1.4rem; margin: 40px 0 16px; border-left: 4px solid #5c7aaa; padding-left: 12px; }
+  .article-body h3 { color: #1a1a2e; font-size: 1.1rem; margin: 28px 0 10px; }
+  .article-body p { color: #333; line-height: 1.8; margin: 0 0 18px; }
+  .article-body ul, .article-body ol { color: #333; line-height: 1.8; margin: 0 0 18px; padding-left: 24px; }
+  .article-body li { margin-bottom: 8px; }
+  .article-body a { color: #5c7aaa; }
+  .article-body a:hover { text-decoration: underline; }
+  .tip-box { background: #f0f4f9; border-left: 4px solid #5c7aaa; border-radius: 0 8px 8px 0; padding: 18px 20px; margin: 24px 0; }
+  .tip-box p { margin: 0; color: #1a1a2e; }
+  .back-link { display: block; margin: 0 0 28px; color: #5c7aaa; font-size: 0.9rem; }
+</style>
+<script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>`;
+  }
+
+  // ── /blog — Blog index ────────────────────────────────────────────────────
+  app.get('/blog', (req, res) => {
+    const title = 'FindJackpots Blog — Casino Tips, Jackpot News & Gambling Guides';
+    const description = 'Expert casino tips, jackpot tracking guides, loyalty program comparisons, and gambling news from the FindJackpots team. Your source for smarter casino play.';
+    const canonical = 'https://findjackpots.com/blog';
+
+    const postsHtml = BLOG_POSTS.map(post => `
+      <article style="border-bottom:1px solid #eee;padding:28px 0;">
+        <div style="font-size:0.82rem;color:#888;margin-bottom:6px;">${new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+        <h2 style="margin:0 0 10px;font-size:1.25rem;"><a href="/blog/${post.slug}" style="color:#1a1a2e;">${post.title}</a></h2>
+        <p style="margin:0 0 14px;color:#555;line-height:1.7;">${post.excerpt}</p>
+        <a href="/blog/${post.slug}" style="color:#5c7aaa;font-weight:600;">Read article →</a>
+      </article>`).join('');
+
+    const html = `${htmlHead({ title, description, canonical })}
+<style>
+  .blog-index-hero { background: linear-gradient(135deg, #5c7aaa 0%, #3a5a8a 100%); color: #fff; padding: 48px 24px 40px; text-align: center; }
+  .blog-index-hero h1 { margin: 0 0 12px; font-size: 2.2rem; font-weight: 800; }
+  .blog-index-hero p { margin: 0 auto; font-size: 1.05rem; opacity: 0.9; max-width: 600px; }
+  .blog-content { max-width: 760px; margin: 0 auto; padding: 40px 24px 60px; }
+  .blog-content h2 { font-size: 1rem; color: #5c7aaa; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; }
+</style>
+<body>
+${siteHeader()}
+<div class="blog-index-hero">
+  <h1>🎰 FindJackpots Blog</h1>
+  <p>Casino tips, jackpot news, loyalty program guides, and more — from the team behind FindJackpots.</p>
+</div>
+<div class="blog-content">
+  <h2>Latest Articles</h2>
+  ${postsHtml}
+  <div style="margin-top:40px;padding:28px;background:#f0f4f9;border-radius:12px;text-align:center;">
+    <p style="margin:0 0 16px;font-size:1rem;font-weight:600;color:#1a1a2e;">Track live jackpots at casinos near you</p>
+    <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;">Open FindJackpots →</a>
+  </div>
+</div>
+${siteFooter()}
+</body>
+</html>`;
+    res.send(html);
+  });
+
+  // ── /blog/top-casinos-minnesota ───────────────────────────────────────────
+  app.get('/blog/top-casinos-minnesota', (req, res) => {
+    const slug = 'top-casinos-minnesota';
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    const canonical = `https://findjackpots.com/blog/${slug}`;
+
+    const html = `${blogHead({ title: post.title, description: post.excerpt, canonical, datePublished: post.date, slug })}
+<body>
+${siteHeader()}
+<div class="blog-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="/blog">Blog</a> › Minnesota Casinos</p>
+    <h1>${post.title}</h1>
+    <p class="meta">By Jason Morrow · ${new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · 7 min read</p>
+  </div>
+</div>
+<div class="article-body">
+  <a class="back-link" href="/blog">← Back to Blog</a>
+
+  <p>Minnesota is one of the best states in the country for tribal casino gaming. With 21 tribal casinos spread across the state — many of them operated by the Ojibwe and Dakota nations — Minnesotans have world-class gambling close to home. Whether you're hunting for a life-changing jackpot, solid loyalty rewards, or a full resort weekend, Minnesota has a casino that fits the bill.</p>
+
+  <p>But not all casinos are created equal. Below, we break down the <strong>top 5 casinos in Minnesota</strong> based on jackpot size, loyalty programs, amenities, and overall player experience. If you want to track live jackpots at any of these properties, <a href="/casinos/minnesota">view all Minnesota casinos on FindJackpots</a>.</p>
+
+  <h2>1. Mystic Lake Casino Hotel — Prior Lake</h2>
+  <p>Mystic Lake is the crown jewel of Minnesota tribal gaming. Operated by the Shakopee Mdewakanton Sioux Community just 25 miles southwest of Minneapolis, Mystic Lake is the largest casino in the upper Midwest. With over 4,000 slot machines and a dedicated poker room, it's the go-to destination for serious players.</p>
+  <p><strong>Jackpots:</strong> Mystic Lake reports some of the highest jackpot payouts in the state, with six-figure wins occurring regularly. The casino's progressive slots and linked machines drive massive jackpot pools. Check <a href="/casinos/minnesota">FindJackpots Minnesota</a> for live jackpot data.</p>
+  <p><strong>Loyalty Program:</strong> Club M is Mystic Lake's rewards program. Points earn comps, free play, hotel stays, and entertainment. The program tiers up to Diamond Elite for high rollers. Comp dollars flow freely, and the hotel offers discounted rates to players.</p>
+  <p><strong>Why visit:</strong> Hotel, spa, multiple restaurants, comedy club, and a massive gaming floor. If you're doing one Minnesota casino, this is it.</p>
+
+  <h2>2. Grand Casino Hinckley — Hinckley</h2>
+  <p>Grand Casino Hinckley sits conveniently along I-35, making it a natural pit stop between Minneapolis and Duluth. Operated by the Mille Lacs Band of Ojibwe, it's one of the largest casinos in Minnesota with 2,000+ machines and a full resort.</p>
+  <p><strong>Jackpots:</strong> Grand Hinckley consistently produces strong jackpot activity. Its slot floor includes a mix of penny, nickel, and dollar machines, plus high-limit rooms for bigger bets and bigger potential wins.</p>
+  <p><strong>Loyalty Program:</strong> The Grand Rewards program links Grand Casino Hinckley and Grand Casino Mille Lacs. Points earned at either casino transfer seamlessly. Rewards include free play, hotel perks, entertainment tickets, and dining credits.</p>
+  <p><strong>Why visit:</strong> Great location for a road trip stop, full hotel and RV park, indoor pool, and consistent jackpot activity.</p>
+
+  <h2>3. Black Bear Casino Resort — Carlton</h2>
+  <p>Tucked in Carlton near Jay Cooke State Park, Black Bear Casino Resort is operated by the Fond du Lac Band of Lake Superior Chippewa. It's a favorite for northern Minnesota and Wisconsin players looking for a full resort experience.</p>
+  <p><strong>Jackpots:</strong> Black Bear has around 2,000 slot machines including a dedicated high-limit area. The casino connects to <a href="/casinos/minnesota">FindJackpots tracking</a>, where you can see recent jackpot wins.</p>
+  <p><strong>Loyalty Program:</strong> The Fond-du-Luth Casino card also works at Black Bear, giving players a two-property network for earning rewards. Free play, dining, and hotel discounts are among the top perks.</p>
+  <p><strong>Why visit:</strong> Beautiful northern Minnesota setting, great hotel, close to Duluth and the North Shore. Strong value for resort-style casino stays.</p>
+
+  <h2>4. Treasure Island Resort & Casino — Red Wing</h2>
+  <p>Treasure Island sits on the banks of the Mississippi River south of the Twin Cities, operated by the Prairie Island Indian Community. The waterfront setting makes it one of the most scenic casino resorts in the Midwest.</p>
+  <p><strong>Jackpots:</strong> With 2,500+ machines and a marina location, Treasure Island pulls players from the Twin Cities and Wisconsin. The casino runs frequent jackpot promotions and progressive slot events.</p>
+  <p><strong>Loyalty Program:</strong> The Island Rewards program offers tiered benefits including free play, spa credits, hotel discounts, and priority marina access — a unique perk for boaters.</p>
+  <p><strong>Why visit:</strong> Stunning river setting, marina, multiple restaurants, full hotel, and easy access from the Twin Cities. A great date-night or weekend trip casino.</p>
+
+  <h2>5. Fortune Bay Resort Casino — Tower</h2>
+  <p>Fortune Bay sits on the shores of Lake Vermilion in the heart of Minnesota's Iron Range. Operated by the Bois Forte Band of Chippewa, it's the most remote casino on this list — and worth every mile of the drive.</p>
+  <p><strong>Jackpots:</strong> Fortune Bay has around 800 machines, a smaller floor than the others, but with a tight player base, jackpots hit more frequently on a per-machine basis. Check <a href="/casinos/minnesota">FindJackpots</a> for the latest wins.</p>
+  <p><strong>Loyalty Program:</strong> The Fortune Bay rewards card ties into the full resort, including golf, marina, snowmobile trails, and an excellent hotel. Points earn free play, resort credits, and dining discounts.</p>
+  <p><strong>Why visit:</strong> Unbeatable setting on Lake Vermilion. Perfect for combining casino play with a northern Minnesota outdoor adventure — fishing, golf, snowmobiling, or just enjoying the scenery.</p>
+
+  <h2>How to Track Minnesota Casino Jackpots</h2>
+  <p>FindJackpots aggregates live jackpot data from casinos across Minnesota. You can browse recent big wins, set jackpot alerts, and compare payout data across all 21 tribal casinos in the state.</p>
+
+  <div class="tip-box">
+    <p>💡 <strong>Pro tip:</strong> The best time to play progressive slots is when the jackpot amount is significantly above the published "seed" value — that's when the pot has been building without a winner and the odds of a payout are statistically more likely.</p>
+  </div>
+
+  <p>Ready to explore? <a href="/casinos/minnesota">View all Minnesota casinos on FindJackpots →</a></p>
+
+  <p>Also see: <a href="/biggest-jackpots">Biggest recent jackpots nationwide</a> · <a href="/best-midwest-casinos">Best Midwest casinos</a> · <a href="/blog/midwest-casino-road-trip">Midwest casino road trip guide</a></p>
+
+  <div style="margin-top:40px;padding:28px;background:#f0f4f9;border-radius:12px;text-align:center;">
+    <p style="margin:0 0 16px;font-size:1rem;font-weight:600;color:#1a1a2e;">Track live Minnesota casino jackpots</p>
+    <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;">Open FindJackpots →</a>
+  </div>
+
+  <p style="margin-top:32px;"><a class="back-link" href="/blog">← Back to Blog</a></p>
+</div>
+${siteFooter()}
+</body>
+</html>`;
+    res.send(html);
+  });
+
+  // ── /blog/how-to-find-loosest-slots ──────────────────────────────────────
+  app.get('/blog/how-to-find-loosest-slots', (req, res) => {
+    const slug = 'how-to-find-loosest-slots';
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    const canonical = `https://findjackpots.com/blog/${slug}`;
+
+    const html = `${blogHead({ title: post.title, description: post.excerpt, canonical, datePublished: post.date, slug })}
+<body>
+${siteHeader()}
+<div class="blog-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="/blog">Blog</a> › Slot Strategy</p>
+    <h1>${post.title}</h1>
+    <p class="meta">By Jason Morrow · ${new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · 8 min read</p>
+  </div>
+</div>
+<div class="article-body">
+  <a class="back-link" href="/blog">← Back to Blog</a>
+
+  <p>Every slot player wants to find the loosest machines on the floor — those high-payout slots that give back more over time. But here's the honest truth: casinos don't put a flashing sign above their best-paying machines. You have to do your research.</p>
+
+  <p>In this guide, we break down exactly what slot payback percentage means, which states actually publish payout data, and practical tips for finding machines that give you the best shot at walking away ahead.</p>
+
+  <h2>What Is Slot Payback Percentage?</h2>
+  <p>Every slot machine is programmed with a <strong>Return to Player (RTP)</strong> percentage — the theoretical share of all wagered money the machine pays back over millions of spins. A machine with a 94% RTP returns $94 for every $100 wagered on average, over a very long time horizon.</p>
+  <p>Key things to understand:</p>
+  <ul>
+    <li><strong>RTP is calculated over millions of spins</strong> — in any short session, variance can swing wildly in either direction.</li>
+    <li><strong>Higher RTP = better odds for players.</strong> Nevada's tight regulatory environment means Vegas casinos average 92–95%+ on dollar machines. Some tribal casinos with less regulation run lower.</li>
+    <li><strong>Dollar slots generally pay more than penny slots.</strong> Penny machines often run 85–88% RTP; dollar machines may hit 95%+.</li>
+    <li><strong>Progressive jackpot slots have lower base RTP</strong> because a slice of every bet feeds the jackpot pool.</li>
+  </ul>
+
+  <h2>Which States Publish Slot Payout Data?</h2>
+  <p>This is where players gain a real edge. Several states require commercial casinos to report slot payout percentages publicly:</p>
+  <ul>
+    <li><strong>Nevada:</strong> The Nevada Gaming Control Board publishes monthly slot reports broken down by denomination and county. You can literally look up the average payback for $1 slots on the Las Vegas Strip vs. downtown.</li>
+    <li><strong>Iowa:</strong> The Iowa Racing and Gaming Commission publishes detailed payout reports by casino and denomination. Iowa's commercial casinos are required to hit minimum payback thresholds. <a href="/casinos/iowa">View Iowa casinos on FindJackpots</a>.</li>
+    <li><strong>Illinois:</strong> The Illinois Gaming Board publishes monthly reports with payback percentages by casino. Illinois is consistently transparent, making it one of the better states for data-driven players.</li>
+    <li><strong>New Jersey, Missouri, Indiana, and others</strong> also publish varying levels of payout data.</li>
+  </ul>
+  <p>Tribal casinos operating under IGRA compacts are generally not required to publish payout data, which is why finding reliable numbers for Minnesota or Wisconsin tribal casinos is harder.</p>
+
+  <div class="tip-box">
+    <p>💡 <strong>Quick tip:</strong> When traveling to Nevada, look up the NGCB monthly report for your specific casino's area. Downtown Las Vegas slot payback consistently beats the Strip — sometimes by 3-5 percentage points.</p>
+  </div>
+
+  <h2>Tips for Finding the Best-Paying Machines</h2>
+
+  <h3>1. Play Higher Denominations</h3>
+  <p>Dollar and quarter machines almost always have better RTP than penny machines. If your budget allows, step up to higher denominations for better long-term odds. A $1/spin dollar slot at 95% RTP beats a 250-line penny machine at 86%.</p>
+
+  <h3>2. Look for High-Volatility Machines in High-Traffic Areas</h3>
+  <p>This is an old casino myth with some truth: casinos historically placed looser machines in high-visibility spots (near entrances, aisles) so players see winners. Modern casinos have moved away from this practice, but it still influences floor layout at many properties.</p>
+
+  <h3>3. Ask Casino Hosts</h3>
+  <p>Casino hosts exist to keep players happy. If you're a known player with a rewards card, don't be shy about asking which games are performing well. Hosts won't reveal exact RTPs, but they can steer you toward popular games with good recent hit frequency.</p>
+
+  <h3>4. Check the Jackpot Amount</h3>
+  <p>For progressive jackpots, higher jackpot amounts (well above the seed value) indicate the jackpot has been growing for a while — more value is sitting in the pot waiting to be won. <a href="/biggest-jackpots">FindJackpots tracks current jackpot sizes</a> so you can see where the biggest opportunities are right now.</p>
+
+  <h3>5. Research Before You Go</h3>
+  <p>Use state gaming reports, player forums like VegasMessage Board or TripAdvisor casino threads, and tools like <a href="/highest-payout-casinos">FindJackpots' highest payout casinos page</a> to compare properties before choosing where to play.</p>
+
+  <h3>6. Location Within the Casino Matters Less Now</h3>
+  <p>Modern casinos use server-based gaming that can adjust machine settings remotely. Physical placement matters less than it used to. Focus your research on casino-level payout data rather than trying to guess machine placement strategy.</p>
+
+  <h2>The Bottom Line</h2>
+  <p>You can't guarantee a win on any slot machine — that's the nature of RNG-based gaming. But you <em>can</em> improve your odds by choosing casinos and games with higher published RTPs, playing higher denominations, and using jackpot tracking tools to identify when progressive pools have grown to exceptional levels.</p>
+  <p>FindJackpots is built to help you do exactly that. Browse <a href="/highest-payout-casinos">highest payout casinos by state</a>, track <a href="/biggest-jackpots">live jackpot data</a>, and find where the best odds are right now.</p>
+
+  <div style="margin-top:40px;padding:28px;background:#f0f4f9;border-radius:12px;text-align:center;">
+    <p style="margin:0 0 16px;font-size:1rem;font-weight:600;color:#1a1a2e;">Find the highest payout casinos near you</p>
+    <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;">Open FindJackpots →</a>
+  </div>
+
+  <p style="margin-top:32px;"><a class="back-link" href="/blog">← Back to Blog</a></p>
+</div>
+${siteFooter()}
+</body>
+</html>`;
+    res.send(html);
+  });
+
+  // ── /blog/biggest-casino-jackpots-2026 ────────────────────────────────────
+  app.get('/blog/biggest-casino-jackpots-2026', async (req, res) => {
+    const slug = 'biggest-casino-jackpots-2026';
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    const canonical = `https://findjackpots.com/blog/${slug}`;
+
+    // Pull top 5 jackpots from DB
+    let topJackpots = [];
+    try {
+      const result = await pool.query(`
+        SELECT j.amount_cents, j.machine_name, j.won_at, c.name as casino_name, c.city, c.state
+        FROM jackpots j
+        JOIN casinos c ON j.casino_id = c.id
+        WHERE j.amount_cents IS NOT NULL AND j.amount_cents > 0
+        ORDER BY j.amount_cents DESC
+        LIMIT 5
+      `);
+      topJackpots = result.rows;
+    } catch (e) {
+      // Silently degrade — jackpot table may not exist yet
+    }
+
+    const jackpotsHtml = topJackpots.length > 0 ? `
+  <h2>Top 5 Biggest Recent Jackpots on FindJackpots</h2>
+  <p>Here are the biggest jackpots currently tracked in our database:</p>
+  <ol>
+    ${topJackpots.map((j) => `<li><strong>${fmt$(j.amount_cents)}</strong> — ${j.machine_name || 'Slot Machine'} at ${j.casino_name || 'Unknown Casino'}, ${j.city || ''} ${j.state || ''}${j.won_at ? ` (${new Date(j.won_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})})` : ''}</li>`).join('\n    ')}
+  </ol>
+  <p>See more at <a href="/biggest-jackpots">FindJackpots: Biggest Jackpots →</a></p>` : `
+  <h2>Tracking 2026's Biggest Jackpots</h2>
+  <p>FindJackpots continuously ingests jackpot data from casinos across the US. <a href="/biggest-jackpots">View the current leaderboard →</a> to see the largest wins tracked in real time.</p>`;
+
+    const html = `${blogHead({ title: post.title, description: post.excerpt, canonical, datePublished: post.date, slug })}
+<body>
+${siteHeader()}
+<div class="blog-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="/blog">Blog</a> › Jackpot News</p>
+    <h1>${post.title}</h1>
+    <p class="meta">By Jason Morrow · ${new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · 7 min read</p>
+  </div>
+</div>
+<div class="article-body">
+  <a class="back-link" href="/blog">← Back to Blog</a>
+
+  <p>2026 has already delivered some stunning casino jackpots across the United States. From life-changing progressive wins to impressive local jackpots at regional tribal casinos, slot players are hitting big this year. Here's how jackpot tracking works, what progressive jackpots actually are, and how you can use FindJackpots to stay on top of the biggest wins in real time.</p>
+
+  <h2>How Casino Jackpots Are Tracked</h2>
+  <p>Casino jackpot tracking has evolved dramatically in the last decade. Historically, jackpot data was siloed inside each casino — players had no easy way to see recent wins at a property before visiting. Today, tools like <a href="/casino-jackpot-tracker">FindJackpots' Casino Jackpot Tracker</a> aggregate data from multiple sources to give players real-time visibility into jackpot activity.</p>
+  <p>Data sources include:</p>
+  <ul>
+    <li><strong>Casino-reported wins:</strong> Many casinos post recent jackpot winners on social media and their own websites. FindJackpots ingests this data automatically.</li>
+    <li><strong>Linked progressive systems:</strong> Casino software vendors like IGT, Aristocrat, and Konami run centralized progressive jackpot networks that track pot sizes and payouts across multiple properties.</li>
+    <li><strong>State gaming reports:</strong> States like Nevada, Iowa, and Illinois require casino operators to report jackpot payouts, creating a public record.</li>
+  </ul>
+
+  <h2>What Are Progressive Jackpots?</h2>
+  <p>Progressive jackpots grow over time as players wager on linked machines. A small percentage of every bet — typically 1–3% — feeds the jackpot meter. These can be:</p>
+  <ul>
+    <li><strong>Local progressives:</strong> Linked only within one casino. Jackpots grow faster because the player pool is smaller, but so do the potential amounts — typically topping out at $10,000–$100,000.</li>
+    <li><strong>Wide-area progressives:</strong> Linked across multiple casinos statewide or nationally. These produce the legendary multi-million dollar jackpots you see on the news. Megabucks, Wheel of Fortune, and Powerball Slots are examples.</li>
+    <li><strong>Stand-alone progressives:</strong> A jackpot pool fed only by one specific machine. These are smaller but hit more frequently.</li>
+  </ul>
+
+  <div class="tip-box">
+    <p>🎰 <strong>Key insight:</strong> Wide-area progressives have worse RTP for base play because so much of every bet goes into the jackpot pool. The tradeoff is a shot at a life-changing payout. Play them when the jackpot is well above seed value.</p>
+  </div>
+
+  ${jackpotsHtml}
+
+  <h2>Biggest Jackpot Categories of 2026</h2>
+  <p>While final annual tallies won't be available until year-end gaming reports are published, 2026 has seen significant activity in several jackpot categories:</p>
+  <ul>
+    <li><strong>Wide-area progressives:</strong> Nevada's Megabucks network continues to produce occasional multi-million dollar payouts, with at least one $3M+ win reported in early 2026.</li>
+    <li><strong>Midwest tribal casinos:</strong> Mystic Lake and Grand Casino Hinckley in Minnesota have both reported six-figure jackpot wins in Q1 2026, consistent with prior year trends.</li>
+    <li><strong>Iowa commercial casinos:</strong> Iowa's commercial casinos, which publish payout data publicly, showed strong jackpot activity in the first quarter.</li>
+    <li><strong>Online-linked machines:</strong> Several states now allow server-linked machines that share jackpot pools with online casino platforms, creating new payout records.</li>
+  </ul>
+
+  <h2>How to Use FindJackpots to Track Wins</h2>
+  <p>FindJackpots makes it easy to stay on top of jackpot activity at casinos near you:</p>
+  <ol>
+    <li>Visit <a href="/casino-jackpot-tracker">the Casino Jackpot Tracker</a> for a live feed of recent wins.</li>
+    <li>Browse <a href="/biggest-jackpots">the biggest jackpots list</a> to see all-time and recent high-value wins.</li>
+    <li>Set location-based alerts in the FindJackpots app to get notified when a big jackpot hits near you.</li>
+    <li>Filter by casino, state, or machine type to find relevant jackpot data for your preferred properties.</li>
+  </ol>
+
+  <p>The goal is simple: give players better information so they can choose the right time and place to play.</p>
+
+  <div style="margin-top:40px;padding:28px;background:#f0f4f9;border-radius:12px;text-align:center;">
+    <p style="margin:0 0 16px;font-size:1rem;font-weight:600;color:#1a1a2e;">Track the biggest jackpots in real time</p>
+    <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;">Open FindJackpots →</a>
+  </div>
+
+  <p style="margin-top:32px;"><a class="back-link" href="/blog">← Back to Blog</a></p>
+</div>
+${siteFooter()}
+</body>
+</html>`;
+    res.send(html);
+  });
+
+  // ── /blog/casino-loyalty-programs-compared ────────────────────────────────
+  app.get('/blog/casino-loyalty-programs-compared', (req, res) => {
+    const slug = 'casino-loyalty-programs-compared';
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    const canonical = `https://findjackpots.com/blog/${slug}`;
+
+    const html = `${blogHead({ title: post.title, description: post.excerpt, canonical, datePublished: post.date, slug })}
+<body>
+${siteHeader()}
+<div class="blog-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="/blog">Blog</a> › Casino Loyalty Programs</p>
+    <h1>${post.title}</h1>
+    <p class="meta">By Jason Morrow · ${new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · 8 min read</p>
+  </div>
+</div>
+<div class="article-body">
+  <a class="back-link" href="/blog">← Back to Blog</a>
+
+  <p>Casino loyalty programs are one of the best tools a regular player has. Sign up for the right card, and the casino essentially pays you back a portion of what you wager — in free play, hotel stays, dining credits, and entertainment tickets. But with dozens of programs competing for your wallet, which one is actually worth it?</p>
+
+  <p>We compared the five most prominent casino loyalty programs in the US: <strong>Caesars Rewards, MGM Rewards, Club M (Mystic Lake), mychoice (Penn), and B Connected (Boyd Gaming)</strong>. Here's the breakdown.</p>
+
+  <h2>Caesars Rewards — The Network King</h2>
+  <p>Caesars Rewards is arguably the most valuable casino loyalty program in the United States, primarily because of its massive footprint. With over 55 Caesars-branded casinos across the country, your points travel with you from Las Vegas to Atlantic City to regional markets.</p>
+  <p><strong>How it works:</strong> You earn Tier Credits and Reward Credits simultaneously. Reward Credits convert to Reward Dollars at roughly 1 Reward Credit = $0.01. Tier Credits determine your status (Gold, Platinum, Diamond, Diamond Plus, Diamond Elite, Seven Stars).</p>
+  <p><strong>Best perks:</strong></p>
+  <ul>
+    <li>Diamond status ($25,000 tier credits/year) includes priority hotel check-in, dedicated phone line, and meaningful free play offers</li>
+    <li>Status match opportunities with other programs</li>
+    <li>Reward Dollars valid at retail, dining, spa, and hotel — not just the casino</li>
+    <li>Birthday bonuses and milestone rewards</li>
+  </ul>
+  <p><strong>Best for:</strong> Frequent travelers to Las Vegas and Atlantic City. The program rewards volume play across a large network. Midwest players can use it at Horseshoe and Harrah's properties. See <a href="/casinos/nevada">Nevada Caesars casinos on FindJackpots</a>.</p>
+
+  <h2>MGM Rewards — Vegas Power Play</h2>
+  <p>MGM Rewards covers the MGM Grand, Bellagio, ARIA, Vdara, Mandalay Bay, and many more top-tier Las Vegas properties. If the Strip is your playground, this is likely your most important card.</p>
+  <p><strong>How it works:</strong> You earn MGM Rewards Points on gaming, hotel, dining, and entertainment spend. Points convert to Slot Play at 5,000 points = $5. Tier levels: Sapphire, Pearl, Gold, Platinum, Noir.</p>
+  <p><strong>Best perks:</strong></p>
+  <ul>
+    <li>Gold status (25,000 tier points) includes priority check-in and dedicated host access</li>
+    <li>Platinum unlocks serious resort fee waivers and complimentary room upgrades</li>
+    <li>Points earn on hotel, dining, spa, and entertainment — not just slots</li>
+    <li>BetMGM Sports and iGaming play counts toward tier in select states</li>
+  </ul>
+  <p><strong>Best for:</strong> Las Vegas Strip regulars who stay at MGM properties. The resort-side earning is a major advantage if you're spending on hotel and dining anyway.</p>
+
+  <h2>Club M — Minnesota's Best Loyalty Card</h2>
+  <p>Club M is Mystic Lake's loyalty program, operated by the Shakopee Mdewakanton Sioux Community. For Minnesota players, this is one of the most rewarding programs available — especially if Mystic Lake is your home casino.</p>
+  <p><strong>How it works:</strong> Earn points on slots, table games, hotel, and dining. Points convert to free play and comp dollars. Tier levels progress from basic to Black Card for the highest rollers.</p>
+  <p><strong>Best perks:</strong></p>
+  <ul>
+    <li>Generous free play offers and mailer promotions for regular players</li>
+    <li>Hotel discounts and complimentary stays at Mystic Lake Hotel</li>
+    <li>Birthday bonuses and special event invitations</li>
+    <li>Consistent "earn multiplier" promotions that dramatically accelerate point accumulation</li>
+  </ul>
+  <p><strong>Best for:</strong> Twin Cities area players who visit Mystic Lake regularly. The program punches above its weight compared to national chains. <a href="/casinos/minnesota">Browse Minnesota casinos on FindJackpots</a>.</p>
+
+  <h2>mychoice — Penn National's Midwest Network</h2>
+  <p>mychoice is the loyalty program for Penn Entertainment (formerly Penn National), covering Hollywood Casinos, Ameristar, and other regional properties. It's the dominant loyalty card in Ohio, Indiana, Iowa, and Missouri.</p>
+  <p><strong>How it works:</strong> mychoice points earn at all Penn properties. Points convert to slot play. Tier levels: mychoice, silver, gold, platinum, and the invitation-only HOF (Hall of Fame).</p>
+  <p><strong>Best perks:</strong></p>
+  <ul>
+    <li>Strong Midwest network — Ohio, Indiana, Iowa, Missouri, Pennsylvania, and more</li>
+    <li>theScore Bet and ESPN Bet play can link to tier in some states</li>
+    <li>Generous promotional calendar for regional markets</li>
+    <li>Hotel and dining comps at full resort properties</li>
+  </ul>
+  <p><strong>Best for:</strong> Midwest players who rotate between states and want a unified card across Penn properties.</p>
+
+  <h2>B Connected — Boyd Gaming's Value Play</h2>
+  <p>B Connected covers Boyd Gaming's 28 properties, including Sam's Town (Las Vegas and regional), Borgata in Atlantic City, and several Midwest and Southern properties. It's an underrated card for players who want solid mid-tier Las Vegas value.</p>
+  <p><strong>Best perks:</strong></p>
+  <ul>
+    <li>Borgata's status in Atlantic City is one of the best regional card programs</li>
+    <li>Solid free play offers and dining comps at Las Vegas properties</li>
+    <li>Linked across all Boyd properties including The Orleans, Gold Coast, and Suncoast</li>
+  </ul>
+  <p><strong>Best for:</strong> Players who prefer off-Strip Las Vegas or visit Atlantic City regularly.</p>
+
+  <h2>Which Loyalty Program Is Worth It?</h2>
+  <p>The honest answer: it depends on where you play. Here's a quick decision guide:</p>
+  <ul>
+    <li><strong>Las Vegas Strip focus → MGM Rewards</strong> (plus Caesars as a secondary)</li>
+    <li><strong>Broad national travel → Caesars Rewards</strong> (best multi-state network)</li>
+    <li><strong>Minnesota home casino → Club M</strong> (Mystic Lake delivers outsized value for locals)</li>
+    <li><strong>Midwest regional player → mychoice</strong> (Penn's Midwest footprint is unmatched)</li>
+    <li><strong>Atlantic City / off-Strip Vegas → B Connected</strong></li>
+  </ul>
+  <p>One more tip: carry multiple cards. There's no penalty for having a Caesars card, MGM card, and Club M card simultaneously. Swipe the card that earns the most at each property.</p>
+
+  <div style="margin-top:40px;padding:28px;background:#f0f4f9;border-radius:12px;text-align:center;">
+    <p style="margin:0 0 16px;font-size:1rem;font-weight:600;color:#1a1a2e;">Find the best casinos near you</p>
+    <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;">Open FindJackpots →</a>
+  </div>
+
+  <p style="margin-top:16px;">Also see: <a href="/casinos/nevada">Nevada casinos</a> · <a href="/casinos/minnesota">Minnesota casinos</a> · <a href="/best-casinos-near-me">Best casinos near me</a></p>
+
+  <p style="margin-top:32px;"><a class="back-link" href="/blog">← Back to Blog</a></p>
+</div>
+${siteFooter()}
+</body>
+</html>`;
+    res.send(html);
+  });
+
+  // ── /blog/midwest-casino-road-trip ────────────────────────────────────────
+  app.get('/blog/midwest-casino-road-trip', (req, res) => {
+    const slug = 'midwest-casino-road-trip';
+    const post = BLOG_POSTS.find(p => p.slug === slug);
+    const canonical = `https://findjackpots.com/blog/${slug}`;
+
+    const html = `${blogHead({ title: post.title, description: post.excerpt, canonical, datePublished: post.date, slug })}
+<body>
+${siteHeader()}
+<div class="blog-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="/blog">Blog</a> › Casino Road Trips</p>
+    <h1>${post.title}</h1>
+    <p class="meta">By Jason Morrow · ${new Date(post.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · 9 min read</p>
+  </div>
+</div>
+<div class="article-body">
+  <a class="back-link" href="/blog">← Back to Blog</a>
+
+  <p>The Midwest is quietly one of the best regions in the country for casino road trips. You've got 21 tribal casinos in Minnesota, 23 in Iowa, 26 in Wisconsin — plus commercial riverboat and racetrack casinos scattered across all three states. A long weekend driving loop can hit a half-dozen excellent properties with minimal backtracking.</p>
+
+  <p>Here's the ultimate Midwest casino road trip guide: the best route, the top stops, and tips for making the most of every mile.</p>
+
+  <h2>The Route: Minneapolis → Des Moines → Milwaukee Loop</h2>
+  <p>The sweet spot for a Midwest casino road trip is a 3–4 day loop starting and ending in the Twin Cities. Here's a suggested itinerary:</p>
+  <ul>
+    <li><strong>Day 1:</strong> Twin Cities → Mystic Lake or Treasure Island → Prairie du Chien, WI</li>
+    <li><strong>Day 2:</strong> Prairie du Chien → Dubuque, IA → Meskwaki Bingo Casino, IA</li>
+    <li><strong>Day 3:</strong> Des Moines area casinos → Prairie Meadows → Return north</li>
+    <li><strong>Day 4:</strong> Wisconsin stops (Potawatomi, Ho-Chunk) → back to Twin Cities</li>
+  </ul>
+
+  <h2>Minnesota: The Starting Point</h2>
+  <p>Start your road trip in Minnesota, home to some of the best tribal casinos in the Midwest. The Twin Cities are flanked by Mystic Lake to the southwest and Treasure Island to the southeast — both excellent first stops.</p>
+  <p>Key Minnesota stops:</p>
+  <ul>
+    <li><strong>Mystic Lake Casino Hotel</strong> (Prior Lake) — Largest casino in the upper Midwest. 4,000+ machines, full hotel, excellent loyalty rewards through Club M. <a href="/casinos/minnesota">See on FindJackpots</a>.</li>
+    <li><strong>Treasure Island Resort & Casino</strong> (Red Wing) — Beautiful Mississippi River setting. Great for an overnight stay before heading into Wisconsin or Iowa.</li>
+    <li><strong>Grand Casino Hinckley</strong> — Perfect if you're heading north or coming from Duluth. On I-35, easy access.</li>
+  </ul>
+  <p>Browse all <a href="/casinos/minnesota">Minnesota casinos on FindJackpots</a> to plan your first stops.</p>
+
+  <h2>Iowa: Commercial Casino Country</h2>
+  <p>Iowa is the wild card of Midwest casino road trips. The state has both tribal casinos and commercial "racino" operations, and because Iowa publishes payout data publicly, you can actually compare which casinos pay better before you visit.</p>
+  <p>Top Iowa stops:</p>
+  <ul>
+    <li><strong>Meskwaki Bingo Casino Hotel</strong> (Tama) — The largest tribal casino in Iowa, centrally located. Good hotel, strong slot floor.</li>
+    <li><strong>Prairie Meadows Casino</strong> (Altoona/Des Moines) — One of Iowa's top commercial racinos. Excellent payout data published by Iowa Racing and Gaming Commission.</li>
+    <li><strong>Isle Casino Hotel</strong> (multiple locations) — Waterloo, Marquette, and Bettendorf locations make them easy to hit on a loop through eastern Iowa.</li>
+    <li><strong>Rhythm City Casino Resort</strong> (Davenport) — New, modern resort near the Quad Cities. Easy access from Wisconsin.</li>
+  </ul>
+  <p><a href="/casinos/iowa">View all Iowa casinos on FindJackpots</a>.</p>
+
+  <div class="tip-box">
+    <p>🗺️ <strong>Road trip tip:</strong> Download the FindJackpots app before you leave. It shows casinos near your current location and recent jackpot activity — perfect for deciding where to stop when you're on the road.</p>
+  </div>
+
+  <h2>Wisconsin: Hidden Gems</h2>
+  <p>Wisconsin has 26 tribal casinos and some genuine surprises. The Ho-Chunk properties are large and well-run; Potawatomi in Milwaukee is a city-based casino that punches well above its size.</p>
+  <p>Top Wisconsin stops:</p>
+  <ul>
+    <li><strong>Potawatomi Hotel & Casino</strong> (Milwaukee) — One of the best urban casinos in the Midwest. 100,000 sq ft of gaming, multiple restaurants, full hotel. A must-stop if you're doing the southern Wisconsin loop.</li>
+    <li><strong>Ho-Chunk Gaming Wisconsin Dells</strong> — In the middle of the Dells resort area, making it a natural stop for families who want a non-gambling reason to visit Wisconsin Dells.</li>
+    <li><strong>Oneida Casino</strong> (Green Bay) — A large, well-established property near Green Bay. Great for a Packers game weekend combo.</li>
+    <li><strong>St. Croix Casino Turtle Lake</strong> — Northwest Wisconsin, easy drive from the Twin Cities. A solid overnight stop on the return trip.</li>
+  </ul>
+  <p><a href="/casinos/wisconsin">View all Wisconsin casinos on FindJackpots</a>.</p>
+
+  <h2>Tips for Maximizing Loyalty Points on a Road Trip</h2>
+  <p>Road tripping through multiple casinos is a great opportunity to rack up points — if you play it smart:</p>
+  <ol>
+    <li><strong>Carry every card.</strong> Get Club M at Mystic Lake, mychoice at Iowa Penn properties, and the B Connected or local cards at Wisconsin casinos. There's no downside to collecting multiple cards.</li>
+    <li><strong>Look for promotional multiplier days.</strong> Many casinos run 2x or 3x points promotions mid-week. Call ahead or check casino apps before arriving.</li>
+    <li><strong>Book hotel through the casino.</strong> Even if you're not a high-roller, booking through the resort usually gets you a discounted rate and additional points.</li>
+    <li><strong>Ask about new player bonuses.</strong> First-time visitors at many casinos get a free play bonus just for signing up for the loyalty card. Budget $20-50 in free play per new property.</li>
+    <li><strong>Check jackpot activity before choosing where to play.</strong> Use <a href="/biggest-jackpots">FindJackpots' biggest jackpots tracker</a> to see which properties have had recent jackpot activity — a sign of active play and live machines.</li>
+  </ol>
+
+  <h2>What to Expect at Tribal Casinos</h2>
+  <p>Most of the Midwest's best casinos are tribal properties. A few things to know:</p>
+  <ul>
+    <li><strong>No smoking rules vary by property.</strong> Some tribal casinos still allow smoking on parts of the floor. Check ahead if that's important to you.</li>
+    <li><strong>Payout data is less transparent.</strong> Tribal casinos aren't required to publish RTP data like Iowa's commercial casinos. Use FindJackpots to compare jackpot activity as a proxy for which machines are paying.</li>
+    <li><strong>Amenities have improved dramatically.</strong> The old days of basic tribal gaming halls are gone. Mystic Lake, Potawatomi, and Ho-Chunk Wisconsin Dells are full resort destinations.</li>
+    <li><strong>Alcohol rules differ.</strong> Some tribal casinos serve alcohol freely; others have restrictions based on tribal ordinance. Check before you go.</li>
+  </ul>
+
+  <h2>Plan Your Trip with FindJackpots</h2>
+  <p>Before hitting the road, use FindJackpots to map out your route, compare jackpot activity at your target properties, and find the <a href="/best-midwest-casinos">best Midwest casinos</a> for your budget and play style.</p>
+
+  <div style="margin-top:40px;padding:28px;background:#f0f4f9;border-radius:12px;text-align:center;">
+    <p style="margin:0 0 16px;font-size:1rem;font-weight:600;color:#1a1a2e;">Plan your Midwest casino road trip</p>
+    <a href="https://findjackpots.com" style="display:inline-block;background:#5c7aaa;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;text-decoration:none;">Open FindJackpots →</a>
+  </div>
+
+  <p style="margin-top:16px;">Also see: <a href="/casinos/minnesota">Minnesota casinos</a> · <a href="/casinos/iowa">Iowa casinos</a> · <a href="/casinos/wisconsin">Wisconsin casinos</a> · <a href="/best-midwest-casinos">Best Midwest casinos</a></p>
+
+  <p style="margin-top:32px;"><a class="back-link" href="/blog">← Back to Blog</a></p>
+</div>
+${siteFooter()}
+</body>
+</html>`;
+    res.send(html);
+  });
+
 };

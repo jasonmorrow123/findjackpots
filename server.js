@@ -246,6 +246,13 @@ app.get('/sitemap.xml', async (req, res) => {
       { path: '/best-midwest-casinos',    priority: '0.9', freq: 'weekly'  },
       { path: '/casino-jackpot-tracker',  priority: '0.9', freq: 'daily'   },
       { path: '/highest-payout-casinos',  priority: '0.8', freq: 'weekly'  },
+      // Blog
+      { path: '/blog',                              priority: '0.8', freq: 'weekly'  },
+      { path: '/blog/top-casinos-minnesota',        priority: '0.8', freq: 'monthly' },
+      { path: '/blog/how-to-find-loosest-slots',    priority: '0.8', freq: 'monthly' },
+      { path: '/blog/biggest-casino-jackpots-2026', priority: '0.8', freq: 'weekly'  },
+      { path: '/blog/casino-loyalty-programs-compared', priority: '0.8', freq: 'monthly' },
+      { path: '/blog/midwest-casino-road-trip',     priority: '0.8', freq: 'monthly' },
     ];
     for (const p of intentPages) {
       urls += `  <url><loc>${base}${p.path}</loc><changefreq>${p.freq}</changefreq><priority>${p.priority}</priority><lastmod>${today}</lastmod></url>\n`;

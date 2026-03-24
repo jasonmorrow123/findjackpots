@@ -2824,6 +2824,12 @@ async function openModal(id) {
         ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--text-secondary);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
+      <!-- Promotions — filled async below -->
+      <div class="modal-section" id="promotionsSection" style="display:none">
+        <h3>🎁 Current Promotions</h3>
+        <div id="promotionsList"></div>
+      </div>
+
       <!-- Restaurants — filled async below -->
       <div class="modal-section" id="restaurantsSection" style="display:none">
         <h3>🍽️ Dining at this Casino</h3>
@@ -2953,8 +2959,9 @@ async function openModal(id) {
     if (zone) zone.innerHTML = '';
   }
 
-  // ── Fetch restaurant data async (fires independently) ──
+  // ── Fetch restaurant and promotions data async (fire independently) ──
   loadModalRestaurants(id);
+  loadModalPromotions(id);
 }
 
 async function loadModalRestaurants(casinoId) {
@@ -2991,6 +2998,53 @@ async function loadModalRestaurants(casinoId) {
           </div>
         </div>`;
     }).join('');
+    section.style.display = '';
+  } catch(e) { /* silent */ }
+}
+
+async function loadModalPromotions(casinoId) {
+  try {
+    await new Promise(r => setTimeout(r, 200));
+    const section = document.getElementById('promotionsSection');
+    const list = document.getElementById('promotionsList');
+    if (!section || !list) return;
+
+    const res = await fetch(`/api/casinos/${casinoId}/promotions`);
+    if (!res.ok) return;
+    const promos = await res.json();
+    if (!promos.length) return;
+
+    const typeColors = {
+      free_play:  { bg: '#1a3a2a', text: '#4ade80', label: 'Free Play' },
+      tournament: { bg: '#1a1f3a', text: '#818cf8', label: 'Tournament' },
+      drawing:    { bg: '#3a1a2a', text: '#f472b6', label: 'Drawing' },
+      concert:    { bg: '#3a2a10', text: '#fbbf24', label: 'Concert' },
+      food:       { bg: '#2a1a10', text: '#fb923c', label: 'Food' },
+      bonus:      { bg: '#2a1a3a', text: '#c084fc', label: 'Bonus' },
+    };
+
+    list.innerHTML = promos.slice(0, 3).map(p => {
+      const tc = typeColors[p.promo_type] || typeColors.bonus;
+      const badge = `<span style="display:inline-block;padding:2px 8px;border-radius:99px;font-size:0.68rem;font-weight:700;letter-spacing:.04em;background:${tc.bg};color:${tc.text};text-transform:uppercase">${tc.label}</span>`;
+      const endStr = p.end_date
+        ? `<span style="font-size:0.71rem;color:var(--text-secondary)">Ends ${new Date(p.end_date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>`
+        : '';
+      const desc = p.description ? `<div style="font-size:0.78rem;color:var(--text-secondary);margin-top:3px;line-height:1.4">${p.description.substring(0,120)}${p.description.length > 120 ? '…' : ''}</div>` : '';
+      const link = p.url ? `<a href="${p.url}" target="_blank" rel="noopener" style="font-size:0.72rem;color:var(--primary);text-decoration:none;margin-top:4px;display:inline-block">View Offer →</a>` : '';
+      return `
+        <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+            <div style="min-width:0">
+              ${badge}
+              <div style="font-weight:600;font-size:0.87rem;color:var(--text);margin-top:4px">${p.title}</div>
+              ${desc}
+              ${link}
+            </div>
+            <div style="flex-shrink:0;text-align:right">${endStr}</div>
+          </div>
+        </div>`;
+    }).join('');
+
     section.style.display = '';
   } catch(e) { /* silent */ }
 }

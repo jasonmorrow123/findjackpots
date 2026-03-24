@@ -988,6 +988,27 @@ app.get('/api/restaurants/batch-summary', async (req, res) => {
   }
 });
 
+// GET /api/casinos/:id/promotions — active promotions for a casino
+app.get('/api/casinos/:id/promotions', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(`
+      SELECT id, title, description, promo_type, start_date, end_date, url
+      FROM casino_promotions
+      WHERE casino_id = $1
+        AND active = true
+        AND (end_date IS NULL OR end_date >= CURRENT_DATE)
+      ORDER BY end_date ASC NULLS LAST
+      LIMIT 10
+    `, [id]);
+    res.json(result.rows);
+  } catch (err) {
+    if (err.message.includes('does not exist')) return res.json([]);
+    console.error('/api/casinos/:id/promotions error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/deal-of-day — best casino promotion today or next 2 days in the region
 app.get('/api/deal-of-day', async (req, res) => {
   try {

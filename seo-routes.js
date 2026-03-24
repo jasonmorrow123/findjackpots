@@ -218,6 +218,26 @@ function stateNavHtml(activeSlug) {
   </ul>`;
 }
 
+// State counts for pill labels
+const STATE_CASINO_COUNTS = {
+  minnesota: 21, nevada: 426, iowa: 23, wisconsin: 26,
+  illinois: 14, michigan: 28, indiana: 13, ohio: 11, missouri: 13,
+};
+
+function otherStatesHtml(currentSlug) {
+  const pillStyle = 'background:#5c7aaa;color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;white-space:nowrap;';
+  const pills = STATE_LINKS
+    .filter(s => s.slug !== currentSlug)
+    .map(s => `<a href="/casinos/${s.slug}" style="${pillStyle}">${s.name} (${STATE_CASINO_COUNTS[s.slug] || ''})</a>`)
+    .join('\n      ');
+  return `<div style="margin:40px 0;padding:24px;background:#f4f7fb;border-radius:12px;">
+  <h3 style="margin:0 0 16px;color:#1e3a5f;font-size:1.1rem;">Explore Casinos in Other States</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    ${pills}
+  </div>
+</div>`;
+}
+
 function siteFooter() {
   return `<footer class="site-footer">
   <div class="container">
@@ -652,6 +672,7 @@ ${siteHeader()}
   <div class="section">
     <h2>Top Jackpots in ${stateName}</h2>
     ${jackpotItems}
+    <p style="margin-top:16px;"><a href="/casino-jackpot-tracker" style="font-weight:600;color:#5c7aaa;">See all jackpot winners →</a> &nbsp;|&nbsp; <a href="/biggest-jackpots">Biggest jackpots nationwide</a></p>
   </div>
 
   ${adSlot()}
@@ -674,14 +695,18 @@ ${siteHeader()}
     </dl>
   </div>` : ''}
 
+  ${otherStatesHtml(stateSlug)}
+
   <div class="section">
     <h2>Browse Casinos by State</h2>
     ${stateNavHtml(stateSlug)}
     <p style="margin-top:16px;color:#666;font-size:0.9rem;">
       Also explore: <a href="/biggest-jackpots">Biggest Jackpots Right Now</a> ·
       <a href="/best-midwest-casinos">Best Midwest Casinos</a> ·
-      <a href="/casino-jackpot-tracker">Jackpot Tracker</a>
+      <a href="/casino-jackpot-tracker">Jackpot Tracker</a> ·
+      <a href="/best-casinos-near-me">Compare Casinos Near Me</a>
     </p>
+    <p style="margin-top:8px;"><a href="/casino-jackpot-tracker" style="font-weight:600;color:#5c7aaa;">See all jackpot winners →</a></p>
   </div>
 
 </div>
@@ -782,8 +807,9 @@ ${siteHeader()}
   </div>
 
   <div class="section">
-    <h2>Browse by State</h2>
+    <h2>Browse Casinos by State</h2>
     ${stateNavHtml(null)}
+    ${otherStatesHtml(null)}
   </div>
 
 </div>
@@ -889,6 +915,7 @@ ${siteHeader()}
   <div class="section">
     <h2>Browse Casinos by State</h2>
     ${stateNavHtml(null)}
+    ${otherStatesHtml(null)}
   </div>
 
 </div>
@@ -1002,6 +1029,7 @@ ${siteHeader()}
   <div class="section">
     <h2>Browse by Midwest State</h2>
     ${stateNavHtml(null)}
+    ${otherStatesHtml(null)}
   </div>
 
 </div>
@@ -1097,6 +1125,7 @@ ${siteHeader()}
   <div class="section">
     <h2>Browse Casinos by State</h2>
     ${stateNavHtml(null)}
+    ${otherStatesHtml(null)}
     <p style="margin-top:16px;"><a href="/biggest-jackpots">→ View the Biggest Jackpots of All Time</a></p>
   </div>
 
@@ -1247,6 +1276,7 @@ ${siteHeader()}
   <div class="section">
     <h2>Browse Casinos by State</h2>
     ${stateNavHtml(null)}
+    ${otherStatesHtml(null)}
   </div>
 
 </div>
@@ -1386,7 +1416,7 @@ ${siteHeader()}
 <div class="page-hero">
   <div class="container">
     <h1>${c.name}</h1>
-    <p>${c.city || ''}${c.city && c.state ? ', ' : ''}${(c.state || '').trim()}${c.chain ? ` · ${c.chain}` : ''}</p>
+    <p>${c.city || ''}${c.city && c.state ? ', ' : ''}${STATE_LINKS.find(s => s.slug === stateSlug) ? `<a href="/casinos/${stateSlug}" style="color:rgba(255,255,255,0.9);text-decoration:underline;">${stateName}</a>` : (c.state || '').trim()}${c.chain ? ` · ${c.chain}` : ''}</p>
   </div>
 </div>
 
@@ -1481,7 +1511,11 @@ ${siteHeader()}
 
   ${STATE_LINKS.find(s => s.slug === stateSlug) ? `
   <div class="section">
-    <p>← <a href="/casinos/${stateSlug}">All ${stateName} Casinos</a> &nbsp;|&nbsp; <a href="/best-midwest-casinos">Best Midwest Casinos</a> &nbsp;|&nbsp; <a href="/biggest-jackpots">Biggest Jackpots</a></p>
+    <p>← <a href="/casinos/${stateSlug}">All ${stateName} Casinos</a> &nbsp;|&nbsp; <a href="/best-midwest-casinos">Best Midwest Casinos</a> &nbsp;|&nbsp; <a href="/biggest-jackpots">Biggest Jackpots</a> &nbsp;|&nbsp; <a href="/casino-jackpot-tracker">Jackpot Tracker</a></p>
+  </div>
+  <div style="margin:0 0 40px;padding:20px 24px;background:#f4f7fb;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <span style="color:#1e3a5f;font-weight:600;">More ${stateName} Casinos</span>
+    <a href="/casinos/${stateSlug}" style="background:#5c7aaa;color:white;padding:8px 20px;border-radius:20px;text-decoration:none;font-size:14px;font-weight:600;">Browse ${stateName} Casinos →</a>
   </div>` : ''}
 
 </div>

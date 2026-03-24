@@ -1205,6 +1205,8 @@
     @media (max-height: 500px) and (orientation: landscape) {
       header { height: 48px; }
       .mobile-search-bar { padding: 6px 16px; }
+      #mobileHeaderLocationBtn { display: flex !important; }
+      #mobileLocationLabel { max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
       .filter-bar-wrap { top: 96px; }
       .search-section { padding: 12px 16px 8px; }
       .search-section h1 { font-size: 1.4rem; margin-bottom: 4px; }
@@ -1881,6 +1883,10 @@
     </div>
     <button class="btn btn-secondary" id="push-bell-btn" style="flex:none;padding:7px 12px;font-size:0.8rem;border-radius:99px" onclick="subscribeToPush()" title="Get jackpot alerts">🔔</button>
     <button class="report-win-btn" onclick="openReportWin()">🏆 Report a Win</button>
+    <!-- Mobile-only location button in header -->
+    <button onclick="openRegionPicker()" id="mobileHeaderLocationBtn" style="display:none;align-items:center;gap:4px;padding:6px 10px;border-radius:99px;border:1px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.15);color:#fff;font-size:0.75rem;cursor:pointer;white-space:nowrap;">
+      📍 <span id="mobileLocationLabel">Location</span>
+    </button>
   </div>
 </header>
 
@@ -1890,9 +1896,7 @@
     <input type="text" id="searchInputMobile" placeholder="Search casinos, cities..." oninput="syncSearch(this.value)" onkeydown="if(event.key==='Enter')searchAndScroll()"/>
     <button onclick="searchAndScroll()">Search</button>
   </div>
-  <button onclick="openRegionPicker()" style="margin-top:6px;width:100%;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-secondary);font-size:0.82rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
-    📍 <span id="mobileLocationLabel">Change Location</span>
-  </button>
+
 </div>
 
 <!-- HERO WRAP — pattern spans search + deal + spin -->

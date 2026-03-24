@@ -804,7 +804,7 @@
       font-weight: 600;
       white-space: nowrap;
     }
-    .cm-table tbody tr.cm-winner td.win { background: #FEF3C7; }
+    .cm-table tbody td.win { background: #FEF3C7; }
     .cm-yes { color: #059669; font-weight: 700; font-size: 1rem; }
     .cm-no  { color: #DC2626; font-weight: 700; font-size: 1rem; }
     .cm-na  { color: #9CA3AF; font-size: 0.82rem; }
@@ -4613,6 +4613,19 @@ async function subscribeEmail(source) {
   }
 }
 
+// ── ESC key closes compare modal ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('compareModalOverlay').classList.contains('open')) {
+      closeCompareModal();
+    }
+  }
+});
+
+// ── Click backdrop to close compare modal ──
+document.getElementById('compareModalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('compareModalOverlay')) closeCompareModal();
+});
 </script>
 </body>
 </html>

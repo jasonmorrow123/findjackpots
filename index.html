@@ -545,6 +545,7 @@
     .btn-primary:hover { background: var(--primary-dark); }
     .btn-secondary { background: #F1F5F9; color: var(--text); }
     .btn-secondary:hover { background: var(--border); }
+    .btn-secondary.active { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary); font-weight: 600; }
 
     /* ── MODAL ── */
     .modal-overlay {
@@ -674,13 +675,30 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       z-index: 50;
       transform: translateY(100%);
       transition: transform 0.3s ease;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
     }
     .compare-bar.visible { transform: translateY(0); }
-    .compare-names { font-size: 0.88rem; color: var(--text-secondary); font-weight: 400; }
-    .compare-names strong { color: var(--primary); }
+    .compare-bar-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .compare-bar-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .compare-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--primary-light); color: var(--primary);
+      border: 1px solid var(--primary); border-radius: 99px;
+      padding: 4px 10px; font-size: 0.8rem; font-weight: 600;
+      white-space: nowrap;
+    }
+    .compare-chip-remove {
+      background: none; border: none; color: var(--primary);
+      cursor: pointer; font-size: 0.85rem; padding: 0; line-height: 1;
+      opacity: 0.7; transition: opacity 0.15s;
+    }
+    .compare-chip-remove:hover { opacity: 1; }
+    .compare-count { font-size: 0.82rem; color: var(--text-secondary); white-space: nowrap; }
+    .compare-bar-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .compare-btn {
       background: var(--primary);
       color: #fff;
@@ -691,8 +709,106 @@
       font-family: inherit;
       cursor: pointer;
       transition: opacity 0.2s ease;
+      white-space: nowrap;
     }
     .compare-btn:hover { opacity: 0.88; }
+    .compare-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── COMPARE MODAL ── */
+    #compareModalOverlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0;
+      overflow-y: auto;
+    }
+    #compareModalOverlay.open { display: flex; }
+    #compareModal {
+      background: var(--card);
+      width: 100%;
+      min-height: 100vh;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .cm-header {
+      position: sticky; top: 0; z-index: 10;
+      background: #F8FAFC;
+      border-bottom: 1.5px solid #E2E8F0;
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .cm-title { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+    .cm-header-actions { display: flex; gap: 8px; align-items: center; }
+    .cm-close {
+      background: #E2E8F0; border: none; color: var(--text);
+      width: 32px; height: 32px; border-radius: 50%;
+      cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cm-add-btn {
+      background: none; border: 1.5px dashed var(--primary);
+      color: var(--primary); padding: 6px 14px; border-radius: 99px;
+      font-size: 0.82rem; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .cm-add-btn:hover { background: var(--primary-light); }
+    .cm-table-wrap { overflow-x: auto; padding: 0 0 40px; -webkit-overflow-scrolling: touch; }
+    .cm-table {
+      width: 100%; border-collapse: collapse;
+      min-width: 480px;
+    }
+    .cm-table thead th {
+      padding: 20px 16px 16px;
+      text-align: center;
+      background: #F8FAFC;
+      border-bottom: 2px solid #E2E8F0;
+      position: sticky; top: 0;
+    }
+    .cm-table thead th:first-child {
+      text-align: left;
+      width: 150px; min-width: 120px;
+    }
+    .cm-col-header { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .cm-col-name { font-size: 1rem; font-weight: 800; color: var(--text); }
+    .cm-col-emoji { font-size: 1.6rem; }
+    .cm-score-badge {
+      display: inline-flex; flex-direction: column; align-items: center;
+      padding: 6px 12px; border-radius: 10px; min-width: 50px;
+    }
+    .cm-score-badge.high { background: #DCFCE7; color: #166534; }
+    .cm-score-badge.mid  { background: #FEF9C3; color: #854D0E; }
+    .cm-score-badge.low  { background: #FEE2E2; color: #991B1B; }
+    .cm-score-num { font-size: 1.3rem; font-weight: 900; line-height: 1; }
+    .cm-score-lbl { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; opacity: 0.7; }
+    .cm-remove-btn {
+      background: none; border: 1px solid #FCA5A5; color: var(--red);
+      padding: 4px 10px; border-radius: 99px; font-size: 0.75rem;
+      font-family: inherit; cursor: pointer; transition: background 0.15s;
+    }
+    .cm-remove-btn:hover { background: #FEE2E2; }
+    .cm-table tbody tr:nth-child(even) { background: #F8FAFC; }
+    .cm-table tbody tr:nth-child(odd)  { background: #ffffff; }
+    .cm-table tbody td {
+      padding: 13px 16px;
+      text-align: center;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.9rem;
+    }
+    .cm-table tbody td:first-child {
+      text-align: left;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .cm-table tbody tr.cm-winner td.win { background: #FEF3C7; }
+    .cm-yes { color: #059669; font-weight: 700; font-size: 1rem; }
+    .cm-no  { color: #DC2626; font-weight: 700; font-size: 1rem; }
+    .cm-na  { color: #9CA3AF; font-size: 0.82rem; }
+    .cm-label-row td { font-size: 0.72rem !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary) !important; background: var(--primary-light) !important; padding: 6px 16px !important; }
 
     /* ── REPORT WIN BUTTON ── */
     .report-win-btn {
@@ -1055,7 +1171,16 @@
       }
 
       /* Compare bar */
-      .compare-bar { padding: 10px 16px; }
+      .compare-bar { padding: 10px 14px; gap: 8px; }
+      .compare-bar-chips { display: none; }
+      .compare-count { font-size: 0.8rem; }
+      .compare-btn { padding: 8px 14px; font-size: 0.85rem; }
+      /* Compare modal */
+      #compareModal { min-height: 100dvh; }
+      .cm-header { padding: 12px 16px; }
+      .cm-table-wrap { padding: 0 0 60px; }
+      .cm-table thead th { padding: 14px 10px 10px; }
+      .cm-table tbody td { padding: 11px 10px; }
 
       /* Footer */
       footer { padding: 20px 16px; }
@@ -1855,7 +1980,7 @@
   <div class="filters">
     <button class="chip active" onclick="setFilter('all', this)">All</button>
     <button class="chip" onclick="setFilter('bingo', this)">Bingo</button>
-    <button class="chip" onclick="setFilter('poker', this)">Poker</button>
+    <button class="chip" id="pokerFilterChip" onclick="setFilter('poker', this)">Poker</button>
     <button class="chip" onclick="setFilter('slots', this)">Loose Slots</button>
     <button class="chip" onclick="setFilter('sports', this)">Sportsbook</button>
     <button class="chip" onclick="setFilter('hot', this)">Hot Jackpots</button>
@@ -1912,9 +2037,33 @@
 
 <!-- COMPARE BAR -->
 <div class="compare-bar" id="compareBar">
-  <div class="compare-names" id="compareNames">0 casinos selected</div>
-  <button class="compare-btn" onclick="showCompare()">Compare Side-by-Side →</button>
-  <button class="btn btn-secondary" style="flex:none;padding:10px 16px" onclick="clearCompare()">Clear</button>
+  <div class="compare-bar-left">
+    <div class="compare-bar-chips" id="compareChips"></div>
+    <div class="compare-count" id="compareCount">0 selected</div>
+  </div>
+  <div class="compare-bar-actions">
+    <button class="compare-btn" id="compareGoBtn" onclick="showCompare()" disabled>Compare →</button>
+    <button class="btn btn-secondary" style="flex:none;padding:8px 14px;font-size:0.85rem" onclick="clearCompare()">Clear</button>
+  </div>
+</div>
+
+<!-- COMPARE FULL-SCREEN MODAL -->
+<div id="compareModalOverlay">
+  <div id="compareModal">
+    <div class="cm-header">
+      <div class="cm-title">⚖️ Side-by-Side Comparison</div>
+      <div class="cm-header-actions">
+        <button class="cm-add-btn" id="cmAddBtn" onclick="closeCompareModal()">+ Add Casino</button>
+        <button class="cm-close" onclick="closeCompareModal()">✕</button>
+      </div>
+    </div>
+    <div class="cm-table-wrap">
+      <table class="cm-table" id="cmTable">
+        <thead id="cmHead"></thead>
+        <tbody id="cmBody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <!-- DETAIL MODAL -->
@@ -2456,6 +2605,12 @@ async function loadCasinos(region = 'las-vegas') {
     filterCasinos();
     const regionLabel = (typeof availableRegions !== 'undefined' && availableRegions.find(r => r.id === region))?.label || region;
     document.getElementById('resultsCount').textContent = `Showing ${CASINOS.length} casino${CASINOS.length !== 1 ? 's' : ''} — ${regionLabel}`;
+    // Update Poker chip count badge
+    const pokerChip = document.getElementById('pokerFilterChip');
+    if (pokerChip) {
+      const pokerCount = CASINOS.filter(c => c.poker).length;
+      if (pokerCount > 0) pokerChip.textContent = `Poker (${pokerCount})`;
+    }
     // Load events for cards and re-render once available
     loadCardEvents(region).then(() => filterCasinos());
 
@@ -2836,6 +2991,12 @@ async function openModal(id) {
         <div id="restaurantsList"></div>
       </div>
 
+      <!-- Poker Room — filled async below, only shown if has_poker + data exists -->
+      <div class="modal-section" id="pokerRoomSection" style="display:none">
+        <h3>🃏 Poker Room</h3>
+        <div id="pokerRoomDetails"></div>
+      </div>
+
       <a class="btn btn-primary" style="width:100%;padding:14px;font-size:0.95rem;border-radius:10px;display:block;text-align:center;text-decoration:none" href="${c.lat && c.lng ? `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.name + ' ' + (c.notes || ''))}`}" target="_blank" rel="noopener">📍 Get Directions</a>
 
       <div id="affiliateBtnZone" style="margin-top:0">
@@ -2959,9 +3120,10 @@ async function openModal(id) {
     if (zone) zone.innerHTML = '';
   }
 
-  // ── Fetch restaurant and promotions data async (fire independently) ──
+  // ── Fetch restaurant, promotions, and poker room data async (fire independently) ──
   loadModalRestaurants(id);
   loadModalPromotions(id);
+  if (c.poker) loadModalPoker(id);
 }
 
 async function loadModalRestaurants(casinoId) {
@@ -3049,6 +3211,41 @@ async function loadModalPromotions(casinoId) {
   } catch(e) { /* silent */ }
 }
 
+async function loadModalPoker(casinoId) {
+  try {
+    await new Promise(r => setTimeout(r, 250));
+    const section = document.getElementById('pokerRoomSection');
+    const details = document.getElementById('pokerRoomDetails');
+    if (!section || !details) return;
+
+    const res = await fetch(`/api/casinos/${casinoId}/poker`);
+    if (!res.ok) return;
+    const pr = await res.json();
+    if (!pr) return;
+
+    const gamesBadges = (pr.games || []).map(g =>
+      `<span style="display:inline-block;padding:3px 10px;border-radius:99px;font-size:0.72rem;font-weight:600;background:var(--card-bg);border:1px solid var(--border);color:var(--text);margin:2px">${g}</span>`
+    ).join('');
+
+    const tournamentRow = pr.tournaments
+      ? `<div class="stat-row"><span class="stat-label">Tournaments</span><span class="stat-value green">✅ Yes</span></div>
+         ${pr.tournament_schedule ? `<div style="font-size:0.78rem;color:var(--text-secondary);margin-top:-4px;padding-bottom:6px;padding-left:2px">📅 ${pr.tournament_schedule}</div>` : ''}`
+      : `<div class="stat-row"><span class="stat-label">Tournaments</span><span class="stat-value" style="color:var(--text-secondary)">No scheduled tournaments</span></div>`;
+
+    details.innerHTML = `
+      <div class="stat-row"><span class="stat-label">Tables</span><span class="stat-value">${pr.tables_count || 'N/A'} tables</span></div>
+      <div class="stat-row"><span class="stat-label">Stakes</span><span class="stat-value">${pr.min_stake || '?'} – ${pr.max_stake || '?'}</span></div>
+      <div style="padding:6px 0">
+        <div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:4px">Games</div>
+        <div>${gamesBadges || '<span style="color:var(--text-secondary);font-size:0.82rem">N/A</span>'}</div>
+      </div>
+      ${tournamentRow}
+      ${pr.hours ? `<div class="stat-row"><span class="stat-label">Hours</span><span class="stat-value">${pr.hours}</span></div>` : ''}
+    `;
+    section.style.display = '';
+  } catch(e) { /* silent */ }
+}
+
 function closeModal(e) {
   if (e.target === document.getElementById('modalOverlay')) {
     document.getElementById('modalOverlay').classList.remove('open');
@@ -3063,69 +3260,280 @@ function toggleCompare(id, e) {
   const btn = document.getElementById(`cmp-${id}`);
   if (compareList.includes(id)) {
     compareList = compareList.filter(x => x !== id);
-    btn.textContent = '+ Compare';
+    if (btn) { btn.textContent = '+ Compare'; btn.classList.remove('active'); }
   } else {
-    if (compareList.length >= 3) { alert('Max 3 casinos to compare'); return; }
+    if (compareList.length >= 3) {
+      // Flash the bar instead of alert
+      const bar = document.getElementById('compareBar');
+      bar.style.borderTopColor = 'var(--red)';
+      setTimeout(() => bar.style.borderTopColor = '', 800);
+      return;
+    }
     compareList.push(id);
-    btn.textContent = '✓ Comparing';
+    if (btn) { btn.textContent = '✓ Comparing'; btn.classList.add('active'); }
   }
   updateCompareBar();
 }
 
 function updateCompareBar() {
   const bar = document.getElementById('compareBar');
-  const names = document.getElementById('compareNames');
+  const chips = document.getElementById('compareChips');
+  const count = document.getElementById('compareCount');
+  const goBtn = document.getElementById('compareGoBtn');
+  const addBtn = document.getElementById('cmAddBtn');
+
   if (compareList.length === 0) {
     bar.classList.remove('visible');
     return;
   }
   bar.classList.add('visible');
-  const selected = compareList.map(id => CASINOS.find(c => c.id === id).name);
-  names.innerHTML = `Comparing: <strong>${selected.join(' vs. ')}</strong>`;
+
+  // Count text
+  const n = compareList.length;
+  count.textContent = `${n} casino${n !== 1 ? 's' : ''} selected`;
+
+  // Chips
+  chips.innerHTML = compareList.map(id => {
+    const c = CASINOS.find(x => x.id === id);
+    if (!c) return '';
+    const shortName = c.name.length > 14 ? c.name.substring(0, 13) + '…' : c.name;
+    return `<span class="compare-chip">${c.emoji} ${shortName}<button class="compare-chip-remove" onclick="removeFromCompare(${id})" title="Remove">✕</button></span>`;
+  }).join('');
+
+  // Go button
+  goBtn.disabled = n < 2;
+  goBtn.textContent = n >= 2 ? `Compare ${n} →` : 'Compare →';
+
+  // Add btn in modal
+  if (addBtn) addBtn.style.display = n < 3 ? '' : 'none';
+}
+
+function removeFromCompare(id) {
+  compareList = compareList.filter(x => x !== id);
+  const btn = document.getElementById(`cmp-${id}`);
+  if (btn) { btn.textContent = '+ Compare'; btn.classList.remove('active'); }
+  updateCompareBar();
+  // If modal open, re-render it
+  if (document.getElementById('compareModalOverlay').classList.contains('open')) {
+    if (compareList.length < 2) { closeCompareModal(); }
+    else renderCompareModal();
+  }
 }
 
 function clearCompare() {
   compareList = [];
-  document.querySelectorAll('[id^="cmp-"]').forEach(b => b.textContent = '+ Compare');
+  document.querySelectorAll('[id^="cmp-"]').forEach(b => { b.textContent = '+ Compare'; b.classList.remove('active'); });
   updateCompareBar();
+  closeCompareModal();
+}
+
+function closeCompareModal() {
+  document.getElementById('compareModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Numeric extractor helpers ──
+function numericScore(c) { return c.score || 0; }
+function numericPayback(c) {
+  if (!c.slotPayback || c.slotPayback === 'N/A') return null;
+  return parseFloat(c.slotPayback);
+}
+function numericJackpot(c) {
+  if (!c.largestJackpot || c.largestJackpot === 'N/A') return null;
+  const s = c.largestJackpot.replace(/[$,]/g,'').replace(/M$/,'000000').replace(/K$/,'000');
+  return parseFloat(s);
+}
+function numericYelp(c) { return c.yelpRating || null; }
+function numericLoyalty(c) { return c.loyaltyScore || 0; }
+function numericRestaurants(c) { return c._restaurantCount || 0; }
+function numericDistance(c) { return distanceMiles(userLat, userLng, c.lat, c.lng); }
+
+function winnerIdx(casinos, valueFn, higherIsBetter = true) {
+  const vals = casinos.map(valueFn);
+  const nonNull = vals.filter(v => v !== null && v !== undefined);
+  if (nonNull.length < 2) return -1; // no competition
+  const target = higherIsBetter ? Math.max(...nonNull) : Math.min(...nonNull);
+  const idx = vals.indexOf(target);
+  // Only highlight if there's a distinct winner
+  const matches = vals.filter(v => v === target).length;
+  return matches === 1 ? idx : -1;
+}
+
+function boolCell(val) {
+  if (val === true) return '<span class="cm-yes">✓</span>';
+  if (val === false) return '<span class="cm-no">✗</span>';
+  return '<span class="cm-na">—</span>';
+}
+
+function renderCompareModal() {
+  const casinos = compareList.map(id => CASINOS.find(c => c.id === id)).filter(Boolean);
+  if (casinos.length < 2) return;
+
+  const n = casinos.length;
+
+  // ── HEADER ROW ──
+  const headCols = casinos.map((c, i) => {
+    const dist = numericDistance(c);
+    const distStr = dist ? `<div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">${formatDistance(dist)} away</div>` : '';
+    return `<th>
+      <div class="cm-col-header">
+        <div class="cm-col-emoji">${c.emoji}</div>
+        <div class="cm-col-name">${c.name}</div>
+        <div class="cm-score-badge ${c.scoreClass}">
+          <span class="cm-score-num">${c.score}</span>
+          <span class="cm-score-lbl">Score</span>
+        </div>
+        ${distStr}
+        <button class="cm-remove-btn" onclick="removeFromCompare(${c.id})">Remove</button>
+      </div>
+    </th>`;
+  }).join('');
+  document.getElementById('cmHead').innerHTML = `<tr><th></th>${headCols}</tr>`;
+
+  // ── ROWS DEFINITION ──
+  // Each entry: [label, valueFn(c)→display, numericFn(c)→number|null, higherIsBetter]
+  const sections = [
+    { label: 'OVERVIEW', rows: [] },
+    { label: 'SCORES & RATINGS', rows: [] },
+    { label: 'LOYALTY PROGRAM', rows: [] },
+    { label: 'AMENITIES', rows: [] },
+    { label: 'GAMING', rows: [] },
+  ];
+
+  // We'll build a flat list with section labels interspersed
+  const rows = [];
+
+  // Section: Overview
+  rows.push({ section: 'OVERVIEW' });
+  rows.push({ label: 'Location', fn: c => c.location || '—', num: null });
+  rows.push({
+    label: 'Distance',
+    fn: c => { const d = numericDistance(c); return d ? formatDistance(d) + ' away' : '<span class="cm-na">—</span>'; },
+    num: c => numericDistance(c),
+    higher: false
+  });
+
+  // Section: Scores & Ratings
+  rows.push({ section: 'SCORES & RATINGS' });
+  rows.push({
+    label: 'Overall Score',
+    fn: c => `<strong>${c.score}</strong>`,
+    num: numericScore,
+    higher: true
+  });
+  rows.push({
+    label: 'Slot Payback %',
+    fn: c => c.slotPayback && c.slotPayback !== 'N/A' ? c.slotPayback : '<span class="cm-na">N/A</span>',
+    num: numericPayback,
+    higher: true
+  });
+  rows.push({
+    label: 'Yelp Rating',
+    fn: c => c.yelpRating ? `${c.yelpRating.toFixed(1)} ⭐${c.reviewCount ? ' <span style="color:var(--text-secondary);font-size:0.78rem">('+c.reviewCount+')</span>' : ''}` : '<span class="cm-na">N/A</span>',
+    num: numericYelp,
+    higher: true
+  });
+  rows.push({
+    label: 'Top Jackpot',
+    fn: c => c.largestJackpot && c.largestJackpot !== 'N/A' ? `<strong>${c.largestJackpot}</strong>` : '<span class="cm-na">N/A</span>',
+    num: numericJackpot,
+    higher: true
+  });
+
+  // Section: Loyalty Program
+  rows.push({ section: 'LOYALTY PROGRAM' });
+  rows.push({
+    label: 'Program Name',
+    fn: c => c.loyaltyProgram !== 'Rewards Program' ? c.loyaltyProgram : '<span class="cm-na">—</span>',
+    num: null
+  });
+  rows.push({
+    label: 'Loyalty Tiers',
+    fn: c => c.loyaltyTiers && c.loyaltyTiers.length ? c.loyaltyTiers.join(' › ') : '<span class="cm-na">—</span>',
+    num: c => c.loyaltyTiers ? c.loyaltyTiers.length : 0,
+    higher: true
+  });
+  rows.push({
+    label: 'Loyalty Score',
+    fn: c => c.loyaltyScore ? `${c.loyaltyScore.toFixed(1)}/10` : '<span class="cm-na">—</span>',
+    num: numericLoyalty,
+    higher: true
+  });
+
+  // Section: Amenities
+  rows.push({ section: 'AMENITIES' });
+  rows.push({ label: 'Hotel On-Site',   fn: c => boolCell(c.hotelOnsite), num: c => c.hotelOnsite ? 1 : 0, higher: true });
+  rows.push({ label: 'Free Parking',    fn: c => boolCell(c.parkingFree), num: c => c.parkingFree ? 1 : 0, higher: true });
+  rows.push({
+    label: 'Restaurants',
+    fn: c => {
+      const cnt = c._restaurantCount;
+      if (cnt == null) return '<span class="cm-na">—</span>';
+      return cnt > 0 ? `<strong>${cnt}</strong> <span style="color:var(--text-secondary);font-size:0.8rem">on-site</span>` : '<span class="cm-na">None listed</span>';
+    },
+    num: numericRestaurants,
+    higher: true
+  });
+
+  // Section: Gaming
+  rows.push({ section: 'GAMING' });
+  rows.push({ label: 'Slot Machines',   fn: c => boolCell(c.slots),       num: c => c.slots ? 1 : 0,       higher: true });
+  rows.push({ label: 'Poker',           fn: c => boolCell(c.poker),       num: c => c.poker ? 1 : 0,       higher: true });
+  rows.push({ label: 'Sports Betting',  fn: c => boolCell(c.sports),      num: c => c.sports ? 1 : 0,      higher: true });
+  rows.push({ label: 'Bingo',           fn: c => boolCell(c.bingo),       num: c => c.bingo ? 1 : 0,       higher: true });
+
+  // ── BUILD TABLE BODY ──
+  let bodyHtml = '';
+  rows.forEach(row => {
+    if (row.section) {
+      const emptyCols = casinos.map(() => '<td></td>').join('');
+      bodyHtml += `<tr class="cm-label-row"><td>${row.section}</td>${emptyCols}</tr>`;
+      return;
+    }
+    const wi = row.num ? winnerIdx(casinos, row.num, row.higher !== false) : -1;
+    const cells = casinos.map((c, i) => {
+      const cls = (wi === i) ? 'win' : '';
+      return `<td class="${cls}">${row.fn(c)}</td>`;
+    }).join('');
+    bodyHtml += `<tr><td>${row.label}</td>${cells}</tr>`;
+  });
+
+  document.getElementById('cmBody').innerHTML = bodyHtml;
+
+  // Update add button visibility
+  const addBtn = document.getElementById('cmAddBtn');
+  if (addBtn) addBtn.style.display = compareList.length < 3 ? '' : 'none';
 }
 
 function showCompare() {
-  if (compareList.length < 2) { alert('Select at least 2 casinos to compare'); return; }
-  const casinos = compareList.map(id => CASINOS.find(c => c.id === id));
-  const fields = [
-    ['Overall Score', c => c.score],
-    ['Slot Payback', c => c.slotPayback],
-    ['Largest Jackpot', c => c.largestJackpot],
-    ['Loyalty Score', c => `${c.loyaltyScore}/10`],
-    ['Points Earn Rate', c => c.pointsPerDollar],
-    ['Min Table Bet', c => c.minBet],
-    ['Slots', c => c.slots ? '✅' : '❌'],
-    ['Bingo', c => c.bingo ? '✅' : '❌'],
-    ['Poker Room', c => c.poker ? '✅' : '❌'],
-    ['Sportsbook', c => c.sports ? '✅' : '❌'],
-    ['Free Parking', c => c.parkingFree ? '✅' : '❌'],
-  ];
+  if (compareList.length < 2) return;
+  // Fetch restaurant counts if not cached
+  const needsFetch = compareList.filter(id => {
+    const c = CASINOS.find(x => x.id === id);
+    return c && c._restaurantCount == null;
+  });
+  const fetchPromise = needsFetch.length > 0
+    ? fetch(`/api/restaurants/batch-summary?ids=${needsFetch.join(',')}`)
+        .then(r => r.json())
+        .then(summaries => {
+          for (const [casinoId, summary] of Object.entries(summaries)) {
+            const c = CASINOS.find(x => x.id === parseInt(casinoId));
+            if (c) c._restaurantCount = summary ? summary.total : 0;
+          }
+        })
+        .catch(() => {})
+    : Promise.resolve();
 
-  const headerCols = casinos.map(c => `<th style="color:var(--gold);padding:10px">${c.emoji} ${c.name}</th>`).join('');
-  const rows = fields.map(([label, fn]) => {
-    const vals = casinos.map(c => `<td style="text-align:center;padding:8px 12px">${fn(c)}</td>`).join('');
-    return `<tr style="border-bottom:1px solid #2a2a3e"><td style="color:var(--text-secondary);padding:8px 12px;font-size:0.85rem">${label}</td>${vals}</tr>`;
-  }).join('');
-
-  document.getElementById('modalContent').innerHTML = `
-    <div class="modal-header">
-      <div><div style="font-size:1.1rem;font-weight:800">Side-by-Side Comparison</div></div>
-      <button class="modal-close" onclick="closeModalBtn()">✕</button>
-    </div>
-    <div class="modal-body" style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse">
-        <thead><tr><th style="padding:10px;text-align:left;color:var(--text-secondary)">Feature</th>${headerCols}</tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>
-  `;
-  document.getElementById('modalOverlay').classList.add('open');
+  fetchPromise.then(() => {
+    // Mark casinos with no data as 0
+    compareList.forEach(id => {
+      const c = CASINOS.find(x => x.id === id);
+      if (c && c._restaurantCount == null) c._restaurantCount = 0;
+    });
+    renderCompareModal();
+    document.getElementById('compareModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
 }
 
 // ── REPORT A WIN ──────────────────────────────────────────────

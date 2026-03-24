@@ -926,6 +926,25 @@ app.get('/api/casinos/:id/restaurants', async (req, res) => {
   }
 });
 
+// GET /api/casinos/:id/poker — poker room details for a casino
+app.get('/api/casinos/:id/poker', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(`
+      SELECT id, casino_id, tables_count, min_stake, max_stake, games,
+             tournaments, tournament_schedule, hours, phone, notes, updated_at
+      FROM poker_rooms
+      WHERE casino_id = $1
+    `, [id]);
+    if (result.rows.length === 0) return res.json(null);
+    res.json(result.rows[0]);
+  } catch (err) {
+    if (err.message.includes('does not exist')) return res.json(null);
+    console.error('/api/casinos/:id/poker error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/casinos/:id/restaurant-summary — category summary for tile display
 app.get('/api/casinos/:id/restaurant-summary', async (req, res) => {
   try {

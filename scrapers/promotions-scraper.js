@@ -16,7 +16,7 @@ const pool = new Pool({
 
 const PROMO_PAGES = [
   { casinoName: 'Mystic Lake Casino Hotel', url: 'https://www.mysticlake.com/promotions' },
-  { casinoName: 'Grand Casino Hinckley', url: 'https://www.grandcasinos.com/hinckley/promotions' },
+  { casinoName: 'Grand Casino Hinckley', url: 'https://www.grandcasinos.com/hinckley/promotions-events' },
   { casinoName: 'Black Bear Casino Resort', url: 'https://www.blackbearcasinoresort.com/promotions' },
   { casinoName: 'Treasure Island Resort & Casino', url: 'https://www.ticasino.com/promotions' },
   { casinoName: 'Palace Station Hotel and Casino', url: 'https://www.palacestation.com/promotions' },
@@ -29,6 +29,17 @@ const PROMO_PAGES = [
   { casinoName: 'Four Winds Casino New Buffalo', url: 'https://www.fourwindscasino.com/promotions' },
   { casinoName: 'Rivers Casino', url: 'https://www.riverscasino.com/pittsburgh/promotions' },
   { casinoName: 'Hollywood Casino Aurora', url: 'https://www.hollywoodcasinoaurora.com/promotions' },
+  { casinoName: 'Shooting Star Casino Hotel', url: 'https://www.starcasino.com/promotions' },
+  { casinoName: 'Jackpot Junction Casino Hotel', url: 'https://www.jackpotjunction.com/promotions' },
+  { casinoName: 'Fortune Bay Resort Casino', url: 'https://www.fortunebay.com/promotions' },
+  { casinoName: 'Caesars Palace', url: 'https://www.caesars.com/caesars-palace/promotions' },
+  { casinoName: 'MGM Grand', url: 'https://mgmgrand.mgmresorts.com/en/promotions.html' },
+  { casinoName: 'Bellagio', url: 'https://bellagio.mgmresorts.com/en/promotions.html' },
+  { casinoName: 'Borgata Hotel Casino & Spa', url: 'https://www.borgata.com/promotions' },
+  { casinoName: 'Hard Rock Hotel & Casino Atlantic City', url: 'https://www.hardrockhotelatlanticcity.com/promotions' },
+  { casinoName: 'Gun Lake Casino', url: 'https://www.gunlakecasino.com/promotions' },
+  { casinoName: 'FireKeepers Casino', url: 'https://www.firekeeperscasino.com/promotions' },
+  { casinoName: 'MotorCity Casino Hotel', url: 'https://www.motorcitycasino.com/promotions' },
 ];
 
 // ── HTTP fetch with redirect following ───────────────────────────────────────

@@ -3178,6 +3178,23 @@ async function openModal(id) {
     } else {
       zone.innerHTML = '';
     }
+
+    // Legendz.com — supplementary affiliate button (CJ, $30/signup, social casino)
+    // Excluded states: NV, NJ, MI, NY, WV, MS, IN, DE, MT, KS, IA
+    const legendzExcluded = ['NV','NJ','MI','NY','WV','MS','IN','DE','MT','KS','IA'];
+    const casinoState = (dbCasino.state || c.state || '').toUpperCase().trim();
+    if (!legendzExcluded.includes(casinoState)) {
+      zone.innerHTML += `
+        <div style="margin-top:10px;text-align:center;">
+          <a href="https://www.dpbolvw.net/click-101711107-17107127" target="_blank" rel="noopener sponsored"
+             style="display:inline-block;background:#1a1a2e;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;text-decoration:none;border:1px solid #333;">
+            🎰 Play Casino Games Free at Legendz →
+          </a>
+          <div style="font-size:10px;color:#999;margin-top:4px;">Free to play · No real money required</div>
+          <img src="https://www.awltovhc.com/image-101711107-17107127" width="1" height="1" border="0"/>
+        </div>
+      `;
+    }
   } catch (e) {
     const zone = document.getElementById('affiliateBtnZone');
     if (zone) zone.innerHTML = '';

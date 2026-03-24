@@ -57,4 +57,21 @@ const AFFILIATE_CONFIG = [
   },
 ];
 
-module.exports = { AFFILIATE_CONFIG };
+// ── Legendz.com — CJ Affiliate (active) ───────────────────────────────────
+// Social casino + free-to-play sportsbook. $30 per signup.
+// Excluded states: NV, NJ, MI, NY, WV, MS, IN, DE, MT, KS, IA
+const LEGENDZ = {
+  legendz: {
+    name: 'Legendz',
+    regLink: 'https://www.dpbolvw.net/click-101711107-17107127',
+    bannerLink: 'https://www.dpbolvw.net/click-101711107-17133749',
+    bannerImg: 'https://www.ftjcfx.com/image-101711107-17133749',
+    pixelImg: 'https://www.awltovhc.com/image-101711107-17107127',
+    cpa: 3000, // $30 in cents
+    network: 'CJ',
+    notes: 'Social casino + sportsbook. $30/signup. Excluded: NV, NJ, MI, NY, WV, MS, IN, DE, MT, KS, IA',
+    excludedStates: ['NV', 'NJ', 'MI', 'NY', 'WV', 'MS', 'IN', 'DE', 'MT', 'KS', 'IA'],
+  },
+};
+
+module.exports = { AFFILIATE_CONFIG, LEGENDZ };

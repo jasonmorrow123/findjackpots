@@ -472,6 +472,20 @@ function adSlot() {
 </div>`;
 }
 
+// Legendz.com affiliate banner — CJ network, $30/signup, social casino.
+// excludedStates: NV, NJ, MI, NY (do not render on those state pages)
+function legendzBanner(stateCode) {
+  const excluded = ['NV', 'NJ', 'MI', 'NY', 'WV', 'MS', 'IN', 'DE', 'MT', 'KS', 'IA'];
+  if (stateCode && excluded.includes(stateCode.toUpperCase())) return '';
+  return `<div style="margin:32px 0;padding:20px 24px;background:#f4f7fb;border-radius:12px;text-align:center;border:1px solid #dde6f0;">
+  <div style="font-size:11px;color:#999;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Featured Partner</div>
+  <a href="https://www.dpbolvw.net/click-101711107-17133749" target="_top" rel="noopener sponsored">
+    <img src="https://www.ftjcfx.com/image-101711107-17133749" width="359" height="240" alt="Play Legendz Casino Free" style="max-width:100%;border-radius:8px;" border="0"/>
+  </a>
+  <img src="https://www.awltovhc.com/image-101711107-17107127" width="1" height="1" border="0"/>
+</div>`;
+}
+
 function scoreBadgeHtml(rating) {
   if (!rating) return '';
   const r = parseFloat(rating);
@@ -1018,6 +1032,7 @@ ${siteHeader()}
 </div>
 
 <script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>
+${legendzBanner(null)}
 ${siteFooter()}
 </body>
 </html>`;
@@ -1335,6 +1350,7 @@ ${siteHeader()}
 </div>
 
 <script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>
+${legendzBanner(null)}
 ${siteFooter()}
 </body>
 </html>`;
@@ -1765,6 +1781,7 @@ ${siteHeader()}
 <script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>
 <script type="application/ld+json">${JSON.stringify(faqJsonLd, null, 2)}</script>
 ${overrideFaqJsonLd ? `<script type="application/ld+json">${JSON.stringify(overrideFaqJsonLd, null, 2)}</script>` : ''}
+${legendzBanner(c.state)}
 ${siteFooter()}
 </body>
 </html>`;
@@ -1918,6 +1935,8 @@ ${siteHeader()}
 
   <p>But not all casinos are created equal. Below, we break down the <strong>top 5 casinos in Minnesota</strong> based on jackpot size, loyalty programs, amenities, and overall player experience. If you want to track live jackpots at any of these properties, <a href="/casinos/minnesota">view all Minnesota casinos on FindJackpots</a>.</p>
 
+  ${legendzBanner(null)}
+
   <h2>1. Mystic Lake Casino Hotel — Prior Lake</h2>
   <p>Mystic Lake is the crown jewel of Minnesota tribal gaming. Operated by the Shakopee Mdewakanton Sioux Community just 25 miles southwest of Minneapolis, Mystic Lake is the largest casino in the upper Midwest. With over 4,000 slot machines and a dedicated poker room, it's the go-to destination for serious players.</p>
   <p><strong>Jackpots:</strong> Mystic Lake reports some of the highest jackpot payouts in the state, with six-figure wins occurring regularly. The casino's progressive slots and linked machines drive massive jackpot pools. Check <a href="/casinos/minnesota">FindJackpots Minnesota</a> for live jackpot data.</p>
@@ -1994,6 +2013,8 @@ ${siteHeader()}
   <p>Every slot player wants to find the loosest machines on the floor — those high-payout slots that give back more over time. But here's the honest truth: casinos don't put a flashing sign above their best-paying machines. You have to do your research.</p>
 
   <p>In this guide, we break down exactly what slot payback percentage means, which states actually publish payout data, and practical tips for finding machines that give you the best shot at walking away ahead.</p>
+
+  ${legendzBanner(null)}
 
   <h2>What Is Slot Payback Percentage?</h2>
   <p>Every slot machine is programmed with a <strong>Return to Player (RTP)</strong> percentage — the theoretical share of all wagered money the machine pays back over millions of spins. A machine with a 94% RTP returns $94 for every $100 wagered on average, over a very long time horizon.</p>
@@ -2103,6 +2124,8 @@ ${siteHeader()}
 
   <p>2026 has already delivered some stunning casino jackpots across the United States. From life-changing progressive wins to impressive local jackpots at regional tribal casinos, slot players are hitting big this year. Here's how jackpot tracking works, what progressive jackpots actually are, and how you can use FindJackpots to stay on top of the biggest wins in real time.</p>
 
+  ${legendzBanner(null)}
+
   <h2>How Casino Jackpots Are Tracked</h2>
   <p>Casino jackpot tracking has evolved dramatically in the last decade. Historically, jackpot data was siloed inside each casino — players had no easy way to see recent wins at a property before visiting. Today, tools like <a href="/casino-jackpot-tracker">FindJackpots' Casino Jackpot Tracker</a> aggregate data from multiple sources to give players real-time visibility into jackpot activity.</p>
   <p>Data sources include:</p>
@@ -2181,6 +2204,8 @@ ${siteHeader()}
   <p>Casino loyalty programs are one of the best tools a regular player has. Sign up for the right card, and the casino essentially pays you back a portion of what you wager — in free play, hotel stays, dining credits, and entertainment tickets. But with dozens of programs competing for your wallet, which one is actually worth it?</p>
 
   <p>We compared the five most prominent casino loyalty programs in the US: <strong>Caesars Rewards, MGM Rewards, Club M (Mystic Lake), mychoice (Penn), and B Connected (Boyd Gaming)</strong>. Here's the breakdown.</p>
+
+  ${legendzBanner(null)}
 
   <h2>Caesars Rewards — The Network King</h2>
   <p>Caesars Rewards is arguably the most valuable casino loyalty program in the United States, primarily because of its massive footprint. With over 55 Caesars-branded casinos across the country, your points travel with you from Las Vegas to Atlantic City to regional markets.</p>
@@ -2288,6 +2313,8 @@ ${siteHeader()}
   <p>The Midwest is quietly one of the best regions in the country for casino road trips. You've got 21 tribal casinos in Minnesota, 23 in Iowa, 26 in Wisconsin — plus commercial riverboat and racetrack casinos scattered across all three states. A long weekend driving loop can hit a half-dozen excellent properties with minimal backtracking.</p>
 
   <p>Here's the ultimate Midwest casino road trip guide: the best route, the top stops, and tips for making the most of every mile.</p>
+
+  ${legendzBanner(null)}
 
   <h2>The Route: Minneapolis → Des Moines → Milwaukee Loop</h2>
   <p>The sweet spot for a Midwest casino road trip is a 3–4 day loop starting and ending in the Twin Cities. Here's a suggested itinerary:</p>

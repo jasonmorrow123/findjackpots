@@ -1679,12 +1679,12 @@ ${siteHeader()}
         <div style="font-weight:700;color:#1e3a5f;font-size:1rem;">🏨 Hotel On-Site</div>
         <div style="color:#666;font-size:0.9rem;margin-top:2px;">Stay right at the casino — book through Hotels.com for best rates</div>
       </div>
-      <a href="https://www.kqzyfj.com/click-101711107-10433860" target="_blank" rel="noopener sponsored"
+      <a href="${c.state === 'NV' ? 'https://www.tkqlhce.com/click-101711107-12873028' : 'https://www.kqzyfj.com/click-101711107-10433860'}" target="_blank" rel="noopener sponsored"
          style="background:#c8102e;color:#fff;padding:10px 20px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;white-space:nowrap;flex-shrink:0;">
-        Book a Room →
+        ${c.state === 'NV' ? 'Find Las Vegas Hotel Deals →' : 'Book a Room →'}
       </a>
     </div>
-    <img src="https://www.ftjcfx.com/image-101711107-10433860" width="1" height="1" border="0"/>
+    <img src="${c.state === 'NV' ? 'https://www.ftjcfx.com/image-101711107-12873028' : 'https://www.ftjcfx.com/image-101711107-10433860'}" width="1" height="1" border="0"/>
     ` : ''}
     <div style="margin-top:16px;">
       <strong>Amenities:</strong> ${amenityBadges(c) || '<span style="color:#888;">Not specified</span>'}

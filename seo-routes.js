@@ -287,7 +287,7 @@ function htmlHead({ title, description, canonical, ogImage = 'https://findjackpo
     a:hover { text-decoration: underline; }
 
     /* Header */
-    .site-header { background: #5c7aaa; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .site-header { background: #1e3a5f; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
     .site-header .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .site-header .logo img { width: 32px; height: 32px; border-radius: 6px; }
     .site-header .logo span { font-size: 1.2rem; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
@@ -1645,7 +1645,7 @@ ${siteHeader()}
   <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:24px 0 0;">
     ${c.rating ? `<div>${scoreBadgeHtml(c.rating)} <span style="color:#666;font-size:0.9rem;">${c.review_count || 0} reviews</span></div>` : ''}
     ${c.state?.trim() && STATE_LINKS.find(s => s.slug === stateSlug) ? `<a href="/casinos/${stateSlug}" style="font-size:0.9rem;">← All ${stateName} Casinos</a>` : ''}
-    <a href="https://findjackpots.com" class="cta-btn" style="padding:8px 18px;font-size:0.9rem;">Open in App →</a>
+    <a href="https://findjackpots.com" class="cta-btn" style="padding:8px 18px;font-size:0.9rem;">Find Casinos Near You →</a>
   </div>
 
   <div class="section">

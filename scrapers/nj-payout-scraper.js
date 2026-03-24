@@ -102,53 +102,56 @@ async function findLatestNJReportUrl() {
 /**
  * Parse the NJ Monthly Gross Revenue Report PDF.
  *
- * Each casino section looks like:
- *   BALLY'S ATLANTIC CITY
- *   MONTHLY GROSS REVENUE REPORT
- *   FOR THE MONTH OF {MONTH YEAR}
- *   ...
+ * PDF layout per casino page (data appears BEFORE casino name):
+ *   ...table/slot data rows...
  *   4Slot Machine Win{units}{win}   {handle}
- *   {win_pct}%   ← next line, e.g. "10.1%"
+ *   {win_pct}%   ← house win percentage, e.g. "10.1%"
+ *   ...footer rows...
+ *   CASINO NAME              ← casino name comes AFTER its own data
+ *   MONTHLY GROSS REVENUE REPORT
+ *
+ * Strategy: collect all slot data lines and all casino name lines by index,
+ * then pair each slot line with the NEXT casino name that follows it.
  *
  * payback = 100 - win_pct (house win % → player payback %)
  */
 function parseNJPDF(text) {
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-  const results = [];
 
-  let currentCasino = null;
-
+  // Collect slot data positions
+  const slotItems = [];
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    // Casino name line immediately before "MONTHLY GROSS REVENUE REPORT"
-    if (lines[i+1] === 'MONTHLY GROSS REVENUE REPORT') {
-      currentCasino = line;
-      continue;
-    }
-
-    // Slot machine win row: "4Slot Machine Win{units}{win}   {handle}"
-    // Followed by win% on next line
-    if (line.startsWith('4Slot Machine Win') && currentCasino) {
-      const pctLine = lines[i+1] || '';
+    if (lines[i].startsWith('4Slot Machine Win')) {
+      const pctLine = lines[i + 1] || '';
       const pctMatch = pctLine.match(/^(\d{1,2}\.\d{1,2})%/);
       if (pctMatch) {
-        const winPct = parseFloat(pctMatch[1]);
-        const paybackPct = parseFloat((100 - winPct).toFixed(2));
-
-        // Extract machine count from line: "4Slot Machine Win{units}{win}   {handle}"
-        // units are embedded right after "Win" before the dollar amounts
-        const unitsMatch = line.match(/^4Slot Machine Win(\d+)/);
-        const machineCount = unitsMatch ? parseInt(unitsMatch[1]) : null;
-
-        results.push({
-          casino_name: currentCasino,
-          payback_pct: paybackPct,
-          machine_count: machineCount,
-        });
-        currentCasino = null;
+        slotItems.push({ lineIdx: i, winPct: parseFloat(pctMatch[1]) });
       }
     }
+  }
+
+  // Collect casino name positions (line before "MONTHLY GROSS REVENUE REPORT")
+  const casinoItems = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i + 1] === 'MONTHLY GROSS REVENUE REPORT') {
+      casinoItems.push({ lineIdx: i, name: lines[i] });
+    }
+  }
+
+  // Pair each slot item with the first casino name that comes after it
+  const results = [];
+  for (const slot of slotItems) {
+    const nextCasino = casinoItems.find(c => c.lineIdx > slot.lineIdx);
+    if (!nextCasino) continue;
+
+    const winPct = slot.winPct;
+    const paybackPct = parseFloat((100 - winPct).toFixed(2));
+
+    results.push({
+      casino_name: nextCasino.name,
+      payback_pct: paybackPct,
+      machine_count: null, // units are merged with amounts in text, not reliably parseable
+    });
   }
 
   return results;

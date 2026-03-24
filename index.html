@@ -2756,6 +2756,12 @@ function renderCards(data) {
     const card = document.createElement('div');
     card.className = `casino-card ${c.hot ? 'featured' : ''}`;
     card.setAttribute('data-id', c.id);
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e) {
+      // Don't open modal if clicking Compare button, thumbs up, or any button
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      openModal(c.id);
+    });
 
     const tagHtml = [
       c.bingo ? '<span class="tag bingo">🟢 Bingo</span>' : '',

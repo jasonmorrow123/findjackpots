@@ -6,6 +6,7 @@ const fs = require('fs');
 const webpush = require('web-push');
 const nodemailer = require('nodemailer');
 const { AFFILIATE_CONFIG } = require('./affiliates');
+const registerSEORoutes = require('./seo-routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -86,6 +87,11 @@ app.get('/manifest.json', (req, res) => res.sendFile(path.join(__dirname, 'manif
 app.use('/icons', express.static(path.join(__dirname, 'icons')));
 app.get('/logo.svg', (req, res) => res.sendFile(path.join(__dirname, 'logo.svg')));
 app.get('/logo-icon.svg', (req, res) => res.sendFile(path.join(__dirname, 'logo-icon.svg')));
+// ─────────────────────────────────────────
+// SEO Landing Pages (server-side rendered)
+// ─────────────────────────────────────────
+registerSEORoutes(app, pool);
+
 // Privacy Policy
 app.get('/privacy', (req, res) => {
   res.send(`<!DOCTYPE html>
@@ -223,14 +229,40 @@ app.get('/googleb0ba27dead70807a.html', (req, res) => {
 // Sitemap
 app.get('/sitemap.xml', async (req, res) => {
   try {
-    const result = await pool.query(`SELECT id, name, city, state FROM casinos ORDER BY id LIMIT 1000`);
+    const result = await pool.query(`SELECT id, name FROM casinos ORDER BY id LIMIT 2000`);
     const base = 'https://findjackpots.com';
     const today = new Date().toISOString().split('T')[0];
-    let urls = `  <url><loc>${base}/</loc><changefreq>daily</changefreq><priority>1.0</priority><lastmod>${today}</lastmod></url>\n`;
+
+    const slugify = s => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    // Core pages
+    let urls = '';
+    urls += `  <url><loc>${base}/</loc><changefreq>daily</changefreq><priority>1.0</priority><lastmod>${today}</lastmod></url>\n`;
+
+    // Intent / keyword pages
+    const intentPages = [
+      { path: '/biggest-jackpots',        priority: '0.9', freq: 'daily'   },
+      { path: '/best-casinos-near-me',    priority: '0.9', freq: 'weekly'  },
+      { path: '/best-midwest-casinos',    priority: '0.9', freq: 'weekly'  },
+      { path: '/casino-jackpot-tracker',  priority: '0.9', freq: 'daily'   },
+      { path: '/highest-payout-casinos',  priority: '0.8', freq: 'weekly'  },
+    ];
+    for (const p of intentPages) {
+      urls += `  <url><loc>${base}${p.path}</loc><changefreq>${p.freq}</changefreq><priority>${p.priority}</priority><lastmod>${today}</lastmod></url>\n`;
+    }
+
+    // State pages
+    const statePages = ['minnesota','nevada','iowa','wisconsin','illinois','michigan','indiana','ohio','missouri'];
+    for (const s of statePages) {
+      urls += `  <url><loc>${base}/casinos/${s}</loc><changefreq>daily</changefreq><priority>0.9</priority><lastmod>${today}</lastmod></url>\n`;
+    }
+
+    // Individual casino pages
     for (const c of result.rows) {
-      const slug = encodeURIComponent(c.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+      const slug = slugify(c.name);
       urls += `  <url><loc>${base}/casino/${c.id}/${slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
     }
+
     const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}</urlset>`;
     res.header('Content-Type', 'application/xml');
     res.send(xml);

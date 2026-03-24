@@ -1673,6 +1673,19 @@ ${siteHeader()}
       ${c.loyalty_program_name ? `<div class="overview-card"><div class="label">Loyalty Program</div><div class="value">${c.loyalty_program_name}${c.loyalty_points_per_dollar ? `<br><span style="font-size:0.85rem;color:#666;">${c.loyalty_points_per_dollar} pts/$</span>` : ''}</div></div>` : ''}
       ${c.monthly_revenue_cents ? `<div class="overview-card"><div class="label">Monthly Gaming Revenue</div><div class="value">${fmt$(c.monthly_revenue_cents)}</div></div>` : ''}
     </div>
+    ${c.has_hotel ? `
+    <div style="margin:20px 0;padding:18px 24px;background:#fff5f5;border-radius:10px;border:1px solid #f5c6c6;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div style="font-weight:700;color:#1e3a5f;font-size:1rem;">🏨 Hotel On-Site</div>
+        <div style="color:#666;font-size:0.9rem;margin-top:2px;">Stay right at the casino — book through Hotels.com for best rates</div>
+      </div>
+      <a href="https://www.kqzyfj.com/click-101711107-10433860" target="_blank" rel="noopener sponsored"
+         style="background:#c8102e;color:#fff;padding:10px 20px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;white-space:nowrap;flex-shrink:0;">
+        Book a Room →
+      </a>
+    </div>
+    <img src="https://www.ftjcfx.com/image-101711107-10433860" width="1" height="1" border="0"/>
+    ` : ''}
     <div style="margin-top:16px;">
       <strong>Amenities:</strong> ${amenityBadges(c) || '<span style="color:#888;">Not specified</span>'}
     </div>

@@ -2822,6 +2822,16 @@ function renderCards(data) {
           👍 <span class="helpful-count" id="helpful-count-${c.id}">${helpfulCount(c.id)}</span>
         </button>
         ${c.phone ? `<a class="btn btn-call" href="tel:${c.phone}" onclick="event.stopPropagation()">Call</a>` : ''}
+        ${c.hotelOnsite ? `
+        <a href="https://www.kqzyfj.com/click-101711107-10433860"
+           target="_blank" rel="noopener sponsored"
+           class="btn btn-secondary"
+           style="font-size:0.78rem;padding:6px 12px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;"
+           onclick="event.stopPropagation()">
+          🏨 Book a Room
+        </a>
+        <img src="https://www.ftjcfx.com/image-101711107-10433860" width="1" height="1" border="0"/>
+        ` : ''}
       </div>
     `;
     grid.appendChild(card);
@@ -3193,6 +3203,18 @@ async function openModal(id) {
           <div style="font-size:10px;color:#999;margin-top:4px;">Free to play · No real money required</div>
           <img src="https://www.awltovhc.com/image-101711107-17107127" width="1" height="1" border="0"/>
         </div>
+      `;
+    }
+
+    // Hotels.com — show when casino has on-site hotel
+    if (c.hotelOnsite || dbCasino.has_hotel) {
+      zone.innerHTML += `
+        <a href="https://www.kqzyfj.com/click-101711107-10433860"
+           target="_blank" rel="noopener sponsored"
+           style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:8px;background:#c8102e;color:#fff;font-weight:600;font-size:14px;text-decoration:none;margin-top:8px;">
+          🏨 Book a Hotel Room at Hotels.com
+        </a>
+        <img src="https://www.ftjcfx.com/image-101711107-10433860" width="1" height="1" border="0"/>
       `;
     }
   } catch (e) {

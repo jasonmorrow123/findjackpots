@@ -74,4 +74,19 @@ const LEGENDZ = {
   },
 };
 
-module.exports = { AFFILIATE_CONFIG, LEGENDZ };
+// ── Hotels.com — CJ Affiliate (active) ────────────────────────────────────
+// Generic hotel search — shows for any casino with has_hotel=true
+// Commission: $5-15 per hotel booking
+const HOTELS_COM = {
+  hotels_com: {
+    name: 'Hotels.com',
+    trackingUrl: 'https://www.kqzyfj.com/click-101711107-10433860',
+    pixelUrl: 'https://www.ftjcfx.com/image-101711107-10433860',
+    network: 'CJ',
+    commission: '$5-15 per booking',
+    epc: 166.88,
+    notes: 'Generic hotel search — works for all casino hotels'
+  }
+};
+
+module.exports = { AFFILIATE_CONFIG, LEGENDZ, HOTELS_COM };

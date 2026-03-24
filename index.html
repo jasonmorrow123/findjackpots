@@ -2537,6 +2537,14 @@ function scoreClass(score) {
   return 'low';
 }
 
+function scoreLabel(score) {
+  if (score >= 85) return 'Excellent';
+  if (score >= 75) return 'Great';
+  if (score >= 62) return 'Good';
+  if (score >= 50) return 'Fair';
+  return 'Basic';
+}
+
 // SVG icons for stat rows
 const ICONS = {
   star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>',
@@ -2768,7 +2776,7 @@ function renderCards(data) {
           </div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
-          <div class="score-badge ${c.scoreClass}"><span class="score-num">${c.score}</span><span class="score-lbl">Score</span></div>
+          <div class="score-badge ${c.scoreClass}"><span class="score-num">${c.score}</span><span class="score-lbl">${scoreLabel(c.score)}</span></div>
           <button id="cmp-top-${c.id}" onclick="toggleCompare(${c.id}, event)" style="font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:${inCompare ? 'var(--primary)' : 'transparent'};color:${inCompare ? '#fff' : 'var(--text-secondary)'};cursor:pointer;white-space:nowrap;transition:all 0.15s;">${inCompare ? '✓ Added' : '+ Compare'}</button>
         </div>
       </div>
@@ -3450,7 +3458,7 @@ function renderCompareModal() {
         <div class="cm-col-name">${c.name}</div>
         <div class="cm-score-badge ${c.scoreClass}">
           <span class="cm-score-num">${c.score}</span>
-          <span class="cm-score-lbl">Score</span>
+          <span class="cm-score-lbl">${scoreLabel(c.score)}</span>
         </div>
         ${distStr}
         <button class="cm-remove-btn" onclick="removeFromCompare(${c.id})">Remove</button>

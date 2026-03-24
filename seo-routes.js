@@ -35,7 +35,7 @@ const CASINO_OVERRIDES = {
         heading: 'The Vibe',
         body: `<p>El Cortez sits at 600 E. Fremont Street, just a short walk from the Fremont Street Experience canopy. Its location puts you within easy reach of the best of downtown Las Vegas without the shoulder-to-shoulder tourist crush of the main canopy area.</p>
 <p>Inside, the carpet is vintage, the lighting is warm, and the energy is relaxed and authentic. You'll find a mix of local grinders, savvy budget travelers, and casino history enthusiasts who came specifically <em>because</em> of the history. It's the anti-tourist-trap: unpretentious, honest, and genuinely fun.</p>
-<p>Free parking is available, which — in downtown Las Vegas — is no small thing. Walk in, park for free, play at $5 tables, eat a good meal, and leave feeling like Vegas actually gave something back for once.</p>`
+<p>Free parking is available, which — in downtown Las Vegas — is no small thing. Walk in, park for free, play at low-minimum tables, eat a good meal, and leave feeling like Vegas actually gave something back for once.</p>`
       },
       {
         heading: 'Club Cortez Loyalty Program',

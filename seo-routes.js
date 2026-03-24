@@ -7,6 +7,209 @@
 
 'use strict';
 
+// ─── Casino Content Overrides ──────────────────────────────────────────────
+// Rich, hand-crafted content for select casino pages.
+// Keys are casino IDs (integers). Each entry replaces the generic overview
+// description section with a detailed, engaging writeup.
+
+const CASINO_OVERRIDES = {
+
+  // ── El Cortez Hotel & Casino (Las Vegas, NV) ──────────────────────────
+  31: {
+    tagline: 'The Soul of Downtown Las Vegas Since 1941',
+    hero_blurb: `El Cortez Hotel & Casino isn't just old — it's <em>legendary</em>. Opened in 1941, it holds the distinction of being the oldest continuously operating hotel and casino in Las Vegas, a city that routinely demolishes its history. While the Strip reinvented itself a dozen times over, El Cortez held its ground on Fremont Street, staying true to what made Vegas great before neon went corporate.`,
+    sections: [
+      {
+        heading: 'History & Heritage',
+        body: `<p>El Cortez opened its doors on November 7, 1941 — just one month before the attack on Pearl Harbor thrust America into World War II. It has never closed since. That's over 80 years of uninterrupted operation, a record no other hotel-casino in Las Vegas can claim.</p>
+<p>The property has deep ties to Las Vegas lore. In 1945, Bugsy Siegel and a group of partners briefly owned El Cortez before flipping it to finance what would become the Flamingo. The original neon sign, installed in 1952, still glows above Fremont Street — one of the last surviving examples of vintage Vegas signage in active use. On February 22, 2013, El Cortez became the <strong>only casino in Nevada listed on the National Register of Historic Places</strong>, cementing its status as a genuine American landmark.</p>
+<p>Remarkably, El Cortez is also the <strong>last major family-run casino in Las Vegas</strong>. While every other major property has been absorbed by MGM, Caesars, or some Wall Street-backed REIT, El Cortez remains independently owned and operated. That independence shows in everything from the player-friendly rules at the tables to the staff who've worked there for decades.</p>`
+      },
+      {
+        heading: 'What Makes It Special',
+        body: `<p>In a city engineered to extract maximum money from visitors, El Cortez is almost subversive. Table minimums start at $5 for most hours — a near-impossibility on the Strip. The blackjack games here are among the best in Las Vegas: <strong>single-deck games are available</strong>, 3:2 payouts are standard, and dealer rules favor the player more than anywhere on Fremont Street.</p>
+<p>Because there's no corporate mandate pushing for higher margins, El Cortez can actually afford to treat players well. Regulars will tell you the staff knows their names, the drinks keep flowing, and the games are honest. It's the kind of casino where a $100 bankroll can stretch into an entire evening of genuine entertainment.</p>
+<p>One detail that surprises first-timers: El Cortez is one of the <strong>last casinos in Vegas offering actual coin-operated slot machines</strong>. The satisfying clatter of coins hitting a metal tray is a sensory experience that's vanished almost everywhere else. If you've never heard it, you're missing a piece of Vegas history.</p>`
+      },
+      {
+        heading: 'The Vibe',
+        body: `<p>El Cortez sits at 600 E. Fremont Street, just a short walk from the Fremont Street Experience canopy. Its location puts you within easy reach of the best of downtown Las Vegas without the shoulder-to-shoulder tourist crush of the main canopy area.</p>
+<p>Inside, the carpet is vintage, the lighting is warm, and the energy is relaxed and authentic. You'll find a mix of local grinders, savvy budget travelers, and casino history enthusiasts who came specifically <em>because</em> of the history. It's the anti-tourist-trap: unpretentious, honest, and genuinely fun.</p>
+<p>Free parking is available, which — in downtown Las Vegas — is no small thing. Walk in, park for free, play at $5 tables, eat a good meal, and leave feeling like Vegas actually gave something back for once.</p>`
+      },
+      {
+        heading: 'Club Cortez Loyalty Program',
+        body: `<p>The <strong>Club Cortez</strong> loyalty program rewards every dollar you play. The program runs three tiers, with benefits that scale up as you earn more points. Points are redeemable for free play, dining credits, and discounted hotel stays. Birthday rewards add a bonus free-play offer during your birth month, and monthly promotions give regulars another reason to keep coming back.</p>
+<p>Sign up at the players club desk — it's free, immediate, and worth doing before your first bet. Even casual visitors will rack up redeemable points during a single session at the tables or slots.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>Siegel's 1941</strong> is the main restaurant, a classic American diner named for the casino's brief Bugsy Siegel connection. It serves all-day breakfast, burgers, and comfort food staples at prices that feel like a time machine to a saner era. <strong>Hot Noods</strong> is a casual noodle bar with Asian-inspired dishes — a surprisingly good option for a quick, satisfying meal on the gaming floor. The <strong>Cortez Room</strong> bar anchors the casino with cold drinks and cocktails, while <strong>El Cortez Hot Dogs & Beer</strong> is exactly what it sounds like: a no-frills counter for a quick bite between sessions.</p>`
+      },
+      {
+        heading: 'Poker Room',
+        body: `<p>El Cortez runs a poker room with 8+ tables focused on low-to-mid stakes play. The staple game is $1/$2 No-Limit Hold'em, making it accessible for recreational players while still drawing experienced locals who appreciate the value. Regular tournaments give grinders something to chase. The room has a neighborhood poker club feel — competitive but not cutthroat, and far less intimidating than the big rooms on the Strip.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Is El Cortez casino worth visiting?',
+        a: 'Absolutely — especially for visitors who want authentic Las Vegas rather than a theme park version of it. El Cortez is the oldest continuously operating hotel-casino in Vegas, the only one on the National Register of Historic Places, and one of the last family-run properties in the city. The table games offer some of the best player-friendly rules in town, minimums start at $5, and free parking means your money goes further. It\'s a genuine Vegas institution.'
+      },
+      {
+        q: 'What is the Club Cortez loyalty program?',
+        a: 'Club Cortez is El Cortez\'s three-tier rewards program. Members earn points on all slot and table play, which can be redeemed for free play, dining, and hotel discounts. The program includes birthday free-play rewards and monthly promotional offers. Sign-up is free at the players club desk and takes just a few minutes — worth doing before your first bet.'
+      },
+      {
+        q: 'Does El Cortez have good blackjack?',
+        a: 'El Cortez is widely considered one of the best blackjack destinations in Las Vegas for value players. Single-deck games are available, most games pay 3:2 on blackjack (not the 6:5 you\'ll find at Strip casinos), and table minimums are often as low as $5 during regular hours. Seasoned players seek it out specifically for these player-friendly conditions.'
+      },
+      {
+        q: 'Is El Cortez on Fremont Street?',
+        a: 'Yes — El Cortez is located at 600 E. Fremont Street in downtown Las Vegas, a short walk from the Fremont Street Experience canopy. Its location is walkable to all of downtown\'s major attractions while being slightly removed from the main tourist crush, which many visitors appreciate.'
+      },
+      {
+        q: 'What restaurants are at El Cortez?',
+        a: 'El Cortez has several dining options: Siegel\'s 1941 (a classic American diner with all-day breakfast and comfort food), Hot Noods (an Asian-inspired noodle bar), the Cortez Room bar for cocktails, and El Cortez Hot Dogs & Beer for quick, casual bites. Prices are refreshingly reasonable by Las Vegas standards.'
+      },
+    ],
+  },
+
+  // ── Mystic Lake Casino Hotel (Prior Lake, MN) ─────────────────────────
+  448: {
+    tagline: 'The Midwest\'s Premier Casino Destination',
+    hero_blurb: `Mystic Lake Casino Hotel is the undisputed heavyweight of Upper Midwest gaming. With over 4,000 slot machines, a world-class poker room, major-name entertainment, and 600+ hotel rooms — all within 25 miles of downtown Minneapolis — it's not just the biggest casino in Minnesota. It's one of the most complete casino resorts in the entire country.`,
+    sections: [
+      {
+        heading: 'Size & Scale',
+        body: `<p>Numbers tell part of the story: <strong>4,000+ slot machines</strong>, hundreds of table games, a 22-table poker room, a full sportsbook, bingo hall, and a hotel tower with over 600 rooms. Mystic Lake is the largest casino in the Upper Midwest by virtually any measure, and the scale shows from the moment you walk in.</p>
+<p>The casino floor is massive but well-organized, with clear sight lines, consistent signage, and enough variety that you can spend an entire day without repeating yourself. High-limit rooms offer stakes for serious players; low-denomination areas keep things accessible for casual visitors. The slot selection runs from classic three-reel games to the latest video slots and linked progressive machines with jackpots that regularly climb into six figures.</p>`
+      },
+      {
+        heading: 'Location & Access',
+        body: `<p>Mystic Lake sits in Prior Lake, Minnesota — <strong>about 25 miles southwest of Minneapolis</strong>, roughly a 35-minute drive from downtown depending on traffic. Free parking is plentiful, and the resort operates a <strong>free shuttle service from the Twin Cities</strong>, making it accessible without a car.</p>
+<p>The drive itself is easy and pleasant, following Highway 169 southwest through the western suburbs and into the bluffs and lakes of Scott County. For Twin Cities residents, Mystic Lake is the obvious choice for a gaming night out — close enough to be spontaneous, large enough to always have something new happening.</p>`
+      },
+      {
+        heading: 'Club M Loyalty Program',
+        body: `<p>The <strong>Club M</strong> loyalty program is one of the most generous casino rewards programs in the Midwest, and regulars will tell you it's the main reason they keep coming back. The program operates on three tiers — Club M, Mysticash, and Diamond — with benefits that escalate significantly as you move up.</p>
+<p>Members earn <strong>Mysticash</strong> on every dollar played on slots and table games. Points convert to free play, dining credits, hotel discounts, and merchandise. Higher tiers unlock priority access to concert tickets (a big deal given the caliber of acts that perform at Mystic Lake Center), exclusive promotions, and dedicated host services. Birthday free play is a standard perk across all tiers, and the calendar is packed with bonus-point events and promotional drawings throughout the year.</p>
+<p>Pro tip: sign up for Club M before your first visit — you'll earn points from your very first dollar played and may qualify for a new member welcome offer.</p>`
+      },
+      {
+        heading: 'Entertainment',
+        body: `<p>Mystic Lake Center is one of the premier entertainment venues in Minnesota, hosting major national touring acts across genres — country, rock, R&B, comedy, and more. The venue's intimate size relative to other concert halls means you're never far from the stage, and the sound quality is excellent.</p>
+<p>On any given weekend, Mystic Lake might have a sold-out country headliner in the main theater, a comedy night in a smaller room, and a DJ set in the bar — while the poker room is running a tournament and promotions drawings are happening on the floor. It's a full entertainment ecosystem, not just a place to pull slot handles.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p>The resort's dining lineup covers every mood and budget. <strong>Mystic Steakhouse</strong> anchors the fine-dining end with aged beef, seafood, and an extensive wine list — a genuine restaurant destination in its own right. <strong>Hop House</strong> doubles as a sports bar and entertainment venue with craft beer, pub fare, and live music. <strong>The Meadows</strong> handles casual everyday dining, <strong>Mystic Deli</strong> covers quick counter-service options, and the <strong>Center Bar</strong> and <strong>Stage Door Bar</strong> keep the drinks flowing near the entertainment venues.</p>`
+      },
+      {
+        heading: 'Poker Room',
+        body: `<p>Mystic Lake's poker room runs <strong>22 tables</strong> and is consistently ranked among the best poker rooms in Minnesota. Daily tournaments attract serious players from across the metro; cash games run from $2/$4 Limit up to $5/$10 No-Limit Hold'em. The room is professionally staffed and well-managed, with a competitive but welcoming atmosphere for players of all levels.</p>`
+      },
+      {
+        heading: 'Jackpots & Slots',
+        body: `<p>With the sheer volume of machines and linked progressive networks, Mystic Lake reports some of the biggest jackpots in Minnesota on a regular basis. <strong>Six-figure slot wins are not uncommon</strong>, and the progressive banks across the floor are always building. FindJackpots tracks reported jackpots in real time — check the jackpot feed above for the latest big wins.</p>`
+      },
+      {
+        heading: 'Community Ownership',
+        body: `<p>Mystic Lake is owned and operated by the <strong>Shakopee Mdewakanton Sioux Community (SMSC)</strong>. Casino revenues fund tribal member benefits including healthcare, education, and housing, and the SMSC is known for its extensive charitable giving to nonprofits across Minnesota. When you play at Mystic Lake, you're supporting a community institution with deep roots in the region.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Is Mystic Lake the biggest casino in Minnesota?',
+        a: 'Yes — Mystic Lake Casino Hotel is the largest casino in Minnesota and the entire Upper Midwest. It features over 4,000 slot machines, hundreds of table games, a 22-table poker room, a full entertainment venue, and 600+ hotel rooms, making it one of the most complete casino resorts in the country.'
+      },
+      {
+        q: 'How far is Mystic Lake from Minneapolis?',
+        a: 'Mystic Lake Casino Hotel is located in Prior Lake, Minnesota, approximately 25 miles southwest of downtown Minneapolis — about a 35-minute drive. Free shuttle service is available from the Twin Cities for guests who prefer not to drive.'
+      },
+      {
+        q: 'What is the Club M loyalty program at Mystic Lake?',
+        a: 'Club M is Mystic Lake\'s loyalty program, offering three tiers: Club M, Mysticash, and Diamond. Members earn Mysticash points on every dollar played, redeemable for free play, dining, hotel stays, and merchandise. Benefits include birthday free play, concert ticket priority, hotel discounts, and bonus-point promotions. Sign-up is free and immediate benefits begin on your first visit.'
+      },
+      {
+        q: 'Does Mystic Lake have a hotel?',
+        a: 'Yes — Mystic Lake Casino Hotel has over 600 hotel rooms in its on-site tower. The hotel is connected directly to the casino and entertainment complex, making it easy to move between rooms, gaming, dining, and shows without going outside. Hotel packages are frequently available through Club M promotions.'
+      },
+      {
+        q: 'What are the best slots at Mystic Lake?',
+        a: 'Mystic Lake has over 4,000 slot machines ranging from classic three-reel games to modern video slots and progressive jackpot banks. The linked progressive machines on the main floor regularly build to six-figure jackpots. For the latest big wins and active jackpot feeds, check the FindJackpots tracker for Mystic Lake — updated in real time as jackpots are reported.'
+      },
+    ],
+  },
+
+  // ── Treasure Island Resort & Casino (Welch, MN) ───────────────────────
+  461: {
+    tagline: 'Minnesota\'s River Casino Escape',
+    hero_blurb: `Treasure Island Resort & Casino offers something no other casino in Minnesota can: a genuine resort setting on the banks of the Mississippi River, tucked into the scenic bluffs of Goodhue County. It's a full weekend destination — river views, a spa, a golf course next door, live entertainment, and a casino floor that punches well above its weight. About an hour southeast of Minneapolis, it's close enough for a spontaneous getaway, scenic enough to feel like a real escape.`,
+    sections: [
+      {
+        heading: 'Location & Setting',
+        body: `<p>Treasure Island is located in Welch, Minnesota, <strong>approximately 60 miles southeast of Minneapolis and St. Paul</strong> — about an hour's drive following the Mississippi River corridor through some of the most beautiful scenery in the state. The bluffs of Goodhue County frame the property, and the river itself is visible from much of the resort.</p>
+<p>That setting is Treasure Island's signature advantage over every other casino in Minnesota. While most MN casinos are planted in flat suburban or rural landscapes, TI has genuine natural beauty working in its favor. The drive down Highway 61 along the Mississippi is part of the experience — a scenic warmup to a weekend that never feels like just a "casino trip."</p>`
+      },
+      {
+        heading: 'Owned by the Prairie Island Indian Community',
+        body: `<p>Treasure Island is owned and operated by the <strong>Prairie Island Indian Community</strong>, part of the Dakota Nation. The community has stewarded this land along the Mississippi for generations. Casino revenues support tribal healthcare, education, housing, and cultural preservation programs. The connection to place — the river, the bluffs, the land — is embedded in the resort's identity in a way that feels genuine rather than decorative.</p>`
+      },
+      {
+        heading: 'The Casino Floor',
+        body: `<p>The gaming floor spans <strong>over 100,000 square feet</strong>, making it one of the larger casino floors in Minnesota. Slot machines dominate the main floor, with a wide variety of denominations, themes, and formats — from penny video slots to high-limit machines. Progressive jackpot banks are spread throughout the floor, and Treasure Island is known among Minnesota players for <strong>frequent slot wins</strong>.</p>
+<p>Table games include blackjack, roulette, craps, and specialty games. The floor is well-maintained and the staff is generally praised for being friendly and attentive — qualities that matter when you're spending a weekend rather than just a few hours.</p>`
+      },
+      {
+        heading: 'The Full Resort Experience',
+        body: `<p>Treasure Island is a true resort, not just a casino with rooms attached. The property includes a full hotel with river and bluff views, an indoor pool, and a <strong>full-service spa</strong> — the kind of amenities that make a weekend trip feel like an actual vacation. The <strong>Cannon Golf Club</strong>, adjacent to the resort, is one of the better public golf courses in southeastern Minnesota, adding another reason to extend your stay.</p>
+<p>Weekend packages typically bundle hotel stays with dining credits, free play, and sometimes spa services — making it surprisingly affordable to do it right. Check the promotions page before booking; seasonal packages often offer significant value over à la carte rates.</p>`
+      },
+      {
+        heading: 'TI Rewards Loyalty Program',
+        body: `<p>The <strong>TI Rewards</strong> program is Treasure Island's loyalty club, earning members points on slot play and table games redeemable for free play, dining, hotel discounts, and priority access to concerts and events. Tier advancement unlocks additional benefits including enhanced free-play rates and exclusive promotions.</p>
+<p>Sign up before your first visit — new member offers are often available, and you'll start accumulating points from your first dollar played. The promotions calendar at TI tends to be active, with bonus-point events, drawings, and seasonal offers running throughout the year.</p>`
+      },
+      {
+        heading: 'Entertainment',
+        body: `<p>The <strong>Treasure Island Center</strong> hosts concerts, comedy shows, and special events throughout the year. The venue draws regional and national acts, and the smaller, more intimate setting compared to large arenas means you're close to the action regardless of where you sit. Entertainment is a core part of the TI experience — check the events calendar when planning your visit, as shows often sell out on weekends.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p>Treasure Island's dining lineup covers the full spectrum from casual to upscale. Fine dining options showcase local and regional ingredients with menus that change seasonally. Casual restaurants and buffet-style dining serve as convenient options when you want something quick between sessions on the floor. The bar and lounge areas keep the social scene going well past when the tables are still running.</p>`
+      },
+      {
+        heading: 'Jackpots',
+        body: `<p>Treasure Island has a reputation among Minnesota players as a property where <strong>jackpots hit with regularity</strong>. The progressive banks across the main floor build consistently and pay out frequently. FindJackpots tracks reported jackpots at TI in real time — see the feed above for the latest big wins and trending machines.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Where is Treasure Island Casino in Minnesota?',
+        a: 'Treasure Island Resort & Casino is located in Welch, Minnesota, on the banks of the Mississippi River in Goodhue County. It\'s approximately 60 miles southeast of Minneapolis/St. Paul — about an hour\'s drive along the scenic Highway 61 corridor through the Mississippi River bluffs.'
+      },
+      {
+        q: 'What is the TI Rewards program?',
+        a: 'TI Rewards is Treasure Island\'s loyalty program. Members earn points on slot play and table games, redeemable for free play, dining credits, hotel discounts, and priority access to concerts and events at the Treasure Island Center. Sign-up is free, and new member promotions are often available. The program has multiple tiers with escalating benefits.'
+      },
+      {
+        q: 'Does Treasure Island Casino have a hotel?',
+        a: 'Yes — Treasure Island Resort & Casino includes a full-service hotel with river and bluff views, an indoor pool, and a spa. Weekend resort packages often bundle hotel stays with free play and dining credits. The adjacent Cannon Golf Club is another reason many guests extend their stays to a full weekend.'
+      },
+      {
+        q: 'How far is Treasure Island Casino from Minneapolis?',
+        a: 'Treasure Island Resort & Casino is approximately 60 miles southeast of Minneapolis and St. Paul — about a 60-minute drive via Highway 52 and Highway 61. The scenic route along the Mississippi River bluffs makes the drive itself an enjoyable part of the trip. Unlike most Minnesota casinos, there is no free shuttle service, so a car is recommended.'
+      },
+      {
+        q: 'What restaurants are at Treasure Island Casino?',
+        a: 'Treasure Island has multiple dining options ranging from fine dining with seasonal menus to casual restaurants and quick-service counters on the casino floor. The property is a full resort, so dining quality tends to be higher than at standalone casino properties. Specific restaurant offerings and hours vary seasonally — check the Treasure Island website for current options before your visit.'
+      },
+    ],
+  },
+
+};
+
 // ─── Helpers ───────────────────────────────────────────────────────────────
 
 function slugify(str) {
@@ -1366,6 +1569,23 @@ ${siteFooter()}
         } catch (e) { /* geo query failed */ }
       }
 
+      // Casino content override
+      const override = CASINO_OVERRIDES[casinoId] || null;
+
+      // Build override FAQ JSON-LD (merged into page if override exists)
+      let overrideFaqJsonLd = null;
+      if (override && override.faqs && override.faqs.length > 0) {
+        overrideFaqJsonLd = {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: override.faqs.map(f => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        };
+      }
+
       // JSON-LD LocalBusiness
       const jsonLd = {
         '@context': 'https://schema.org',
@@ -1447,6 +1667,28 @@ ${siteHeader()}
     </div>` : ''}
   </div>
 
+  ${override ? `
+  <div class="section" style="background:#f4f7fb;border-radius:14px;padding:28px 32px;margin-top:24px;border-left:4px solid #1e3a5f;">
+    <p style="font-size:1.25rem;font-weight:700;color:#1e3a5f;margin:0 0 12px;">${override.tagline}</p>
+    <p style="font-size:1.05rem;color:#333;line-height:1.7;margin:0 0 20px;">${override.hero_blurb}</p>
+    ${override.sections.map(s => `
+    <div style="margin-bottom:24px;">
+      <h3 style="color:#1e3a5f;font-size:1.05rem;margin:0 0 10px;border-bottom:1px solid #cdd8e8;padding-bottom:6px;">${s.heading}</h3>
+      <div style="color:#333;line-height:1.75;font-size:0.97rem;">${s.body}</div>
+    </div>`).join('')}
+    ${override.faqs && override.faqs.length > 0 ? `
+    <div style="margin-top:28px;">
+      <h3 style="color:#1e3a5f;font-size:1.05rem;margin:0 0 16px;border-bottom:1px solid #cdd8e8;padding-bottom:6px;">Frequently Asked Questions</h3>
+      <dl>
+        ${override.faqs.map(f => `
+        <div class="faq-item" style="margin-bottom:16px;">
+          <dt style="font-weight:700;color:#1e3a5f;margin-bottom:4px;">${f.q}</dt>
+          <dd style="margin:0;color:#333;line-height:1.7;">${f.a}</dd>
+        </div>`).join('')}
+      </dl>
+    </div>` : ''}
+  </div>` : ''}
+
   ${adSlot()}
 
   <div class="section">
@@ -1522,6 +1764,7 @@ ${siteHeader()}
 
 <script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>
 <script type="application/ld+json">${JSON.stringify(faqJsonLd, null, 2)}</script>
+${overrideFaqJsonLd ? `<script type="application/ld+json">${JSON.stringify(overrideFaqJsonLd, null, 2)}</script>` : ''}
 ${siteFooter()}
 </body>
 </html>`;

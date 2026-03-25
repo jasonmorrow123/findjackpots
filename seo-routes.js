@@ -1395,11 +1395,12 @@ module.exports = function registerSEORoutes(app, pool) {
 
         // ── Hero stat helpers ────────────────────────────────────────────
         const heroCasinoCount  = stats.casino_count  || casinos.length || '—';
-        const heroTopJackpot   = stats.top_jackpot   ? fmt$(stats.top_jackpot) : 'See Live';
+        const heroTopJackpot   = stats.top_jackpot   ? fmt$(stats.top_jackpot) : null;
         const heroHotelCount   = stats.hotel_count   || '—';
         const heroParkingCount = stats.parking_count || '—';
 
         function statPill(value, label) {
+          if (!value) return ''; // hide pill if no data
           return `<div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:12px 20px;text-align:center;min-width:90px;">
             <div style="font-size:1.6rem;font-weight:800;color:#f2c94c;line-height:1;">${value}</div>
             <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">${label}</div>

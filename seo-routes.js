@@ -1335,34 +1335,126 @@ module.exports = function registerSEORoutes(app, pool) {
         const info = STATE_INFO[stateCode] || { name: stateSlug, slug: stateSlug, intro: '' };
         const stateName = info.name;
 
-        // Query casinos
-        const casinosResult = await pool.query(`
-          SELECT c.id, c.name, c.slug, c.city, c.state, c.address,
-                 c.has_hotel, c.has_poker, c.has_sportsbook, c.has_bingo, c.has_slots, c.free_parking,
-                 c.loyalty_program_name, c.loyalty_points_per_dollar,
-                 c.monthly_revenue_cents, c.lat, c.lng,
-                 r.rating, r.review_count
-          FROM casinos c
-          LEFT JOIN reviews r ON r.casino_id = c.id AND r.source = 'yelp'
-          WHERE TRIM(c.state) = $1
-          ORDER BY r.review_count DESC NULLS LAST, c.name ASC
-          LIMIT 100
-        `, [stateCode]);
-        const casinos = casinosResult.rows;
+        // ── All queries in parallel ──────────────────────────────────────
+        const [casinosResult, jackpotsResult, statsResult, topCasinosResult] = await Promise.all([
+          // Full casino list (for JSON-LD)
+          pool.query(`
+            SELECT c.id, c.name, c.slug, c.city, c.state, c.address,
+                   c.has_hotel, c.has_poker, c.has_sportsbook, c.has_bingo, c.has_slots, c.free_parking,
+                   c.loyalty_program_name, c.loyalty_points_per_dollar,
+                   c.monthly_revenue_cents, c.lat, c.lng,
+                   r.rating, r.review_count
+            FROM casinos c
+            LEFT JOIN reviews r ON r.casino_id = c.id AND r.source = 'yelp'
+            WHERE TRIM(c.state) = $1
+            ORDER BY r.review_count DESC NULLS LAST, c.name ASC
+            LIMIT 100
+          `, [stateCode]),
+          // Top jackpots
+          pool.query(`
+            SELECT j.amount_cents, j.machine_name, j.won_at, j.created_at,
+                   c.name AS casino_name, c.city, c.id AS casino_id, c.slug AS casino_slug
+            FROM jackpots j
+            JOIN casinos c ON c.id = j.casino_id
+            WHERE TRIM(c.state) = $1
+            ORDER BY j.amount_cents DESC
+            LIMIT 10
+          `, [stateCode]),
+          // Hero stats
+          pool.query(`
+            SELECT
+              COUNT(DISTINCT c.id)::int                                     AS casino_count,
+              MAX(j.amount_cents)                                            AS top_jackpot,
+              COUNT(DISTINCT c.id) FILTER (WHERE c.has_hotel = true)::int   AS hotel_count,
+              COUNT(DISTINCT c.id) FILTER (WHERE c.free_parking = true)::int AS parking_count
+            FROM casinos c
+            LEFT JOIN jackpots j ON j.casino_id = c.id
+            WHERE TRIM(c.state) = $1
+          `, [stateCode]),
+          // Top 10 casinos card grid
+          pool.query(`
+            SELECT c.id, c.name, c.city, c.has_hotel, c.free_parking, c.has_poker,
+                   c.has_sportsbook, c.loyalty_program_name, c.slug,
+                   MAX(j.amount_cents) AS top_jackpot,
+                   r.rating, r.review_count
+            FROM casinos c
+            LEFT JOIN jackpots j ON j.casino_id = c.id
+            LEFT JOIN reviews r ON r.casino_id = c.id AND r.source = 'yelp'
+            WHERE TRIM(c.state) = $1
+            GROUP BY c.id, c.name, c.city, c.has_hotel, c.free_parking, c.has_poker,
+                     c.has_sportsbook, c.loyalty_program_name, c.slug, r.rating, r.review_count
+            ORDER BY r.review_count DESC NULLS LAST, c.id
+            LIMIT 10
+          `, [stateCode]),
+        ]);
 
-        // Query jackpots for this state
-        const jackpotsResult = await pool.query(`
-          SELECT j.amount_cents, j.machine_name, j.won_at, j.created_at,
-                 c.name AS casino_name, c.city, c.id AS casino_id, c.slug AS casino_slug
-          FROM jackpots j
-          JOIN casinos c ON c.id = j.casino_id
-          WHERE TRIM(c.state) = $1
-          ORDER BY j.amount_cents DESC
-          LIMIT 10
-        `, [stateCode]);
-        const jackpots = jackpotsResult.rows;
+        const casinos    = casinosResult.rows;
+        const jackpots   = jackpotsResult.rows;
+        const stats      = statsResult.rows[0] || {};
+        const topCasinos = topCasinosResult.rows;
 
-        // JSON-LD: ItemList
+        // ── Hero stat helpers ────────────────────────────────────────────
+        const heroCasinoCount  = stats.casino_count  || casinos.length || '—';
+        const heroTopJackpot   = stats.top_jackpot   ? fmt$(stats.top_jackpot) : 'N/A';
+        const heroHotelCount   = stats.hotel_count   || '—';
+        const heroParkingCount = stats.parking_count || '—';
+
+        function statPill(value, label) {
+          return `<div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:12px 20px;text-align:center;min-width:90px;">
+            <div style="font-size:1.6rem;font-weight:800;color:#f2c94c;line-height:1;">${value}</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">${label}</div>
+          </div>`;
+        }
+
+        // ── Casino card grid ─────────────────────────────────────────────
+        function casinoCard(c) {
+          const r = parseFloat(c.rating || 0);
+          let borderColor = '#dde6f0', scoreLabel = '', scoreBg = 'transparent', scoreText = '#888';
+          if (r >= 4.5)      { borderColor = '#4caf50'; scoreLabel = 'Excellent'; scoreBg = '#4caf50'; scoreText = '#fff'; }
+          else if (r >= 4.0) { borderColor = '#8bc34a'; scoreLabel = 'Very Good'; scoreBg = '#8bc34a'; scoreText = '#fff'; }
+          else if (r >= 3.5) { borderColor = '#f2c94c'; scoreLabel = 'Good';      scoreBg = '#f2c94c'; scoreText = '#1a1a2e'; }
+          else if (r >= 3.0) { borderColor = '#ff9800'; scoreLabel = 'Average';   scoreBg = '#ff9800'; scoreText = '#fff'; }
+
+          const amenities = [
+            c.has_hotel      && '🏨',
+            c.free_parking   && '🅿️',
+            c.has_poker      && '♠️',
+            c.has_sportsbook && '📊',
+          ].filter(Boolean).join(' ');
+
+          const cs = slugify(c.name);
+          return `<div style="background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.07);border-left:4px solid ${borderColor};padding:18px 20px;display:flex;flex-direction:column;gap:6px;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 6px 20px rgba(0,0,0,0.13)'" onmouseout="this.style.boxShadow='0 2px 10px rgba(0,0,0,0.07)'">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+    <a href="/casino/${c.id}/${cs}" style="font-weight:700;color:#1e3a5f;font-size:0.97rem;line-height:1.3;text-decoration:none;flex:1;">${c.name}</a>
+    ${scoreLabel ? `<span style="background:${scoreBg};color:${scoreText};border-radius:20px;padding:2px 9px;font-size:0.75rem;font-weight:700;white-space:nowrap;flex-shrink:0;">${scoreLabel}</span>` : ''}
+  </div>
+  <div style="color:#888;font-size:0.83rem;">📍 ${c.city || ''}</div>
+  ${amenities ? `<div style="font-size:1rem;letter-spacing:3px;">${amenities}</div>` : ''}
+  ${c.loyalty_program_name ? `<div style="font-size:0.82rem;color:#5c7aaa;">💎 ${c.loyalty_program_name}</div>` : ''}
+  ${c.top_jackpot ? `<div style="font-size:0.82rem;color:#e5a820;font-weight:600;">🏆 Top jackpot: ${fmt$(c.top_jackpot)}</div>` : ''}
+  <a href="/casino/${c.id}/${cs}" style="margin-top:4px;font-size:0.83rem;font-weight:600;color:#5c7aaa;text-decoration:none;">View Details →</a>
+</div>`;
+        }
+
+        const casinoCardGrid = topCasinos.length
+          ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:16px;">${topCasinos.map(casinoCard).join('')}</div>`
+          : `<p style="color:#888;">No casino data yet. Check back soon!</p>`;
+
+        // ── Jackpot list ─────────────────────────────────────────────────
+        const jackpotItems = jackpots.length > 0
+          ? `<ul class="jackpot-list">
+            ${jackpots.map(j => `
+              <li>
+                <div class="jackpot-amount">${fmt$(j.amount_cents)}</div>
+                <div class="jackpot-meta">
+                  <div class="machine">${j.machine_name || 'Slot Machine'}</div>
+                  <div class="casino"><a href="/casino/${j.casino_id}/${slugify(j.casino_name)}">${j.casino_name}</a> · ${j.city || ''}</div>
+                </div>
+              </li>`).join('')}
+          </ul>`
+          : `<p style="color:#888;">No jackpots recorded for ${stateName} yet. Check back soon!</p>`;
+
+        // ── JSON-LD ──────────────────────────────────────────────────────
         const jsonLd = {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
@@ -1377,7 +1469,6 @@ module.exports = function registerSEORoutes(app, pool) {
           })),
         };
 
-        // JSON-LD: FAQPage
         const stateFaqs = info.faqs || [];
         const faqJsonLd = stateFaqs.length > 0 ? {
           '@context': 'https://schema.org',
@@ -1389,99 +1480,115 @@ module.exports = function registerSEORoutes(app, pool) {
           })),
         } : null;
 
-        // Casinos table rows
-        const casinoRows = casinos.map(c => `
-          <tr>
-            <td class="casino-name">
-              <a href="/casino/${c.id}/${slugify(c.name)}">${c.name}</a>
-              <div class="casino-city">${c.city || ''}</div>
-            </td>
-            <td>${scoreBadgeHtml(c.rating)}</td>
-            <td>${amenityBadges(c)}</td>
-            <td>${c.loyalty_program_name || '—'}</td>
-          </tr>`).join('');
+        // ── Shared link styles ───────────────────────────────────────────
+        const quickLinkStyle = `color:#1e3a5f;font-weight:600;font-size:0.88rem;white-space:nowrap;text-decoration:none;padding:4px 2px;border-bottom:2px solid transparent;transition:border-color 0.15s;`;
 
-        // Jackpot rows
-        const jackpotItems = jackpots.length > 0
-          ? `<ul class="jackpot-list">
-            ${jackpots.map(j => `
-              <li>
-                <div class="jackpot-amount">${fmt$(j.amount_cents)}</div>
-                <div class="jackpot-meta">
-                  <div class="machine">${j.machine_name || 'Slot Machine'}</div>
-                  <div class="casino"><a href="/casino/${j.casino_id}/${slugify(j.casino_name)}">${j.casino_name}</a> · ${j.city || ''}</div>
-                </div>
-              </li>`).join('')}
-          </ul>`
-          : `<p style="color:#888;">No jackpots recorded for ${stateName} yet. Check back soon!</p>`;
-
+        // ── HTML ─────────────────────────────────────────────────────────
         const html = `${htmlHead({
           title: `Best Casinos in ${stateName} | FindJackpots`,
           description: `Find the best casinos in ${stateName}. Compare ${casinos.length} casinos by jackpots, amenities, loyalty programs, and ratings. Updated daily.`,
           canonical: `https://findjackpots.com/casinos/${stateSlug}`,
         })}
+<style>
+  @media (max-width: 600px) {
+    .state-card-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
 <body>
 ${siteHeader()}
 
-<div class="page-hero">
-  <div class="container">
-    <h1>Best Casinos in ${stateName}</h1>
-    <p>Compare ${casinos.length} casinos by jackpots, amenities, ratings, and loyalty programs</p>
+<!-- ═══ PREMIUM HERO ═══════════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#0f1c35 0%,#1e3a5f 50%,#2d5282 100%);padding:60px 24px;text-align:center;position:relative;overflow:hidden;">
+  <!-- Decorative background symbols -->
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0.04;font-size:100px;display:flex;flex-wrap:wrap;gap:16px;overflow:hidden;pointer-events:none;user-select:none;align-content:flex-start;padding:10px;">
+    🎰🎲🃏🎯🎰🎲🃏🎯🎰🎲🃏🎯🎰🎲🃏🎯🎰🎲🃏🎯🎰🎲🃏🎯🎰🎲🃏🎯🎰🎲🃏🎯
+  </div>
+  <!-- Gold accent line -->
+  <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#f2c94c,#e5a820,#f2c94c);"></div>
+
+  <div style="position:relative;z-index:1;max-width:800px;margin:0 auto;">
+    <div style="display:inline-block;background:rgba(242,201,76,0.15);border:1px solid rgba(242,201,76,0.3);border-radius:99px;padding:6px 16px;font-size:12px;color:#f2c94c;font-weight:600;margin-bottom:16px;letter-spacing:0.08em;">
+      🎰 CASINO GUIDE
+    </div>
+    <h1 style="font-size:clamp(1.8rem,5vw,3.4rem);font-weight:900;color:#fff;margin:0 0 12px;letter-spacing:-0.02em;line-height:1.1;">
+      Best Casinos in ${stateName}
+    </h1>
+    <p style="font-size:1.1rem;color:rgba(255,255,255,0.75);margin:0 0 32px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6;">
+      Compare jackpots, payouts, loyalty programs &amp; amenities across ${heroCasinoCount} casinos
+    </p>
+    <!-- Stat pills -->
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      ${statPill(heroCasinoCount, 'Casinos')}
+      ${statPill(heroTopJackpot, 'Top Jackpot')}
+      ${statPill(heroHotelCount, 'With Hotel')}
+      ${statPill(heroParkingCount, 'Free Parking')}
+    </div>
   </div>
 </div>
 
+<!-- ═══ STICKY QUICK LINKS ═════════════════════════════════════════════ -->
+<div style="background:#fff;border-bottom:1px solid #e8eef5;padding:10px 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;gap:24px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+    <a href="#casinos"  style="${quickLinkStyle}">🎰 Casinos</a>
+    <a href="#jackpots" style="${quickLinkStyle}">🏆 Jackpots</a>
+    <a href="#about"    style="${quickLinkStyle}">📖 About</a>
+    <a href="#faq"      style="${quickLinkStyle}">❓ FAQ</a>
+    <a href="https://findjackpots.com" style="${quickLinkStyle}color:#e5a820;">🗺️ Map</a>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ════════════════════════════════════════════════════ -->
 <div class="container">
 
-  <div class="section">
+  <!-- ── TOP CASINOS CARD GRID ───────────────────────────────────────── -->
+  <h2 id="casinos" style="font-size:1.55rem;font-weight:800;color:#1e3a5f;margin:40px 0 4px;padding-top:8px;border-top:2px solid #f0f4f8;">
+    🎰 Top Casinos in ${stateName}
+  </h2>
+  <p style="color:#666;font-size:0.9rem;margin:0 0 4px;">Top ${topCasinos.length} by player rating — <a href="#" style="color:#5c7aaa;">see all ${heroCasinoCount} →</a></p>
+  ${casinoCardGrid}
+
+  ${adSlot()}
+
+  <!-- ── JACKPOTS ────────────────────────────────────────────────────── -->
+  <h2 id="jackpots" style="font-size:1.55rem;font-weight:800;color:#1e3a5f;margin:40px 0 16px;padding-top:20px;border-top:2px solid #f0f4f8;">
+    🏆 Top Jackpots in ${stateName}
+  </h2>
+  ${jackpotItems}
+  <p style="margin-top:16px;font-size:0.9rem;">
+    <a href="/casino-jackpot-tracker" style="font-weight:600;color:#5c7aaa;">See all jackpot winners →</a>
+    &nbsp;·&nbsp;
+    <a href="/biggest-jackpots" style="color:#5c7aaa;">Biggest jackpots nationwide</a>
+  </p>
+
+  ${adSlot()}
+
+  <!-- ── INTRO / ABOUT ───────────────────────────────────────────────── -->
+  <h2 id="about" style="font-size:1.55rem;font-weight:800;color:#1e3a5f;margin:40px 0 16px;padding-top:20px;border-top:2px solid #f0f4f8;">
+    📖 About Casinos in ${stateName}
+  </h2>
+  <div style="background:#f8faff;border-left:4px solid #5c7aaa;padding:24px 28px;border-radius:0 12px 12px 0;margin-bottom:8px;">
     <div class="intro-text">${info.intro || `<p>Explore the best casinos in ${stateName} on FindJackpots. We track jackpots, amenities, and loyalty programs so you can find the best place to play.</p>`}</div>
   </div>
 
-  ${adSlot()}
-
-  <div class="section">
-    <h2>Casinos in ${stateName} (${casinos.length})</h2>
-    <div style="overflow-x:auto;">
-      <table class="casino-table">
-        <thead>
-          <tr>
-            <th>Casino</th>
-            <th>Rating</th>
-            <th>Amenities</th>
-            <th>Loyalty Program</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${casinoRows || '<tr><td colspan="4" style="color:#888;padding:20px;">No casinos found.</td></tr>'}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Top Jackpots in ${stateName}</h2>
-    ${jackpotItems}
-    <p style="margin-top:16px;"><a href="/casino-jackpot-tracker" style="font-weight:600;color:#5c7aaa;">See all jackpot winners →</a> &nbsp;|&nbsp; <a href="/biggest-jackpots">Biggest jackpots nationwide</a></p>
-  </div>
-
-  ${adSlot()}
-
-  <div class="cta-box">
+  <!-- ── CTA ────────────────────────────────────────────────────────── -->
+  <div class="cta-box" style="margin:40px 0;">
     <h3>🎰 See Live Jackpots &amp; Casino Map</h3>
     <p>Use FindJackpots to explore the full interactive map, set jackpot alerts, and compare casinos side-by-side.</p>
     <a class="cta-btn" href="https://findjackpots.com">Open FindJackpots App →</a>
   </div>
 
+  <!-- ── FAQ ────────────────────────────────────────────────────────── -->
   ${stateFaqs.length > 0 ? `
-  <div class="section">
-    <h2>Frequently Asked Questions: Gambling in ${stateName}</h2>
-    <dl>
-      ${stateFaqs.map(f => `
-      <div class="faq-item">
-        <dt>${f.q}</dt>
-        <dd>${f.a}</dd>
-      </div>`).join('')}
-    </dl>
-  </div>` : ''}
+  <h2 id="faq" style="font-size:1.55rem;font-weight:800;color:#1e3a5f;margin:40px 0 16px;padding-top:20px;border-top:2px solid #f0f4f8;">
+    ❓ Frequently Asked Questions: Gambling in ${stateName}
+  </h2>
+  <dl>
+    ${stateFaqs.map(f => `
+    <div class="faq-item">
+      <dt>${f.q}</dt>
+      <dd>${f.a}</dd>
+    </div>`).join('')}
+  </dl>` : ''}
 
   ${otherStatesHtml(stateSlug)}
 
@@ -1494,7 +1601,6 @@ ${siteHeader()}
       <a href="/casino-jackpot-tracker">Jackpot Tracker</a> ·
       <a href="/best-casinos-near-me">Compare Casinos Near Me</a>
     </p>
-    <p style="margin-top:8px;"><a href="/casino-jackpot-tracker" style="font-weight:600;color:#5c7aaa;">See all jackpot winners →</a></p>
   </div>
 
 </div>

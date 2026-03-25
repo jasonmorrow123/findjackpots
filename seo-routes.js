@@ -743,6 +743,577 @@ const STATE_INFO = {
       },
     ],
   },
+
+  // ── Bellagio (Las Vegas, NV) ──────────────────────────────────────────
+  6: {
+    tagline: 'Where the Strip\'s Highest Stakes Meet Its Most Iconic Address',
+    hero_blurb: `The Bellagio isn't just a casino — it's the benchmark against which every other luxury resort on the Las Vegas Strip is measured. From the 1,000-fountain choreographed water ballet on its eight-acre lake to the world-class poker room and chef-driven restaurants that would anchor a great city's dining scene on their own, the Bellagio is a place where even casual visitors feel like high rollers.`,
+    sections: [
+      {
+        heading: 'A Legacy of Luxury',
+        body: `<p>Steve Wynn opened the Bellagio on October 15, 1998, at a cost of $1.6 billion — then the most expensive hotel ever built. The vision was audacious: transplant the elegance of the Italian lakeside village of Bellagio, Italy, to the Nevada desert and reinvent what a Las Vegas resort could be. It worked beyond anyone's expectations. The Bellagio instantly redefined the Strip, launching the era of mega-resort luxury that still defines Las Vegas today.</p>
+<p>MGM Resorts International acquired the property in 2000 and has continued to invest in it over the decades. Despite being over 25 years old, the Bellagio remains consistently ranked among the finest hotels and casinos in the world — a testament to the enduring power of the original vision and the ongoing commitment to keeping standards exceptionally high.</p>
+<p>The iconic <strong>Fountains of Bellagio</strong> are free to watch and perform every 30 minutes in the afternoon and every 15 minutes after 8 p.m. Choreographed to music ranging from Sinatra to Pavarotti, the show draws crowds nightly and remains one of the most-watched free attractions in Las Vegas history.</p>`
+      },
+      {
+        heading: 'The Casino Floor',
+        body: `<p>The Bellagio's 116,000-square-foot casino floor is famous for hosting the highest-stakes gambling in Las Vegas. High-limit rooms here routinely see six-figure bets — it's the preferred haunt of serious gamblers, professional players, and the kinds of whales that receive personal host attention and complimentary suites. But the floor also has space for recreational gamblers, with a range of denominations and table limits that accommodate nearly any bankroll.</p>
+<p>The <strong>poker room</strong> is one of the most celebrated in the world: <strong>40 tables</strong> spread across $2/$5 No-Limit Hold'em all the way up to the nosebleed games that sometimes feature the biggest names in professional poker. The room has hosted Bobby's Room, a private game where stakes are legendary and railbirds have been known to gather outside just to watch. Daily tournaments run throughout the week, with larger events drawing fields from across the country.</p>
+<p>Slots at the Bellagio skew high-denomination — dollar machines, $5 machines, and above are well-represented. The high-limit slot room, tucked away from the main floor, features machines with max bets in the hundreds of dollars and jackpots that can reach life-changing amounts. Progressive linked machines add jackpot excitement, and the Bellagio is known for posting some of the largest slot wins in Las Vegas.</p>`
+      },
+      {
+        heading: 'Art, Culture & Atmosphere',
+        body: `<p>The <strong>Bellagio Gallery of Fine Art</strong> is a legitimate world-class museum operating inside a casino — an unlikely combination that works remarkably well. The gallery hosts rotating exhibitions featuring works on loan from major international museums and private collections. Past exhibitions have featured Monet, Warhol, Picasso, and Fabergé. Admission is typically $20-25 and worth every penny.</p>
+<p>The <strong>Bellagio Conservatory & Botanical Gardens</strong> is free to visit and changes with the seasons, transforming its 14,000-square-foot atrium into elaborate floral installations five times a year: Chinese New Year, Spring, Summer, Fall, and Winter/Holiday. The scale and craftsmanship are genuinely impressive — this isn't casino decoration, it's horticultural theater. Dozens of staff botanists maintain the displays around the clock.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p>The Bellagio's restaurant lineup reads like a greatest-hits of fine dining. <strong>Picasso</strong> is built around original Pablo Picasso artworks and serves French-Mediterranean cuisine that has earned multiple Forbes Five-Star ratings — one of the most decorated restaurants in Las Vegas. <strong>Le Cirque</strong>, an offshoot of the legendary New York original, offers French haute cuisine in a jewel-box setting overlooking the lake.</p>
+<p><strong>Prime Steakhouse</strong> brings Jean-Georges Vongerichten's touch to classic American cuts, with a terrace that puts the fountain show directly outside your window during dinner service. <strong>Lago</strong> by Julian Serrano serves modern Italian with the same lake view. Beyond the flagships, the Bellagio also has <strong>Harvest</strong> for California-inspired farm-to-table, <strong>Noodles</strong> for late-night Asian comfort food, and the <strong>Petrossian Bar</strong> for caviar service and Champagne. Few casino properties in the world can match this depth of culinary talent in a single building.</p>`
+      },
+      {
+        heading: 'MGM Rewards & Loyalty',
+        body: `<p>The Bellagio participates in <strong>MGM Rewards</strong>, MGM Resorts International's loyalty program. Points earned at the Bellagio are valid across all MGM properties — from the Borgata in Atlantic City to the MGM Grand in Las Vegas — making it one of the most versatile casino loyalty programs in the country. Tiers include Sapphire, Pearl, Gold, Platinum, Noir, and the invitation-only Chairman tier, each unlocking progressively better perks: priority check-in, resort fee waivers, suite upgrades, and dedicated host access. Slot play, table games, hotel stays, dining, and spa visits all earn rewards points, so a full stay at the Bellagio translates to significant tier credit across the entire MGM network.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>Book fountain-view rooms well in advance — they sell out fast and make the Bellagio experience significantly better. The best free viewing spot for the fountains is the sidewalk directly in front of the resort along Las Vegas Boulevard; arrive 10 minutes before a show for a good position. The poker room is open 24/7 but games at higher stakes are most reliably available evenings and weekends. For dining, the Petrossian Bar is an underrated spot for a drink and light bites without needing a reservation. If you're interested in the Gallery of Fine Art, check the schedule in advance — exhibitions change, and some are dramatically better than others.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is the Bellagio poker room like?',
+        a: 'The Bellagio poker room is one of the most famous in the world, featuring 40 tables spread across stakes from $2/$5 No-Limit Hold\'em up to the legendary Bobby\'s Room where the highest-stakes private games in poker history have taken place. Daily tournaments run throughout the week, and the room is open 24/7. It draws a mix of recreational players, serious grinders, and world-class professionals. Many consider it the premier poker room in Las Vegas.'
+      },
+      {
+        q: 'How often do the Bellagio fountains run?',
+        a: 'The Fountains of Bellagio perform every 30 minutes Monday through Friday from 3 p.m. to 8 p.m., then every 15 minutes from 8 p.m. to midnight. On weekends and holidays, shows begin at noon. Each show lasts 3-5 minutes and is choreographed to different music — shows are free to watch from the sidewalk along Las Vegas Boulevard.'
+      },
+      {
+        q: 'What is the MGM Rewards program at Bellagio?',
+        a: 'Bellagio is part of the MGM Rewards loyalty program, which has six tiers: Sapphire, Pearl, Gold, Platinum, Noir, and Chairman. Points are earned on slots, table games, hotel stays, dining, and spa visits at any MGM Resorts property. Higher tiers offer resort fee waivers, suite upgrades, priority check-in, and dedicated host services. Points are redeemable for free play, dining credits, and hotel stays across the entire MGM network.'
+      },
+      {
+        q: 'Does the Bellagio have high-limit slots?',
+        a: 'Yes — the Bellagio has a dedicated high-limit slot room with dollar, five-dollar, and higher-denomination machines. Maximum bets on some machines can reach hundreds of dollars per spin, and the room has produced some of Las Vegas\'s largest slot jackpots. The main casino floor also has a wide range of denominations for players at every level.'
+      },
+      {
+        q: 'What are the best restaurants at the Bellagio?',
+        a: 'The Bellagio has one of the strongest dining lineups on the Strip. Top choices include Picasso (French-Mediterranean, Forbes Five-Star rated, surrounded by original Picasso artworks), Le Cirque (classic French haute cuisine), and Prime Steakhouse by Jean-Georges Vongerichten (with fountain views). Lago by Julian Serrano serves modern Italian with lake views. For casual late-night dining, Noodles is a local favorite. The Petrossian Bar is excellent for cocktails, Champagne, and caviar service.'
+      },
+    ],
+  },
+
+  // ── MGM Grand Hotel & Casino (Las Vegas, NV) ──────────────────────────
+  350: {
+    tagline: 'The Largest Casino Resort in the Americas — and One of the Most Electric',
+    hero_blurb: `MGM Grand Las Vegas is a city within a city: over 5,000 hotel rooms, a 171,500-square-foot casino floor, multiple celebrity chef restaurants, the most sought-after entertainment venue for boxing and UFC in the world, and a Cirque du Soleil residency that has been running for decades. If the Bellagio is the Strip's crown jewel of elegance, MGM Grand is its unmatched powerhouse of scale and spectacle.`,
+    sections: [
+      {
+        heading: 'Scale & History',
+        body: `<p>When MGM Grand opened on December 18, 1993, it was the <strong>largest hotel in the world</strong> — a record it held for years. Today it remains one of the largest, with over 5,000 rooms making it the largest single hotel structure in the United States. The resort sprawls across 102 acres on the south end of the Strip at the corner of Las Vegas Boulevard and Tropicana Avenue, the same intersection that anchors Excalibur, New York-New York, and the Tropicana.</p>
+<p>The original MGM Grand was built on the site of the Marina Hotel and was designed to evoke Hollywood's golden era — the original MGM film studios and their iconic roaring lion. The famous lion statue and logo remain, though the resort has evolved far beyond its Hollywood origins into a full-scale entertainment and gaming empire.</p>`
+      },
+      {
+        heading: 'The Casino Floor',
+        body: `<p>At <strong>171,500 square feet</strong>, the MGM Grand casino floor is one of the largest in the world. It's divided into distinct areas to prevent the disorientation that can plague oversized casino floors: the main gaming area, a high-limit room, a poker room, a sportsbook, and specialty gaming zones each have their own atmosphere. The slot selection is enormous — thousands of machines spanning every denomination, theme, and game type imaginable, including dozens of linked progressive jackpots.</p>
+<p>The poker room runs cash games from $1/$2 No-Limit Hold'em through higher stakes, plus a regular tournament schedule. The sportsbook is a destination in its own right, especially during football season, March Madness, and major boxing or UFC events. MGM Grand's relationship with combat sports means the book gets preferential access to fight odds and promotions during major cards.</p>`
+      },
+      {
+        heading: 'Entertainment',
+        body: `<p><strong>KÀ by Cirque du Soleil</strong> has called MGM Grand home since 2004 and shows no signs of slowing down. The production is widely considered one of Cirque's most ambitious — featuring a 360-degree rotating stage, massive aerial sequences, and a story told entirely through movement, acrobatics, and pyrotechnics. Tickets range from around $100 to $200+, and the show regularly sells out. It's a must-see Vegas experience.</p>
+<p>The <strong>MGM Grand Garden Arena</strong> is the premier combat sports venue in Las Vegas and arguably the country. Legendary fights — from Oscar De La Hoya vs. Floyd Mayweather to dozens of UFC championship bouts — have taken place here. The arena also hosts major concerts, award shows, and special events, making MGM Grand a destination even on nights you're not gambling. Check the events calendar when planning your visit, as major fight nights sell out the hotel entirely.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>Wolfgang Puck Bar & Grill</strong> anchors the dining scene with the celebrity chef's approachable California cuisine — roasted chicken, fresh pasta, wood-fired pizzas — executed at a high level. <strong>Tom Colicchio's Craftsteak</strong> (from the Top Chef judge and founder of the Craft restaurant group) brings a farm-to-table philosophy to classic American steakhouse traditions, with exceptional dry-aged cuts and thoughtful sides. <strong>Morimoto</strong> — Iron Chef Masaharu Morimoto's Las Vegas outpost — serves creative Japanese cuisine and omakase experiences at the high end. For a more casual experience, <strong>Hecho en Vegas</strong> serves modern Mexican, and <strong>MGM Grand Buffet</strong> has fed millions of visitors over the decades with its rotating spread of global dishes.</p>`
+      },
+      {
+        heading: 'MGM Rewards',
+        body: `<p>MGM Grand participates in <strong>MGM Rewards</strong>, MGM Resorts International's multi-property loyalty program with six tiers: Sapphire, Pearl, Gold, Platinum, Noir, and the invite-only Chairman. Points earn on slots, table games, hotel stays, dining, and entertainment across all MGM properties — from Bellagio and Aria to Park MGM and the Borgata in Atlantic City. The program is particularly valuable for visitors who bounce between MGM properties, as tier status and points transfer seamlessly. High-volume players can earn resort fee waivers, complimentary suites, and access to dedicated executive hosts who can arrange nearly anything.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>If you're attending a major boxing or UFC fight, book your hotel room the moment the fight is announced — they sell out within hours of major card announcements. The casino floor gets extremely crowded on fight nights; the high-limit areas remain somewhat calmer. For KÀ, buy tickets in advance and spring for middle-tier seats — the extreme sides and back rows miss some of the aerial effects. Wolfgang Puck Bar & Grill is excellent for a pre-fight dinner without the wait times of the celebrity steakhouses. The hotel's pool complex, Wet Republic, operates as a major dayclub — book a cabana for the full experience.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'How big is the MGM Grand casino floor?',
+        a: 'The MGM Grand casino floor covers 171,500 square feet, making it one of the largest casino floors in the world. It includes thousands of slot machines, 139 table games, a poker room, a sportsbook, and dedicated high-limit gaming areas. The floor is organized into distinct zones so it feels navigable despite its enormous size.'
+      },
+      {
+        q: 'What is KÀ by Cirque du Soleil at MGM Grand?',
+        a: 'KÀ is Cirque du Soleil\'s permanent resident show at MGM Grand, running since 2004. It\'s widely considered one of Cirque\'s most technically ambitious productions, featuring a massive rotating stage, aerial acrobatics, pyrotechnics, and a martial arts-influenced story told entirely through movement. Shows run most nights of the week; tickets typically range from $100-$200+. Book in advance, especially on weekends.'
+      },
+      {
+        q: 'Does MGM Grand have good boxing and UFC events?',
+        a: 'Yes — the MGM Grand Garden Arena is the premier combat sports venue in Las Vegas and has hosted more major boxing and UFC events than any other venue in the city. Legendary fights from De La Hoya vs. Mayweather to dozens of UFC championship bouts have taken place here. When a major fight is announced, book your hotel immediately — the property sells out within hours.'
+      },
+      {
+        q: 'What is the MGM Rewards program?',
+        a: 'MGM Rewards is MGM Resorts\' multi-property loyalty program with six tiers: Sapphire, Pearl, Gold, Platinum, Noir, and Chairman. Points earn on gaming, hotel stays, dining, and entertainment across all MGM properties nationwide. Benefits include resort fee waivers, room upgrades, priority check-in, free play, and dedicated host access at higher tiers. Points are redeemable for free play, hotel stays, and dining credits.'
+      },
+      {
+        q: 'What are the best restaurants at MGM Grand Las Vegas?',
+        a: 'MGM Grand has an exceptional dining lineup. Top picks: Tom Colicchio\'s Craftsteak (upscale farm-to-table steakhouse), Wolfgang Puck Bar & Grill (California cuisine, approachable and reliable), and Morimoto (Iron Chef-caliber Japanese cuisine with omakase options). Hecho en Vegas offers solid Mexican food at a more casual price point, and the MGM Grand Buffet is a Vegas staple for variety and value.'
+      },
+    ],
+  },
+
+  // ── Caesars Palace (Las Vegas, NV) ────────────────────────────────────
+  85: {
+    tagline: 'All Roads Lead to Caesars — The Strip\'s Most Iconic Address',
+    hero_blurb: `Caesars Palace opened in 1966 and has spent nearly six decades becoming the most recognizable casino name on earth. With its Roman Empire grandeur, a revolving cast of celebrity restaurant concepts, a theater that has hosted some of the longest-running residencies in entertainment history, and a rewards program that spans 50+ properties nationwide, Caesars Palace isn't just a casino — it's an institution.`,
+    sections: [
+      {
+        heading: 'Roman Grandeur & History',
+        body: `<p>Jay Sarno opened Caesars Palace on August 5, 1966, with a vision unprecedented in Las Vegas at the time: a resort themed not around neon kitsch or mere luxury, but around the full sensory grandeur of ancient Rome. The toga-clad cocktail servers, the marble columns, the fountains modeled on Rome's Trevi Fountain, the garden of classical statuary — every element was designed to make guests feel like emperors. It was pure theater, and it worked magnificently.</p>
+<p>Over the following decades, Caesars Palace became the template for aspirational Vegas — the place you referenced when you wanted to evoke glamour, excess, and old-school gambling. The Evel Knievel fountain jump attempt in 1967 was a spectacle that put Caesars on television screens across America. The Tournament of Champions tennis matches, the Ali fights, the boxing matches that defined an era — Caesars Palace was at the center of all of it.</p>
+<p>Caesars Entertainment (now Caesars Entertainment Corporation) has continued expanding the resort over the decades. Today it encompasses 3,960 hotel rooms and suites across six towers, a 124,181-square-foot casino, a luxury spa, multiple pools, and a shopping experience in the Forum Shops that many visitors mistake for a standalone mall.</p>`
+      },
+      {
+        heading: 'The Casino Floor',
+        body: `<p>The Caesars Palace casino spans <strong>124,181 square feet</strong> of gaming across multiple connected rooms, each with a distinct character. The main floor handles high volume with thousands of slot machines and dozens of table games; dedicated baccarat rooms cater to Asian-market high rollers with private, quieter settings appropriate to the gravity of that game's stakes. High-limit areas offer tables and machines for players who want higher stakes and more personal service.</p>
+<p>The <strong>poker room</strong> is a serious operation running daily tournaments and cash games from low stakes through mid-high. Weekly tournament series draw fields from the local grinder community and visiting recreational players alike. With Caesars' deep roots in poker history — the World Series of Poker was born next door at Binion's Horseshoe — there's a fitting tradition to the room that elevates the experience.</p>`
+      },
+      {
+        heading: 'The Colosseum & Entertainment',
+        body: `<p>The <strong>Colosseum at Caesars Palace</strong> is a 4,300-seat theater that has hosted some of the most successful and long-running celebrity residencies in entertainment history. Céline Dion's original run from 2003-2007 defined the modern residency concept and grossed over $400 million. Elton John, Mariah Carey, Rod Stewart, Shania Twain, Bruno Mars, Adele, and many others have followed. Booking a Colosseum show is one of the best uses of a Las Vegas trip — the venue is intimate enough for every seat to feel close, and the production values are typically exceptional.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>Gordon Ramsay Hell's Kitchen</strong> brings the famously intense TV kitchen to life with an immersive experience that includes the show's signature dishes — beef Wellington, lobster risotto, sticky toffee pudding — in a room designed to replicate the set. It's a tourist experience done right: the food is genuinely good and the theater is fun. <strong>Bobby Flay's Mesa Grill</strong> serves Southwestern cuisine from the Food Network celebrity chef with bold, spice-forward flavors that stand out on the Strip's otherwise steak-and-Italian-heavy dining landscape.</p>
+<p><strong>NOBU</strong> at Caesars Palace is Nobu Matsuhisa's legendary Japanese restaurant serving his iconic miso-glazed black cod, yellowtail jalapeño, and omakase menus in a stunning setting. The <strong>Bacchanal Buffet</strong> is legendary in its own right — widely considered the best buffet in Las Vegas, offering over 500 dishes prepared daily across 15 cooking stations with an emphasis on premium proteins and global variety.</p>`
+      },
+      {
+        heading: 'Caesars Rewards',
+        body: `<p><strong>Caesars Rewards</strong> is one of the most powerful loyalty programs in the casino industry, covering 50+ properties in destinations from Las Vegas to Atlantic City to regional markets across the country. Tiers run Gold, Platinum, Diamond, Diamond Plus, Diamond Elite, and the coveted Seven Stars — with Diamond and above unlocking the best perks: resort fee waivers, priority lines, lounge access, and dedicated hosts. Points earn on gaming, hotel stays, dining, entertainment, and online casino play through Caesars' digital platforms. Diamond status, earned at roughly 15,000 tier credits per year, is a particularly valued milestone that delivers meaningful benefits across the entire network.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>The Forum Shops at Caesars is one of the highest-grossing shopping malls in the country — worth walking even if you're not buying. The Garden of the Gods pool complex has multiple pools and cabanas; book well in advance for summer weekends. For poker, Caesars often runs satellite tournaments to larger events — a good value way to potentially earn a seat at a bigger game. The Bacchanal Buffet has long waits on weekend mornings; go on weekday afternoons for the shortest lines. Caesars Rewards Diamond status earned here is valid at every Caesars property in the country — valuable if you ever visit Harrah's, Horseshoe, or other Caesars-branded casinos.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'What celebrity residencies have performed at the Colosseum at Caesars Palace?',
+        a: 'The Colosseum at Caesars Palace has hosted some of the most successful residencies in entertainment history: Céline Dion (the original, 2003-2007 and again 2011-2019), Elton John, Mariah Carey, Rod Stewart, Shania Twain, Bruno Mars, and Adele, among many others. The 4,300-seat venue is designed for intimate large-venue concerts; tickets typically range from $100 to $500+ depending on the artist and seat location.'
+      },
+      {
+        q: 'What is the Caesars Rewards Diamond tier?',
+        a: 'Caesars Rewards Diamond is earned by accumulating 15,000 tier credits in a calendar year. Benefits include resort fee waivers at Caesars properties, access to Diamond lounges (where available), priority check-in lines, dedicated hosts, and enhanced free play and dining offers. Diamond status is valid at all 50+ Caesars Entertainment properties nationwide, including Harrah\'s, Horseshoe, Paris Las Vegas, and Bally\'s locations.'
+      },
+      {
+        q: 'Does Caesars Palace have a good poker room?',
+        a: 'Yes — Caesars Palace runs a well-regarded poker room with daily tournaments and cash games across multiple stakes levels. The room draws a mix of recreational players and serious grinders, with a strong tournament schedule including satellite events. Given Caesars\' historical connection to poker (the World Series of Poker originated at Binion\'s Horseshoe, a Caesars acquisition), there\'s a fitting legacy to the room.'
+      },
+      {
+        q: 'What are the best restaurants at Caesars Palace?',
+        a: 'Top dining picks at Caesars Palace: NOBU (Nobu Matsuhisa\'s iconic Japanese restaurant, acclaimed for miso black cod and omakase), Gordon Ramsay Hell\'s Kitchen (the TV kitchen brought to life with strong food and great theater), Bobby Flay\'s Mesa Grill (bold Southwestern cuisine), and the Bacchanal Buffet (widely considered the best buffet in Las Vegas with 500+ dishes daily). The Forum Shops also has numerous standalone restaurant options.'
+      },
+      {
+        q: 'How big is the Caesars Palace casino?',
+        a: 'The Caesars Palace casino covers 124,181 square feet of gaming, spread across multiple connected rooms including the main gaming floor, dedicated baccarat rooms, high-limit slots and table areas, a poker room, and a sportsbook. The property has 3,960 hotel rooms and suites across six towers, making it one of the largest resort complexes on the Las Vegas Strip.'
+      },
+    ],
+  },
+
+  // ── Wynn Las Vegas (Las Vegas, NV) ────────────────────────────────────
+  446: {
+    tagline: 'Steve Wynn\'s Masterpiece — The Highest-Rated Casino in Las Vegas',
+    hero_blurb: `Wynn Las Vegas is the crown jewel of ultra-luxury on the Strip — a resort so focused on perfection that it's consistently rated the best hotel in Las Vegas by guests across every major review platform. From its legendary service culture and gorgeous golf course to its reputation for generous slot paybacks and a dining lineup that rivals anything in the country, Wynn defines what Las Vegas aspires to be at its highest level.`,
+    sections: [
+      {
+        heading: 'The Wynn Vision',
+        body: `<p>Steve Wynn — the visionary behind the Mirage and the Bellagio — opened Wynn Las Vegas on April 28, 2005, after selling his previous resort empire to MGM. His stated goal: build the finest hotel in the world. Two decades later, the case is compelling. Wynn Las Vegas has earned more <strong>Forbes Five-Star</strong> ratings (casino, hotel, spa, and multiple restaurants simultaneously) than any other resort in the United States.</p>
+<p>The design philosophy is one of restraint: no overt theme, no gimmicks, just quality. The signature curved tower, the lush landscaping, the private golf course, the waterfall and lake that greet guests at the main entrance — every detail signals that this is a place that takes luxury seriously. Encore, the tower Wynn opened next to the original property in 2008, extends the same philosophy with its own casino, restaurants, nightclub, and beach club.</p>`
+      },
+      {
+        heading: 'The Casino & Slot Paybacks',
+        body: `<p>Wynn's casino covers approximately 111,000 square feet and is widely regarded as one of the most pleasant gaming environments in Las Vegas. The ceiling height, natural light from the mountain-facing windows, live flowers, and absence of the typical casino sensory overload create an atmosphere where you can actually relax while you play. Table games are spread across a full range — baccarat, blackjack, craps, roulette, and specialty games — with high-limit rooms that attract serious money.</p>
+<p>Wynn Las Vegas has a long-standing reputation among slot enthusiasts for <strong>generous payback percentages</strong>. The Nevada Gaming Control Board publishes payback data by gaming district, and Wynn consistently posts some of the highest returns on dollar and higher-denomination slots in Las Vegas. Serious slot players often seek Wynn out specifically for this reason. High-denomination machines, linked progressives, and a well-curated game selection make the slots area worth dedicated time.</p>`
+      },
+      {
+        heading: 'Golf',
+        body: `<p>The <strong>Wynn Golf Club</strong> is the only golf course on the Las Vegas Strip — an 18-hole, 6,722-yard course designed by Tom Fazio that winds through the property's grounds. A round here runs $500-$600+ per person, making it one of the most expensive hotel golf experiences in the country. But for serious golfers staying at Wynn, the combination of impeccable conditions, a casino hotel address, and the sheer novelty of playing golf on the Strip makes it memorable. The course was temporarily converted into a temporary park during COVID and has since been restored to full operation.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>Sinatra</strong> is a tribute to Old Blue Eyes himself — a restaurant serving classic Italian-American cuisine in a room decorated with Sinatra memorabilia, where the music is classic Rat Pack and the vibe is pure mid-century elegance. It's one of the most atmospheric dining experiences in Las Vegas. <strong>SW Steakhouse</strong> overlooks the resort's private lake and waterfall, making it arguably the best dining view in the city — the show outside the window (a nightly waterfall display) rivals the Bellagio fountains for drama.</p>
+<p><strong>Costa di Mare</strong> specializes in whole Mediterranean fish flown in fresh daily — a rarity in the desert — in an open-air setting that feels transported from the Amalfi Coast. <strong>Wing Lei</strong> was the first Chinese restaurant in the United States to earn a Michelin star. <strong>Wynncore</strong> serves an all-day comfort menu. Across the portfolio, Wynn's dining program reflects the same obsessive attention to quality that defines every other corner of the property.</p>`
+      },
+      {
+        heading: 'Encore Beach Club & Nightlife',
+        body: `<p><strong>Encore Beach Club</strong> is consistently ranked among the top pool clubs in the world and is a major destination for electronic music fans during warmer months (roughly March through October). The venue books A-list DJs and producers, and the production values — lighting, sound, stagecraft — are nightclub-caliber in a daylight outdoor setting. Cabanas and bungalows book out fast for peak weekends; plan months in advance if attending during summer or major music weekends.</p>`
+      },
+      {
+        heading: 'Wynn Rewards',
+        body: `<p><strong>Wynn Rewards</strong> is the property's proprietary loyalty program, covering both Wynn Las Vegas and Encore. Points earn on slot play, table games, hotel stays, dining, spa visits, and golf. Tier levels progress through Wynn Rewards Member, Wynn Rewards Gold, Wynn Rewards Platinum, and the top-tier Wynn Rewards Black — an invitation-only tier for the property's most valuable players. Benefits include free play, dining credits, room upgrades, priority reservations, and access to exclusive events. Unlike the large multi-property programs, Wynn Rewards is boutique in scale but generous in treatment for its top players.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Why is Wynn Las Vegas considered the best casino in Las Vegas?',
+        a: 'Wynn Las Vegas consistently earns the highest guest ratings of any casino resort in Las Vegas across TripAdvisor, Google, and professional review platforms. It has earned more simultaneous Forbes Five-Star ratings (hotel, casino, spa, and multiple restaurants) than any other US resort. The combination of exceptional service culture, beautiful design, generous slot paybacks, and a world-class dining and entertainment lineup makes it stand out even on a Strip full of luxury options.'
+      },
+      {
+        q: 'Does Wynn Las Vegas have better slot paybacks than other casinos?',
+        a: 'Wynn Las Vegas has a long-standing reputation among slot enthusiasts for above-average payback percentages, particularly on dollar and higher-denomination machines. Nevada Gaming Control Board data consistently shows Wynn posting competitive returns. This is not guaranteed on any individual session, but over large sample sizes Wynn\'s machines are considered more generous than many Strip competitors, which is why serious slot players often specifically choose Wynn.'
+      },
+      {
+        q: 'What is the Encore Beach Club at Wynn?',
+        a: 'Encore Beach Club is Wynn\'s iconic poolside dayclub, consistently ranked among the best pool clubs in the world. It operates roughly March through October and books top DJs and electronic music artists for weekend events. The venue features multiple pools, cabanas, bungalows, and full bar service. Cabanas and bungalows sell out fast for peak weekends; book months in advance. General admission is available on most event days.'
+      },
+      {
+        q: 'Is the Wynn golf course open to the public?',
+        a: 'Yes — the Wynn Golf Club is open to hotel guests and, with availability, outside visitors. It\'s an 18-hole Tom Fazio-designed course and the only golf course on the Las Vegas Strip. Greens fees typically run $500-$600+ per person. Reservations are required and can be made through the Wynn website or concierge. Hotel guests generally get booking priority.'
+      },
+      {
+        q: 'What are the best restaurants at Wynn Las Vegas?',
+        a: 'Wynn\'s dining lineup is exceptional across the board. Top picks: SW Steakhouse (stunning lake and waterfall views, outstanding dry-aged steaks), Sinatra (atmospheric Italian-American tribute to Frank Sinatra), Costa di Mare (fresh Mediterranean whole fish in a beautiful outdoor setting), and Wing Lei (the first Chinese restaurant in the US to earn a Michelin star). All require advance reservations; SW Steakhouse and Costa di Mare book out weeks ahead on weekends.'
+      },
+    ],
+  },
+
+  // ── The Venetian Resort Las Vegas (Las Vegas, NV) ─────────────────────
+  5: {
+    tagline: 'Venice Reimagined on the Strip — With 120,000 Square Feet of Casino Floor',
+    hero_blurb: `The Venetian Resort Las Vegas is one of the most ambitious hospitality projects in American history: a full-scale recreation of Venice's architecture, canals, and atmosphere transplanted to the Nevada desert and combined with a 120,000-square-foot casino, 7,000+ luxury suites, and one of the most robust poker tournament schedules in the country. It's immersive, it's massive, and it consistently delivers one of the best overall casino resort experiences on the Strip.`,
+    sections: [
+      {
+        heading: 'Venice on the Strip',
+        body: `<p>Sheldon Adelson opened The Venetian on May 3, 1999, on the site of the demolished Sands Hotel — where the Rat Pack had famously held court in the 1960s. The vision was total immersion: replicas of Venice's iconic landmarks including the campanile, the Doge's Palace, the Rialto Bridge, and the Grand Canal itself, with gondoliers navigating an indoor waterway through the resort's shopping district. The attention to architectural detail is genuinely impressive even decades after opening.</p>
+<p>The Palazzo, an adjoining tower that opened in 2007, expanded the complex to over 7,000 suites — all standard rooms are suites with split-level living areas starting at around 650 square feet. There is no standard room at The Venetian or The Palazzo: every accommodation is a suite, which represents exceptional value relative to comparable Strip hotels that charge suite-level prices for a fraction of the space.</p>`
+      },
+      {
+        heading: 'The Casino Floor',
+        body: `<p>At <strong>120,000 square feet</strong>, The Venetian's casino floor is one of the largest in the world and one of the best-organized. The space is divided into distinct zones — the main gaming floor, a high-limit room, the poker room, a race and sports book — each with its own atmosphere and stakes profile. Slot machine selection is enormous: thousands of games spanning every denomination, manufacturer, and style, including hundreds of linked progressive machines across local and wide-area networks.</p>
+<p>Table game selection is equally comprehensive, with multiple blackjack variants, craps, roulette, baccarat, pai gow poker, and specialty games. The high-limit room handles serious bets with discretion and attentive service. The main floor is busy but well-staffed, with reasonable wait times for drinks and efficient cage operations.</p>`
+      },
+      {
+        heading: 'Poker: DeepStack Extravaganza',
+        body: `<p>The Venetian poker room is among the top five poker rooms in Las Vegas by reputation and player traffic. The room runs cash games 24/7 across multiple stakes, but its real calling card is the <strong>DeepStack Extravaganza</strong> — a regular tournament series that draws fields of hundreds to thousands of players across multiple events with guaranteed prize pools. The DeepStack is considered one of the best value tournament series in Vegas for players who want WSOP-caliber structures without WSOP-level buy-ins. Between DeepStack events, the room hosts daily tournaments and a robust cash game selection from $1/$2 through high stakes.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>B&B Ristorante</strong> from Mario Batali and Joe Bastianich (now operated under the Bastianich umbrella) serves handmade Italian pasta and Venetian-inspired cuisine in a stylish setting that perfectly suits the resort's theme. <strong>TAO Asian Bistro</strong> is a Las Vegas institution — the Vegas location of the New York original brings pan-Asian cuisine, a rooftop pool deck, and the connected TAO Nightclub, one of the highest-grossing nightclubs in the country. <strong>Matteo's Ristorante Italiano</strong> serves classic Italian fare; <strong>Bouchon</strong> by Thomas Keller offers French bistro cuisine from the Michelin-starred chef of The French Laundry. The resort's 40+ restaurants and dining options cover nearly every cuisine at every price point, making it one of the most dining-diverse properties in Las Vegas.</p>`
+      },
+      {
+        heading: 'Canyon Ranch Spa',
+        body: `<p>The <strong>Canyon Ranch SpaClub</strong> at The Venetian is one of the best spa operations in Las Vegas, covering 134,000 square feet across a full floor of the resort. The facility includes over 100 treatment rooms, an indoor pool, an aquavana hydrotherapy area with heated lounges, a full fitness center, and a café serving healthy cuisine. Canyon Ranch's expertise in wellness gives the spa a different character than the typical hotel spa operation — it's less focused on pampering and more on genuine therapeutic benefit, though plenty of luxury treatments are available alongside the medical and wellness offerings.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>The Grand Canal Shoppes are worth visiting even if you're not buying — the indoor canal with gondoliers and the painted sky ceiling are genuinely impressive, and free to walk through. Gondola rides are ticketed separately and make a fun, touristy activity for couples or families. For poker, check the DeepStack Extravaganza schedule before your trip — timing your visit around a tournament series gives you better game selection and more table options. Hotel booking through the Venetian directly (rather than third-party sites) typically yields the best room assignment. The Palazzo tower tends to have slightly larger suites than the Venetian tower.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'What is the DeepStack Extravaganza at The Venetian?',
+        a: 'The DeepStack Extravaganza is The Venetian\'s recurring major poker tournament series, running multiple times per year. It\'s one of the most popular tournament series in Las Vegas for recreational and serious players alike, offering WSOP-caliber tournament structures and deep stack formats at more accessible buy-in levels. Events typically include multiple flights, guaranteed prize pools, and a range of buy-in levels from a few hundred to several thousand dollars. The Venetian poker room also runs daily tournaments and 24/7 cash games.'
+      },
+      {
+        q: 'Are all rooms at The Venetian suites?',
+        a: 'Yes — every standard accommodation at both The Venetian and The Palazzo is a suite. The smallest standard suite starts at approximately 650 square feet and features a split-level design with a sunken living room and separate sleeping area. There are no traditional hotel rooms. Suite prices are often competitive with non-suite rooms at comparable Strip properties, making The Venetian an excellent value for the space you receive.'
+      },
+      {
+        q: 'How big is The Venetian casino floor?',
+        a: 'The Venetian casino floor covers approximately 120,000 square feet and is one of the largest in the world. It includes thousands of slot machines, 139+ table games, a high-limit room, a poker room, and a race and sports book. The floor is well-organized into distinct zones that make navigation intuitive despite the enormous scale.'
+      },
+      {
+        q: 'What is Canyon Ranch Spa at The Venetian?',
+        a: 'The Canyon Ranch SpaClub at The Venetian is one of the largest and most comprehensive hotel spas in Las Vegas at 134,000 square feet. It features 100+ treatment rooms, an indoor pool, aquavana hydrotherapy circuit, full fitness center, and a healthy dining café. Canyon Ranch brings its wellness expertise to the spa operation, offering both luxury pampering treatments and therapeutic, medically-oriented services. Treatments range from massages and facials to acupuncture, nutritional consulting, and fitness assessments.'
+      },
+      {
+        q: 'What are the best restaurants at The Venetian?',
+        a: 'The Venetian has 40+ dining options. Top picks: B&B Ristorante (Mario Batali-inspired Italian, handmade pasta), Bouchon by Thomas Keller (French bistro from the Michelin-starred chef), TAO Asian Bistro (pan-Asian cuisine, beautiful setting, connected to the nightclub), and Matteo\'s Ristorante Italiano for classic Italian fare. The resort has options at every price point from quick bites in the Grand Canal Shoppes to high-end tasting menu experiences.'
+      },
+    ],
+  },
+
+  // ── Mandalay Bay Resort & Casino (Las Vegas, NV) ──────────────────────
+  344: {
+    tagline: 'Beach, Sharks, and Blues — Mandalay Bay Is Vegas\'s Most Unexpected Resort',
+    hero_blurb: `Mandalay Bay sits at the south end of the Las Vegas Strip and has spent 25 years carving out a distinct identity by offering experiences you can't find anywhere else on the Boulevard: a real beach with actual sand and a wave pool, a world-class aquarium, a legendary concert venue, and a seamless connection to a Four Seasons hotel — all under one enormous roof.`,
+    sections: [
+      {
+        heading: 'Beach & Pool',
+        body: `<p>The <strong>Mandalay Bay Beach</strong> is one of Las Vegas's most distinctive amenities and the defining feature of the resort for many guests. The complex features <strong>2,700 tons of real sand</strong>, a wave pool that generates three-foot waves for body surfing, a lazy river, a surf machine, an adult section with European-style sun decks, multiple pools, and extensive cabana and daybed rentals. During summer months it becomes a premier dayclub venue with poolside concerts and DJ events. The beach is open to all hotel guests and delivers a genuine outdoor-recreation experience that most Vegas pool experiences can't match.</p>
+<p>On peak summer weekends, Beach Club events transform the space into one of the highest-energy outdoor venues in the city, with ticketed concerts that draw large crowds. The combination of the beach setting and production-level entertainment is unique in Las Vegas.</p>`
+      },
+      {
+        heading: 'Shark Reef Aquarium',
+        body: `<p><strong>Shark Reef Aquarium</strong> is one of the most impressive non-casino attractions in Las Vegas — a genuine public aquarium housing over 2,000 animals across 1.3 million gallons of water. The collection includes sharks (including endangered sawfish), rays, sea turtles, Komodo dragons, golden crocodiles, jellyfish, and hundreds of tropical fish species. Admission runs approximately $25 for adults and is absolutely worth the time, especially for visitors with families or anyone who appreciates marine life. It's a 90-minute experience that provides a genuine break from the casino floor without leaving the resort.</p>`
+      },
+      {
+        heading: 'House of Blues',
+        body: `<p><strong>House of Blues Las Vegas</strong> at Mandalay Bay is one of the premier mid-sized concert venues in the city, with a capacity of roughly 1,800 and a legendary reputation for sound quality and atmosphere. The venue books a mix of rock, blues, hip-hop, country, and R&B acts — typically artists in the second and third tier of fame who put on exceptional live shows at intimate scale. The Gospel Brunch on Sunday mornings is a beloved Las Vegas institution: live gospel music with a Southern buffet. It books out weeks in advance during peak season.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>Michael Mina's StripSteak</strong> is the resort's flagship fine dining experience — a modern American steakhouse from the James Beard Award-winning chef that features USDA prime beef finished in duck fat, an exceptional raw bar, and a wine list that takes the steakhouse format to its highest expression. <strong>Border Grill</strong> from TV chefs Mary Sue Milliken and Susan Feniger delivers bold Mexican flavors in a colorful, high-energy setting with an outdoor terrace overlooking the beach. <strong>Libertine Social</strong> is a gastropub with creative cocktails and shareable plates; <strong>Fleur</strong> by Hubert Keller offers French tapas and small bites.</p>`
+      },
+      {
+        heading: 'Casino & Four Seasons Connection',
+        body: `<p>The Mandalay Bay casino covers 135,000 square feet with a full range of slot machines, table games, a race and sports book, and a high-limit room. The gaming floor is well-maintained and busy without being overwhelming. Mandalay Bay is connected directly to the <strong>Four Seasons Las Vegas</strong>, which occupies floors 35-39 of the main tower and operates as a separate hotel within the same building — Four Seasons guests can access all Mandalay Bay amenities, including the beach and Shark Reef, while enjoying the Four Seasons' service levels and private check-in. This makes Mandalay Bay/Four Seasons one of the best family-friendly luxury options on the Strip.</p>
+<p>The resort participates in <strong>MGM Rewards</strong>, earning points across the entire MGM Resorts network on gaming, dining, hotel stays, and entertainment.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>For the beach, weekday mornings offer the most relaxed experience — weekends get crowded quickly and the best cabana locations go first. The wave pool runs scheduled surf sessions; check the daily schedule at the beach entrance. For Shark Reef, go mid-afternoon when the morning rush has cleared. House of Blues Gospel Brunch requires advance tickets — buy online weeks ahead. StripSteak requires a reservation; walk-ins are rare on weekends. The Mandalay Bay Convention Center makes the resort a hub for trade shows and conventions year-round; check the convention calendar if you prefer avoiding large groups.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Does Mandalay Bay have a real beach?',
+        a: 'Yes — the Mandalay Bay Beach features 2,700 tons of real sand, a wave pool that generates body-surfable waves, a lazy river, a surf machine, multiple pools, and extensive cabana rentals. It\'s one of the most impressive resort pool complexes in Las Vegas and operates as a major dayclub venue with concerts and DJ events during peak season. The beach is included in the resort experience for hotel guests.'
+      },
+      {
+        q: 'What is the Shark Reef Aquarium at Mandalay Bay?',
+        a: 'Shark Reef Aquarium is a full-scale public aquarium at Mandalay Bay housing over 2,000 animals in 1.3 million gallons of water. The collection includes multiple shark species, sawfish, rays, sea turtles, Komodo dragons, golden crocodiles, and jellyfish. Admission is approximately $25 for adults. It\'s one of the best non-casino attractions in Las Vegas and a great option for families or anyone looking for a break from the gaming floor.'
+      },
+      {
+        q: 'What is the House of Blues Las Vegas like?',
+        a: 'House of Blues Las Vegas at Mandalay Bay is a 1,800-capacity concert venue with an outstanding reputation for sound quality and intimate atmosphere. It books a diverse mix of touring rock, blues, hip-hop, and country acts. The Sunday Gospel Brunch — live gospel music with a Southern buffet — is a legendary Las Vegas tradition that books out weeks in advance. Tickets for most shows range from $30-$100 depending on the artist.'
+      },
+      {
+        q: 'Is Mandalay Bay connected to the Four Seasons?',
+        a: 'Yes — the Four Seasons Las Vegas occupies floors 35-39 of the Mandalay Bay main tower, operating as a separate hotel with its own private check-in, pool, restaurants, and Forbes Five-Star service levels. Four Seasons guests have full access to all Mandalay Bay amenities including the beach, Shark Reef, and casino. This arrangement makes the Mandalay Bay/Four Seasons combination one of the best family-luxury options on the Las Vegas Strip.'
+      },
+      {
+        q: 'Does Mandalay Bay participate in MGM Rewards?',
+        a: 'Yes — Mandalay Bay is an MGM Resorts property and participates in the MGM Rewards loyalty program. Points earned on gaming, hotel stays, dining, and entertainment at Mandalay Bay are valid across the entire MGM network, including Bellagio, MGM Grand, Aria, Park MGM, and the Borgata in Atlantic City. Tier status earned at Mandalay Bay applies at all MGM properties.'
+      },
+    ],
+  },
+
+  // ── Horseshoe Hammond (Hammond, IN) ───────────────────────────────────
+  506: {
+    tagline: 'Chicago\'s Casino — 53,000 Feet of Action Just 15 Miles from the Loop',
+    hero_blurb: `Horseshoe Hammond is the largest casino in Indiana and the closest major casino destination to downtown Chicago — just 15 miles east across the state line. For millions of Chicagoans and suburban Illinois residents, Horseshoe Hammond is <em>the</em> casino: the place for a spontaneous gaming night, a birthday celebration with the crew, or a serious poker session without a long drive into the Wisconsin or Iowa countryside.`,
+    sections: [
+      {
+        heading: 'Location & Access from Chicago',
+        body: `<p>Horseshoe Hammond sits at 777 Casino Center Drive in Hammond, Indiana — <strong>approximately 15 miles southeast of downtown Chicago</strong>, about 25-35 minutes by car depending on traffic. From the Loop, take I-90/94 east to the Calumet City/Hammond exits. Free parking is abundant, which alone makes Horseshoe Hammond vastly more convenient than a comparable Chicago entertainment experience that would cost $30-50 to park.</p>
+<p>For visitors without a car, the South Shore Line commuter rail runs from Chicago's Millennium Station to Hammond, and Horseshoe Hammond offers a shuttle from the Gary/Chicago Airport and certain Chicago-area hotels. The casino's draw extends well beyond Chicago — visitors regularly come from Milwaukee, South Bend, and throughout the Chicago metro's south and southwest suburbs.</p>`
+      },
+      {
+        heading: 'Gaming Floor',
+        body: `<p>At <strong>53,000 square feet</strong>, Horseshoe Hammond has the largest gaming floor in Indiana. The slot machine selection includes thousands of games across all denominations, from penny machines through dollar and five-dollar options with max bets that attract serious players. The table game section runs blackjack, craps, roulette, baccarat, Mississippi Stud, Three Card Poker, and other specialty games across dozens of tables.</p>
+<p>High-limit areas serve players who want elevated stakes and more attentive service. The gaming floor layout is well-organized — clear sight lines and intuitive navigation through what could easily become a disorienting space. Because Horseshoe draws a regular local following, the tables are active most evenings and weekends without the extreme crowding that can make Vegas casinos exhausting.</p>`
+      },
+      {
+        heading: 'Poker Room',
+        body: `<p>The Horseshoe Hammond poker room is considered one of the best in the Chicago metro area — and given the density of serious poker players in that market, that's meaningful praise. The room runs cash games daily including $1/$2 and $2/$5 No-Limit Hold'em, Limit Hold'em, and pot-limit games, with the action heaviest on evenings and weekends. Regular daily and weekly tournaments draw local regulars and traveling players alike. As a Caesars property, Horseshoe Hammond occasionally hosts World Series of Poker Circuit (WSOPC) events — tour stops that draw serious players from across the Midwest and offer WSOP Main Event seat packages as prize packages.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p><strong>Jack Binion's Steak</strong> is the flagship dining experience — named for the legendary casino operator and Horseshoe founder's son, it's a classic American steakhouse serving prime cuts with the no-nonsense excellence you'd expect from the Binion legacy. Aged beef, classic sides, a solid wine list, and a room that feels like a proper celebration destination. Beyond Jack Binion's, the property has a casual dining area serving American comfort food, a buffet on select days, and a bar and grill on the gaming floor for quick bites during play.</p>`
+      },
+      {
+        heading: 'Caesars Rewards',
+        body: `<p>Horseshoe Hammond participates in <strong>Caesars Rewards</strong> — one of the most powerful loyalty programs in the gaming industry, covering 50+ properties including all Horseshoe, Harrah's, Paris Las Vegas, Caesars Palace, and Bally's locations. Points earn on gaming, dining, and hotel stays and are redeemable across the entire network. For Chicago-area residents, Caesars Rewards tier status earned at Horseshoe Hammond is directly applicable at Caesars Palace and other flagship properties — making it worthwhile to consolidate your play here even if you visit Vegas occasionally. Diamond status unlocks resort fee waivers, priority lines, and dedicated hosts at premium properties.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>Weekday evenings offer the best combination of active tables and manageable crowds — Friday and Saturday nights get very busy, especially around Chicago sporting events. For poker, the room fills quickly on weekend evenings; arrive early or add your name to the waitlist digitally through the Horseshoe app. Jack Binion's is best experienced on a weeknight when the pacing is less rushed. If you're building toward Caesars Rewards Diamond status, Horseshoe Hammond is an excellent place to earn tier credits given its proximity to Chicago — more convenient than a Vegas trip for regular play. The Horseshoe app tracks promotional offers and has a waitlist feature for table games.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'How far is Horseshoe Hammond from downtown Chicago?',
+        a: 'Horseshoe Hammond is approximately 15 miles southeast of downtown Chicago, about a 25-35 minute drive depending on traffic. Take I-90/94 east from the Loop. Free parking is available at the casino. For visitors without a car, the South Shore Line commuter rail runs from Millennium Station in Chicago to the Hammond area, and the casino operates shuttle services from select locations.'
+      },
+      {
+        q: 'Is Horseshoe Hammond the biggest casino in Indiana?',
+        a: 'Yes — Horseshoe Hammond has the largest gaming floor in Indiana at 53,000 square feet. It has thousands of slot machines, dozens of table games, a well-regarded poker room, and a full dining lineup. It\'s the dominant casino in the Chicago metro area for both recreational players and serious gamblers.'
+      },
+      {
+        q: 'Does Horseshoe Hammond have good poker?',
+        a: 'Horseshoe Hammond\'s poker room is widely considered the best in the Chicago metro area. It runs daily cash games including $1/$2 and $2/$5 No-Limit Hold\'em plus regular daily and weekly tournaments. As a Caesars Entertainment property, it also periodically hosts World Series of Poker Circuit events — major tournaments with WSOP Main Event seat packages as top prizes. The room draws a strong local following of serious players.'
+      },
+      {
+        q: 'Does Horseshoe Hammond participate in Caesars Rewards?',
+        a: 'Yes — Horseshoe Hammond is a Caesars Entertainment property and fully participates in the Caesars Rewards loyalty program. Points and tier status earned here are valid at all 50+ Caesars properties including Caesars Palace Las Vegas, Harrah\'s locations, Paris Las Vegas, and all Horseshoe properties nationwide. This makes it one of the most valuable places for Chicago-area residents to build loyalty status.'
+      },
+      {
+        q: 'What is Jack Binion\'s Steak at Horseshoe Hammond?',
+        a: 'Jack Binion\'s Steak is the flagship restaurant at Horseshoe Hammond, a classic American steakhouse named for Jack Binion, son of legendary casino operator Benny Binion who founded the original Horseshoe Casino brand. The restaurant serves prime aged beef, classic steakhouse sides, and has a solid wine selection. It\'s considered one of the better steakhouses in the Chicago suburb dining landscape and is the go-to choice for special occasions at the casino.'
+      },
+    ],
+  },
+
+  // ── Rivers Casino Pittsburgh (Pittsburgh, PA) ─────────────────────────
+  638: {
+    tagline: 'Pittsburgh\'s Only Casino — Perched Above the Ohio River with the City\'s Best Skyline Views',
+    hero_blurb: `Rivers Casino Pittsburgh is the only full-scale casino in the Steel City, and it has made the most of its monopoly by becoming a genuine entertainment destination: 3,000 slot machines, 100+ table games, multiple bars and restaurants including a Primanti Brothers outpost, and some of the most dramatic views of downtown Pittsburgh available from any indoor venue in the region.`,
+    sections: [
+      {
+        heading: 'Pittsburgh\'s Riverside Casino',
+        body: `<p>Rivers Casino Pittsburgh opened in August 2009 on the North Shore of the Ohio River, adjacent to PNC Park (home of the Pittsburgh Pirates) and Acrisure Stadium (home of the Pittsburgh Steelers). The location is superb — accessible from downtown Pittsburgh via the Andy Warhol Bridge, with a riverfront setting that gives the building unobstructed views of the famous Pittsburgh skyline. For out-of-town visitors, the casino's location puts it within easy walking or short rideshare distance from both baseball and football stadiums, making Rivers a natural pre- or post-game destination.</p>
+<p>The Pennsylvania gaming market is mature and competitive, with Rivers Pittsburgh operating alongside Rivers Philadelphia, Valley Forge Casino, Parx Casino, and others. But in Pittsburgh proper, Rivers holds the only license — giving it a captive local market that sustains high volume year-round. Weekend evenings and game nights drive particularly heavy traffic.</p>`
+      },
+      {
+        heading: 'Casino Floor',
+        body: `<p>Rivers Pittsburgh's gaming floor features approximately <strong>3,000 slot machines</strong> — an extensive selection spanning classic three-reel games, modern video slots, licensed branded titles, and high-denomination machines in dedicated areas. The <strong>100+ table games</strong> include blackjack, craps, roulette, baccarat, and specialty games spread across the main floor and a separate high-limit room. The poker room runs cash games and tournaments with daily and weekly events; the room draws a loyal Pittsburgh-area player base and occasional visiting professionals.</p>
+<p>A dedicated sportsbook offers wagering on professional and college sports, with a modern viewing setup for major events. On Steelers and Pirates game days, the sportsbook becomes particularly active.</p>`
+      },
+      {
+        heading: 'Views & Atmosphere',
+        body: `<p>The <strong>Flight Bar</strong> is the casino's signature watering hole and one of the most visually dramatic bar settings in Pittsburgh. Named for the city's aviation heritage, it sits along the building's glass wall facing the Ohio River, delivering an unobstructed panoramic view of the Pittsburgh skyline — the bridges, the confluence of the three rivers, the PPG Place towers, and the hills of the South Side. It's the kind of view that stops conversation. The bar serves a full cocktail menu and has become a destination in its own right for Pittsburgh locals looking for a drinks venue with exceptional scenery.</p>
+<p><strong>The Drum Bar</strong> is an intimate lounge inside the casino with live entertainment on weekend evenings — jazz, R&B, and local acts that give the space an authentic Pittsburgh vibe rather than the generic casino lounge feel.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p>The presence of a <strong>Primanti Brothers</strong> inside Rivers Casino Pittsburgh is deeply appropriate — the iconic Pittsburgh sandwich shop, famous for putting the coleslaw and fries inside the sandwich, has been feeding Pittsburghers since 1933. Having one inside the casino is a local detail that signals Rivers genuinely understands its city. Beyond Primanti's, the property has a <strong>Andrew's Steak & Seafood</strong> restaurant for sit-down dining, a <strong>food court</strong> for quick bites, and multiple bars with food menus spread across the casino floor. The dining options are practical and well-suited to a gaming audience — not destination fine dining, but solid food at reasonable prices in a convenient layout.</p>`
+      },
+      {
+        heading: 'Rush Rewards & Loyalty',
+        body: `<p>Rivers Casino Pittsburgh participates in <strong>Rush Rewards</strong> — the loyalty program for Rush Street Gaming's casino portfolio, which includes Rivers Philadelphia, Rivers Des Plaines (Chicago suburb), Rivers Schenectady, and Rivers Portsmouth. Points earn on slot play, table games, dining, and hotel stays and are redeemable for free play, dining credits, and merchandise. The Rush Rewards program runs multiple tiers with escalating benefits; regular players at Rivers Pittsburgh who visit other Rush properties can consolidate their status across the network. The program is considered straightforward and fair by regular players, without the complexity that can make some large-network loyalty programs confusing.</p>`
+      },
+      {
+        heading: 'Insider Tips',
+        body: `<p>For the best Flight Bar experience, come at dusk when the city lights are coming on — the view is genuinely spectacular. On Steelers or Pirates game days, the casino is extremely crowded before and after games; if you want a calmer gaming session, avoid those windows or arrive early. Parking validation is typically available through the casino; ask at the players club desk. The poker room has its strongest action on weekend evenings and during tournament series — check the tournament calendar on the Rivers Pittsburgh website before visiting. Primanti Brothers inside the casino is a reliable option for late-night food when most other dining has closed.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Is Rivers Casino the only casino in Pittsburgh?',
+        a: 'Yes — Rivers Casino Pittsburgh holds the only gaming license in the City of Pittsburgh and operates as the sole full-scale casino in the city. The next nearest casinos are in the broader Pittsburgh metro area. Rivers\' North Shore location adjacent to PNC Park and Acrisure Stadium makes it a natural complement to sports events.'
+      },
+      {
+        q: 'What is the Flight Bar at Rivers Casino Pittsburgh?',
+        a: 'The Flight Bar is Rivers Casino Pittsburgh\'s signature bar, located along the building\'s riverfront glass wall with panoramic views of the Pittsburgh skyline, the Ohio River, and the confluence of Pittsburgh\'s three rivers. It\'s considered one of the best bar views in the city and is a destination for Pittsburgh locals as well as casino visitors. The bar serves a full cocktail menu and has live entertainment on select nights.'
+      },
+      {
+        q: 'Does Rivers Casino Pittsburgh have Primanti Brothers?',
+        a: 'Yes — Rivers Casino Pittsburgh has a Primanti Brothers location on the casino floor. Primanti Brothers is the iconic Pittsburgh sandwich chain famous since 1933 for its sandwiches stuffed with coleslaw and french fries. Having one inside the casino is a beloved local touch that connects the resort to authentic Pittsburgh culture.'
+      },
+      {
+        q: 'What is Rush Rewards at Rivers Casino?',
+        a: 'Rush Rewards is the loyalty program for Rush Street Gaming casinos, including Rivers Pittsburgh, Rivers Philadelphia, Rivers Des Plaines (Chicago suburb), Rivers Schenectady, and Rivers Portsmouth. Points earn on gaming, dining, and hotel stays and are redeemable for free play and dining credits. The program has multiple tiers with escalating benefits, and status is shared across all Rush Street Gaming properties.'
+      },
+      {
+        q: 'How many slot machines does Rivers Casino Pittsburgh have?',
+        a: 'Rivers Casino Pittsburgh has approximately 3,000 slot machines spanning a wide range of denominations, themes, and game types, including classic reel games, modern video slots, licensed branded titles, and high-denomination machines. The casino also has 100+ table games, a poker room, and a sportsbook.'
+      },
+    ],
+  },
+
+  // ── Soaring Eagle Casino & Resort (Mount Pleasant, MI) ────────────────
+  528: {
+    tagline: 'Michigan\'s Largest Casino Resort — 4,500 Slots and a Full Hollywood-Style Entertainment Complex',
+    hero_blurb: `Soaring Eagle Casino & Resort in Mount Pleasant, Michigan is the largest casino in the state outside of Detroit — and by many measures, one of the most complete gaming resort experiences in the Midwest. With 4,500 slot machines, a 100,000-square-foot casino floor, a 512-room hotel, and an entertainment complex that draws national touring acts, Soaring Eagle delivers a full destination resort experience deep in the heart of central Michigan.`,
+    sections: [
+      {
+        heading: 'Scale & Setting',
+        body: `<p>Soaring Eagle is owned and operated by the Saginaw Chippewa Indian Tribe of Michigan and has grown dramatically from its original 1993 opening into one of the premier gaming destinations in the Great Lakes region. The resort sits in Mount Pleasant, Michigan — about <strong>70 miles north of Lansing and 130 miles north of Detroit</strong> — making it a true destination property rather than a convenient urban casino. Guests come from across Michigan, from neighboring Ohio and Indiana, and from Ontario, Canada for the full resort experience.</p>
+<p>The scale is impressive for a location in central Michigan: a <strong>100,000-square-foot casino floor</strong>, a hotel with <strong>512 rooms</strong>, multiple restaurants, a full entertainment venue, a spa, and extensive meeting and event space. The tribe's investment in the property has been consistent and substantial, keeping the facilities modern and competitive with regional alternatives.</p>`
+      },
+      {
+        heading: 'Slots & Gaming',
+        body: `<p>Soaring Eagle's reputation is built substantially on its slot program. The <strong>4,500 slot machines</strong> make it one of the largest slot floors in the Midwest, covering a massive range of denominations, manufacturers, and game types. The resort is well-known among serious slot players for <strong>generous promotions and competitive paybacks</strong> — a reputation that drives significant repeat visitation from players who've had good results here. Linked progressives with large jackpots create excitement throughout the floor, and the casino runs regular jackpot promotions that distribute additional prizes beyond the base game payouts.</p>
+<p>Table games include blackjack, craps, roulette, baccarat, and specialty games. A dedicated high-limit room serves players who want elevated stakes and more personal service. The poker room operates with regular cash games and a tournament schedule that draws local Michigan players and visiting talent from the broader region.</p>`
+      },
+      {
+        heading: 'Entertainment',
+        body: `<p>The <strong>Soaring Eagle Casino & Resort Entertainment Complex</strong> is one of the larger entertainment venues in Michigan — a Hollywood-style facility that books national touring acts across country, rock, hip-hop, pop, and comedy. Past performers have included major country artists, classic rock legends, and prominent comedians. The venue's capacity puts it in a mid-tier range that makes it particularly attractive for fans who want to see established artists in a more intimate setting than an arena or stadium. Concert tickets often include gaming packages through the casino's promotions, making for a combined entertainment value that's hard to beat in the region.</p>`
+      },
+      {
+        heading: 'Hotel & Amenities',
+        body: `<p>The <strong>512-room hotel tower</strong> at Soaring Eagle offers rooms and suites at varying price points, making it accessible for budget-conscious travelers while also having premium accommodations for high-value guests. The <strong>Spa at Soaring Eagle</strong> provides massage, skin care, and wellness treatments in a tranquil setting separated from the casino energy. An indoor pool complex serves hotel guests year-round — important for a central Michigan property that sees cold winters. Fitness facilities, business center services, and extensive meeting space make Soaring Eagle viable for corporate events and group bookings alongside leisure visitors.</p>`
+      },
+      {
+        heading: 'Dining',
+        body: `<p>Soaring Eagle's dining complex includes several distinct concepts. The <strong>main buffet</strong> is a regional draw, cycling through themed nights and featuring live carving stations, seafood selections, and a dessert bar. <strong>Sinagua Steak & Seafood</strong> is the upscale dining option, serving prime cuts and fresh seafood in a more formal setting appropriate for celebrations and special occasions. Casual dining options on the gaming floor handle quick meals during play, and the hotel has café and bar service for guests who prefer to stay close to their room. The dining quality across the board is competitive for a regional gaming market.</p>`
+      },
+      {
+        heading: 'Soaring Eagle Rewards',
+        body: `<p>The <strong>Soaring Eagle Rewards</strong> program rewards loyal players with points on slot play, table games, and hotel stays. Points redeem for free play, dining, hotel credits, and entertainment tickets. The program has multiple tier levels with increasing benefits for frequent visitors, and the casino runs regular promotional events — drawings, multiplier days, and jackpot challenges — that give members additional earning opportunities beyond base play. The promotions calendar is aggressive and designed to drive repeat visits, which is one reason Soaring Eagle maintains such strong regional loyalty despite its location requiring a meaningful drive for most guests.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'How many slot machines does Soaring Eagle Casino have?',
+        a: 'Soaring Eagle Casino & Resort has approximately 4,500 slot machines, making it one of the largest slot floors in the Midwest and the largest casino in Michigan outside of the Detroit market. The selection spans all denominations from penny through dollar and above, with hundreds of linked progressive machines and regular jackpot promotions.'
+      },
+      {
+        q: 'How far is Soaring Eagle Casino from Detroit?',
+        a: 'Soaring Eagle Casino & Resort in Mount Pleasant, Michigan is approximately 130 miles north of Detroit — about a 2-hour drive depending on traffic. It\'s about 70 miles north of Lansing. The distance makes it a destination trip rather than a day trip for Detroit-area residents, which is why the full resort experience (hotel, entertainment, dining) is important to the property\'s offering.'
+      },
+      {
+        q: 'Does Soaring Eagle Casino have loose slots?',
+        a: 'Soaring Eagle has a strong regional reputation for competitive slot paybacks and generous promotions. Michigan\'s tribal gaming compact requires minimum payout percentages, and Soaring Eagle is known for running above minimums on many machine types. The casino also runs frequent promotional events — multiplier days, jackpot challenges, and drawing promotions — that effectively increase the value return for players who participate.'
+      },
+      {
+        q: 'What entertainment acts perform at Soaring Eagle?',
+        a: 'Soaring Eagle\'s entertainment complex books national touring acts across multiple genres: country, classic rock, hip-hop, pop, and comedy. Past performers have spanned from major country stars to classic rock legends to prominent comedians. The venue\'s mid-tier capacity makes it ideal for established artists in an intimate setting. Check the Soaring Eagle website for the current entertainment calendar; shows often include gaming packages as part of promotional offers.'
+      },
+      {
+        q: 'Does Soaring Eagle have a hotel?',
+        a: 'Yes — Soaring Eagle has a 512-room hotel tower with rooms and suites at varying price points. Amenities include an indoor pool, the Spa at Soaring Eagle, a fitness center, and multiple dining options. The hotel makes Soaring Eagle a full destination resort for overnight stays from across Michigan and surrounding states.'
+      },
+    ],
+  },
+
+  // ── Potawatomi Hotel & Casino (Milwaukee, WI) ─────────────────────────
+  542: {
+    tagline: 'Milwaukee\'s Casino — The Only Major Gaming Destination Within the City Limits',
+    hero_blurb: `Potawatomi Hotel & Casino is Milwaukee's home casino — a sprawling, full-service gaming and entertainment destination tucked into the Menomonee Valley, just minutes from downtown. As the only major casino operating within Milwaukee's city limits, Potawatomi draws a loyal local following with 3,000 slot machines, 100+ table games, a James Beard Award-nominated restaurant, a 6,000-seat entertainment venue, and a loyalty program that rewards regular play generously.`,
+    sections: [
+      {
+        heading: 'Milwaukee\'s Urban Casino',
+        body: `<p>Potawatomi Hotel & Casino — owned and operated by the Forest County Potawatomi Community — has been a fixture in Milwaukee since 1991, beginning as a bingo hall and growing steadily into one of the largest gaming facilities in Wisconsin. The current facility in the Menomonee Valley has been extensively renovated and expanded over the years, with the hotel tower opening in 2014 completing the transformation into a full resort destination.</p>
+<p>The Menomonee Valley location gives Potawatomi an urban character that distinguishes it from the rural tribal casinos that dominate Wisconsin gaming. The Valley is itself a revitalized industrial corridor, and Potawatomi anchors its entertainment district with the energy and foot traffic of a major gaming and events venue. Downtown Milwaukee is minutes away, making Potawatomi a natural component of a Milwaukee weekend itinerary.</p>`
+      },
+      {
+        heading: 'Casino Floor',
+        body: `<p>Potawatomi's gaming floor features approximately <strong>3,000 slot machines</strong> — a massive selection covering every denomination, theme, and game type from penny slots through dollar and multi-dollar high-limit options. The machine library is regularly refreshed with new titles from major manufacturers, and linked progressive jackpots provide excitement throughout the floor. Table game selection includes blackjack, craps, roulette, baccarat, and specialty games across <strong>100+ tables</strong>, with a dedicated high-limit area for elevated-stakes play.</p>
+<p>The poker room runs regular cash games from low stakes through mid-high, plus a tournament schedule with daily and weekly events. The room has a strong local following from Milwaukee's experienced player base, and the tournament series periodically host larger events with meaningful prize pools.</p>`
+      },
+      {
+        heading: 'Dream Dance Steak',
+        body: `<p><strong>Dream Dance Steak</strong> is Potawatomi's crown jewel in dining and one of the most acclaimed restaurants in the entire state of Wisconsin. The restaurant earned a <strong>James Beard Award nomination</strong> — an extraordinary distinction for a casino restaurant, and a recognition that the food genuinely transcends what you'd expect from a gaming property. Dream Dance serves exceptional beef, impeccably sourced and prepared, alongside creative sides and a wine program that befits a serious fine dining operation. For Milwaukee diners who want a world-class steakhouse experience, Dream Dance routinely outperforms its competition citywide. Reservations are essential.</p>`
+      },
+      {
+        heading: 'Dining & Entertainment',
+        body: `<p>Beyond Dream Dance Steak, Potawatomi has a solid dining lineup for a full evening out. <strong>Fire Pit Sports Bar & Grill</strong> is the casual centerpiece — a high-energy sports bar with a massive screen setup, solid American bar food (wings, burgers, nachos, craft beer selection), and live entertainment on select evenings. Multiple quick-service options and a buffet on select days handle the volume of gaming floor visitors who need a meal without a full sit-down experience.</p>
+<p>The <strong>Northern Lights Theater</strong> is a 6,000-seat entertainment venue that books national touring acts across comedy, country, rock, R&B, and pop. The theater's size puts it in a category that attracts established mid-tier acts and occasional major-name performers, making Potawatomi a meaningful player in Milwaukee's entertainment landscape. Concert tickets are frequently bundled with promotional packages through the PaysBig Rewards program.</p>`
+      },
+      {
+        heading: 'PaysBig Rewards',
+        body: `<p><strong>PaysBig Rewards</strong> is Potawatomi's loyalty program, and it's structured to reward regular visitors generously. Members earn points on slot play, table games, dining, hotel stays, and entertainment purchases. Points redeem for free play, dining credits, hotel discounts, and entertainment tickets. The program runs multiple tiers with escalating benefits — higher tiers unlock priority access to entertainment tickets (critical for popular shows that sell out quickly), complimentary hotel stays, birthday offers, and dedicated host services for the casino's most valuable players. The promotions calendar is active, with jackpot tournaments, drawing events, and multiplier days running throughout the year. For Milwaukee-area players, PaysBig is the obvious loyalty program to prioritize given Potawatomi's status as the only major in-city casino option.</p>`
+      },
+      {
+        heading: 'Hotel',
+        body: `<p>The Potawatomi Hotel opened in 2014 as a luxury addition to the gaming complex. The hotel delivers upscale urban accommodations with high-floor views of the Milwaukee skyline and Menomonee Valley, a full fitness center, and direct interior access to the casino, restaurants, and entertainment venue. It has become Milwaukee's go-to hotel for gaming-focused visitors and a well-regarded upscale option for general Milwaukee travel. Rates are competitive with downtown Milwaukee hotels of comparable quality, and PaysBig Rewards members earn points on hotel stays that can offset future room costs.</p>`
+      },
+    ],
+    faqs: [
+      {
+        q: 'Is Potawatomi the only casino in Milwaukee?',
+        a: 'Potawatomi Hotel & Casino is the only major casino operating within Milwaukee city limits, which makes it the default gaming destination for Milwaukee residents and visitors. The next nearest tribal casinos are significantly further afield in rural Wisconsin. Potawatomi\'s urban Menomonee Valley location puts it minutes from downtown Milwaukee.'
+      },
+      {
+        q: 'What is Dream Dance Steak at Potawatomi?',
+        a: 'Dream Dance Steak is Potawatomi\'s flagship fine dining restaurant and one of the most acclaimed steakhouses in Wisconsin. It earned a James Beard Award nomination — an extraordinary distinction for a casino restaurant. The restaurant serves exceptional sourced beef with creative sides and a serious wine program. It\'s consistently rated among the best steakhouses in Milwaukee and requires advance reservations, especially on weekend evenings.'
+      },
+      {
+        q: 'What is PaysBig Rewards at Potawatomi Casino?',
+        a: 'PaysBig Rewards is Potawatomi\'s multi-tier loyalty program. Members earn points on slot play, table games, hotel stays, dining, and entertainment purchases. Points are redeemable for free play, dining credits, hotel discounts, and entertainment tickets. Higher tiers unlock priority entertainment ticket access, complimentary stays, birthday offers, and host services. The program runs frequent promotional events including jackpot tournaments, drawing events, and multiplier days.'
+      },
+      {
+        q: 'How many slot machines does Potawatomi Casino have?',
+        a: 'Potawatomi Hotel & Casino has approximately 3,000 slot machines covering all denominations from penny through high-limit options. The machine selection is regularly updated with new titles from major manufacturers, and linked progressive jackpots run throughout the floor. The casino also has 100+ table games including blackjack, craps, roulette, baccarat, and specialty games.'
+      },
+      {
+        q: 'What entertainment venue is at Potawatomi Casino Milwaukee?',
+        a: 'Potawatomi\'s Northern Lights Theater is a 6,000-seat entertainment venue that books national touring acts in comedy, country, rock, R&B, and pop. The venue size attracts established acts and occasional major-name performers, making it a significant player in Milwaukee\'s entertainment scene. Tickets are frequently bundled with PaysBig Rewards promotional packages. Check the Potawatomi website for the current entertainment calendar.'
+      },
+    ],
+  },
+
 };
 
 // ─── Module Export ─────────────────────────────────────────────────────────

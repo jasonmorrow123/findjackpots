@@ -252,7 +252,12 @@ app.get('/sitemap.xml', async (req, res) => {
       { path: '/blog/how-to-find-loosest-slots',    priority: '0.8', freq: 'monthly' },
       { path: '/blog/biggest-casino-jackpots-2026', priority: '0.8', freq: 'weekly'  },
       { path: '/blog/casino-loyalty-programs-compared', priority: '0.8', freq: 'monthly' },
-      { path: '/blog/midwest-casino-road-trip',     priority: '0.8', freq: 'monthly' },
+      { path: '/blog/midwest-casino-road-trip',          priority: '0.8', freq: 'monthly' },
+      { path: '/blog/best-casinos-near-chicago',         priority: '0.8', freq: 'monthly' },
+      { path: '/blog/best-casinos-near-minneapolis',     priority: '0.8', freq: 'monthly' },
+      { path: '/blog/vegas-locals-casinos-guide',        priority: '0.8', freq: 'monthly' },
+      { path: '/blog/casino-loyalty-programs-midwest',   priority: '0.8', freq: 'monthly' },
+      { path: '/blog/slot-machine-tips-beginners',       priority: '0.8', freq: 'monthly' },
     ];
     for (const p of intentPages) {
       urls += `  <url><loc>${base}${p.path}</loc><changefreq>${p.freq}</changefreq><priority>${p.priority}</priority><lastmod>${today}</lastmod></url>\n`;

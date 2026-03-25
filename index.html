@@ -2776,7 +2776,8 @@ async function loadCasinos(region = 'las-vegas') {
         name: c.name,
         chain: c.chain || 'Independent',
         location: `${c.city || 'Las Vegas'}, ${c.state || 'NV'}`,
-        slotPayback: c.payback_pct ? c.payback_pct + '%' : 'N/A',
+        slotPayback: c.payback_pct ? parseFloat(c.payback_pct).toFixed(1) + '%' : 'N/A',
+        paybackReportMonth: c.payback_report_month || null,
         largestJackpot: c.top_jackpot_cents ? '$' + formatAmount(c.top_jackpot_cents / 100) : 'N/A',
         jackpotFreq: c.latest_jackpot_date ? 'Reported' : 'Unknown',
         loyaltyProgram: c.loyalty_program_name || c.chain || 'Rewards Program',
@@ -3044,16 +3045,17 @@ function renderCards(data) {
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
           <div class="score-badge ${c.scoreClass}"><span class="score-num">${c.score}</span><span class="score-lbl">${scoreLabel(c.score)}</span></div>
+          ${c.slotPayback && c.slotPayback !== 'N/A' ? `<div style="font-size:10px;background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:99px;font-weight:600;white-space:nowrap;">🎰 ${c.slotPayback} payback</div>` : ''}
           <button id="cmp-top-${c.id}" onclick="toggleCompare(${c.id}, event)" style="font-size:10px;padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:${inCompare ? 'var(--primary)' : 'transparent'};color:${inCompare ? '#fff' : 'var(--text-secondary)'};cursor:pointer;white-space:nowrap;transition:all 0.15s;">${inCompare ? '✓ Added' : '+ Compare'}</button>
         </div>
       </div>
       <div class="card-body">
         ${(() => {
           const dist = distanceMiles(userLat, userLng, c.lat, c.lng);
-          const fmt = formatDistance(dist);
-          return fmt ? `<div class="stat-row">
-            <span class="stat-label">${ICONS.location} Distance</span>
-            <span class="stat-value">${fmt}</span>
+          const dt = driveTime(dist);
+          return dt ? `<div class="stat-row">
+            <span class="stat-label">🚗 Drive Time</span>
+            <span class="stat-value">${dt}</span>
           </div>` : '';
         })()}
         ${c.yelpRating ? `
@@ -3306,11 +3308,19 @@ async function openModal(id) {
 
       <div class="modal-section">
         <h3>📊 Quick Stats</h3>
-        <div class="stat-row"><span class="stat-label">Slot Payback %</span><span class="stat-value green">${c.slotPayback}</span></div>
+        ${(() => {
+          if (c.slotPayback && c.slotPayback !== 'N/A') {
+            const monthLabel = c.paybackReportMonth ? new Date(c.paybackReportMonth).toLocaleDateString('en-US', {month:'short', year:'numeric'}) : null;
+            const stateLabel = c.location ? c.location.split(',')[1]?.trim() : null;
+            const sourceNote = monthLabel ? `<span style="color:var(--text-secondary);font-size:0.72rem;font-weight:400;display:block;margin-top:2px">${stateLabel ? stateLabel + ' ' : ''}Gaming Commission, ${monthLabel}</span>` : '';
+            return `<div class="stat-row"><span class="stat-label">🎰 Slot Payback</span><span class="stat-value green" style="font-size:1.05rem;font-weight:700">${c.slotPayback}${sourceNote}</span></div>`;
+          }
+          return `<div class="stat-row"><span class="stat-label">🎰 Slot Payback</span><span class="stat-value">${c.slotPayback}</span></div>`;
+        })()}
         <div class="stat-row"><span class="stat-label">Min Table Bet</span><span class="stat-value">${c.minBet}</span></div>
         <div class="stat-row"><span class="stat-label">Free Parking</span><span class="stat-value ${c.parkingFree ? 'green' : 'red'}">${c.parkingFree ? 'Yes ✓' : 'No ✗'}</span></div>
         <div class="stat-row"><span class="stat-label">Hotel On-site</span><span class="stat-value ${c.hotelOnsite ? 'green' : 'red'}">${c.hotelOnsite ? 'Yes ✓' : 'No ✗'}</span></div>
-        ${(() => { const d = formatDistance(distanceMiles(userLat, userLng, c.lat, c.lng)); return d ? `<div class="stat-row"><span class=stat-label>Distance</span><span class="stat-value">${d} from you</span></div>` : ''; })()}
+        ${(() => { const dist = distanceMiles(userLat, userLng, c.lat, c.lng); const dt = driveTime(dist); return dt ? `<div class="stat-row"><span class="stat-label">🚗 Drive Time</span><span class="stat-value">${dt} away</span></div>` : ''; })()}
         ${c.monthly_revenue_cents ? `<div class="stat-row"><span class="stat-label">Monthly Revenue</span><span class="stat-value">${'$' + (c.monthly_revenue_cents / 1e8).toFixed(1) + 'M'}${c.revenue_report_month ? ' <span style="color:var(--text-secondary);font-size:0.75rem">(' + new Date(c.revenue_report_month).toLocaleDateString('en-US',{month:'short',year:'numeric'}) + ')</span>' : ''}</span></div>` : ''}
       </div>
 
@@ -3761,7 +3771,7 @@ function renderCompareModal() {
   // ── HEADER ROW ──
   const headCols = casinos.map((c, i) => {
     const dist = numericDistance(c);
-    const distStr = dist ? `<div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">${formatDistance(dist)} away</div>` : '';
+    const distStr = dist ? `<div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">${driveTime(dist) || formatDistance(dist) + ' away'}</div>` : '';
     return `<th>
       <div class="cm-col-header">
         <div class="cm-col-emoji">${c.emoji}</div>
@@ -3794,8 +3804,8 @@ function renderCompareModal() {
   rows.push({ section: 'OVERVIEW' });
   rows.push({ label: 'Location', fn: c => c.location || '—', num: null });
   rows.push({
-    label: 'Distance',
-    fn: c => { const d = numericDistance(c); return d ? formatDistance(d) + ' away' : '<span class="cm-na">—</span>'; },
+    label: 'Drive Time',
+    fn: c => { const d = numericDistance(c); return d ? (driveTime(d) || formatDistance(d) + ' away') : '<span class="cm-na">—</span>'; },
     num: c => numericDistance(c),
     higher: false
   });
@@ -4344,9 +4354,12 @@ async function loadWinnerOfDay() {
       desc = `<strong>${who}</strong> walked away a winner`;
     }
 
-    // Append distance hint if we have it
+    // Append drive time hint if we have it
     if (winner.distance_miles != null && winner.scope !== 'national') {
-      desc += ` <span style="opacity:0.65;font-size:0.82em">(${winner.distance_miles} mi away)</span>`;
+      const dt = driveTime(winner.distance_miles);
+      desc += dt
+        ? ` <span style="opacity:0.65;font-size:0.82em">(${dt})</span>`
+        : ` <span style="opacity:0.65;font-size:0.82em">(${winner.distance_miles} mi away)</span>`;
     }
     document.getElementById('winnerDesc').innerHTML = desc;
 
@@ -4546,6 +4559,18 @@ function formatDistance(miles) {
   if (miles < 1) return '< 1 mi';
   if (miles < 10) return miles.toFixed(1) + ' mi';
   return Math.round(miles) + ' mi';
+}
+
+function driveTime(miles) {
+  if (!miles || miles <= 0) return null;
+  let mins;
+  if (miles < 10) mins = Math.round(miles * 4);
+  else if (miles < 50) mins = Math.round(miles * 1.33);
+  else mins = Math.round(miles * 1.0);
+  if (mins < 60) return mins + ' min drive';
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return m > 0 ? `${h}h ${m}min drive` : `${h}h drive`;
 }
 
 // Wrap geolocation in a real Promise so we can await it properly

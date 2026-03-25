@@ -351,7 +351,8 @@ app.get('/api/casinos', async (req, res) => {
         j.machine_name AS latest_jackpot_machine,
         j.amount_cents AS latest_jackpot_cents,
         j.created_at AS latest_jackpot_date,
-        top_j.amount_cents AS top_jackpot_cents
+        top_j.amount_cents AS top_jackpot_cents,
+        sp.payback_pct, sp.report_month AS payback_report_month
       FROM casinos c
       LEFT JOIN reviews r ON r.casino_id = c.id AND r.source = 'yelp'
       LEFT JOIN LATERAL (
@@ -364,6 +365,13 @@ app.get('/api/casinos', async (req, res) => {
         FROM jackpots WHERE casino_id = c.id
         ORDER BY amount_cents DESC LIMIT 1
       ) top_j ON true
+      LEFT JOIN (
+        SELECT casino_id, payback_pct, report_month
+        FROM slot_payback
+        WHERE (casino_id, report_month) IN (
+          SELECT casino_id, MAX(report_month) FROM slot_payback GROUP BY casino_id
+        )
+      ) sp ON sp.casino_id = c.id
       WHERE ${whereClause}
       ORDER BY r.review_count DESC NULLS LAST, c.name ASC
       LIMIT $${limitParam} OFFSET $${offsetParam}

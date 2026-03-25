@@ -1395,7 +1395,7 @@ module.exports = function registerSEORoutes(app, pool) {
 
         // ── Hero stat helpers ────────────────────────────────────────────
         const heroCasinoCount  = stats.casino_count  || casinos.length || '—';
-        const heroTopJackpot   = stats.top_jackpot   ? fmt$(stats.top_jackpot) : 'N/A';
+        const heroTopJackpot   = stats.top_jackpot   ? fmt$(stats.top_jackpot) : 'See Live';
         const heroHotelCount   = stats.hotel_count   || '—';
         const heroParkingCount = stats.parking_count || '—';
 
@@ -1533,7 +1533,7 @@ ${siteHeader()}
     <a href="#jackpots" style="${quickLinkStyle}">🏆 Jackpots</a>
     <a href="#about"    style="${quickLinkStyle}">📖 About</a>
     <a href="#faq"      style="${quickLinkStyle}">❓ FAQ</a>
-    <a href="https://findjackpots.com" style="${quickLinkStyle}color:#e5a820;">🗺️ Map</a>
+    <a href="https://www.google.com/maps/search/casinos+in+${encodeURIComponent(stateName)}" target="_blank" rel="noopener" style="${quickLinkStyle}color:#e5a820;">🗺️ Map</a>
   </div>
 </div>
 

@@ -379,7 +379,7 @@
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 24px;
       max-width: 1200px;
-      margin: 24px auto 80px;
+      margin: 24px auto 24px;
       padding: 0 24px;
     }
 
@@ -834,7 +834,7 @@
       background: var(--page-bg);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 48px 24px;
+      padding: 28px 24px;
     }
     .community-inner { max-width: 1200px; margin: 0 auto; }
     /* Legacy wins styles kept for JS compat */
@@ -2855,11 +2855,11 @@ async function loadActiveDeals() {
 
     const res = await fetch(`/api/promotions/batch-summary?ids=${ids.join(',')}`);
     if (!res.ok) throw new Error('API error');
-    const data = await res.json(); // expected: { [casinoId]: { promotions: [...] } }
+    const data = await res.json(); // { [casinoId]: [{ title, promo_type }] }
 
     // Find casinos with promotions, sort by count desc
     const withPromos = CASINOS
-      .map(c => ({ casino: c, promos: data[c.id]?.promotions || [] }))
+      .map(c => ({ casino: c, promos: Array.isArray(data[c.id]) ? data[c.id] : [] }))
       .filter(x => x.promos.length > 0)
       .sort((a, b) => b.promos.length - a.promos.length)
       .slice(0, 5);

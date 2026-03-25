@@ -837,53 +837,145 @@
       padding: 48px 24px;
     }
     .community-inner { max-width: 1200px; margin: 0 auto; }
-    .community-inner h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
-    .community-inner .section-sub { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 24px; font-weight: 400; }
-    .wins-feed {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
+    /* Legacy wins styles kept for JS compat */
+    .wins-feed { display: none; }
+    .wins-empty { display: none; }
+
+    /* Explore + Deals two-column layout */
+    .explore-deals-row {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
     }
-    .win-card {
+    .explore-col {
+      flex: 0 0 60%;
+    }
+    .deals-col {
+      flex: 1;
+    }
+    .explore-deals-row .col-heading {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    /* State grid */
+    .state-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .state-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      position: relative;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+      display: block;
     }
-    .win-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(74,114,184,0.12); }
-    .win-card.verified { border-color: var(--green); }
-    .win-amount {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #2d8c65;
-      line-height: 1;
-      margin-bottom: 6px;
+    .state-card:hover {
+      border-color: #5c7aaa;
+      box-shadow: 0 4px 16px rgba(92,122,170,0.15);
+      transform: translateY(-2px);
+      color: #5c7aaa;
     }
-    .win-machine { font-size: 0.88rem; color: var(--text); font-weight: 600; margin-bottom: 4px; }
-    .win-meta { font-size: 0.78rem; color: var(--text-secondary); }
-    .win-badge {
-      position: absolute;
-      top: 12px; right: 12px;
-      font-size: 0.68rem;
+    .state-card-name {
       font-weight: 700;
-      padding: 3px 8px;
+      font-size: 0.95rem;
+    }
+    .state-card-count {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+    /* Active deals */
+    .deals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .deal-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .deal-item:hover {
+      border-color: #5c7aaa;
+      box-shadow: 0 3px 12px rgba(92,122,170,0.12);
+    }
+    .deal-item-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .deal-item-body { flex: 1; min-width: 0; }
+    .deal-item-name { font-weight: 700; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .deal-item-title { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .deal-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 7px;
       border-radius: 99px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px;
     }
-    .win-badge.verified { background: #e4f2ec; color: #2d7a5a; }
-    .win-badge.unverified { background: #eceef4; color: #888; }
-    .wins-empty {
-      grid-column: 1/-1;
+    .deal-badge-free-play { background: #e4f2ec; color: #2d7a5a; }
+    .deal-badge-match { background: #fff3cd; color: #856404; }
+    .deal-badge-points { background: #d1e4f5; color: #0c5280; }
+    .deal-badge-promo { background: #f0e6ff; color: #6b21a8; }
+    .deal-badge-default { background: #eceef4; color: #555; }
+    .deals-placeholder {
       text-align: center;
-      padding: 40px 20px;
+      padding: 32px 16px;
       color: var(--text-secondary);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
     }
-    .wins-empty span { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+    .deals-placeholder span { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+    /* Blog row */
+    .blog-section {
+      margin-top: 44px;
+    }
+    .blog-section .col-heading {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .blog-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover {
+      border-color: #5c7aaa;
+      box-shadow: 0 4px 16px rgba(92,122,170,0.15);
+      transform: translateY(-2px);
+    }
+    .blog-card-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 6px; }
+    .blog-card-excerpt { font-size: 0.78rem; color: var(--text-secondary); flex: 1; }
+    .blog-card-read { font-size: 0.78rem; font-weight: 700; color: #5c7aaa; margin-top: 10px; }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
@@ -1154,9 +1246,13 @@
       .card-footer { padding: 12px 16px; gap: 6px; }
       .casino-name { font-size: 1rem; }
 
-      /* Community wins */
+      /* Community section responsive */
       .community-inner { padding: 0 16px; }
-      .wins-feed { grid-template-columns: 1fr; }
+      .explore-deals-row { flex-direction: column; }
+      .explore-col, .deals-col { flex: none; width: 100%; }
+      .state-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-row { grid-template-columns: 1fr; overflow-x: auto; display: flex; gap: 14px; }
+      .blog-card { min-width: 240px; flex-shrink: 0; }
 
       /* Market section */
       .market-inner { padding: 0 16px; }
@@ -2031,18 +2127,105 @@
 
 <div class="casino-grid" id="casinoGrid"></div>
 
-<!-- COMMUNITY WINS FEED -->
+<!-- EXPLORE + DEALS + BLOG SECTION -->
 <div class="community-section">
   <div class="community-inner">
-    <h2 style="font-size:1.4rem;font-weight:700;">🏆 Recent Jackpot Winners</h2>
-    <p class="section-sub">Real jackpots reported by FindJackpots users · <span id="winsCount" style="color:var(--green);font-weight:700">0 reports</span></p>
-    <div class="wins-feed" id="winsFeed">
-      <div class="wins-empty">
-        <span>🎰</span>
-        Hit a jackpot? Be the first to report it!<br>
-        <button class="report-win-btn" style="margin:14px auto 0;display:inline-flex" onclick="openReportWin()">🏆 Report a Win</button>
+
+    <!-- Two-column: Explore by State + Active Deals -->
+    <div class="explore-deals-row">
+
+      <!-- Left: Explore by State (60%) -->
+      <div class="explore-col">
+        <div class="col-heading">🗺️ Explore Casinos by State</div>
+        <div class="state-grid">
+          <a href="/casinos/nevada" class="state-card">
+            <div class="state-card-name">Nevada</div>
+            <div class="state-card-count">426 casinos</div>
+          </a>
+          <a href="/casinos/michigan" class="state-card">
+            <div class="state-card-name">Michigan</div>
+            <div class="state-card-count">25 casinos</div>
+          </a>
+          <a href="/casinos/wisconsin" class="state-card">
+            <div class="state-card-name">Wisconsin</div>
+            <div class="state-card-count">22 casinos</div>
+          </a>
+          <a href="/casinos/iowa" class="state-card">
+            <div class="state-card-name">Iowa</div>
+            <div class="state-card-count">21 casinos</div>
+          </a>
+          <a href="/casinos/minnesota" class="state-card">
+            <div class="state-card-name">Minnesota</div>
+            <div class="state-card-count">21 casinos</div>
+          </a>
+          <a href="/casinos/illinois" class="state-card">
+            <div class="state-card-name">Illinois</div>
+            <div class="state-card-count">14 casinos</div>
+          </a>
+          <a href="/casinos/missouri" class="state-card">
+            <div class="state-card-name">Missouri</div>
+            <div class="state-card-count">13 casinos</div>
+          </a>
+          <a href="/casinos/indiana" class="state-card">
+            <div class="state-card-name">Indiana</div>
+            <div class="state-card-count">13 casinos</div>
+          </a>
+          <a href="/casinos/ohio" class="state-card">
+            <div class="state-card-name">Ohio</div>
+            <div class="state-card-count">11 casinos</div>
+          </a>
+        </div>
       </div>
-    </div>
+
+      <!-- Right: Active Deals (40%) -->
+      <div class="deals-col">
+        <div class="col-heading">🎁 Today's Best Deals</div>
+        <div class="deals-list" id="activeDealsList">
+          <div class="deals-placeholder">
+            <span>🎁</span>
+            Loading today's deals…
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /explore-deals-row -->
+
+    <!-- Blog section -->
+    <div class="blog-section">
+      <div class="col-heading">📰 From the Blog</div>
+      <div class="blog-row">
+        <a href="/blog/best-casinos-near-minneapolis" class="blog-card">
+          <div class="blog-card-title">Best Casinos Near Minneapolis</div>
+          <div class="blog-card-excerpt">Discover the top casinos within driving distance of the Twin Cities, from tribal properties…</div>
+          <div class="blog-card-read">Read →</div>
+        </a>
+        <a href="/blog/best-casinos-near-chicago" class="blog-card">
+          <div class="blog-card-title">Best Casinos Near Chicago</div>
+          <div class="blog-card-excerpt">Chicago's casino scene is booming. Here's where to play within an hour of the city…</div>
+          <div class="blog-card-read">Read →</div>
+        </a>
+        <a href="/blog/how-to-find-loosest-slots" class="blog-card">
+          <div class="blog-card-title">How to Find the Loosest Slots</div>
+          <div class="blog-card-excerpt">Not all slot machines pay out equally. Learn the tricks pros use to find better odds…</div>
+          <div class="blog-card-read">Read →</div>
+        </a>
+        <a href="/blog/casino-loyalty-programs-compared" class="blog-card">
+          <div class="blog-card-title">Casino Loyalty Programs Compared</div>
+          <div class="blog-card-excerpt">Players clubs vary wildly. We compare the top Midwest casino loyalty tiers and perks…</div>
+          <div class="blog-card-read">Read →</div>
+        </a>
+        <a href="/blog/midwest-casino-road-trip" class="blog-card">
+          <div class="blog-card-title">Midwest Casino Road Trip Guide</div>
+          <div class="blog-card-excerpt">Plan the ultimate casino road trip through Iowa, Wisconsin, Illinois, and beyond…</div>
+          <div class="blog-card-read">Read →</div>
+        </a>
+      </div>
+    </div><!-- /blog-section -->
+
+    <!-- Hidden for JS compat (wins feed) -->
+    <div class="wins-feed" id="winsFeed" style="display:none"></div>
+    <span id="winsCount" style="display:none">0</span>
+
   </div>
 </div>
 
@@ -2647,6 +2830,7 @@ async function loadCasinos(region = 'las-vegas') {
     }
     // Load events for cards and re-render once available
     loadCardEvents(region).then(() => filterCasinos());
+    loadActiveDeals();
 
     if (CASINOS.length === 0) {
       document.getElementById('casinoGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-secondary);font-size:0.95rem">No casinos found for this region yet.<br><span style="font-size:0.82rem">Check back soon as we expand our database!</span></div>';
@@ -2656,6 +2840,64 @@ async function loadCasinos(region = 'las-vegas') {
     CASINOS = DEMO_CASINOS;
     CASINOS_LOADED = true;
     filterCasinos();
+    loadActiveDeals();
+  }
+}
+
+// ── ACTIVE DEALS SECTION ─────────────────────────────────────
+async function loadActiveDeals() {
+  const container = document.getElementById('activeDealsList');
+  if (!container) return;
+
+  try {
+    const ids = CASINOS.map(c => c.id).filter(Boolean).slice(0, 100);
+    if (!ids.length) throw new Error('no ids');
+
+    const res = await fetch(`/api/promotions/batch-summary?ids=${ids.join(',')}`);
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json(); // expected: { [casinoId]: { promotions: [...] } }
+
+    // Find casinos with promotions, sort by count desc
+    const withPromos = CASINOS
+      .map(c => ({ casino: c, promos: data[c.id]?.promotions || [] }))
+      .filter(x => x.promos.length > 0)
+      .sort((a, b) => b.promos.length - a.promos.length)
+      .slice(0, 5);
+
+    if (!withPromos.length) throw new Error('no promos');
+
+    const PROMO_TYPE_CLASS = {
+      'free_play': 'deal-badge-free-play',
+      'match': 'deal-badge-match',
+      'points': 'deal-badge-points',
+      'free-play': 'deal-badge-free-play',
+      'bonus': 'deal-badge-match',
+    };
+    const PROMO_TYPE_LABEL = {
+      'free_play': 'Free Play',
+      'free-play': 'Free Play',
+      'match': 'Match',
+      'points': 'Points',
+      'bonus': 'Bonus',
+    };
+
+    container.innerHTML = withPromos.map(({ casino, promos }) => {
+      const top = promos[0];
+      const title = (top.title || top.name || 'Active Promotion').substring(0, 40);
+      const type = top.type || top.promo_type || 'promo';
+      const badgeClass = PROMO_TYPE_CLASS[type] || 'deal-badge-default';
+      const badgeLabel = PROMO_TYPE_LABEL[type] || type;
+      return `<div class="deal-item" onclick="openModal(${casino.id})">
+        <div class="deal-item-icon">${casino.emoji || '🎰'}</div>
+        <div class="deal-item-body">
+          <div class="deal-item-name">${casino.name}</div>
+          <div class="deal-item-title">${title}</div>
+        </div>
+        <span class="deal-badge ${badgeClass}">${badgeLabel}</span>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    container.innerHTML = `<div class="deals-placeholder"><span>🎁</span>Check back soon for today's deals</div>`;
   }
 }
 
